@@ -603,10 +603,11 @@
     var host = document.getElementById(id); if (!host) return;
     var W = Math.max(host.clientWidth || 460, 260), H = opt.h || 84, pl = 24, pb = 12, pt = 8, s = svg(W, H);
     var max = opt.max || 100, n = opt.labels.length, step = (W - pl - 40) / (n - 1);
+    var U = opt.unit == null ? "%" : opt.unit;
     [0, 0.5, 1].forEach(function (f) {
       var y = pt + (H - pt - pb) * (1 - f);
       s.appendChild(el("line", { x1: pl, x2: W - 34, y1: y, y2: y, stroke: "var(--grid)" }));
-      s.appendChild(txt(Math.round(max * f) + (opt.unit || "%"), pl - 4, y + 3, { anchor: "end" }));
+      s.appendChild(txt(Math.round(max * f) + U, pl - 4, y + 3, { anchor: "end" }));
     });
     if (opt.rule != null) {
       var ry = pt + (H - pt - pb) * (1 - opt.rule / max);
@@ -619,10 +620,10 @@
         fill: "none", stroke: sr.color, "stroke-width": 2, "stroke-linejoin": "round" }));
       pts.forEach(function (p, i) {
         var c = el("circle", { cx: p[0], cy: p[1], r: 2.8, fill: sr.color, stroke: "#fff", "stroke-width": 1.6 });
-        tip(c, opt.labels[i] + " · " + sr.name + ": " + sr.values[i] + (opt.unit || "%")); s.appendChild(c);
+        tip(c, opt.labels[i] + " · " + sr.name + ": " + sr.values[i] + U); s.appendChild(c);
       });
       var lp = pts[pts.length - 1];
-      s.appendChild(txt(sr.values[sr.values.length - 1] + (opt.unit || "%"), lp[0] + 5, lp[1] + 3, { fs: 8.5, fill: "var(--ink-1)", w: 650 }));
+      s.appendChild(txt(sr.values[sr.values.length - 1] + U, lp[0] + 5, lp[1] + 3, { fs: 8.5, fill: "var(--ink-1)", w: 650 }));
     });
     opt.labels.forEach(function (lb, i) { s.appendChild(txt(lb, pl + i * step, H - 3, { anchor: "middle" })); });
     s.appendChild(el("line", { x1: pl, x2: W - 34, y1: H - pb, y2: H - pb, stroke: "var(--baseline)" }));

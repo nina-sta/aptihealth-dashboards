@@ -110,8 +110,9 @@
 
   .tt {
     position: fixed; pointer-events: none; opacity: 0; transition: opacity .08s;
-    background: var(--ink-1); color: #fff; font-size: 10.5px;
-    padding: 5px 8px; border-radius: 4px; z-index: 60; max-width: 250px; white-space: normal; line-height: 1.4;
+    background: #143a63; color: #ffffff; font-size: 10.5px;
+    border: 1px solid #0d2743; box-shadow: 0 4px 14px rgba(11, 11, 11, 0.28);
+    padding: 5px 8px; border-radius: 4px; z-index: 80; max-width: 250px; white-space: normal; line-height: 1.4;
   }
 
   .c2 { grid-column: span 2 } .c3 { grid-column: span 3 } .c4 { grid-column: span 4 }
@@ -497,9 +498,9 @@
     <button aria-pressed="false" data-pg="pg-provider">Provider journey</button>
     <span class="hint">Every measure is monthly. Chips inside a visual are visual-level filters; hover ⓘ for the Power BI visual type.</span>
   </div>
-</div>
 
-<div class="tt" id="tt"></div>
+  <div class="tt" id="tt"></div>
+</div>
 
 <script>
 (function () {

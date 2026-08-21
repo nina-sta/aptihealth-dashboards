@@ -31,6 +31,8 @@
     border: 1px solid var(--border); border-radius: 3px; padding: 3px 8px; white-space: nowrap;
   }
   .sl::after { content: " ▾"; color: var(--ink-muted); font-size: 8px; }
+  .sl { cursor: pointer; user-select: none; }
+  .sl:hover, .sl[data-open] { border-color: var(--ink-muted); color: var(--ink-1); }
 
   .page { display: none; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 8px; }
   .page.on { display: grid; }
@@ -47,6 +49,28 @@
     border: 1px solid var(--border); border-radius: 3px; padding: 1px 5px; white-space: nowrap;
   }
   .wf::before { content: "⏷ "; color: var(--ink-muted); font-size: 7px; }
+  .wf { cursor: pointer; user-select: none; }
+  .wf:hover, .wf[data-open] { border-color: var(--ink-muted); color: var(--ink-1); }
+
+  .dd {
+    position: fixed; z-index: 70; display: none; min-width: 132px; max-width: 240px;
+    max-height: 232px; overflow-y: auto; background: #ffffff; color: #0b0b0b;
+    border: 1px solid rgba(11, 11, 11, 0.18); border-radius: 4px; padding: 3px;
+    box-shadow: 0 6px 18px rgba(11, 11, 11, 0.14);
+  }
+  .dd.on { display: block; }
+  .dd .ddh {
+    font-size: 8px; color: #898781; text-transform: uppercase; letter-spacing: 0.07em;
+    font-weight: 650; padding: 3px 6px 4px;
+  }
+  .dd button {
+    appearance: none; border: 0; background: none; cursor: pointer; font: inherit; width: 100%;
+    display: flex; align-items: center; gap: 6px; text-align: left;
+    font-size: 10.5px; color: #0b0b0b; padding: 4px 6px; border-radius: 3px; white-space: nowrap;
+  }
+  .dd button:hover { background: #f5f4f0; }
+  .dd button .tick { width: 9px; flex-shrink: 0; color: #2a78d6; font-size: 9px; }
+  .dd button[aria-checked="true"] { font-weight: 650; }
   .i {
     appearance: none; border: 0; background: none; padding: 0; cursor: help;
     font: inherit; font-size: 10px; color: var(--ink-muted); line-height: 1;
@@ -499,6 +523,7 @@
     <span class="hint">Every measure is monthly. Chips inside a visual are visual-level filters; hover ⓘ for the Power BI visual type.</span>
   </div>
 
+  <div class="dd" id="dd" role="listbox"></div>
   <div class="tt" id="tt"></div>
 </div>
 
@@ -956,6 +981,81 @@
       });
     });
   });
+
+  /* ---- slicer / visual-filter dropdowns (mock: they open and set the label, nothing filters) ---- */
+  var MONTHS = ["Aug 2026", "Jul 2026", "Jun 2026", "May 2026", "Apr 2026", "Q3 2026", "Rolling 3 months"];
+  var CHANNELS = ["Channel: all", "Channel: self sign-up", "Channel: PCP practices", "Channel: health systems", "Channel: health plans"];
+  var ACUITY = ["Acuity: all", "Acuity: severe", "Acuity: high", "Acuity: medium", "Acuity: base"];
+  var SUPS = ["Supervisor: all", "Supervisor A", "Supervisor B", "Supervisor C"];
+
+  var OPTIONS = {
+    /* report-level slicers */
+    "Payer: CDPHP": { head: "Payer", opts: ["Payer: CDPHP", "Payer: MVP", "Payer: Fidelis", "Payer: Medicaid FFS", "Payer: all"] },
+    "Program: All": { head: "Program", opts: ["Program: All", "Program: Therapy only", "Program: Medication management", "Program: Combined", "Program: Higher level of care"] },
+    "Rolling 12 months": { head: "Period", opts: ["Rolling 12 months", "Rolling 6 months", "Rolling 3 months", "Year to date", "Calendar 2025"] },
+    /* visual-level filters */
+    "Aug 2026": { head: "Month", opts: MONTHS },
+    "Channel: all": { head: "Referral channel", opts: CHANNELS },
+    "Acuity: all": { head: "Acuity", opts: ACUITY },
+    "Acuity: severe": { head: "Acuity", opts: ACUITY },
+    "Supervisor: all": { head: "Supervisor", opts: SUPS },
+    "Baseline \u22659": { head: "HEDIS baseline", opts: ["Baseline \u22659", "Baseline \u22655", "Baseline: any score"] },
+    "Stage: first session": { head: "Conversion stage", opts: ["Stage: DI scheduled", "Stage: DI attended", "Stage: first session", "Stage: 4th session"] },
+    "Stage: all": { head: "Journey stage", opts: ["Stage: all", "Stage: registered, never assessed", "Stage: A5 done, no DI", "Stage: DI attended, no first session", "Stage: in care, left early", "Stage: completed 90-day care"] },
+    "Scored within 30 days": { head: "Scoring window", opts: ["Scored within 30 days", "Scored within 60 days", "Scored within 90 days"] },
+    "Of: active members": { head: "Denominator", opts: ["Of: active members", "Of: all enrolled members", "Of: members with \u22651 session"] },
+    "Milestone: DI attended": { head: "Milestone", opts: ["Milestone: DI scheduled", "Milestone: DI attended", "Milestone: first therapy session"] },
+    "Top 4 + other": { head: "Reason grouping", opts: ["Top 4 + other", "Top 6 + other", "All reasons"] },
+    "Top 5": { head: "Rows shown", opts: ["Top 5", "Top 10", "Top 20", "All providers"] },
+    "60-day lookback": { head: "Engagement definition", opts: ["60-day lookback", "90-day lookback", "In-month only"] },
+    "All note types": { head: "Note type", opts: ["All note types", "Guided session notes", "Progress notes", "Intake (DI) notes", "Discharge summaries"] },
+    "Note type: all": { head: "Note type", opts: ["Note type: all", "Note type: guided session", "Note type: progress", "Note type: intake (DI)", "Note type: discharge summary"] },
+    "Month end": { head: "Measured at", opts: ["Month end", "Monthly peak", "Monthly average"] }
+  };
+
+  var dd = document.getElementById("dd"), ddFor = null;
+
+  function closeDD() {
+    dd.classList.remove("on");
+    if (ddFor) { ddFor.removeAttribute("data-open"); ddFor = null; }
+  }
+
+  function openDD(chip) {
+    var cur = chip.textContent.trim();
+    var cfg = OPTIONS[cur] || { head: "Filter", opts: [cur] };
+    dd.innerHTML = "";
+    var h = document.createElement("div"); h.className = "ddh"; h.textContent = cfg.head; dd.appendChild(h);
+    cfg.opts.forEach(function (o) {
+      var b = document.createElement("button");
+      b.type = "button"; b.setAttribute("role", "option");
+      b.setAttribute("aria-checked", o === cur ? "true" : "false");
+      var k = document.createElement("span"); k.className = "tick"; k.textContent = o === cur ? "\u2713" : "";
+      b.appendChild(k);
+      b.appendChild(document.createTextNode(o));
+      b.addEventListener("click", function (ev) {
+        ev.stopPropagation();
+        chip.textContent = o;   /* label only — this mock does not re-query anything */
+        closeDD();
+      });
+      dd.appendChild(b);
+    });
+    dd.classList.add("on");
+    chip.setAttribute("data-open", "");
+    ddFor = chip;
+    var r = chip.getBoundingClientRect();
+    dd.style.left = Math.max(6, Math.min(r.left, window.innerWidth - dd.offsetWidth - 8)) + "px";
+    var below = window.innerHeight - r.bottom;
+    dd.style.top = (below > dd.offsetHeight + 10 ? r.bottom + 4 : Math.max(6, r.top - dd.offsetHeight - 4)) + "px";
+  }
+
+  document.addEventListener("click", function (e) {
+    var chip = e.target.closest(".sl, .wf");
+    if (chip) { e.stopPropagation(); if (chip === ddFor) closeDD(); else { closeDD(); openDD(chip); } return; }
+    if (!e.target.closest("#dd")) closeDD();
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeDD(); });
+  window.addEventListener("scroll", closeDD, true);
+  window.addEventListener("resize", closeDD);
 
   var tt = document.getElementById("tt");
   document.addEventListener("mouseover", function (e) {

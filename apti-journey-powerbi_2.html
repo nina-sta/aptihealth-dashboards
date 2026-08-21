@@ -218,10 +218,10 @@
     </div>
 
     <div class="v c3 h2r">
-      <div class="vh"><h4>Outcome measure coverage</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: clustered column with a constant line for target. Share of active members with a PHQ-9 or GAD-7 score in the last 30 days.">ⓘ</button></div>
+      <div class="vh"><h4>Active members with a current PHQ-9 or GAD-7</h4>
+        <div class="vf"><span class="wf">Scored within 30 days</span><span class="wf">Of: active members</span><button class="i" data-tip="Power BI: clustered column with a constant line for target. Numerator: active members with at least one PHQ-9 or GAD-7 recorded in the trailing 30 days. Denominator: all active members that month. The 30-day chip switches the window (30 / 60 / 90 days) &mdash; it changes the definition, not just the filter, so the target moves with it.">ⓘ</button></div>
       </div>
-      <p class="info">Scores are visit-triggered, so visit frequency moves every time-to measure.</p>
+      <p class="info">Scores are captured at a visit, so this tracks how recently members were seen, not clinician compliance. Members between visits cannot have a fresh score, which is why the line sits below 100% by design.</p>
       <div class="body"><div class="ch" id="c-cov"></div></div>
     </div>
 

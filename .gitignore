@@ -1,0 +1,9 @@
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+node_modules/
+
+# scratch folder for files this sandbox could not delete — safe to remove
+_to_delete/

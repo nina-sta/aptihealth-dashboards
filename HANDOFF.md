@@ -53,6 +53,28 @@ visuals ship with a `gapnote` instead of a clean number because of them.
 - **Both engagement definitions are shown side by side** rather than hidden behind a chip,
   because the gap between them is the decision.
 
+## Live inconsistency — needs a decision before anything ships
+
+Another session removed seven visuals from the internal patient-journey report (`fbc6e28`,
+committed locally, **not pushed**) and republished that artifact. It updated the spec rows in
+the same commit, which is correct. But **all seven are marked *CDPHP asked* and all seven are
+still in the payer report**, so the payer report now carries seven visuals that exist in no
+internal report:
+
+  Referrals and members reaching first session · Channel mix · Conversion to first session by
+  copay cohort · Active members with a current PHQ-9 or GAD-7 · Urgent seen ≤ 7 days ·
+  Median days to care by reason · Members in care by tenure
+
+`tools/sync.py` did not catch this — the payer cross-check only ran one way. Fixed; it now
+fails on orphans, and it is failing on these seven right now. Two coherent resolutions:
+
+- **Restore them internally.** They answer payer questions, so we look at them too.
+- **Accept the payer report owning visuals no internal report shows**, and change the model
+  and the checker to allow it.
+
+Do not push `fbc6e28` until this is settled — pushing it puts the payer report and the
+internal reports out of step on the live site.
+
 ## Open questions for a person
 
 1. **Who owns each data point?** Blocks the specs.

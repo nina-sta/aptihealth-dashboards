@@ -14,8 +14,12 @@ It enforces four things:
 2. Every report has a specification under docs/.
 3. The set of visuals in a report and the set of rows in its specification match exactly.
    This is the docs-and-mock-ups-agree rule. Add a visual, add a row, in the same commit.
-4. Every visual marked "CDPHP asked" in an internal report also appears in the CDPHP
-   payer report, because that report is meant to be the full answer to their ask.
+4. The CDPHP payer report and the internal reports agree, in both directions:
+   - every visual marked "CDPHP asked" internally reaches the payer report, because that
+     report is meant to be the full answer to their ask; and
+   - every visual in the payer report still exists in some internal report. The payer report
+     is assembled from the internal ones, so a visual with no internal home is an orphan —
+     usually a visual deleted internally without deciding what the payer should see.
 
 No dependencies. Python 3 only.
 """
@@ -100,6 +104,14 @@ def main():
             problems.append("%s: shared css is stale — run: python3 tools/sync.py --fix" % rel)
 
     cdphp_visuals = set(visuals(read(CDPHP_REPORT)))
+    internal_visuals = set()
+    for rel in REPORTS:
+        if rel != CDPHP_REPORT:
+            internal_visuals |= set(visuals(read(rel)))
+    for orphan in sorted(cdphp_visuals - internal_visuals):
+        problems.append("%s: %r is in the payer report but in no internal report — restore it "
+                        "internally, or decide the payer should stop seeing it and remove it here"
+                        % (CDPHP_REPORT, orphan))
 
     for rel, doc in sorted(REPORTS.items()):
         src = read(rel)

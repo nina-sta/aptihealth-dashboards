@@ -27,20 +27,13 @@ and is the point of this document.
 | --- | --- | --- | --- | --- |
 | Members served ⬥ | How many people have we ever treated for this payer? | _unassigned_ | _to agree_ | Built |
 | Engaged members ⬥ | How many are in care right now? | _unassigned_ | _to agree_ | Built |
-| Referrals and members reaching first session ⬥ | How many referrals arrive and how many reach a first session? | _unassigned_ | _to agree_ | Built |
-| Channel mix ⬥ | Where do referrals come from and how is that shifting? | _unassigned_ | _to agree_ | Built |
 | Acquisition and access funnel | Where in sign-up do people fall out? | _unassigned_ | _to agree_ | Built |
 | Outcomes ⬥ | Are people getting better? | _unassigned_ | _to agree_ | Built |
-| Conversion to first session by copay cohort ⬥ | Does a copay stop people from starting care? | _unassigned_ | _to agree_ | Built |
 | Access by referral channel ⬥ | Which channel converts, and how fast? | _unassigned_ | _to agree_ | Built |
-| Active members with a current PHQ-9 or GAD-7 ⬥ | Do we have a recent score for the people we are measuring? | _unassigned_ | _to agree_ | Built |
-| Urgent seen ≤ 7 days ⬥ | Do urgent referrals get seen inside a week? | _unassigned_ | _to agree_ | Built |
 | Median days to first appointment — urgent vs routine ⬥ | How long is the wait, and does urgency change it? | _unassigned_ | _to agree_ | Built |
 | Urgent volume by reason | What is driving urgent volume? | _unassigned_ | _to agree_ | Built |
 | Urgent referrals — time to care by reason ⬥ | Which urgent reasons wait longest? | _unassigned_ | _to agree_ | Built |
-| Median days to care by reason ⬥ | Which single reason is the outlier on wait time? | _unassigned_ | _to agree_ | Built |
 | Routine referrals by requested service | What are routine referrals asking for? | _unassigned_ | _to agree_ | Built |
-| Members in care by tenure ⬥ | Are we accumulating long-stay members? | _unassigned_ | _to agree_ | Blocked — Blocked: needs an episode-of-care definition — days in care currently run through inactivation |
 | Members meeting ACP touchpoint minimum | Are we hitting the contractual touchpoint minimum? | _unassigned_ | _to agree_ | Built |
 | Lapse and exit | Who is going quiet or leaving? | _unassigned_ | _to agree_ | Built |
 | Where members drop out — inactivation by journey stage ⬥ | Do people leave before care starts or after it finishes? | _unassigned_ | _to agree_ | Built |
@@ -78,7 +71,7 @@ and is the point of this document.
 | Visual | Business question | Owner | Business impact | Status |
 | --- | --- | --- | --- | --- |
 | Sessions per member — mean and median ⬥ | How much care does a typical member actually get? | _unassigned_ | _to agree_ | Built |
-| Median length of active care ⬥ | How long does an episode of care last? | _unassigned_ | _to agree_ | Blocked — Blocked on the same episode-of-care definition as the tenure visual. Today length of care runs through to inactivation, which overstates it |
+| Median length of active care ⬥ | How long does an episode of care last? | _unassigned_ | _to agree_ | Blocked — Blocked on the episode-of-care definition. Today length of care runs through to inactivation, which overstates it |
 | 2+ BH sessions in first 60 days ⬥ | Do new members get enough early contact to stick? | _unassigned_ | _to agree_ | Built |
 | Median days to 50% reduction — PHQ-9 and GAD-7 ⬥ | How fast do people improve, and does the baseline filter change the answer? | _unassigned_ | _to agree_ | Built |
 
@@ -100,10 +93,9 @@ and is the point of this document.
 
 ## Open items
 
-- **Members in care by tenure** — Blocked: needs an episode-of-care definition — days in care currently run through inactivation.
 - **Days from registration to inactivation** — Needs an inactivation reason field to separate lapsed from clinically discharged.
 - **Payer contracts and credentialing** — Confirm whether “licensed” in the ask means payer credentialing or state licensure — they are different counts.
 - **Adolescent DIs booked outside the age range** — Assumes the booking stores the provider age range as configured at booking time, not as configured today.
 - **Diagnostic interviews — first-time vs repeat** — “Repeat” is not defined on our side. The only written rules are the annual re-assessment for returning members and A5R every 90 days.
 - **Post-discharge members reached** — Denominator depends on how we learn about a discharge — payer feed, referrer notification or member self-report. Each gives a different population.
-- **Median length of active care** — Blocked on the same episode-of-care definition as the tenure visual. Today length of care runs through to inactivation, which overstates it.
+- **Median length of active care** — Blocked on the episode-of-care definition. Today length of care runs through to inactivation, which overstates it.

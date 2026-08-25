@@ -206,28 +206,7 @@
       </div>
     </div>
 
-    <div class="v c5 h1r">
-      <div class="vh"><h4>Referrals and members reaching first session</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: clustered column chart. Both measures share a unit, so one axis — do not add conversion % as a second axis here.">ⓘ</button></div>
-      </div>
-      <div class="body"><div class="ch" id="c-conv"></div>
-        <div class="lg"><span><i style="background:var(--s1)"></i>Referrals created</span><span><i style="background:var(--s2)"></i>Reached first session</span></div>
-      </div>
-    </div>
-
-    <div class="v c3 h1r">
-      <div class="vh"><h4>Channel mix</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><button class="i" data-tip="Power BI: 100% stacked column chart. Share of referrals by channel each month — this is where the CDPHP-direct decline against self sign-up growth becomes visible.">ⓘ</button></div>
-      </div>
-      <div class="body"><div class="ch" id="c-mix"></div>
-        <div class="lg">
-          <span><i style="background:var(--s1)"></i>Self sign-up</span><span><i style="background:var(--s2)"></i>PCP</span>
-          <span><i style="background:var(--s3)"></i>Health sys</span><span><i style="background:var(--s4)"></i>Plans</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="v c7 h2r">
+    <div class="v c8 h2r">
       <div class="vh"><h4>Acquisition and access funnel</h4>
         <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: funnel. Both chips are visual-level slicers — the month chip is what makes this a monthly funnel rather than a period total.">ⓘ</button></div>
       </div>
@@ -242,39 +221,11 @@
       <div class="body" id="c-sm-out"></div>
     </div>
 
-    <div class="v c5 h2r">
-      <div class="vh"><h4>Conversion to first session by copay cohort</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">Stage: first session</span><button class="i" data-tip="Power BI: line chart, two series. Cohorts split on the copay returned by the eligibility check. The stage chip walks the whole path the ask names — registration complete, DI attended, first session — one stage at a time, because three stages times two cohorts is six lines and unreadable.">ⓘ</button></div>
-      </div>
-      <div class="body"><div class="ch" id="c-copay"></div>
-        <div class="lg"><span><i style="background:var(--s1)"></i>$0 copay</span><span><i style="background:var(--s2)"></i>Copay &gt; $0</span></div>
-      </div>
-    </div>
-
     <div class="v c4 h2r">
       <div class="vh"><h4>Access by referral channel</h4><span class="ask">CDPHP asked</span>
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Put month on columns for a trended view.">ⓘ</button></div>
       </div>
       <div class="body" id="c-mx-chan"></div>
-    </div>
-
-    <div class="v c3 h2r">
-      <div class="vh"><h4>Active members with a current PHQ-9 or GAD-7</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">Scored within 30 days</span><span class="wf">Of: active members</span><button class="i" data-tip="Power BI: clustered column with a constant line for target. Numerator: active members with at least one PHQ-9 or GAD-7 recorded in the trailing 30 days. Denominator: all active members that month. The 30-day chip switches the window (30 / 60 / 90 days) &mdash; it changes the definition, not just the filter, so the target moves with it.">ⓘ</button></div>
-      </div>
-      <p class="info">Scores are captured at a visit, so this tracks how recently members were seen, not clinician compliance. Members between visits cannot have a fresh score, which is why the line sits below 100% by design.</p>
-      <div class="body"><div class="ch" id="c-cov"></div></div>
-    </div>
-
-    <div class="v kpi c2 h2r">
-      <div class="vh"><h4>Urgent seen &le; 7 days</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><button class="i" data-tip="Power BI: KPI + line. Share of urgent referrals with a completed DI within 7 days. 126 urgent referrals in August, 16% of all volume.">&#9432;</button></div>
-      </div>
-      <div class="body">
-        <div class="big">81<small>%</small></div>
-        <div class="sub"><span class="up">&#9652; 6pp</span> vs July</div>
-        <div class="spark ch" id="u-7d"></div>
-      </div>
     </div>
 
     <div class="v c5 h2r">
@@ -309,15 +260,6 @@
       <div class="body" id="u-mx"></div>
     </div>
 
-    <div class="v c5 h3r">
-      <div class="vh"><h4>Median days to care by reason</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: clustered bar chart with a constant line at 7 days. Sorted slowest first so the outlier reason is always at the top.">&#9432;</button></div>
-      </div>
-      <div class="body"><div class="ch" id="u-bars"></div>
-        <div class="lg"><span>Black rule = 7-day follow-up standard</span></div>
-      </div>
-    </div>
-
     <div class="v c12 h1r">
       <div class="vh"><h4>Routine referrals by requested service</h4>
         <div class="vf"><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: stacked column chart. Medication management requires enrolment in therapy, so the combined option should always trail therapy-only.">&#9432;</button></div>
@@ -330,27 +272,14 @@
       </div>
     </div>
 
-    <div class="v c5 h2r">
-      <div class="vh"><h4>Members in care by tenure</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">Acuity: all</span><button class="i" data-tip="Power BI: stacked column chart. Tenure mix month over month — the growing 365d+ band is the 'lifers' question in one picture.">ⓘ</button></div>
-      </div>
-      <div class="body"><div class="ch" id="c-tenure"></div>
-        <div class="lg">
-          <span><i style="background:var(--s1)"></i>0–90d</span><span><i style="background:var(--s2)"></i>91–180d</span>
-          <span><i style="background:var(--s3)"></i>181–365d</span><span><i style="background:var(--s4)"></i>365d+</span>
-        </div>
-        <div class="gapnote">⚠ Blocked: needs an episode-of-care definition — days in care currently run through inactivation.</div>
-      </div>
-    </div>
-
-    <div class="v c4 h2r">
+    <div class="v c7 h2r">
       <div class="vh"><h4>Members meeting ACP touchpoint minimum</h4>
         <div class="vf"><span class="wf">Acuity: severe</span><button class="i" data-tip="Power BI: clustered column with a constant line at the contractual minimum. The acuity chip switches which minimum applies — Severe 4+, High 2, Medium 1, Base 3 documented attempts.">ⓘ</button></div>
       </div>
       <div class="body"><div class="ch" id="c-acp"></div></div>
     </div>
 
-    <div class="v c3 h2r">
+    <div class="v c5 h2r">
       <div class="vh"><h4>Lapse and exit</h4>
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: multi-row card with a month-over-month delta field. Each row drills through to the member list.">ⓘ</button></div>
       </div>
@@ -530,7 +459,7 @@
         <div class="vf"><span class="wf">Cut-off: 60 idle days</span><button class="i" data-tip="Power BI: line chart, one series, in days. Active care runs from first session to the last session before the cut-off. The chip switches the idle cut-off (30 / 60 / 90 days), which is what decides when care is treated as ended.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="x-loc"></div>
-        <div class="gapnote">&#9888; Blocked on the same episode-of-care definition as the tenure visual. Today length of care runs through to inactivation, which overstates it.</div>
+        <div class="gapnote">&#9888; Blocked on the episode-of-care definition. Today length of care runs through to inactivation, which overstates it.</div>
       </div>
     </div>
 
@@ -951,26 +880,6 @@ APTI.render(function () {
   spark("k-served", [286, 301, 274, 262, 330, 348, 322, 361, 379, 366, 388, 412], "var(--s1)");
   spark("k-engaged", [5180, 5240, 5190, 5090, 5410, 5520, 5480, 5610, 5680, 5720, 5924, 5740], "var(--s1)");
 
-  columns("c-conv", {
-    labels: MO, h: 56,
-    series: [
-      { name: "Referrals", color: "var(--s1)", values: [712, 740, 690, 655, 781, 802, 764, 799, 812, 786, 803, 781] },
-      { name: "Reached first session", color: "var(--s2)", values: [150, 163, 138, 124, 180, 192, 176, 200, 211, 197, 209, 195] }
-    ],
-    fmt: function (v) { return Math.round(v / 100) * 100; }
-  });
-
-  columns("c-mix", {
-    labels: MO, h: 52, stacked: true, pct: true, max: 100, pl: 20, unit: "%",
-    series: [
-      { name: "Self sign-up", color: "var(--s1)", values: [38, 40, 42, 43, 45, 46, 47, 48, 50, 51, 52, 53] },
-      { name: "PCP", color: "var(--s2)", values: [28, 27, 27, 26, 25, 25, 24, 24, 23, 23, 22, 22] },
-      { name: "Health systems", color: "var(--s3)", values: [19, 19, 18, 18, 18, 17, 17, 17, 16, 16, 16, 16] },
-      { name: "Plans", color: "var(--s4)", values: [15, 14, 13, 13, 12, 12, 12, 11, 11, 10, 10, 9] }
-    ],
-    fmt: function (v) { return Math.round(v) + "%"; }
-  });
-
   funnel("c-funnel", [
     { label: "Referral created", value: 781, conv: "—" },
     { label: "Registration complete", value: 570, conv: "73%" },
@@ -989,14 +898,6 @@ APTI.render(function () {
     { label: "Median days to 50%", value: "58", color: "var(--s2)", unit: " days", spark: [76, 74, 73, 71, 69, 68, 66, 64, 62, 61, 59, 58] }
   ]);
 
-  lines("c-copay", {
-    labels: MO, h: 80,
-    series: [
-      { name: "$0 copay", color: "var(--s1)", values: [50, 51, 49, 48, 52, 53, 52, 54, 55, 54, 55, 54] },
-      { name: "Copay > $0", color: "var(--s2)", values: [30, 31, 29, 27, 31, 32, 31, 33, 34, 32, 34, 33] }
-    ]
-  });
-
   matrix("c-mx-chan",
     ["Channel", "Referrals", "→ DI", "Med. days"],
     [
@@ -1008,14 +909,7 @@ APTI.render(function () {
     ]
   );
 
-  columns("c-cov", {
-    labels: MO, h: 72, rule: 90, ruleLabel: "target 90%", max: 100, unit: "%",
-    series: [{ name: "Coverage", color: "var(--s1)", values: [61, 63, 62, 60, 65, 66, 67, 68, 70, 70, 71, 72] }],
-    fmt: function (v) { return Math.round(v) + "%"; }
-  });
-
   /* ---------------- ACCESS & URGENCY (on the patient page) ---------------- */
-  spark("u-7d", [68, 70, 66, 63, 71, 73, 72, 75, 77, 76, 75, 81], "var(--s1)", "%");
 
   lines("u-days", {
     labels: MO, h: 82, max: 16, unit: " d", rule: 7, ruleLabel: "7-day standard",
@@ -1050,19 +944,6 @@ APTI.render(function () {
     ]
   );
 
-  bars("u-bars", {
-    lw: 116, rh: 20, max: 10, rule: 7,
-    rows: [
-      { label: "Grave disability", value: 8.4, fmt: "8.4 d", color: "var(--critical)" },
-      { label: "Acute grief / loss", value: 6.8, fmt: "6.8 d", color: "var(--serious)" },
-      { label: "Perinatal crisis", value: 5.2, fmt: "5.2 d", color: "var(--s2)" },
-      { label: "Rapid deterioration", value: 4.6, fmt: "4.6 d", color: "var(--s2)" },
-      { label: "Post BH discharge", value: 3.1, fmt: "3.1 d", color: "var(--s1)" },
-      { label: "Suicidal ideation", value: 2.4, fmt: "2.4 d", color: "var(--s1)" },
-      { label: "Risk to others", value: 2.0, fmt: "2.0 d", color: "var(--s1)" }
-    ]
-  });
-
   columns("u-routine", {
     labels: MO, h: 54, stacked: true,
     series: [
@@ -1073,17 +954,6 @@ APTI.render(function () {
   });
 
 
-
-  columns("c-tenure", {
-    labels: MO, h: 66, stacked: true,
-    series: [
-      { name: "0–90d", color: "var(--s1)", values: [1740, 1768, 1702, 1660, 1790, 1822, 1798, 1840, 1866, 1852, 1874, 1880] },
-      { name: "91–180d", color: "var(--s2)", values: [1010, 1028, 1042, 1050, 1064, 1078, 1086, 1094, 1102, 1110, 1116, 1120] },
-      { name: "181–365d", color: "var(--s3)", values: [640, 656, 668, 678, 690, 700, 708, 716, 724, 732, 738, 742] },
-      { name: "365d+", color: "var(--s4)", values: [402, 418, 434, 449, 464, 478, 492, 506, 518, 530, 542, 551] }
-    ],
-    fmt: function (v) { return (v / 1000).toFixed(1) + "k"; }
-  });
 
   columns("c-acp", {
     labels: MO, h: 74, rule: 100, ruleLabel: "contract minimum", max: 100, unit: "%",

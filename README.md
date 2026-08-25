@@ -1,40 +1,52 @@
-# aptihealth dashboards
+# aptihealth report prototypes
 
-Design mock-ups for the aptihealth **Patient journey** and **Provider journey** report
-pages, built as a self-contained HTML wireframe ahead of the Power BI build.
+Design mock-ups for aptihealth's reports, built as self-contained HTML ahead of the Power BI
+build. **Live: https://nina-sta.github.io/aptihealth-dashboards/**
 
-## What is in here
+The prototype exists to connect business and data science: business decides what matters, the
+mock-up makes it arguable in pictures, the specification records the definition and the owner,
+and data science builds it in Power BI.
 
-| File | What it is |
-| --- | --- |
-| `apti-journey-powerbi_2.html` | The report mock-up. Open it in any browser — no build step, no dependencies. |
-| `CLAUDE.md` | Conventions for anyone (person or Claude) changing the mock-up. Read before editing. |
+## The three reports
 
-## How to view it
+| Report | Mock-up | Specification |
+| --- | --- | --- |
+| Patient journey (internal) | [`reports/internal/patient-journey.html`](reports/internal/patient-journey.html) | [spec](docs/internal/patient-journey.md) |
+| Provider journey (internal) | [`reports/internal/provider-journey.html`](reports/internal/provider-journey.html) | [spec](docs/internal/provider-journey.md) |
+| CDPHP payer report (external) | [`reports/external/cdphp.html`](reports/external/cdphp.html) | [spec](docs/external/cdphp.md) |
 
-Double-click the HTML file, or from this folder:
+CDPHP is built first and is deliberately the largest. Every other payer report will be this
+one with visuals switched off, so a measure missing here is missing everywhere.
+
+## Viewing it
+
+Open any report file in a browser — no build step, no dependencies.
 
 ```bash
-open apti-journey-powerbi_2.html      # macOS
+open index.html
 ```
 
-Two report pages are switched with the tabs at the bottom of the page, the way
-Power BI page tabs work. Grey chips inside a visual are visual-level filters.
-Hover the ⓘ in a visual header to see which native Power BI visual it maps to.
+Grey chips inside a visual are visual-level filters and open a list of options. Hover the ⓘ in
+a visual header for the native Power BI visual and the measure definition. A **CDPHP asked**
+marker means the visual answers a statistic the payer requested.
 
-## Important: every number is fabricated
+## Every number is fabricated
 
-All values are mock data for layout purposes. The deliverable is the **layout,
-the visual types and the measure definitions** — not the figures. A handful of
-reference points are drawn from real documented sources and are marked `(doc)`
-in the mock-up.
+All values are mock. What is real is the choice of measure, its definition, the Power BI visual
+behind it, and the gaps. A few reference points come from documented sources and are marked
+`(doc)`. Provider names in the mock-ups are invented.
 
-Provider names appear in one visual (panel size vs target) and are real
-colleagues paired with invented panel sizes. That is why this repository is
-**private** — do not make it public without replacing them.
+Older commits in this repository's history contain real colleague names from before the
+mock-up was anonymised.
 
-## Status
+## Working on it
 
-Mock-up, not a build. Before this can be built in Power BI, four measure
-definitions have to be agreed and one data gap closed — see the TODO section in
-`CLAUDE.md`.
+Mock-ups and specifications are one deliverable — change one, change the other in the same
+commit. Before finishing any piece of work:
+
+```bash
+python3 tools/sync.py
+```
+
+Read [`CLAUDE.md`](CLAUDE.md) before editing. It carries the design rules, the palette and the
+list of measure definitions still blocking the Power BI build.

@@ -1,0 +1,1350 @@
+<title>CDPHP payer report</title>
+<!-- shared:css:start -->
+<style>
+  .root {
+    color-scheme: light;
+    --plane: #ffffff; --surface: #ffffff;
+    --ink-1: #0b0b0b; --ink-2: #52514e; --ink-muted: #898781;
+    --grid: #e6e5df; --baseline: #c3c2b7; --border: rgba(11, 11, 11, 0.14);
+    --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4;
+    --good: #0ca30c; --warning: #fab219; --serious: #ec835a; --critical: #d03b3b;
+    --success-text: #006300; --track: #eeece7; --chipbg: #f5f4f0;
+  }
+
+  body { margin: 0; background: #ffffff; }
+  .root {
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--plane); color: var(--ink-1);
+    padding: 14px 14px 8px; line-height: 1.35;
+  }
+
+  .rpthead { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+  .rpthead h1 { font-size: 15px; margin: 0; letter-spacing: -0.01em; }
+  .rpthead .mock {
+    font-size: 10.5px; color: var(--ink-2); border: 1px solid var(--border);
+    border-left: 2px solid var(--warning); border-radius: 4px; padding: 3px 8px;
+  }
+  .rpthead .mock b { color: var(--ink-1); }
+  .slicers { margin-left: auto; display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
+  .slicers .lbl { font-size: 9px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 650; }
+  .sl {
+    font-size: 10.5px; color: var(--ink-2); background: var(--chipbg);
+    border: 1px solid var(--border); border-radius: 3px; padding: 3px 8px; white-space: nowrap;
+  }
+  .sl::after { content: " ▾"; color: var(--ink-muted); font-size: 8px; }
+  .sl { cursor: pointer; user-select: none; }
+  .sl:hover, .sl[data-open] { border-color: var(--ink-muted); color: var(--ink-1); }
+
+  .page { display: none; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 8px; }
+  .page.on { display: grid; }
+
+  .v {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 4px;
+    padding: 8px 10px 9px; overflow: hidden; display: flex; flex-direction: column;
+  }
+  .vh { display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap; row-gap: 3px; }
+  .ask {
+    font-size: 7.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+    color: #143a63; background: #e8eef6; border: 1px solid #c5d5e8;
+    border-radius: 3px; padding: 1px 5px; white-space: nowrap; flex-shrink: 0; align-self: center;
+  }
+  .appx { font-size: 9.5px; color: var(--ink-1); margin: 2px 0 0; padding-left: 15px; }
+  .appx li { padding: 2px 0; border-bottom: 1px solid var(--grid); }
+  .appx li:last-child { border-bottom: 0; }
+  .vh h4 { font-size: 11px; font-weight: 650; margin: 0; letter-spacing: -0.005em; flex: 1; }
+  .vf { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+  .wf {
+    font-size: 8.5px; color: var(--ink-2); background: var(--chipbg);
+    border: 1px solid var(--border); border-radius: 3px; padding: 1px 5px; white-space: nowrap;
+  }
+  .wf::before { content: "⏷ "; color: var(--ink-muted); font-size: 7px; }
+  .wf { cursor: pointer; user-select: none; }
+  .wf:hover, .wf[data-open] { border-color: var(--ink-muted); color: var(--ink-1); }
+
+  .dd {
+    position: fixed; z-index: 70; display: none; min-width: 132px; max-width: 240px;
+    max-height: 232px; overflow-y: auto; background: #ffffff; color: #0b0b0b;
+    border: 1px solid rgba(11, 11, 11, 0.18); border-radius: 4px; padding: 3px;
+    box-shadow: 0 6px 18px rgba(11, 11, 11, 0.14);
+  }
+  .dd.on { display: block; }
+  .dd .ddh {
+    font-size: 8px; color: #898781; text-transform: uppercase; letter-spacing: 0.07em;
+    font-weight: 650; padding: 3px 6px 4px;
+  }
+  .dd button {
+    appearance: none; border: 0; background: none; cursor: pointer; font: inherit; width: 100%;
+    display: flex; align-items: center; gap: 6px; text-align: left;
+    font-size: 10.5px; color: #0b0b0b; padding: 4px 6px; border-radius: 3px; white-space: nowrap;
+  }
+  .dd button:hover { background: #f5f4f0; }
+  .dd button .tick { width: 9px; flex-shrink: 0; color: #2a78d6; font-size: 9px; }
+  .dd button[aria-checked="true"] { font-weight: 650; }
+  .i {
+    appearance: none; border: 0; background: none; padding: 0; cursor: help;
+    font: inherit; font-size: 10px; color: var(--ink-muted); line-height: 1;
+  }
+  .i:hover { color: var(--s1); }
+  .info { font-size: 9px; color: var(--ink-2); margin: 3px 0 0; }
+  .body { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; padding-top: 6px; }
+
+  .kpi .big { font-size: 28px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.05; }
+  .kpi .big small { font-size: 12px; font-weight: 500; color: var(--ink-2); letter-spacing: 0; }
+  .kpi .sub { font-size: 9.5px; color: var(--ink-2); margin-top: 2px; }
+  .kpi .sub .up { color: var(--success-text); font-weight: 650; }
+  .kpi .sub .down { color: var(--critical); font-weight: 650; }
+  .kpi .spark { margin-top: 5px; }
+
+  .sm2 .big { font-size: 16px; font-weight: 600; letter-spacing: -0.02em; }
+  .sm2 .row { display: flex; align-items: flex-end; justify-content: space-between; gap: 6px; }
+
+  .ch { width: 100%; }
+  .ch svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .lg { display: flex; gap: 9px; flex-wrap: wrap; font-size: 8.5px; color: var(--ink-2); margin-top: 4px; }
+  .lg i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; margin-right: 3px; vertical-align: -1px; }
+
+  table.mx { width: 100%; border-collapse: collapse; font-size: 9.5px; font-variant-numeric: tabular-nums; }
+  table.mx th {
+    text-align: right; font-weight: 600; color: var(--ink-muted); font-size: 8.5px;
+    text-transform: uppercase; letter-spacing: 0.05em; padding: 0 4px 4px; border-bottom: 1px solid var(--grid);
+  }
+  table.mx th:first-child, table.mx td:first-child { text-align: left; }
+  table.mx td { padding: 3px 4px; border-bottom: 1px solid var(--grid); color: var(--ink-1); }
+  table.mx tr:last-child td { border-bottom: 0; font-weight: 650; }
+  table.mx td.b { position: relative; }
+  table.mx td.b .bar { position: absolute; inset: 2px auto 2px 3px; background: var(--s1); opacity: 0.24; border-radius: 2px; }
+  table.mx td.b span { position: relative; }
+  .cf { border-radius: 2px; padding: 1px 4px; font-weight: 650; }
+  .cf.g { color: var(--success-text); background: color-mix(in srgb, var(--good) 13%, white); }
+  .cf.w { color: var(--ink-1); background: color-mix(in srgb, var(--warning) 24%, white); }
+  .cf.c { color: var(--critical); background: color-mix(in srgb, var(--critical) 13%, white); }
+
+  .flags { display: flex; flex-direction: column; }
+  .flags .f { display: grid; grid-template-columns: 11px 1fr auto auto; gap: 6px; align-items: center; font-size: 10px; padding: 4px 0; border-bottom: 1px solid var(--grid); }
+  .flags .f:last-child { border-bottom: 0; }
+  .flags .f .n { font-weight: 650; font-variant-numeric: tabular-nums; font-size: 11.5px; }
+  .flags .f .mo { font-size: 8.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; min-width: 40px; text-align: right; }
+  .flags .f .t { color: var(--ink-2); }
+  .flags .f .t b { color: var(--ink-1); font-weight: 600; }
+  .flags .ico { font-size: 9px; text-align: center; }
+  .g-good .ico { color: var(--good); } .g-warning .ico { color: var(--warning); }
+  .g-serious .ico { color: var(--serious); } .g-critical .ico { color: var(--critical); }
+
+  .gapnote { font-size: 8.5px; color: var(--critical); font-weight: 600; margin-top: 4px; }
+
+  .ptabs { display: flex; gap: 2px; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 7px; align-items: center; }
+  .ptabs button {
+    appearance: none; border: 1px solid transparent; background: none; cursor: pointer; font: inherit;
+    font-size: 11px; font-weight: 550; color: var(--ink-muted); padding: 4px 12px; border-radius: 3px;
+  }
+  .ptabs button[aria-pressed="true"] { color: var(--ink-1); background: var(--chipbg); border-color: var(--border); }
+  .ptabs button:hover { color: var(--ink-1); }
+  .ptabs .hint { margin-left: auto; font-size: 9px; color: var(--ink-muted); }
+
+  .tt {
+    position: fixed; pointer-events: none; opacity: 0; transition: opacity .08s;
+    background: #143a63; color: #ffffff; font-size: 10.5px;
+    border: 1px solid #0d2743; box-shadow: 0 4px 14px rgba(11, 11, 11, 0.28);
+    padding: 5px 8px; border-radius: 4px; z-index: 80; max-width: 250px; white-space: normal; line-height: 1.4;
+  }
+
+  .c2 { grid-column: span 2 } .c3 { grid-column: span 3 } .c4 { grid-column: span 4 }
+  .c5 { grid-column: span 5 } .c6 { grid-column: span 6 } .c7 { grid-column: span 7 }
+  .c8 { grid-column: span 8 } .c12 { grid-column: span 12 }
+  .h1r { min-height: 96px } .h2r { min-height: 172px } .h3r { min-height: 208px }
+  @media (max-width: 1000px) {
+    .page.on { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    .c7, .c8, .c12 { grid-column: span 6 } .c5 { grid-column: span 4 }
+  }
+  @media (max-width: 620px) {
+    .page.on { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .c3, .c4, .c5, .c6, .c7, .c8, .c12 { grid-column: span 2 }
+  }
+
+  /* report-to-report navigation in the footer tab strip */
+  .ptabs a {
+    text-decoration: none; border: 1px solid transparent;
+    font-size: 11px; font-weight: 550; color: var(--ink-muted); padding: 4px 12px; border-radius: 3px;
+  }
+  .ptabs a:hover { color: var(--ink-1); }
+  .ptabs a[aria-current="page"] { color: var(--ink-1); background: var(--chipbg); border-color: var(--border); }
+</style>
+<!-- shared:css:end -->
+
+<div class="root">
+  <div class="rpthead">
+    <h1>CDPHP &mdash; payer report</h1>
+    <span class="mock">&#9888; <b>Prototype only.</b> The real report will be built in Power BI, so the finished thing follows whatever Power BI allows. This is here to agree the metrics.</span>
+    <div class="slicers">
+      <span class="lbl">Report</span>
+      <span class="sl">Program: All</span>
+      <span class="sl">Rolling 12 months</span>
+    </div>
+  </div>
+
+  <div class="page on" id="pg-cdphp">
+    <!-- ============ POPULATION AND ENGAGEMENT ============ -->
+
+    <div class="v kpi c2 h1r">
+      <div class="vh"><h4>Members served</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><button class="i" data-tip="Power BI: card + line. All-time distinct members with a completed DI who have ever been a CDPHP member — the payer slicer sets the &quot;ever&quot; qualifier, it does not filter to current coverage. The line is new members per month.">ⓘ</button></div>
+      </div>
+      <div class="body">
+        <div class="big">18,420</div>
+        <div class="sub">+412 in August</div>
+        <div class="spark ch" id="k-served"></div>
+      </div>
+    </div>
+
+    <div class="v kpi c2 h1r">
+      <div class="vh"><h4>Engaged members</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">60-day lookback</span><button class="i" data-tip="Power BI: KPI + line. The chip switches between the 60-day billing lookback and a strict in-month count — the two differ by roughly 8%.">ⓘ</button></div>
+      </div>
+      <div class="body">
+        <div class="big">5,740</div>
+        <div class="sub"><span class="down">▾ 3.1%</span> vs July</div>
+        <div class="spark ch" id="k-engaged"></div>
+      </div>
+    </div>
+
+    <div class="v c5 h2r">
+      <div class="vh"><h4>Engaged members &mdash; two definitions side by side</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart. Both series count members, so one axis. The 60-day lookback is the billing definition; strictly in-month counts only members with a service dated inside the month. Showing both is the point &mdash; the gap is the size of the definition problem.">&#9432;</button></div>
+      </div>
+      <p class="info">The two definitions are not reconcilable after the fact, so the report carries both until one is agreed. The gap runs 7&ndash;9% of the engaged count.</p>
+      <div class="body"><div class="ch" id="x-eng2"></div>
+        <div class="lg"><span><i style="background:var(--s1)"></i>60-day billing lookback</span><span><i style="background:var(--s2)"></i>Strictly in-month</span></div>
+      </div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Retained members</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">60-day lookback</span><button class="i" data-tip="Power BI: clustered column chart. Retained = engaged this month and engaged in the prior month. Both series are member counts, so one axis. The retention rate is the ratio of the two bars and is in the tooltip, not on a second axis.">&#9432;</button></div>
+      </div>
+      <p class="info">Retention inherits whichever engagement definition is selected. Under the strict in-month rule the retained count drops with it.</p>
+      <div class="body"><div class="ch" id="x-ret"></div>
+        <div class="lg"><span><i style="background:var(--s1)"></i>Engaged</span><span><i style="background:var(--s2)"></i>Retained from prior month</span></div>
+      </div>
+    </div>
+
+    <div class="v c5 h2r">
+      <div class="vh"><h4>Members in care by tenure</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Acuity: all</span><button class="i" data-tip="Power BI: stacked column chart. Tenure mix month over month — the growing 365d+ band is the 'lifers' question in one picture.">ⓘ</button></div>
+      </div>
+      <div class="body"><div class="ch" id="c-tenure"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>0–90d</span><span><i style="background:var(--s2)"></i>91–180d</span>
+          <span><i style="background:var(--s3)"></i>181–365d</span><span><i style="background:var(--s4)"></i>365d+</span>
+        </div>
+        <div class="gapnote">⚠ Blocked: needs an episode-of-care definition — days in care currently run through inactivation.</div>
+      </div>
+    </div>
+
+    <div class="v c3 h2r">
+      <div class="vh"><h4>Payer contracts and credentialing</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart. Contracted = a signed payer agreement. Credentialed = the medical group is enrolled and can bill that payer. A payer can be contracted without being billable yet, which is the gap this visual exists to show.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="x-payers"></div>
+        <div class="lg"><span><i style="background:var(--s1)"></i>Under contract</span><span><i style="background:var(--s2)"></i>Credentialed to bill</span></div>
+        <div class="gapnote">&#9888; Confirm whether &ldquo;licensed&rdquo; in the ask means payer credentialing or state licensure &mdash; they are different counts.</div>
+      </div>
+    </div>
+
+    <div class="v c5 h2r">
+      <div class="vh"><h4>Members with a medication management service</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Of: active members</span><button class="i" data-tip="Power BI: line chart, two series, both percentages of active members. Ever = at least one medication management service at any point. In month = at least one dated inside the month. This replaces the unverified 40% figure with a measured number.">&#9432;</button></div>
+      </div>
+      <p class="info">Replaces the 40% quoted in conversation, which is not sourced anywhere. The two readings differ by roughly three times, so the qualifier has to travel with the number.</p>
+      <div class="body"><div class="ch" id="x-medmgmt"></div>
+        <div class="lg"><span><i style="background:var(--s1)"></i>Ever</span><span><i style="background:var(--s2)"></i>In the month</span></div>
+      </div>
+    </div>
+
+    <!-- ============ ACCESS AND REFERRALS ============ -->
+
+    <div class="v c5 h1r">
+      <div class="vh"><h4>Referrals and members reaching first session</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: clustered column chart. Both measures share a unit, so one axis — do not add conversion % as a second axis here.">ⓘ</button></div>
+      </div>
+      <div class="body"><div class="ch" id="c-conv"></div>
+        <div class="lg"><span><i style="background:var(--s1)"></i>Referrals created</span><span><i style="background:var(--s2)"></i>Reached first session</span></div>
+      </div>
+    </div>
+
+    <div class="v c3 h1r">
+      <div class="vh"><h4>Channel mix</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><button class="i" data-tip="Power BI: 100% stacked column chart. Share of referrals by channel each month — this is where the CDPHP-direct decline against self sign-up growth becomes visible.">ⓘ</button></div>
+      </div>
+      <div class="body"><div class="ch" id="c-mix"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Self sign-up</span><span><i style="background:var(--s2)"></i>PCP</span>
+          <span><i style="background:var(--s3)"></i>Health sys</span><span><i style="background:var(--s4)"></i>Plans</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Access by referral channel</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Put month on columns for a trended view.">ⓘ</button></div>
+      </div>
+      <div class="body" id="c-mx-chan"></div>
+    </div>
+
+    <div class="v c5 h3r">
+      <div class="vh"><h4>Self sign-up by how they heard about us</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Source is the member's own answer at registration, so it is self-reported and optional - the unanswered row is kept visible rather than hidden.">&#9432;</button></div>
+      </div>
+      <div class="body" id="x-selfsrc"></div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>CDPHP-direct referral volume</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart. Referrals where CDPHP itself is the referrer, as opposed to a CDPHP member arriving through another channel. The decline is the trend worth the conversation.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="x-cdphpvol"></div></div>
+    </div>
+
+    <div class="v c5 h3r">
+      <div class="vh"><h4>CDPHP-direct referrers</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Who inside CDPHP is actually sending members, with the acuity 4 share so volume is not read without severity.">&#9432;</button></div>
+      </div>
+      <div class="body" id="x-cdphpref"></div>
+    </div>
+
+    <div class="v c5 h2r">
+      <div class="vh"><h4>Channel mix &mdash; CDPHP vs comparable payer</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with conditional formatting. Two payers of similar size side by side. Shares are within-payer, so each column sums to 100% and the delta column is what to read.">&#9432;</button></div>
+      </div>
+      <div class="body" id="x-paymix"></div>
+    </div>
+
+    <div class="v c5 h2r">
+      <div class="vh"><h4>Conversion to first session by copay cohort</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Stage: first session</span><button class="i" data-tip="Power BI: line chart, two series. Cohorts split on the copay returned by the eligibility check. The stage chip walks the whole path the ask names — registration complete, DI attended, first session — one stage at a time, because three stages times two cohorts is six lines and unreadable.">ⓘ</button></div>
+      </div>
+      <div class="body"><div class="ch" id="c-copay"></div>
+        <div class="lg"><span><i style="background:var(--s1)"></i>$0 copay</span><span><i style="background:var(--s2)"></i>Copay &gt; $0</span></div>
+      </div>
+    </div>
+
+    <div class="v c5 h2r">
+      <div class="vh"><h4>Median sessions by copay cohort</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><button class="i" data-tip="Power BI: line chart, two series, same unit. Cohorts split on the copay returned by the eligibility check, the same split as the conversion visual, so the two can be read together.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="x-copaysess"></div>
+        <div class="lg"><span><i style="background:var(--s1)"></i>$0 copay</span><span><i style="background:var(--s2)"></i>Copay &gt; $0</span></div>
+      </div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Paywall exposure and conversion</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart. Both series are member counts, so one axis. The conversion rate is the ratio of the two bars and sits in the tooltip rather than on a second axis.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="x-paywall"></div>
+        <div class="lg"><span><i style="background:var(--s1)"></i>Saw the paywall</span><span><i style="background:var(--s2)"></i>Booked after seeing it</span></div>
+      </div>
+    </div>
+
+    <!-- ============ URGENCY AND TIME TO CARE ============ -->
+
+    <div class="v kpi c2 h2r">
+      <div class="vh"><h4>Urgent seen &le; 7 days</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><button class="i" data-tip="Power BI: KPI + line. Share of urgent referrals with a completed DI within 7 days. 126 urgent referrals in August, 16% of all volume.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big">81<small>%</small></div>
+        <div class="sub"><span class="up">&#9652; 6pp</span> vs July</div>
+        <div class="spark ch" id="u-7d"></div>
+      </div>
+    </div>
+
+    <div class="v c5 h2r">
+      <div class="vh"><h4>Median days to first appointment &mdash; urgent vs routine</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Milestone: DI attended</span><button class="i" data-tip="Power BI: line chart, two series, with a constant line at 7 days. The milestone chip switches between DI scheduled, DI attended and first therapy session.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="u-days"></div>
+        <div class="lg"><span><i style="background:var(--s2)"></i>Urgent</span><span><i style="background:var(--s1)"></i>Routine</span></div>
+      </div>
+    </div>
+
+    <div class="v c7 h3r">
+      <div class="vh"><h4>Urgent referrals &mdash; time to care by reason</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Volume, median days to DI attended, and the share seen within 7 days, per urgent reason.">&#9432;</button></div>
+      </div>
+      <p class="info">Reason is the referrer&rsquo;s stated cause of admission. Post-discharge follow-up carries a contractual 7-day standard; the rest are clinical priority, not contractual.</p>
+      <div class="body" id="u-mx"></div>
+    </div>
+
+    <div class="v c5 h3r">
+      <div class="vh"><h4>Median days to care by reason</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: clustered bar chart with a constant line at 7 days. Sorted slowest first so the outlier reason is always at the top.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="u-bars"></div>
+        <div class="lg"><span>Black rule = 7-day follow-up standard</span></div>
+      </div>
+    </div>
+
+    <!-- ============ DISCHARGE FOLLOW-UP AND ACUITY ============ -->
+
+    <div class="v c8 h3r">
+      <div class="vh"><h4>Acuity 4 by referral channel and admission source</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Exists to test the claim that acuity 4 is mostly hospital and ED discharges. Admission source is the referrer's stated origin, not a derived field.">&#9432;</button></div>
+      </div>
+      <p class="info">On this month the claim only half holds: inpatient and ED together are under half of acuity 4, and self sign-up carries more high-acuity volume than expected.</p>
+      <div class="body" id="x-ac4mx"></div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Post-discharge members reached</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Within 7 days</span><button class="i" data-tip="Power BI: clustered column with a constant line for target. Share of members with a known discharge who had a two-way contact inside the window. The chip switches the window (7 / 14 / 30 days) and moves the target with it.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="x-pdout"></div>
+        <div class="gapnote">&#9888; Denominator depends on how we learn about a discharge &mdash; payer feed, referrer notification or member self-report. Each gives a different population.</div>
+      </div>
+    </div>
+
+    <div class="v c6 h2r">
+      <div class="vh"><h4>FUM and FUH &mdash; HEDIS follow-up</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">30-day</span><button class="i" data-tip="Power BI: line chart, two series, both percentages, with a constant line at the HEDIS threshold. Measured the HEDIS way: discharge date to the date of a completed visit. The chip switches between the 7-day and 30-day numerator.">&#9432;</button></div>
+      </div>
+      <p class="info">FUM is follow-up after an ED visit for mental illness; FUH is follow-up after hospitalisation. Both use the completed-visit date, not the booking date.</p>
+      <div class="body"><div class="ch" id="x-fum"></div>
+        <div class="lg"><span><i style="background:var(--s1)"></i>FUH</span><span><i style="background:var(--s2)"></i>FUM</span></div>
+      </div>
+    </div>
+
+    <div class="v c6 h2r">
+      <div class="vh"><h4>Acuity 4 criteria &mdash; appendix</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><button class="i" data-tip="Not a visual. This is the criteria list to send as an attachment alongside the report, kept here so the definition travels with the numbers instead of living in an email.">&#9432;</button></div>
+      </div>
+      <p class="info">Send as an attachment with any acuity figure. A member meets acuity 4 on any one of these.</p>
+      <div class="body">
+        <ol class="appx">
+          <li>Discharge from inpatient behavioural health or an ED behavioural health presentation in the last 30 days</li>
+          <li>Active suicidal ideation, a plan, or self-harm within the last 30 days</li>
+          <li>PHQ-9 of 20 or above, or GAD-7 of 15 or above, at intake</li>
+          <li>Two or more behavioural health crisis contacts in the last 90 days</li>
+          <li>Co-occurring substance use requiring concurrent treatment</li>
+          <li>Clinician override with a documented reason</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- ============ INTAKE ============ -->
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Intake providers covering ages 5&ndash;17</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Of: intake providers</span><button class="i" data-tip="Power BI: clustered column with a constant line for target. Share of intake-capable providers whose configured age range covers the full 5-17 band. A provider covering 13-17 only does not count here.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="x-agecov"></div></div>
+    </div>
+
+    <div class="v c3 h2r">
+      <div class="vh"><h4>Adolescent DIs booked outside the age range</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart. A diagnostic interview for a member under 18 booked with a provider whose configured age range does not cover that age. Every one of these is a booking the matching rules should have prevented.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="x-agemis"></div>
+        <div class="gapnote">&#9888; Assumes the booking stores the provider age range as configured at booking time, not as configured today.</div>
+      </div>
+    </div>
+
+    <div class="v c5 h2r">
+      <div class="vh"><h4>Diagnostic interviews &mdash; first-time vs repeat</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart. Both series are DI counts, so one axis. Repeat means a member who had a completed DI before this one.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="x-direpeat"></div>
+        <div class="lg"><span><i style="background:var(--s1)"></i>First-time</span><span><i style="background:var(--s2)"></i>Repeat</span></div>
+        <div class="gapnote">&#9888; &ldquo;Repeat&rdquo; is not defined on our side. The only written rules are the annual re-assessment for returning members and A5R every 90 days.</div>
+      </div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Assessment instrument reference</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Current version</span><button class="i" data-tip="Power BI: matrix. A snapshot, not a trend - question counts change only when the instrument is re-versioned, and the chip carries the version. Counts are what is live in the platform today.">&#9432;</button></div>
+      </div>
+      <p class="info">Counted in the platform, current version. Conditional questions only appear on a qualifying answer, so a member rarely sees the full count.</p>
+      <div class="body" id="x-a5"></div>
+    </div>
+
+    <!-- ============ ENGAGEMENT DEPTH AND OUTCOMES ============ -->
+
+    <div class="v c5 h2r">
+      <div class="vh"><h4>Sessions per member &mdash; mean and median</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Of: members in care</span><button class="i" data-tip="Power BI: line chart, two series, same unit. Mean and median are shown together because the mean is dragged up by long-tenure members - the gap between the two lines is the skew.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="x-sess"></div>
+        <div class="lg"><span><i style="background:var(--s1)"></i>Mean</span><span><i style="background:var(--s2)"></i>Median</span></div>
+      </div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Median length of active care</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Cut-off: 60 idle days</span><button class="i" data-tip="Power BI: line chart, one series, in days. Active care runs from first session to the last session before the cut-off. The chip switches the idle cut-off (30 / 60 / 90 days), which is what decides when care is treated as ended.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="x-loc"></div>
+        <div class="gapnote">&#9888; Blocked on the same episode-of-care definition as the tenure visual. Today length of care runs through to inactivation, which overstates it.</div>
+      </div>
+    </div>
+
+    <div class="v c3 h2r">
+      <div class="vh"><h4>2+ BH sessions in first 60 days</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><button class="i" data-tip="Power BI: clustered column with a constant line for target. Share of members whose first 60 days after admission contain at least two behavioural health sessions. The cohort is dated by admission, so the last two months are still filling.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="x-2in60"></div></div>
+    </div>
+
+    <div class="v c3 h2r">
+      <div class="vh"><h4>Outcomes</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Baseline ≥9</span><button class="i" data-tip="Power BI: small multiples (area). HEDIS starts these measures at a baseline score of 9 — the chip toggles that filter.">ⓘ</button></div>
+      </div>
+      <div class="body" id="c-sm-out"></div>
+    </div>
+
+    <div class="v c6 h2r">
+      <div class="vh"><h4>Median days to 50% reduction &mdash; PHQ-9 and GAD-7</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><button class="i" data-tip="Power BI: line chart, four series, all in days. Both instruments are shown with the HEDIS baseline filter on and off, because the filter changes the population and therefore the answer. Series order follows the fixed categorical palette.">&#9432;</button></div>
+      </div>
+      <p class="info">Dropping the baseline filter pulls in mild presentations that reach 50% quickly, which shortens the median by roughly two weeks. Neither reading is wrong; they answer different questions.</p>
+      <div class="body"><div class="ch" id="x-50pct"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>PHQ-9, baseline &ge;9</span><span><i style="background:var(--s2)"></i>PHQ-9, all baselines</span>
+          <span><i style="background:var(--s3)"></i>GAD-7, baseline &ge;9</span><span><i style="background:var(--s4)"></i>GAD-7, all baselines</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c3 h2r">
+      <div class="vh"><h4>Active members with a current PHQ-9 or GAD-7</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Scored within 30 days</span><span class="wf">Of: active members</span><button class="i" data-tip="Power BI: clustered column with a constant line for target. Numerator: active members with at least one PHQ-9 or GAD-7 recorded in the trailing 30 days. Denominator: all active members that month. The 30-day chip switches the window (30 / 60 / 90 days) &mdash; it changes the definition, not just the filter, so the target moves with it.">ⓘ</button></div>
+      </div>
+      <p class="info">Scores are captured at a visit, so this tracks how recently members were seen, not clinician compliance. Members between visits cannot have a fresh score, which is why the line sits below 100% by design.</p>
+      <div class="body"><div class="ch" id="c-cov"></div></div>
+    </div>
+
+    <div class="v c7 h3r">
+      <div class="vh"><h4>Where members drop out — inactivation by journey stage</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: 100% stacked column chart. Stage is derived from the furthest milestone reached before the inactivation date — registered only, assessed, DI attended, in care, or completed 90-day care.">ⓘ</button></div>
+      </div>
+      <p class="info">Answers whether members leave right after signing up or after finishing treatment. Only the last band is a good outcome; the first two are acquisition waste.</p>
+      <div class="body"><div class="ch" id="c-inact-stage"></div>
+        <div class="lg">
+          <span><i style="background:var(--s5)"></i>Registered, never assessed</span>
+          <span><i style="background:var(--s2)"></i>A5 done, no DI</span>
+          <span><i style="background:var(--s4)"></i>DI attended, no first session</span>
+          <span><i style="background:var(--s1)"></i>In care, left early</span>
+          <span><i style="background:var(--s3)"></i>Completed 90-day care</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c5 h3r">
+      <div class="vh"><h4>Days from registration to inactivation</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Stage: all</span><button class="i" data-tip="Power BI: clustered column chart used as a histogram (bucketed days as the axis). Buckets come from a DAX calculated column, not from the visual — Power BI cannot bin a measure.">ⓘ</button></div>
+      </div>
+      <p class="info">The 0–7 day spike is people who never really started. The 90–120 band is expected — that's the end of the 90-day programme.</p>
+      <div class="body"><div class="ch" id="c-inact-days"></div>
+        <div class="gapnote">⚠ Needs an inactivation reason field to separate lapsed from clinically discharged.</div>
+      </div>
+    </div>
+
+    <!-- ============ WORKFORCE ============ -->
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Medical group headcount by licence type</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><button class="i" data-tip="Power BI: small multiples (area). Seven licence types will not fit the five-colour categorical palette, so this is faceted rather than stacked - one panel per licence, each with its own monthly trend.">&#9432;</button></div>
+      </div>
+      <div class="body" id="x-lic"></div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Co-sign obligations and supervisor capacity</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart. Both series are headcounts, so one axis. Providers requiring co-sign are pre-independent clinicians; the supervisor count is active LCSWs actually carrying a co-sign panel, not everyone credentialed to supervise.">&#9432;</button></div>
+      </div>
+      <p class="info">The ratio between the two bars is the supervision load. It has roughly doubled over the year, which is what the co-sign queue depth is downstream of.</p>
+      <div class="body"><div class="ch" id="x-cosignreq"></div>
+        <div class="lg"><span><i style="background:var(--s1)"></i>Providers requiring co-sign</span><span><i style="background:var(--s2)"></i>Active LCSW supervisors</span></div>
+      </div>
+    </div>
+
+    <!-- ============ DOCUMENTATION QUALITY ============ -->
+
+    <div class="v kpi c2 h1r">
+      <div class="vh"><h4>Notes signed &lt; 24h</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">All note types</span><button class="i" data-tip="Power BI: KPI + line. Session end to signed note. The chip isolates guided session notes, which are 73% of all documentation.">ⓘ</button></div>
+      </div>
+      <div class="body">
+        <div class="big">68<small>%</small></div>
+        <div class="sub"><span class="up">▴ 4pp</span> vs July</div>
+        <div class="spark ch" id="k-24h"></div>
+      </div>
+    </div>
+
+    <div class="v c5 h1r">
+      <div class="vh"><h4>Note timeliness</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Supervisor: all</span><button class="i" data-tip="Power BI: 100% stacked column chart. Status colors always ship with labels, never color alone.">ⓘ</button></div>
+      </div>
+      <div class="body"><div class="ch" id="p-time"></div>
+        <div class="lg">
+          <span><i style="background:var(--good)"></i>&lt;24h</span><span><i style="background:var(--warning)"></i>24–48h</span>
+          <span><i style="background:var(--serious)"></i>48–72h</span><span><i style="background:var(--critical)"></i>&gt;72h / unsigned</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Median time from session end to signed note</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">All note types</span><button class="i" data-tip="Power BI: line chart, one series, in hours, with a constant line at the 24-hour standard. The share-based view is the note timeliness visual; this is the median the share cannot show.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="x-notemed"></div>
+        <div class="gapnote">&#9888; Depends on a session-end timestamp existing in the model. If only a session date is stored, this measure cannot be built as specified.</div>
+      </div>
+    </div>
+
+    <div class="v kpi c2 h2r">
+      <div class="vh"><h4>Co-sign queue</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Month end</span><button class="i" data-tip="Power BI: card + line. Notes are not billable until co-signed. The chip switches between month-end depth and monthly peak.">ⓘ</button></div>
+      </div>
+      <div class="body">
+        <div class="big">73</div>
+        <div class="sub">median 19h in queue</div>
+        <div class="spark ch" id="k-cosign"></div>
+      </div>
+    </div>
+
+    <div class="v c5 h3r">
+      <div class="vh"><h4>Co-sign rejections by reason</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Rejection rate alone does not tell a supervisor what to fix; the reason and the days it adds back to the queue do.">&#9432;</button></div>
+      </div>
+      <div class="body" id="x-rejmx"></div>
+    </div>
+
+    <div class="v c8 h2r">
+      <div class="vh"><h4>Documentation and quality by supervisor group</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. PHQ-9 delta is acuity-adjusted — publishing it raw is how the report loses clinician trust on day one.">ⓘ</button></div>
+      </div>
+      <div class="body" id="p-mx"></div>
+    </div>
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Golden Thread completeness</h4><span class="ask">CDPHP asked</span>
+        <div class="vf"><button class="i" data-tip="Power BI: small multiples (area). One panel per required element rather than a stacked bar, because the question is which element is missing, not what the blended score is. A note counts as complete only when all four are present.">&#9432;</button></div>
+      </div>
+      <div class="body" id="x-gt"></div>
+    </div>
+  </div>
+
+  <div class="ptabs" role="group" aria-label="Reports">
+    <a href="../internal/patient-journey.html">Patient journey</a>
+    <a href="../internal/provider-journey.html">Provider journey</a>
+    <a href="../external/cdphp.html" aria-current="page">CDPHP payer report</a>
+    <span class="hint">Every measure is monthly. Every visual here answers a statistic CDPHP asked for. Hover &#9432; for the Power BI visual type.</span>
+  </div>
+
+  <div class="dd" id="dd" role="listbox"></div>
+  <div class="tt" id="tt"></div>
+</div>
+
+<!-- shared:js:start -->
+<script>
+/* Shared chart builders and page behaviour for every report in this repo.
+   Loaded by each report page; the report then calls APTI.render() with its own data.
+   Changing a builder here changes every report — that is the point of the file. */
+(function (g) {
+  var MO = ["Sep","Oct","Nov","Dec","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug"];
+  var NS = "http://www.w3.org/2000/svg";
+
+  function el(t, a) { var e = document.createElementNS(NS, t); for (var k in a) e.setAttribute(k, a[k]); return e; }
+  function svg(w, h) { var s = el("svg", { viewBox: "0 0 " + w + " " + h }); s.style.height = h + "px"; return s; }
+  function txt(s, x, y, o) {
+    o = o || {};
+    var t = el("text", { x: x, y: y, "font-size": o.fs || 8, fill: o.fill || "var(--ink-muted)",
+      "text-anchor": o.anchor || "start", "font-weight": o.w || 400 });
+    t.textContent = s; return t;
+  }
+  function tip(n, s) { n.setAttribute("data-tip", s); }
+
+  function columns(id, opt) {
+    var host = document.getElementById(id); if (!host) return;
+    var W = Math.max(host.clientWidth || 460, 240), H = opt.h || 80;
+    var pl = opt.pl == null ? 24 : opt.pl, pb = opt.pb || 12, pt = 9, s = svg(W, H);
+    var max = opt.max;
+    if (!max) {
+      if (opt.stacked && !opt.pct) {
+        max = 0;
+        for (var q = 0; q < opt.labels.length; q++) {
+          var tt2 = opt.series.reduce(function (a, sr) { return a + sr.values[q]; }, 0);
+          if (tt2 > max) max = tt2;
+        }
+        max = max * 1.1;
+      } else {
+        max = Math.max.apply(null, [].concat.apply([], opt.series.map(function (x) { return x.values; }))) * 1.15;
+      }
+    }
+    var n = opt.labels.length, bw = (W - pl - 4) / n;
+    [0, 0.5, 1].forEach(function (f) {
+      var y = pt + (H - pt - pb) * (1 - f);
+      s.appendChild(el("line", { x1: pl, x2: W, y1: y, y2: y, stroke: "var(--grid)" }));
+      s.appendChild(txt(opt.fmt ? opt.fmt(max * f) : Math.round(max * f), pl - 4, y + 3, { anchor: "end" }));
+    });
+    opt.labels.forEach(function (lb, i) {
+      var x0 = pl + i * bw;
+      if (opt.stacked) {
+        var acc = 0, tot = opt.series.reduce(function (a, sr) { return a + sr.values[i]; }, 0);
+        opt.series.forEach(function (sr) {
+          var v = sr.values[i], hh = (H - pt - pb) * (v / (opt.pct ? tot : max));
+          var r = el("rect", { x: x0 + bw * 0.18, y: H - pb - acc - hh, width: bw * 0.64,
+            height: Math.max(hh - 2, 1), rx: 2, fill: sr.color });
+          tip(r, lb + " · " + sr.name + ": " + v + (opt.unit || ""));
+          s.appendChild(r); acc += hh;
+        });
+      } else {
+        var k = opt.series.length, iw = (bw * 0.72) / k;
+        opt.series.forEach(function (sr, j) {
+          var v = sr.values[i], hh = (H - pt - pb) * (v / max);
+          var r = el("rect", { x: x0 + bw * 0.14 + j * (iw + 1), y: H - pb - hh, width: iw - 1,
+            height: Math.max(hh, 1), rx: 2, fill: sr.color });
+          tip(r, lb + " · " + sr.name + ": " + v + (opt.unit || ""));
+          s.appendChild(r);
+        });
+      }
+      var lab = txt(lb, x0 + bw / 2, H - 3, { anchor: "middle", fs: opt.xfs || 8 });
+      s.appendChild(lab);
+    });
+    if (opt.rule != null) {
+      var ry = pt + (H - pt - pb) * (1 - opt.rule / max);
+      s.appendChild(el("line", { x1: pl, x2: W, y1: ry, y2: ry, stroke: "var(--ink-1)", "stroke-width": 1.6, "stroke-dasharray": "4 3" }));
+      s.appendChild(txt(opt.ruleLabel || ("target " + opt.rule), W, ry - 3, { anchor: "end", fs: 8, fill: "var(--ink-1)", w: 650 }));
+    }
+    s.appendChild(el("line", { x1: pl, x2: W, y1: H - pb, y2: H - pb, stroke: "var(--baseline)" }));
+    host.appendChild(s);
+  }
+
+  function lines(id, opt) {
+    var host = document.getElementById(id); if (!host) return;
+    var W = Math.max(host.clientWidth || 460, 260), H = opt.h || 84, pl = 24, pb = 12, pt = 8, s = svg(W, H);
+    var max = opt.max || 100, n = opt.labels.length, step = (W - pl - 40) / (n - 1);
+    var U = opt.unit == null ? "%" : opt.unit;
+    [0, 0.5, 1].forEach(function (f) {
+      var y = pt + (H - pt - pb) * (1 - f);
+      s.appendChild(el("line", { x1: pl, x2: W - 34, y1: y, y2: y, stroke: "var(--grid)" }));
+      s.appendChild(txt(Math.round(max * f) + U, pl - 4, y + 3, { anchor: "end" }));
+    });
+    if (opt.rule != null) {
+      var ry = pt + (H - pt - pb) * (1 - opt.rule / max);
+      s.appendChild(el("line", { x1: pl, x2: W - 34, y1: ry, y2: ry, stroke: "var(--ink-1)", "stroke-width": 1.6, "stroke-dasharray": "4 3" }));
+      s.appendChild(txt(opt.ruleLabel || "", pl + 3, ry + 9, { anchor: "start", fs: 8, fill: "var(--ink-1)", w: 650 }));
+    }
+    opt.series.forEach(function (sr) {
+      var pts = sr.values.map(function (v, i) { return [pl + i * step, pt + (H - pt - pb) * (1 - v / max)]; });
+      s.appendChild(el("path", { d: "M" + pts.map(function (p) { return p[0] + "," + p[1]; }).join("L"),
+        fill: "none", stroke: sr.color, "stroke-width": 2, "stroke-linejoin": "round" }));
+      pts.forEach(function (p, i) {
+        var c = el("circle", { cx: p[0], cy: p[1], r: 2.8, fill: sr.color, stroke: "#fff", "stroke-width": 1.6 });
+        tip(c, opt.labels[i] + " · " + sr.name + ": " + sr.values[i] + U); s.appendChild(c);
+      });
+      var lp = pts[pts.length - 1];
+      s.appendChild(txt(sr.values[sr.values.length - 1] + U, lp[0] + 5, lp[1] + 3, { fs: 8.5, fill: "var(--ink-1)", w: 650 }));
+    });
+    opt.labels.forEach(function (lb, i) { s.appendChild(txt(lb, pl + i * step, H - 3, { anchor: "middle" })); });
+    s.appendChild(el("line", { x1: pl, x2: W - 34, y1: H - pb, y2: H - pb, stroke: "var(--baseline)" }));
+    host.appendChild(s);
+  }
+
+  function bars(id, opt) {
+    var host = document.getElementById(id); if (!host) return;
+    var rows = opt.rows, lw = opt.lw || 88, rh = opt.rh || 18;
+    var W = Math.max(host.clientWidth || 320, 240), H = rows.length * rh + 6, s = svg(W, H);
+    var max = opt.max || Math.max.apply(null, rows.map(function (r) { return Math.max(r.value, r.target || 0); })) * 1.18;
+    var aw = W - lw - 44;
+    if (opt.rule != null) {
+      var rx = lw + aw * (opt.rule / max);
+      s.appendChild(el("line", { x1: rx, x2: rx, y1: 0, y2: H - 2, stroke: "var(--ink-1)", "stroke-width": 1.6 }));
+    }
+    rows.forEach(function (r, i) {
+      var y = i * rh + 3, bh = rh - 8;
+      s.appendChild(txt(r.label, 0, y + bh - 1, { fill: "var(--ink-2)", fs: 8.5 }));
+      s.appendChild(el("rect", { x: lw, y: y, width: aw, height: bh, rx: 2, fill: "var(--track)" }));
+      var b = el("rect", { x: lw, y: y, width: Math.max(aw * (r.value / max), 1), height: bh, rx: 2, fill: r.color || "var(--s1)" });
+      tip(b, r.label + ": " + (r.fmt || r.value)); s.appendChild(b);
+      if (r.target) {
+        var tx = lw + aw * (r.target / max);
+        s.appendChild(el("line", { x1: tx, x2: tx, y1: y - 1, y2: y + bh + 1, stroke: "var(--ink-1)", "stroke-width": 2 }));
+      }
+      s.appendChild(txt(r.fmt || r.value, W, y + bh - 1, { anchor: "end", fill: "var(--ink-1)", fs: 8.5, w: 650 }));
+    });
+    host.appendChild(s);
+  }
+
+  function funnel(id, rows) {
+    var host = document.getElementById(id); if (!host) return;
+    var rh = 17, W = Math.max(host.clientWidth || 400, 260), H = rows.length * rh + 4, s = svg(W, H);
+    var lw = 126, max = rows[0].value;
+    rows.forEach(function (r, i) {
+      var y = i * rh + 2, bh = rh - 6, aw = W - lw - 74;
+      s.appendChild(txt(r.label, 0, y + bh - 1, { fill: r.leak ? "var(--critical)" : "var(--ink-2)", fs: 8.5 }));
+      s.appendChild(el("rect", { x: lw, y: y, width: aw, height: bh, rx: 2, fill: "var(--track)" }));
+      var b = el("rect", { x: lw, y: y, width: Math.max(aw * (r.value / max), 1), height: bh, rx: 2, fill: "var(--s1)" });
+      tip(b, r.label + ": " + r.value.toLocaleString() + (r.conv ? " · " + r.conv + " of prior stage" : "") + (r.leakTxt ? " · leak: " + r.leakTxt : ""));
+      s.appendChild(b);
+      s.appendChild(txt(r.value.toLocaleString(), W - 34, y + bh - 1, { anchor: "end", fill: "var(--ink-1)", fs: 8.5, w: 650 }));
+      s.appendChild(txt(r.conv || "—", W, y + bh - 1, { anchor: "end", fs: 8.5 }));
+    });
+    host.appendChild(s);
+  }
+
+  function spark(id, vals, color, unit) {
+    var host = document.getElementById(id); if (!host) return;
+    var W = Math.max(host.clientWidth || 120, 80), H = 22, s = svg(W, H);
+    var max = Math.max.apply(null, vals) * 1.05, min = Math.min.apply(null, vals) * 0.95;
+    var step = W / (vals.length - 1);
+    var pts = vals.map(function (v, i) { return [i * step, H - (H - 3) * ((v - min) / (max - min || 1)) - 1.5]; });
+    var d = "M" + pts.map(function (p) { return p[0] + "," + p[1]; }).join("L");
+    s.appendChild(el("path", { d: d + "L" + W + "," + H + "L0," + H + "Z", fill: color, opacity: 0.13 }));
+    s.appendChild(el("path", { d: d, fill: "none", stroke: color, "stroke-width": 1.8, "stroke-linejoin": "round" }));
+    var lp = pts[pts.length - 1];
+    s.appendChild(el("circle", { cx: lp[0] - 1, cy: lp[1], r: 2.2, fill: color }));
+    tip(s, "Monthly, Sep–Aug · latest " + vals[vals.length - 1] + (unit || ""));
+    host.appendChild(s);
+  }
+
+  function smallMultiples(id, items) {
+    var host = document.getElementById(id); if (!host) return;
+    items.forEach(function (it, ix) {
+      var wrap = document.createElement("div");
+      wrap.className = "sm2";
+      wrap.style.cssText = "border-bottom:1px solid var(--grid);padding:4px 0";
+      var row = document.createElement("div"); row.className = "row";
+      var l = document.createElement("div");
+      l.innerHTML = '<div class="big">' + it.value + '</div><div style="font-size:8.5px;color:var(--ink-2)">' + it.label + '</div>';
+      var ch = document.createElement("div"); ch.style.cssText = "width:54%"; ch.id = id + "-sm" + ix;
+      row.appendChild(l); row.appendChild(ch); wrap.appendChild(row); host.appendChild(wrap);
+      spark(ch.id, it.spark, it.color, it.unit);
+    });
+    if (host.lastChild) host.lastChild.style.borderBottom = "0";
+  }
+
+  function matrix(id, cols, rows) {
+    var host = document.getElementById(id); if (!host) return;
+    var t = document.createElement("table"); t.className = "mx";
+    var hr = document.createElement("tr");
+    cols.forEach(function (c) { var th = document.createElement("th"); th.textContent = c; hr.appendChild(th); });
+    t.appendChild(hr);
+    rows.forEach(function (r) {
+      var tr = document.createElement("tr");
+      r.forEach(function (c) {
+        var td = document.createElement("td");
+        if (c && c.bar != null) {
+          td.className = "b";
+          var b = document.createElement("div"); b.className = "bar"; b.style.width = "calc(" + c.bar + "% - 6px)";
+          var sp = document.createElement("span"); sp.textContent = c.v;
+          td.appendChild(b); td.appendChild(sp);
+        } else if (c && c.cf) {
+          var s2 = document.createElement("span"); s2.className = "cf " + c.cf; s2.textContent = c.v; td.appendChild(s2);
+        } else if (c && c.v != null) { td.textContent = c.v; }
+        else { td.textContent = c; }
+        tr.appendChild(td);
+      });
+      t.appendChild(tr);
+    });
+    host.appendChild(t);
+  }
+
+  /* Charts size themselves from host.clientWidth, so every page is made visible
+     for the duration of the draw and then hidden again. A hidden page measures
+     as zero width and the charts render at a fallback size. Do not remove this. */
+  function render(draw) {
+    var pages = Array.prototype.slice.call(document.querySelectorAll(".page"));
+    pages.forEach(function (p) { p.classList.add("on"); });
+    draw();
+    pages.forEach(function (p, i) { p.classList.toggle("on", i === 0); });
+    wire();
+  }
+
+  function wire() {
+
+  btns.forEach(function (b) {
+    b.addEventListener("click", function () {
+      btns.forEach(function (o) {
+        var on = o === b;
+        o.setAttribute("aria-pressed", on ? "true" : "false");
+        document.getElementById(o.dataset.pg).classList.toggle("on", on);
+      });
+    });
+  });
+
+  /* ---- slicer / visual-filter dropdowns (mock: they open and set the label, nothing filters) ---- */
+  var MONTHS = ["Aug 2026", "Jul 2026", "Jun 2026", "May 2026", "Apr 2026", "Q3 2026", "Rolling 3 months"];
+  var CHANNELS = ["Channel: all", "Channel: self sign-up", "Channel: PCP practices", "Channel: health systems", "Channel: health plans"];
+  var ACUITY = ["Acuity: all", "Acuity: severe", "Acuity: high", "Acuity: medium", "Acuity: base"];
+  var SUPS = ["Supervisor: all", "Supervisor A", "Supervisor B", "Supervisor C"];
+
+  var OPTIONS = {
+    /* report-level slicers */
+    "Payer: CDPHP": { head: "Payer", opts: ["Payer: CDPHP", "Payer: MVP", "Payer: Fidelis", "Payer: Medicaid FFS", "Payer: all"] },
+    "Program: All": { head: "Program", opts: ["Program: All", "Program: Therapy only", "Program: Medication management", "Program: Combined", "Program: Higher level of care"] },
+    "Rolling 12 months": { head: "Period", opts: ["Rolling 12 months", "Rolling 6 months", "Rolling 3 months", "Year to date", "Calendar 2025"] },
+    /* visual-level filters */
+    "Aug 2026": { head: "Month", opts: MONTHS },
+    "Channel: all": { head: "Referral channel", opts: CHANNELS },
+    "Acuity: all": { head: "Acuity", opts: ACUITY },
+    "Acuity: severe": { head: "Acuity", opts: ACUITY },
+    "Supervisor: all": { head: "Supervisor", opts: SUPS },
+    "Baseline \u22659": { head: "HEDIS baseline", opts: ["Baseline \u22659", "Baseline \u22655", "Baseline: any score"] },
+    "Stage: first session": { head: "Conversion stage", opts: ["Stage: registration complete", "Stage: DI attended", "Stage: first session"] },
+    "Stage: all": { head: "Journey stage", opts: ["Stage: all", "Stage: registered, never assessed", "Stage: A5 done, no DI", "Stage: DI attended, no first session", "Stage: in care, left early", "Stage: completed 90-day care"] },
+    "Scored within 30 days": { head: "Scoring window", opts: ["Scored within 30 days", "Scored within 60 days", "Scored within 90 days"] },
+    "Of: active members": { head: "Denominator", opts: ["Of: active members", "Of: all enrolled members", "Of: members with \u22651 session"] },
+    "Milestone: DI attended": { head: "Milestone", opts: ["Milestone: DI scheduled", "Milestone: DI attended", "Milestone: first therapy session"] },
+    "Top 4 + other": { head: "Reason grouping", opts: ["Top 4 + other", "Top 6 + other", "All reasons"] },
+    "Top 5": { head: "Rows shown", opts: ["Top 5", "Top 10", "Top 20", "All providers"] },
+    "60-day lookback": { head: "Engagement definition", opts: ["60-day lookback", "90-day lookback", "In-month only"] },
+    "All note types": { head: "Note type", opts: ["All note types", "Guided session notes", "Progress notes", "Intake (DI) notes", "Discharge summaries"] },
+    "Note type: all": { head: "Note type", opts: ["Note type: all", "Note type: guided session", "Note type: progress", "Note type: intake (DI)", "Note type: discharge summary"] },
+    "Month end": { head: "Measured at", opts: ["Month end", "Monthly peak", "Monthly average"] }
+  };
+
+  var dd = document.getElementById("dd"), ddFor = null;
+
+  function closeDD() {
+    dd.classList.remove("on");
+    if (ddFor) { ddFor.removeAttribute("data-open"); ddFor = null; }
+  }
+
+  function openDD(chip) {
+    var cur = chip.textContent.trim();
+    var cfg = OPTIONS[cur] || { head: "Filter", opts: [cur] };
+    dd.innerHTML = "";
+    var h = document.createElement("div"); h.className = "ddh"; h.textContent = cfg.head; dd.appendChild(h);
+    cfg.opts.forEach(function (o) {
+      var b = document.createElement("button");
+      b.type = "button"; b.setAttribute("role", "option");
+      b.setAttribute("aria-checked", o === cur ? "true" : "false");
+      var k = document.createElement("span"); k.className = "tick"; k.textContent = o === cur ? "\u2713" : "";
+      b.appendChild(k);
+      b.appendChild(document.createTextNode(o));
+      b.addEventListener("click", function (ev) {
+        ev.stopPropagation();
+        chip.textContent = o;   /* label only — this mock does not re-query anything */
+        closeDD();
+      });
+      dd.appendChild(b);
+    });
+    dd.classList.add("on");
+    chip.setAttribute("data-open", "");
+    ddFor = chip;
+    var r = chip.getBoundingClientRect();
+    dd.style.left = Math.max(6, Math.min(r.left, window.innerWidth - dd.offsetWidth - 8)) + "px";
+    var below = window.innerHeight - r.bottom;
+    dd.style.top = (below > dd.offsetHeight + 10 ? r.bottom + 4 : Math.max(6, r.top - dd.offsetHeight - 4)) + "px";
+  }
+
+  document.addEventListener("click", function (e) {
+    var chip = e.target.closest(".sl, .wf");
+    if (chip) { e.stopPropagation(); if (chip === ddFor) closeDD(); else { closeDD(); openDD(chip); } return; }
+    if (!e.target.closest("#dd")) closeDD();
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeDD(); });
+  window.addEventListener("scroll", closeDD, true);
+  window.addEventListener("resize", closeDD);
+
+  var tt = document.getElementById("tt");
+  document.addEventListener("mouseover", function (e) {
+    var t = e.target.closest("[data-tip]"); if (!t) return;
+    tt.textContent = t.getAttribute("data-tip"); tt.style.opacity = "1";
+  });
+  document.addEventListener("mousemove", function (e) {
+    if (tt.style.opacity !== "1") return;
+    tt.style.left = Math.min(e.clientX + 13, window.innerWidth - tt.offsetWidth - 8) + "px";
+    tt.style.top = (e.clientY + 15) + "px";
+  });
+  document.addEventListener("mouseout", function (e) {
+    if (e.target.closest("[data-tip]")) tt.style.opacity = "0";
+  });
+  }
+
+  g.APTI = {
+    MO: MO, render: render,
+    columns: columns, lines: lines, bars: bars,
+    funnel: funnel, spark: spark, smallMultiples: smallMultiples, matrix: matrix
+  };
+})(window);
+</script>
+<!-- shared:js:end -->
+<script>
+APTI.render(function () {
+  var MO = APTI.MO, columns = APTI.columns, lines = APTI.lines, bars = APTI.bars,
+      funnel = APTI.funnel, spark = APTI.spark, smallMultiples = APTI.smallMultiples, matrix = APTI.matrix;
+
+
+  spark("k-served", [286, 301, 274, 262, 330, 348, 322, 361, 379, 366, 388, 412], "var(--s1)");
+  spark("k-engaged", [5180, 5240, 5190, 5090, 5410, 5520, 5480, 5610, 5680, 5720, 5924, 5740], "var(--s1)");
+
+  columns("x-eng2", {
+    labels: MO, h: 76, unit: " members",
+    series: [
+      { name: "60-day lookback", color: "var(--s1)", values: [5180, 5240, 5190, 5090, 5410, 5520, 5480, 5610, 5680, 5720, 5924, 5740] },
+      { name: "Strictly in-month", color: "var(--s2)", values: [4772, 4835, 4770, 4664, 4977, 5083, 5029, 5152, 5215, 5262, 5450, 5271] }
+    ],
+    fmt: function (v) { return (v / 1000).toFixed(1) + "k"; }
+  });
+
+  columns("x-ret", {
+    labels: MO, h: 76, unit: " members",
+    series: [
+      { name: "Engaged", color: "var(--s1)", values: [5180, 5240, 5190, 5090, 5410, 5520, 5480, 5610, 5680, 5720, 5924, 5740] },
+      { name: "Retained from prior month", color: "var(--s2)", values: [3782, 3877, 3841, 3716, 3949, 4085, 4110, 4207, 4317, 4347, 4502, 4420] }
+    ],
+    fmt: function (v) { return (v / 1000).toFixed(1) + "k"; }
+  });
+
+  columns("c-tenure", {
+    labels: MO, h: 66, stacked: true,
+    series: [
+      { name: "0–90d", color: "var(--s1)", values: [1740, 1768, 1702, 1660, 1790, 1822, 1798, 1840, 1866, 1852, 1874, 1880] },
+      { name: "91–180d", color: "var(--s2)", values: [1010, 1028, 1042, 1050, 1064, 1078, 1086, 1094, 1102, 1110, 1116, 1120] },
+      { name: "181–365d", color: "var(--s3)", values: [640, 656, 668, 678, 690, 700, 708, 716, 724, 732, 738, 742] },
+      { name: "365d+", color: "var(--s4)", values: [402, 418, 434, 449, 464, 478, 492, 506, 518, 530, 542, 551] }
+    ],
+    fmt: function (v) { return (v / 1000).toFixed(1) + "k"; }
+  });
+
+  columns("x-payers", {
+    labels: MO, h: 74, pl: 16, unit: " payers",
+    series: [
+      { name: "Under contract", color: "var(--s1)", values: [9, 9, 10, 10, 10, 11, 11, 11, 12, 12, 12, 13] },
+      { name: "Credentialed to bill", color: "var(--s2)", values: [7, 7, 7, 8, 8, 8, 9, 9, 9, 10, 10, 10] }
+    ]
+  });
+
+  lines("x-medmgmt", {
+    labels: MO, h: 80, max: 40,
+    series: [
+      { name: "Ever", color: "var(--s1)", values: [24, 25, 25, 26, 26, 27, 27, 28, 28, 29, 29, 30] },
+      { name: "In the month", color: "var(--s2)", values: [9, 9, 10, 9, 10, 10, 11, 11, 11, 11, 12, 12] }
+    ]
+  });
+
+  columns("c-conv", {
+    labels: MO, h: 56,
+    series: [
+      { name: "Referrals", color: "var(--s1)", values: [712, 740, 690, 655, 781, 802, 764, 799, 812, 786, 803, 781] },
+      { name: "Reached first session", color: "var(--s2)", values: [150, 163, 138, 124, 180, 192, 176, 200, 211, 197, 209, 195] }
+    ],
+    fmt: function (v) { return Math.round(v / 100) * 100; }
+  });
+
+  columns("c-mix", {
+    labels: MO, h: 52, stacked: true, pct: true, max: 100, pl: 20, unit: "%",
+    series: [
+      { name: "Self sign-up", color: "var(--s1)", values: [38, 40, 42, 43, 45, 46, 47, 48, 50, 51, 52, 53] },
+      { name: "PCP", color: "var(--s2)", values: [28, 27, 27, 26, 25, 25, 24, 24, 23, 23, 22, 22] },
+      { name: "Health systems", color: "var(--s3)", values: [19, 19, 18, 18, 18, 17, 17, 17, 16, 16, 16, 16] },
+      { name: "Plans", color: "var(--s4)", values: [15, 14, 13, 13, 12, 12, 12, 11, 11, 10, 10, 9] }
+    ],
+    fmt: function (v) { return Math.round(v) + "%"; }
+  });
+
+  matrix("c-mx-chan",
+    ["Channel", "Referrals", "→ DI", "Med. days"],
+    [
+      ["Self sign-up", { v: "414", bar: 100 }, { v: "31%", cf: "w" }, "9.4"],
+      ["PCP practices", { v: "172", bar: 42 }, { v: "38%", cf: "g" }, "7.1"],
+      ["Health systems", { v: "125", bar: 30 }, { v: "24%", cf: "c" }, "11.8"],
+      ["Health plans", { v: "70", bar: 17 }, { v: "22%", cf: "c" }, "12.6"],
+      ["Total", { v: "781", bar: 100 }, { v: "30%" }, "8.6"]
+    ]
+  );
+
+  matrix("x-selfsrc",
+    ["How they heard about us", "Members", "Share", "Acuity 4"],
+    [
+      ["Search engine", { v: "141", bar: 100 }, { v: "34%", cf: "g" }, "11%"],
+      ["Health plan mailing or portal", { v: "88", bar: 62 }, { v: "21%", cf: "g" }, "8%"],
+      ["Friend or family", { v: "62", bar: 44 }, { v: "15%", cf: "w" }, "9%"],
+      ["Employer or school", { v: "45", bar: 32 }, { v: "11%", cf: "w" }, "6%"],
+      ["Social media", { v: "31", bar: 22 }, { v: "7%", cf: "w" }, "14%"],
+      ["Not answered", { v: "47", bar: 33 }, { v: "11%", cf: "c" }, "12%"],
+      ["Total self sign-up", { v: "414", bar: 100 }, { v: "100%" }, "9%"]
+    ]
+  );
+
+  columns("x-cdphpvol", {
+    labels: MO, h: 74, pl: 18, unit: " referrals",
+    series: [{ name: "CDPHP-direct referrals", color: "var(--s4)", values: [107, 104, 90, 85, 94, 96, 92, 88, 89, 79, 80, 70] }]
+  });
+
+  matrix("x-cdphpref",
+    ["Referrer inside CDPHP", "Referrals", "Med. days to DI", "Acuity 4"],
+    [
+      ["Care management team", { v: "27", bar: 100 }, { v: "10.4", cf: "w" }, "31%"],
+      ["Utilisation review", { v: "16", bar: 59 }, { v: "13.1", cf: "c" }, "44%"],
+      ["Member services line", { v: "13", bar: 48 }, { v: "11.8", cf: "c" }, "15%"],
+      ["Behavioural health unit", { v: "9", bar: 33 }, { v: "8.9", cf: "w" }, "38%"],
+      ["Not attributed", { v: "5", bar: 19 }, { v: "15.2", cf: "c" }, "20%"],
+      ["Total CDPHP-direct", { v: "70", bar: 100 }, { v: "12.6" }, "23%"]
+    ]
+  );
+
+  matrix("x-paymix",
+    ["Channel", "CDPHP", "Comparable payer", "Delta"],
+    [
+      ["Self sign-up", { v: "53%", cf: "w" }, "41%", { v: "+12pp", cf: "w" }],
+      ["PCP practices", { v: "22%", cf: "c" }, "31%", { v: "−9pp", cf: "c" }],
+      ["Health systems", { v: "16%", cf: "g" }, "17%", "−1pp"],
+      ["Payer-direct", { v: "9%", cf: "c" }, "11%", { v: "−2pp", cf: "w" }],
+      ["Total referrals", { v: "781" }, "694", "+87"]
+    ]
+  );
+
+
+
+  lines("c-copay", {
+    labels: MO, h: 80,
+    series: [
+      { name: "$0 copay", color: "var(--s1)", values: [50, 51, 49, 48, 52, 53, 52, 54, 55, 54, 55, 54] },
+      { name: "Copay > $0", color: "var(--s2)", values: [30, 31, 29, 27, 31, 32, 31, 33, 34, 32, 34, 33] }
+    ]
+  });
+
+  lines("x-copaysess", {
+    labels: MO, h: 80, max: 14, unit: "",
+    series: [
+      { name: "$0 copay", color: "var(--s1)", values: [7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9] },
+      { name: "Copay > $0", color: "var(--s2)", values: [5, 5, 5, 4, 5, 5, 5, 6, 6, 6, 6, 6] }
+    ]
+  });
+
+  columns("x-paywall", {
+    labels: MO, h: 74, unit: " members",
+    series: [
+      { name: "Saw the paywall", color: "var(--s1)", values: [268, 279, 262, 248, 296, 305, 291, 303, 309, 298, 306, 297] },
+      { name: "Booked after seeing it", color: "var(--s2)", values: [79, 84, 76, 70, 91, 96, 91, 98, 102, 97, 102, 101] }
+    ]
+  });
+
+  /* ---------------- ACCESS & URGENCY (on the patient page) ---------------- */
+  spark("u-7d", [68, 70, 66, 63, 71, 73, 72, 75, 77, 76, 75, 81], "var(--s1)", "%");
+
+  lines("u-days", {
+    labels: MO, h: 82, max: 16, unit: " d", rule: 7, ruleLabel: "7-day standard",
+    series: [
+      { name: "Urgent", color: "var(--s2)", values: [8, 8, 9, 10, 8, 7, 7, 6, 6, 6, 7, 5] },
+      { name: "Routine", color: "var(--s1)", values: [12, 12, 13, 14, 12, 11, 11, 10, 10, 11, 10, 9] }
+    ]
+  });
+
+  matrix("u-mx",
+    ["Urgent reason", "Referrals", "Median days to DI", "Seen ≤ 7 days", "≤ 48h"],
+    [
+      ["Post BH hospital discharge (7-day follow-up)", { v: "38", bar: 100 }, { v: "3.1", cf: "g" }, { v: "94%", cf: "g" }, "42%"],
+      ["Suicidal ideation or self-harm risk", { v: "31", bar: 82 }, { v: "2.4", cf: "g" }, { v: "97%", cf: "g" }, "61%"],
+      ["Rapid deterioration / acute decompensation", { v: "18", bar: 47 }, { v: "4.6", cf: "w" }, { v: "83%", cf: "w" }, "28%"],
+      ["Acute grief / loss", { v: "14", bar: 37 }, { v: "6.8", cf: "w" }, { v: "71%", cf: "c" }, "14%"],
+      ["Risk to others (homicidal/violent ideation)", { v: "9", bar: 24 }, { v: "2.0", cf: "g" }, { v: "100%", cf: "g" }, "78%"],
+      ["Perinatal / postpartum crisis", { v: "9", bar: 24 }, { v: "5.2", cf: "w" }, { v: "78%", cf: "w" }, "33%"],
+      ["Grave disability / unable to care for self", { v: "7", bar: 18 }, { v: "8.4", cf: "c" }, { v: "57%", cf: "c" }, "14%"],
+      ["Total urgent", { v: "126", bar: 100 }, { v: "4.1" }, { v: "81%" }, "41%"]
+    ]
+  );
+
+  bars("u-bars", {
+    lw: 116, rh: 20, max: 10, rule: 7,
+    rows: [
+      { label: "Grave disability", value: 8.4, fmt: "8.4 d", color: "var(--critical)" },
+      { label: "Acute grief / loss", value: 6.8, fmt: "6.8 d", color: "var(--serious)" },
+      { label: "Perinatal crisis", value: 5.2, fmt: "5.2 d", color: "var(--s2)" },
+      { label: "Rapid deterioration", value: 4.6, fmt: "4.6 d", color: "var(--s2)" },
+      { label: "Post BH discharge", value: 3.1, fmt: "3.1 d", color: "var(--s1)" },
+      { label: "Suicidal ideation", value: 2.4, fmt: "2.4 d", color: "var(--s1)" },
+      { label: "Risk to others", value: 2.0, fmt: "2.0 d", color: "var(--s1)" }
+    ]
+  });
+
+  matrix("x-ac4mx",
+    ["Admission source", "Acuity 4", "Share of acuity 4", "Self sign-up", "PCP", "Health system", "CDPHP-direct"],
+    [
+      ["Inpatient BH discharge", { v: "34", bar: 100 }, { v: "27%", cf: "w" }, "2", "4", "21", "7"],
+      ["ED presentation", { v: "23", bar: 68 }, { v: "18%", cf: "w" }, "3", "3", "14", "3"],
+      ["Crisis line / mobile crisis", { v: "19", bar: 56 }, { v: "15%", cf: "w" }, "6", "2", "8", "3"],
+      ["PCP escalation", { v: "17", bar: 50 }, { v: "13%", cf: "g" }, "0", "15", "1", "1"],
+      ["Member self-report at intake", { v: "26", bar: 76 }, { v: "21%", cf: "c" }, "24", "1", "0", "1"],
+      ["Not recorded", { v: "7", bar: 21 }, { v: "6%", cf: "c" }, "4", "1", "1", "1"],
+      ["Total acuity 4", { v: "126", bar: 100 }, { v: "100%" }, "39", "26", "45", "16"]
+    ]
+  );
+
+  columns("x-pdout", {
+    labels: MO, h: 74, rule: 75, ruleLabel: "target 75%", max: 100, unit: "%",
+    series: [{ name: "Reached within 7 days", color: "var(--s1)", values: [52, 54, 51, 49, 57, 59, 58, 61, 63, 62, 64, 66] }],
+    fmt: function (v) { return Math.round(v) + "%"; }
+  });
+
+  lines("x-fum", {
+    labels: MO, h: 80, max: 100, rule: 60, ruleLabel: "HEDIS 30-day threshold",
+    series: [
+      { name: "FUH", color: "var(--s1)", values: [58, 60, 57, 55, 62, 64, 63, 66, 68, 67, 69, 71] },
+      { name: "FUM", color: "var(--s2)", values: [44, 46, 43, 41, 48, 50, 49, 52, 54, 53, 55, 57] }
+    ]
+  });
+
+  columns("x-agecov", {
+    labels: MO, h: 74, rule: 60, ruleLabel: "target 60%", max: 100, unit: "%",
+    series: [{ name: "Covering 5-17", color: "var(--s1)", values: [31, 32, 32, 34, 35, 35, 37, 38, 38, 40, 41, 42] }],
+    fmt: function (v) { return Math.round(v) + "%"; }
+  });
+
+  columns("x-agemis", {
+    labels: MO, h: 74, pl: 16, unit: " DIs",
+    series: [{ name: "Mismatched adolescent DIs", color: "var(--critical)", values: [11, 12, 14, 15, 13, 12, 12, 11, 10, 10, 9, 8] }]
+  });
+
+  columns("x-direpeat", {
+    labels: MO, h: 76, stacked: true, unit: " DIs",
+    series: [
+      { name: "First-time", color: "var(--s1)", values: [232, 240, 218, 204, 254, 262, 248, 264, 271, 259, 268, 261] },
+      { name: "Repeat", color: "var(--s2)", values: [54, 58, 51, 47, 62, 65, 61, 66, 69, 66, 70, 68] }
+    ]
+  });
+
+  matrix("x-a5",
+    ["Instrument", "Questions", "Conditional", "Always shown"],
+    [
+      ["A5 — initial assessment", { v: "33", bar: 69 }, "11", "22"],
+      ["A5R — reassessment", { v: "48", bar: 100 }, "19", "29"]
+    ]
+  );
+
+  lines("x-sess", {
+    labels: MO, h: 80, max: 16, unit: "",
+    series: [
+      { name: "Mean", color: "var(--s1)", values: [8.9, 9.1, 9.0, 8.8, 9.4, 9.6, 9.5, 9.8, 10.1, 10.0, 10.3, 10.5] },
+      { name: "Median", color: "var(--s2)", values: [6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8] }
+    ]
+  });
+
+  lines("x-loc", {
+    labels: MO, h: 80, max: 160, unit: " d",
+    series: [{ name: "Median length of active care", color: "var(--s1)", values: [104, 108, 111, 115, 112, 116, 119, 121, 124, 126, 129, 132] }]
+  });
+
+  columns("x-2in60", {
+    labels: MO, h: 74, rule: 80, ruleLabel: "target 80%", max: 100, unit: "%",
+    series: [{ name: "2+ sessions in 60 days", color: "var(--s1)", values: [64, 66, 63, 61, 68, 70, 69, 72, 74, 73, 71, 68] }],
+    fmt: function (v) { return Math.round(v) + "%"; }
+  });
+
+  smallMultiples("c-sm-out", [
+    { label: "Reached 50% reduction", value: "44%", color: "var(--s1)", unit: "%", spark: [33, 35, 34, 37, 38, 40, 39, 41, 42, 43, 43, 44] },
+    { label: "In remission (<5)", value: "21%", color: "var(--s1)", unit: "%", spark: [15, 16, 16, 17, 18, 18, 19, 19, 20, 20, 21, 21] },
+    { label: "Median days to 50%", value: "58", color: "var(--s2)", unit: " days", spark: [76, 74, 73, 71, 69, 68, 66, 64, 62, 61, 59, 58] }
+  ]);
+
+  lines("x-50pct", {
+    labels: MO, h: 88, max: 85, unit: " d",
+    series: [
+      { name: "PHQ-9, baseline >=9", color: "var(--s1)", values: [76, 74, 73, 71, 69, 68, 66, 64, 62, 61, 59, 58] },
+      { name: "PHQ-9, all baselines", color: "var(--s2)", values: [61, 60, 58, 57, 55, 54, 53, 51, 49, 48, 47, 45] },
+      { name: "GAD-7, baseline >=9", color: "var(--s3)", values: [69, 68, 66, 65, 63, 62, 60, 59, 57, 56, 54, 53] },
+      { name: "GAD-7, all baselines", color: "var(--s4)", values: [55, 54, 53, 51, 50, 49, 47, 46, 45, 43, 42, 41] }
+    ]
+  });
+
+  columns("c-cov", {
+    labels: MO, h: 72, rule: 90, ruleLabel: "target 90%", max: 100, unit: "%",
+    series: [{ name: "Coverage", color: "var(--s1)", values: [61, 63, 62, 60, 65, 66, 67, 68, 70, 70, 71, 72] }],
+    fmt: function (v) { return Math.round(v) + "%"; }
+  });
+
+  /* NEW — inactivation by journey stage */
+  columns("c-inact-stage", {
+    labels: MO, h: 96, stacked: true, pct: true, max: 100, unit: "%",
+    series: [
+      { name: "Registered, never assessed", color: "var(--s5)", values: [31, 32, 34, 35, 33, 32, 31, 30, 29, 29, 28, 27] },
+      { name: "A5 done, no DI", color: "var(--s2)", values: [22, 22, 21, 21, 21, 20, 20, 20, 19, 19, 19, 18] },
+      { name: "DI attended, no first session", color: "var(--s4)", values: [14, 13, 13, 13, 12, 12, 12, 12, 12, 11, 11, 11] },
+      { name: "In care, left early", color: "var(--s1)", values: [26, 26, 25, 25, 26, 27, 27, 27, 28, 28, 28, 29] },
+      { name: "Completed 90-day care", color: "var(--s3)", values: [7, 7, 7, 6, 8, 9, 10, 11, 12, 13, 14, 15] }
+    ],
+    fmt: function (v) { return Math.round(v) + "%"; }
+  });
+
+  /* NEW — days from registration to inactivation, histogram */
+  columns("c-inact-days", {
+    labels: ["0–7", "8–14", "15–30", "31–60", "61–90", "91–120", "121–180", "181–365", "365+"],
+    h: 96, xfs: 7.5, pl: 22,
+    series: [{ name: "Members", color: "var(--s1)", values: [61, 24, 19, 22, 17, 31, 14, 12, 8] }]
+  });
+
+  smallMultiples("x-lic", [
+    { label: "LCSW", value: "38", color: "var(--s1)", spark: [32, 32, 33, 34, 34, 35, 35, 36, 36, 37, 37, 38] },
+    { label: "LCSW-R", value: "12", color: "var(--s1)", spark: [9, 9, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12] },
+    { label: "LMHC", value: "27", color: "var(--s1)", spark: [22, 23, 23, 24, 24, 25, 25, 26, 26, 26, 27, 27] },
+    { label: "LMSW", value: "24", color: "var(--s1)", spark: [19, 20, 20, 21, 21, 22, 22, 23, 23, 23, 24, 24] },
+    { label: "LMFT", value: "11", color: "var(--s1)", spark: [9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 11] },
+    { label: "PMHNP-BC", value: "21", color: "var(--s2)", spark: [17, 17, 18, 18, 19, 19, 20, 20, 20, 21, 21, 21] },
+    { label: "RN", value: "15", color: "var(--s3)", spark: [12, 12, 13, 13, 13, 14, 14, 14, 15, 15, 15, 15] }
+  ]);
+
+  columns("x-cosignreq", {
+    labels: MO, h: 76, pl: 16, unit: " providers",
+    series: [
+      { name: "Providers requiring co-sign", color: "var(--s1)", values: [19, 20, 22, 24, 26, 28, 30, 31, 33, 34, 35, 36] },
+      { name: "Active LCSW supervisors", color: "var(--s2)", values: [8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10] }
+    ]
+  });
+
+
+  spark("k-pool", [96, 98, 99, 101, 103, 104, 106, 107, 109, 110, 111, 112], "var(--s1)");
+  spark("k-24h", [55, 56, 58, 57, 60, 61, 62, 63, 65, 66, 67, 68], "var(--good)", "%");
+  spark("k-cosign", [48, 52, 55, 58, 60, 63, 65, 67, 69, 70, 71, 73], "var(--critical)");
+
+  columns("p-time", {
+    labels: MO, h: 56, stacked: true, pct: true, max: 100, pl: 20, unit: "%",
+    series: [
+      { name: "<24h", color: "var(--good)", values: [55, 56, 58, 57, 60, 61, 62, 63, 65, 66, 67, 68] },
+      { name: "24-48h", color: "var(--warning)", values: [24, 24, 23, 24, 22, 22, 21, 21, 20, 20, 19, 19] },
+      { name: "48-72h", color: "var(--serious)", values: [12, 12, 11, 11, 11, 10, 10, 9, 9, 9, 8, 8] },
+      { name: ">72h", color: "var(--critical)", values: [9, 8, 8, 8, 7, 7, 7, 7, 6, 5, 6, 5] }
+    ],
+    fmt: function (v) { return Math.round(v) + "%"; }
+  });
+
+  lines("x-notemed", {
+    labels: MO, h: 80, max: 48, unit: " h", rule: 24, ruleLabel: "24-hour standard",
+    series: [{ name: "Median hours to signed note", color: "var(--s1)", values: [31, 30, 29, 30, 27, 26, 25, 24, 23, 22, 21, 19] }]
+  });
+
+  matrix("x-rejmx",
+    ["Rejection reason", "Notes", "Share", "Days added"],
+    [
+      ["Missing or thin medical necessity", { v: "38", bar: 100 }, { v: "34%", cf: "c" }, { v: "2.6", cf: "c" }],
+      ["Goal not linked to the intervention", { v: "26", bar: 68 }, { v: "23%", cf: "c" }, { v: "1.9", cf: "w" }],
+      ["Diagnosis not supported by the note", { v: "21", bar: 55 }, { v: "19%", cf: "w" }, { v: "2.1", cf: "w" }],
+      ["Wrong service code or duration", { v: "16", bar: 42 }, { v: "14%", cf: "w" }, { v: "1.2", cf: "g" }],
+      ["Other, free text", { v: "11", bar: 29 }, { v: "10%", cf: "w" }, { v: "1.7", cf: "w" }],
+      ["Total rejected", { v: "112", bar: 100 }, { v: "6.1%" }, { v: "2.1" }]
+    ]
+  );
+
+  matrix("p-mx",
+    ["Supervisor group", "Providers", "Notes", "<24h", "Pending co-sign", "Rejection", "PHQ-9 delta (adj.)"],
+    [
+      ["Group A", "14", { v: "2,412", bar: 100 }, { v: "61%", cf: "c" }, { v: "31", bar: 100 }, { v: "8.4%", cf: "c" }, "−5.8"],
+      ["Group B", "12", { v: "1,986", bar: 82 }, { v: "72%", cf: "g" }, { v: "18", bar: 58 }, { v: "5.1%", cf: "g" }, "−6.4"],
+      ["Group C", "11", { v: "1,744", bar: 72 }, { v: "69%", cf: "w" }, { v: "14", bar: 45 }, { v: "6.0%", cf: "w" }, "−6.1"],
+      ["Group D", "9", { v: "1,208", bar: 50 }, { v: "74%", cf: "g" }, { v: "10", bar: 32 }, { v: "4.4%", cf: "g" }, "−6.6"],
+      ["Total", "46", { v: "7,350", bar: 100 }, { v: "68%" }, { v: "73", bar: 100 }, { v: "6.1%" }, "−6.2"]
+    ]
+  );
+
+  smallMultiples("x-gt", [
+    { label: "Diagnosis recorded", value: "97%", color: "var(--s1)", unit: "%", spark: [92, 92, 93, 93, 94, 94, 95, 95, 96, 96, 97, 97] },
+    { label: "Goal stated and current", value: "84%", color: "var(--s1)", unit: "%", spark: [71, 72, 74, 75, 76, 78, 79, 80, 81, 82, 83, 84] },
+    { label: "Intervention linked to goal", value: "76%", color: "var(--s2)", unit: "%", spark: [61, 62, 64, 65, 67, 68, 70, 71, 72, 73, 75, 76] },
+    { label: "Progress toward goal", value: "68%", color: "var(--critical)", unit: "%", spark: [54, 55, 56, 58, 59, 60, 62, 63, 64, 65, 67, 68] },
+    { label: "All four present", value: "63%", color: "var(--critical)", unit: "%", spark: [48, 49, 51, 52, 54, 55, 57, 58, 59, 60, 62, 63] }
+  ]);
+
+
+});
+</script>

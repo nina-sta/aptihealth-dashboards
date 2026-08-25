@@ -4,87 +4,179 @@ Read this before changing anything in this repository.
 
 ## What this repository is
 
-A **design mock-up**, not an application. `apti-journey-powerbi_2.html` is a
-self-contained HTML page that shows how the aptihealth Patient journey and
-Provider journey report pages should look, so the team can build them in
-**Power BI**. There is no build step, no package manager, no dependencies. Open
-the file in a browser to see the result.
+A set of **design mock-ups**, not an application. Three self-contained HTML pages show how
+aptihealth's reports should look so the team can build them in **Power BI**. There is no
+package manager and no dependency. Open a file in a browser to see the result.
 
-The audience is aptihealth leadership and product. The mock-up mirrors the
-documented funnel map (Funnels A–E) that lives in the contextMB repo under
-`context/projects/aptihealth/flow-diagrams/`.
+The point of the prototype is to connect two groups who do not speak the same language:
+
+> **business** decides what matters and why → the **mock-up** makes it arguable in pictures →
+> the **specification** records the definition, the owner and the impact → **data science**
+> builds it in Power BI
+
+So the mock-up is not the deliverable. The agreed definitions are. The mock-up is how we get
+to them quickly and visually, and how we keep arguing about them cheaply when someone
+disagrees.
+
+## Layout
+
+```
+index.html                              landing page, links the three reports
+reports/
+  _shared/report.css                    canonical stylesheet
+  _shared/charts.js                     canonical chart builders and page behaviour
+  internal/patient-journey.html         internal — the member's path
+  internal/provider-journey.html        internal — documentation, supervision, matching
+  external/cdphp.html                   external — the payer report
+docs/
+  README.md                             how the specs work
+  internal/patient-journey.md           spec paired with the patient mock-up
+  internal/provider-journey.md          spec paired with the provider mock-up
+  external/cdphp.md                     spec paired with the CDPHP mock-up
+tools/sync.py                           consistency check — run it before finishing
+HANDOFF.md                              state of play between sessions
+```
+
+**Internal reports** are how we run the business. Every visual should trace to a named person
+who acts on it. **External reports** go to payers. CDPHP is built first and deliberately the
+largest — every other payer report is this one with visuals switched off — so a measure
+missing from CDPHP is missing everywhere.
+
+Work **top-down**: agree the shape of a report before arguing about a single tile.
+
+## The rule that matters most
+
+**The mock-ups and the specifications are one deliverable.**
+
+- Change a visual → update its row in the matching `docs/` spec in the **same commit**.
+- Change a spec row → change the visual to match in the **same commit**.
+- Add a visual → add a row. Remove a visual → remove the row.
+
+Before calling any piece of work finished, run:
+
+```bash
+python3 tools/sync.py
+```
+
+It fails if a report and its spec disagree, if a report has no spec, if the shared chart code
+has drifted between the three reports, or if something marked *CDPHP asked* internally is
+missing from the CDPHP report. Do not report work as done while it fails.
+
+**Where a definition lives:** in the ⓘ tooltip on the tile, one copy only. Specs deliberately
+do not repeat it — they own the owner, the business impact and the status instead. Never
+paste a definition into a spec; that is how the two drift.
+
+## Shared code is copied on purpose
+
+`reports/_shared/` holds the canonical CSS and chart builders. Each report **inlines** them
+between `<!-- shared:css:start -->` / `<!-- shared:js:start -->` markers, so every report is
+one file that can be opened from disk, served from Pages, or published as an artifact with no
+asset loading at all.
+
+Edit the file in `_shared/`, never the copy inside a report, then:
+
+```bash
+python3 tools/sync.py --fix
+```
+
+`sync.py` without `--fix` fails when a copy is stale, so drift gets caught rather than shipped.
 
 ## Non-negotiable design rules
 
 These were decided deliberately. Do not "improve" them without being asked.
 
-1. **White background, light mode only.** No dark-mode blocks. Tiles are white,
-   separated by hairline borders.
-2. **Every measure is monthly.** If a new visual is added, it shows a month axis
-   or a monthly trend. Snapshots are allowed only where a trend is meaningless
-   (funnel, matrix, panel-vs-target) and each of those carries a month chip.
-3. **Never a dual axis.** Two measures of different units go in two visuals, or
-   get stacked in the same unit. This is why "sessions held vs billed rate" is a
-   stacked column of billed/unbilled counts, not a column-plus-line.
+1. **White background, light mode only.** No dark-mode blocks. Tiles are white, separated by
+   hairline borders.
+2. **Every measure is monthly.** Snapshots are allowed only where a trend is meaningless
+   (funnel, matrix, panel-vs-target) and each carries a month chip.
+3. **Never a dual axis.** Two measures of different units go in two visuals, or get stacked in
+   the same unit. This is why "sessions held vs billed rate" is a stacked column of
+   billed/unbilled counts, not a column-plus-line.
 4. **Status colours always ship with a label**, never colour alone.
-5. **Visual-level filters are the grey chips** in a visual header. The report
-   level slicers live in the page header. Some chips switch a *definition*
-   (engagement lookback, HEDIS baseline threshold) — that is intentional.
-6. **The ⓘ tooltip names the native Power BI visual** for that tile, plus the
-   reason it was chosen. Keep it accurate; it is what the data team builds from.
+5. **Visual-level filters are the grey chips** in a visual header; report-level slicers live in
+   the page header. Some chips switch a *definition* (engagement lookback, HEDIS baseline,
+   scoring window) — that is intentional, and the tooltip must say so.
+6. **The ⓘ tooltip names the native Power BI visual** for that tile, plus the reason it was
+   chosen. Keep it accurate; it is what the data team builds from.
 7. **No tables in prose.** Matrix visuals are fine — those are charts.
+8. **A visual that answers a payer question carries a marker** in its header —
+   `<span class="ask">CDPHP asked</span>`.
 
 ## Palette (validated, do not substitute by eye)
 
-Categorical: `--s1 #2a78d6` `--s2 #eb6834` `--s3 #1baf7a` `--s4 #eda100`
-`--s5 #e87ba4`, assigned in that fixed order and never cycled.
+Categorical: `--s1 #2a78d6` `--s2 #eb6834` `--s3 #1baf7a` `--s4 #eda100` `--s5 #e87ba4`,
+assigned in that fixed order and never cycled.
 Status: good `#0ca30c`, warning `#fab219`, serious `#ec835a`, critical `#d03b3b`.
 Ink: primary `#0b0b0b`, secondary `#52514e`, muted `#898781`.
 
-The order is a colour-blindness-safety mechanism, not decoration. If you need a
-sixth series, fold it into "Other" or facet instead.
+The order is a colour-blindness-safety mechanism, not decoration. **If you need a sixth
+series, facet or fold into "Other"** — that is why licence-type headcount is small multiples
+rather than a stacked bar.
 
-## How the code is organised
+## How a report page is built
 
-One file. Inline `<style>`, then the HTML for each report page, then one
-`<script>` with small SVG chart builders:
+Inline shared `<style>`, the HTML for the page, inline shared `<script>`, then a short script
+with that report's data:
 
-- `columns()` — clustered / stacked / 100% stacked, optional constant line (`opt.rule`)
-- `lines()` — multi-series line, optional constant line
-- `bars()` — horizontal bars, optional per-row target marker
-- `funnel()`, `spark()`, `smallMultiples()`, `matrix()`
+```js
+APTI.render(function () {
+  var MO = APTI.MO, columns = APTI.columns, /* … */;
+  columns("some-id", { /* … */ });
+});
+```
 
-Charts size themselves from `host.clientWidth`, so **all report pages are made
-visible during init and then hidden again** — otherwise hidden pages measure as
-zero width and charts render at a fallback size. Do not remove that.
+`APTI.render()` makes every page visible, draws, then hides again — charts size themselves
+from `host.clientWidth` and a hidden page measures as zero. Do not remove that.
 
-Stacked charts derive their axis maximum from stacked totals. If you add a
-stacked series and the bars overflow the plot, that is the bug to look for.
+Builders: `columns()` (clustered / stacked / 100% stacked, optional `opt.rule`), `lines()`
+(multi-series, optional rule; pass `unit: ""` for a unitless series), `bars()` (optional
+per-row target marker), `funnel()`, `spark()`, `smallMultiples()`, `matrix()`.
+
+Stacked charts derive their axis maximum from stacked totals. If bars overflow the plot after
+you add a series, that is the bug to look for.
 
 ## Data
 
-All figures are mock. Values marked `(doc)` in the page come from real sources:
-notes per month, discharge summary counts, referral volume, providers requiring
-co-sign. Do not invent new `(doc)` claims — if a number is not sourced, leave it
-unmarked or write "not documented".
+All figures are mock. Values marked `(doc)` come from real sources. **Do not invent new
+`(doc)` claims** — if a number is not sourced, leave it unmarked or write "not documented".
+Provider names in the mock-ups are invented; do not replace them with real colleagues.
+
+Where a measure cannot honestly be built yet, ship the tile with a `gapnote` naming the
+missing field or decision rather than a clean number. `sync.py` surfaces those as *Blocked*
+in the spec.
 
 ## Workflow
 
-Small commits, one change each, described in plain language. Do not refactor the
-chart helpers while making a content change — it makes the diff unreadable and
-this file is the only artefact.
+Small commits, one change each, described in plain language. Do not refactor the chart
+builders while making a content change — it makes the diff unreadable.
 
-When context gets long in a chat, stop and commit. Start a fresh session for the
-next change and let this file carry the context instead of the transcript.
+**Finish every piece of work with `python3 tools/sync.py`.**
 
-## TODO before the Power BI build
+## Handing off between sessions
 
-- Agree four measure definitions: episode of care, engaged (in-month vs 60-day
-  lookback), members served (all-time vs period), PHQ-9/GAD-7 baseline threshold
-  for the 50%-reduction family.
-- Confirm a session-end timestamp exists in the model. The whole provider page
-  depends on "time from session end to signed note", which may not be available.
-- Confirm the referral reason (urgent/routine cause of admission) is a stored
-  attribute and not free text in a note. The urgency visuals assume an attribute.
-- Decide whether the payer view is a filtered subset of this model or a separate
-  report. One model, two views — not two truths.
+Long chats degrade. At roughly **200–300k tokens of context**, stop and write `HANDOFF.md`:
+
+- what this is for and who it is for, in a few lines — assume the next session knows nothing
+- what changed in this session and what state it is in
+- decisions taken and *why*, especially ones that look arbitrary later
+- open questions nobody has answered yet, and unfinished threads with the next concrete step
+
+Then commit it and start a fresh session. `HANDOFF.md` is overwritten each time, not appended
+— git history is the archive. Keep it short enough that someone actually reads it.
+
+## Open definitions blocking the Power BI build
+
+- **Episode of care** — days in care currently run through inactivation, which overstates
+  length of care and distorts tenure.
+- **Engaged** — 60-day billing lookback versus strictly in-month. Both are in the mock-up
+  side by side until one is agreed.
+- **Members served** — all-time versus period.
+- **PHQ-9 / GAD-7 baseline threshold** for the 50%-reduction family.
+- **Repeat DI** — not defined; the only written rules are annual re-assessment for returning
+  members and A5R every 90 days.
+- **Session-end timestamp** — the whole documentation-timeliness family depends on it. Confirm
+  it exists in the model.
+- **Referral reason** — the urgency visuals assume a stored attribute, not free text in a note.
+- **Discharge notification source** — payer feed, referrer notification or member self-report.
+  Each gives a different denominator for post-discharge outreach.
+- **"Licensed"** in the payer-count ask — payer credentialing or state licensure.

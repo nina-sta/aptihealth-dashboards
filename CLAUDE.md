@@ -27,7 +27,7 @@ reports/
   _shared/charts.js                     canonical chart builders and page behaviour
   internal/patient-journey.html         internal — the member's path
   internal/provider-journey.html        internal — documentation, supervision, matching
-  external/cdphp.html                   external — the payer report
+  external/cdphp.html                   external — the payer report, five pages in one file
 docs/
   README.md                             how the specs work
   internal/patient-journey.md           spec paired with the patient mock-up
@@ -42,6 +42,14 @@ who acts on it. **External reports** go to payers. CDPHP is built first and deli
 largest — every other payer report is this one with visuals switched off — so a measure
 missing from CDPHP is missing everywhere. It carries no report-level slicers: the payer sees
 one program and one period, decided when the report is issued, not switched by the reader.
+
+**The CDPHP report is one file holding five pages**, switched by the `<button data-pg="…">`
+tabs in `.ptabs` at the bottom — that is Power BI's own model, one report with a page strip,
+and `render()` in the shared code already implements it. The pages are CDPHP Billing, CDPHP 1,
+CDPHP 2, CDPHP 3 and CDPHP Update; the three numbered ones are reserved placeholders with no
+visuals yet. `sync.py` reads every page in the file, so all five share one specification —
+`docs/external/cdphp.md`, sectioned by `## Page` heading. Adding a page means adding a button,
+a `.page` div and a `## Page` section together.
 
 The payer report is allowed to keep a visual after it leaves every internal report. What the
 payer is owed and what we run the business on are two different lists (decided 26 Aug 2026).

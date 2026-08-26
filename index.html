@@ -164,7 +164,8 @@
   /* The report switcher stays on screen — these pages are long and it is the only
      way between reports. */
   .ptabs {
-    display: flex; gap: 2px; margin-top: 10px; border-top: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; gap: 2px; row-gap: 4px;
+    margin-top: 10px; border-top: 1px solid var(--border);
     padding-top: 7px; align-items: center;
     position: sticky; bottom: 0; z-index: 60;
     background: var(--plane); padding-bottom: 7px;
@@ -177,6 +178,10 @@
   .ptabs button[aria-pressed="true"] { color: var(--ink-1); background: var(--chipbg); border-color: var(--border); }
   .ptabs button:hover { color: var(--ink-1); }
   .ptabs .hint { margin-left: auto; font-size: 9px; color: var(--ink-muted); }
+  /* Separates the cross-report links from the page tabs of the report you are in.
+     One report with several pages is what Power BI actually builds, so the strip
+     has to show both without reading as one flat list of eight things. */
+  .ptabs .sep { align-self: stretch; width: 1px; background: var(--border); margin: 2px 8px; }
 
   .tt {
     position: fixed; pointer-events: none; opacity: 0; transition: opacity .08s;
@@ -244,8 +249,10 @@
   <h2>External &mdash; payer reporting</h2>
   <a class="card" href="reports/external/cdphp.html">
     <b>CDPHP payer report</b>
-    <span>The 37 visuals that answer what CDPHP asked for, billing and eligibility first. Built first and deliberately
-          the largest &mdash; every other payer report is this one with visuals switched off.</span>
+    <span>Five pages, switched from the tab strip along the bottom &mdash; CDPHP Billing,
+          CDPHP&nbsp;1, 2 and 3 (reserved, still empty), and CDPHP Update. 37 visuals, billing
+          first. Deliberately the largest payer report &mdash; every other one is this with
+          visuals switched off.</span>
   </a>
 </div>
 </body>

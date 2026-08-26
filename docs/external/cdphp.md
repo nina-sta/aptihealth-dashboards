@@ -6,6 +6,12 @@
 **Audience:** CDPHP, and internally whoever signs off before anything leaves the building.
 **Purpose:** Answer the statistics CDPHP asked for. This is deliberately the largest payer report: every other payer report is this one with visuals switched off, so anything missing here is missing everywhere.
 
+**Five pages, one report.** The mock-up carries a page tab strip along the bottom, because that
+is what Power BI builds: one report file with several pages, not five separate reports. The
+`## Page` headings below are those tabs, in the order they appear. CDPHP 1, 2 and 3 are
+deliberately empty placeholders — the slots exist so the tab order is settled before the
+content is, and nothing is agreed for them yet.
+
 ## How to read the table
 
 `Visual` matches the tile heading in the report exactly — that is the join key between this
@@ -22,10 +28,10 @@ visual. Every row currently reads `_unassigned_`; assigning them is the next wor
 and is the point of this document.
 
 
-### Billing And Eligibility
+## Page — CDPHP Billing
 
-The invoice and what gates it. Read this section first: everything below it describes care we
-delivered, and this is the part that decides whether we are paid for it.
+The invoice and what gates it. This page is first because everything on CDPHP Update describes
+care we delivered, and this is the part that decides whether we are paid for it.
 
 | Visual | Business question | Owner | Business impact | Status |
 | --- | --- | --- | --- | --- |
@@ -34,6 +40,23 @@ delivered, and this is the part that decides whether we are paid for it.
 | Current month invoice — sent on the 15th | What exactly are we invoicing this month? | _unassigned_ | _to agree_ | Built |
 | ACP consent response | How many patients have consented to what we share with the payer? | _unassigned_ | _to agree_ | Blocked — The stored response values are not confirmed. This assumes consented / declined / no response; a fourth value for "request never sent" would change the denominator |
 | Monthly invoice — billed lines by month | Can we show the payer a member's billing history when they query a line? | _unassigned_ | _to agree_ | Built |
+
+## Page — CDPHP 1
+
+Reserved, no visuals. Nothing agreed yet.
+
+## Page — CDPHP 2
+
+Reserved, no visuals. Nothing agreed yet.
+
+## Page — CDPHP 3
+
+Reserved, no visuals. Nothing agreed yet.
+
+## Page — CDPHP Update
+
+Everything the payer is owed that is not the invoice: who we served, how they got to us, how
+fast, how much care they got, and whether the documentation behind it holds up.
 
 ### Population And Engagement
 
@@ -108,6 +131,8 @@ delivered, and this is the part that decides whether we are paid for it.
 | Golden Thread completeness | Are our notes defensible in an audit? | _unassigned_ | _to agree_ | Built |
 
 ## Open items
+
+Across every page.
 
 - **ACP consent response** — The stored response values are not confirmed. This assumes consented / declined / no response; a fourth value for “request never sent” would change the denominator.
 - **Members in care by tenure** — Blocked: needs an episode-of-care definition — days in care currently run through inactivation.

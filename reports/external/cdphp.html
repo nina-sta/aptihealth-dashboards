@@ -159,7 +159,8 @@
   /* The report switcher stays on screen — these pages are long and it is the only
      way between reports. */
   .ptabs {
-    display: flex; gap: 2px; margin-top: 10px; border-top: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; gap: 2px; row-gap: 4px;
+    margin-top: 10px; border-top: 1px solid var(--border);
     padding-top: 7px; align-items: center;
     position: sticky; bottom: 0; z-index: 60;
     background: var(--plane); padding-bottom: 7px;
@@ -172,6 +173,10 @@
   .ptabs button[aria-pressed="true"] { color: var(--ink-1); background: var(--chipbg); border-color: var(--border); }
   .ptabs button:hover { color: var(--ink-1); }
   .ptabs .hint { margin-left: auto; font-size: 9px; color: var(--ink-muted); }
+  /* Separates the cross-report links from the page tabs of the report you are in.
+     One report with several pages is what Power BI actually builds, so the strip
+     has to show both without reading as one flat list of eight things. */
+  .ptabs .sep { align-self: stretch; width: 1px; background: var(--border); margin: 2px 8px; }
 
   .tt {
     position: fixed; pointer-events: none; opacity: 0; transition: opacity .08s;
@@ -209,8 +214,7 @@
     <span class="mock">&#9888; <b>Prototype only.</b> The real report will be built in Power BI, so the finished thing follows whatever Power BI allows. This is here to agree the metrics.</span>
   </div>
 
-  <div class="page on" id="pg-cdphp">
-    <!-- ============ BILLING AND ELIGIBILITY ============ -->
+  <div class="page on" id="pg-billing">
 
     <div class="v c6 h2r">
       <div class="vh"><h4>Patients by eligibility and engagement</h4>
@@ -271,6 +275,21 @@
       <div class="body" id="b-invhist"></div>
     </div>
 
+  </div>
+
+  <div class="page" id="pg-c1">
+    <div class="band"><span class="t">CDPHP 1</span><span class="d">Reserved. Nothing is agreed for this page yet &mdash; the visuals and their definitions come next.</span><span class="r"></span></div>
+  </div>
+
+  <div class="page" id="pg-c2">
+    <div class="band"><span class="t">CDPHP 2</span><span class="d">Reserved. Nothing is agreed for this page yet &mdash; the visuals and their definitions come next.</span><span class="r"></span></div>
+  </div>
+
+  <div class="page" id="pg-c3">
+    <div class="band"><span class="t">CDPHP 3</span><span class="d">Reserved. Nothing is agreed for this page yet &mdash; the visuals and their definitions come next.</span><span class="r"></span></div>
+  </div>
+
+  <div class="page" id="pg-update">
     <!-- ============ POPULATION AND ENGAGEMENT ============ -->
 
     <div class="v kpi c2 h1r">
@@ -600,11 +619,16 @@
     </div>
   </div>
 
-  <div class="ptabs" role="group" aria-label="Reports">
+  <div class="ptabs" role="group" aria-label="Reports and CDPHP pages">
     <a href="../internal/patient-journey.html">Patient journey</a>
     <a href="../internal/provider-journey.html">Provider journey</a>
-    <a href="../external/cdphp.html" aria-current="page">CDPHP payer report</a>
-    <span class="hint">Every measure is monthly unless the tile says otherwise. Hover &#9432; for the Power BI visual type.</span>
+    <span class="sep"></span>
+    <button data-pg="pg-billing" aria-pressed="true">CDPHP Billing</button>
+    <button data-pg="pg-c1" aria-pressed="false">CDPHP 1</button>
+    <button data-pg="pg-c2" aria-pressed="false">CDPHP 2</button>
+    <button data-pg="pg-c3" aria-pressed="false">CDPHP 3</button>
+    <button data-pg="pg-update" aria-pressed="false">CDPHP Update</button>
+    <span class="hint">Five pages, one report &mdash; as Power BI builds it. Every measure is monthly unless the tile says otherwise.</span>
   </div>
 
   <div class="dd" id="dd" role="listbox"></div>

@@ -135,6 +135,7 @@
   .roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
   .roles .rg { border-left: 2px solid var(--s1); padding-left: 7px; }
   .roles .rg.pr { border-left-color: var(--s2); }
+  .roles .rg.ot { border-left-color: var(--s3); }
   .roles .rgh { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; padding-bottom: 3px; border-bottom: 1px solid var(--grid); }
   .roles .rgh b { font-size: 10px; font-weight: 650; color: var(--ink-1); }
   .roles .rgh .n { font-size: 15px; font-weight: 600; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
@@ -201,18 +202,18 @@
   </div>
 
   <div class="page on" id="pg-provider">
-    <div class="v kpi c4 h1r">
+    <div class="v kpi c6 h1r">
       <div class="vh"><h4>Providers in matching pool</h4>
         <div class="vf"><button class="i" data-tip="Power BI: card + line. Fully configured and accepting new patients, at month end.">&#9432;</button></div>
       </div>
       <div class="body">
         <div class="big">112</div>
-        <div class="sub">of 130 in the medical group</div>
+        <div class="sub">of 158 in the medical group</div>
         <div class="spark ch" id="k-pool"></div>
       </div>
     </div>
 
-    <div class="v kpi c4 h1r">
+    <div class="v kpi c6 h1r">
       <div class="vh"><h4>Notes signed &lt; 24h</h4>
         <div class="vf"><span class="wf">All note types</span><button class="i" data-tip="Power BI: KPI + line. Session end to signed note. The chip isolates guided session notes, which are 73% of all documentation.">&#9432;</button></div>
       </div>
@@ -220,17 +221,6 @@
         <div class="big">68<small>%</small></div>
         <div class="sub"><span class="up">&#9652; 4pp</span> vs July</div>
         <div class="spark ch" id="k-24h"></div>
-      </div>
-    </div>
-
-    <div class="v kpi c4 h1r">
-      <div class="vh"><h4>Co-sign queue</h4>
-        <div class="vf"><span class="wf">Month end</span><button class="i" data-tip="Power BI: card + line. Notes are not billable until co-signed. The chip switches between month-end depth and monthly peak.">&#9432;</button></div>
-      </div>
-      <div class="body">
-        <div class="big">73</div>
-        <div class="sub">median 19h in queue</div>
-        <div class="spark ch" id="k-cosign"></div>
       </div>
     </div>
 
@@ -250,20 +240,6 @@
     </div>
 
     <div class="v c8 h2r">
-      <div class="vh"><h4>Documentation and quality by supervisor group</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. PHQ-9 delta is acuity-adjusted — publishing it raw is how the report loses clinician trust on day one.">&#9432;</button></div>
-      </div>
-      <div class="body" id="p-mx"></div>
-    </div>
-
-    <div class="v c4 h2r">
-      <div class="vh"><h4>Co-sign load by supervisor</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: small multiples (area). Pending notes per supervisor by month — a small number of LCSWs carry this whole queue.">&#9432;</button></div>
-      </div>
-      <div class="body" id="p-sm"></div>
-    </div>
-
-    <div class="v c8 h2r">
       <div class="vh"><h4>Sessions held — billed vs unbilled</h4>
         <div class="vf"><span class="wf">Supervisor: all</span><span class="wf">Note type: all</span><button class="i" data-tip="Power BI: stacked column chart. Same unit, one axis — do not model the billed rate as a second axis on this visual.">&#9432;</button></div>
       </div>
@@ -272,7 +248,7 @@
       </div>
     </div>
 
-    <div class="v c4 h3r">
+    <div class="v c6 h3r">
       <div class="vh"><h4>Medical group headcount by licence type</h4>
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix — role as the outer row group, licence type as the inner, headcount as the value. Deliberately not a chart: the question is which licence sits under which role, and no bar or facet can show that nesting.">&#9432;</button></div>
       </div>
@@ -297,22 +273,15 @@
               <li>PMHNP-BC<span>21</span></li>
             </ul>
           </div>
+          <div class="rg ot">
+            <div class="rgh"><b>Other</b><span class="n">28</span></div>
+            <div class="rgs">Case management and peer support</div>
+            <ul class="rl">
+              <li>RN — case managers<span>15</span></li>
+              <li class="none">No clinical licence — peers<span>13</span></li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </div>
-
-    <div class="v c8 h3r">
-      <div class="vh"><h4>Co-sign rejections by reason</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Rejection rate alone does not tell a supervisor what to fix; the reason and the days it adds back to the queue do.">&#9432;</button></div>
-      </div>
-      <div class="body" id="x-rejmx"></div>
-    </div>
-
-    <div class="v c6 h2r">
-      <div class="vh"><h4>Median time from session end to signed note</h4>
-        <div class="vf"><span class="wf">All note types</span><button class="i" data-tip="Power BI: line chart, one series, in hours, with a constant line at the 24-hour standard. The share-based view is the notes-signed KPI; this is the median the share cannot show.">&#9432;</button></div>
-      </div>
-      <div class="body"><div class="ch" id="x-notemed"></div>
       </div>
     </div>
 
@@ -322,6 +291,14 @@
       </div>
       <div class="body" id="x-gt"></div>
     </div>
+    <div class="v c12 h2r">
+      <div class="vh"><h4>Median time from session end to signed note</h4>
+        <div class="vf"><span class="wf">All note types</span><button class="i" data-tip="Power BI: line chart, one series, in hours, with a constant line at the 24-hour standard. The share-based view is the notes-signed KPI; this is the median the share cannot show.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="x-notemed"></div>
+      </div>
+    </div>
+
   </div>
 
   <div class="ptabs" role="group" aria-label="Reports">
@@ -784,29 +761,11 @@
 <script>
 APTI.render(function () {
   var MO = APTI.MO, columns = APTI.columns, lines = APTI.lines,
-      spark = APTI.spark, smallMultiples = APTI.smallMultiples, matrix = APTI.matrix;
+      spark = APTI.spark, smallMultiples = APTI.smallMultiples;
 
 
   spark("k-pool", [96, 98, 99, 101, 103, 104, 106, 107, 109, 110, 111, 112], "var(--s1)");
   spark("k-24h", [55, 56, 58, 57, 60, 61, 62, 63, 65, 66, 67, 68], "var(--s1)", "%");
-  spark("k-cosign", [48, 52, 55, 58, 60, 63, 65, 67, 69, 70, 71, 73], "var(--s1)");
-
-  smallMultiples("p-sm", [
-    { label: "Supervisor A", value: "31", color: "var(--s2)", spark: [12, 14, 18, 20, 22, 24, 26, 27, 28, 29, 30, 31] },
-    { label: "Supervisor B", value: "18", color: "var(--s1)", spark: [22, 22, 21, 21, 20, 20, 19, 19, 19, 18, 18, 18] },
-    { label: "Supervisor C", value: "14", color: "var(--s1)", spark: [19, 19, 18, 18, 17, 17, 16, 16, 15, 15, 14, 14] }
-  ]);
-
-  matrix("p-mx",
-    ["Supervisor group", "Providers", "Notes", "<24h", "Pending co-sign", "Rejection", "PHQ-9 delta (adj.)"],
-    [
-      ["Group A", "14", { v: "2,412", bar: 100 }, { v: "61%", cf: "c" }, { v: "31", bar: 100 }, { v: "8.4%", cf: "c" }, "\u22125.8"],
-      ["Group B", "12", { v: "1,986", bar: 82 }, { v: "72%", cf: "g" }, { v: "18", bar: 58 }, { v: "5.1%", cf: "g" }, "\u22126.4"],
-      ["Group C", "11", { v: "1,744", bar: 72 }, { v: "69%", cf: "w" }, { v: "14", bar: 45 }, { v: "6.0%", cf: "w" }, "\u22126.1"],
-      ["Group D", "9", { v: "1,208", bar: 50 }, { v: "74%", cf: "g" }, { v: "10", bar: 32 }, { v: "4.4%", cf: "g" }, "\u22126.6"],
-      ["Total", "46", { v: "7,350", bar: 100 }, { v: "68%" }, { v: "73", bar: 100 }, { v: "6.1%" }, "\u22126.2"]
-    ]
-  );
 
   columns("p-combo", {
     labels: MO, h: 84, stacked: true, max: 13000,
@@ -822,18 +781,6 @@ APTI.render(function () {
     labels: MO, h: 80, max: 48, unit: " h", rule: 24, ruleLabel: "24-hour standard",
     series: [{ name: "Median hours to signed note", color: "var(--s1)", values: [31, 30, 29, 30, 27, 26, 25, 24, 23, 22, 21, 19] }]
   });
-
-  matrix("x-rejmx",
-    ["Rejection reason", "Notes", "Share", "Days added"],
-    [
-      ["Missing or thin medical necessity", { v: "38", bar: 100 }, { v: "34%", cf: "c" }, { v: "2.6", cf: "c" }],
-      ["Goal not linked to the intervention", { v: "26", bar: 68 }, { v: "23%", cf: "c" }, { v: "1.9", cf: "w" }],
-      ["Diagnosis not supported by the note", { v: "21", bar: 55 }, { v: "19%", cf: "w" }, { v: "2.1", cf: "w" }],
-      ["Wrong service code or duration", { v: "16", bar: 42 }, { v: "14%", cf: "w" }, { v: "1.2", cf: "g" }],
-      ["Other, free text", { v: "11", bar: 29 }, { v: "10%", cf: "w" }, { v: "1.7", cf: "w" }],
-      ["Total rejected", { v: "112", bar: 100 }, { v: "6.1%" }, { v: "2.1" }]
-    ]
-  );
 
   smallMultiples("x-gt", [
     { label: "Diagnosis recorded", value: "97%", color: "var(--s1)", unit: "%", spark: [92, 92, 93, 93, 94, 94, 95, 95, 96, 96, 97, 97] },

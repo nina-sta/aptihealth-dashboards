@@ -307,7 +307,7 @@
                 "Feb 2026", "Jan 2026", "Dec 2025", "Nov 2025", "Oct 2025", "Sep 2025"];
   var CHANNELS = ["Channel: all", "Channel: referrers only", "Channel: self sign-up", "Channel: PCP practices", "Channel: health systems", "Channel: health plans"];
   var ACUITY = ["Acuity: all", "Acuity: severe", "Acuity: high", "Acuity: medium", "Acuity: base"];
-  var SUPS = ["Supervisor: all", "Supervisor A", "Supervisor B", "Supervisor C"];
+  var SUPS = ["Supervisor: all", "K. Delaney", "M. Okonkwo", "S. Barros", "T. Whitfield"];
 
   var OPTIONS = {
     /* report-level slicers */
@@ -323,6 +323,7 @@
     "Acuity: all": { head: "Acuity", opts: ACUITY },
     "Acuity: severe": { head: "Acuity", opts: ACUITY },
     "Supervisor: all": { head: "Supervisor", opts: SUPS },
+    "Role: all": { head: "Role", opts: ["Role: all", "Role: behavioral health specialists", "Role: prescribers", "Role: other"] },
     "Baseline \u22659": { head: "HEDIS baseline", opts: ["Baseline \u22659", "Baseline \u22655", "Baseline: any score"] },
     "Stage: first session": { head: "Conversion stage", opts: ["Stage: registration complete", "Stage: DI attended", "Stage: first session"] },
     "Stage: all": { head: "Journey stage", opts: ["Stage: all", "Stage: registered, never assessed", "Stage: A5 done, no DI", "Stage: DI attended, no first session", "Stage: in care, left early", "Stage: completed 90-day care"] },

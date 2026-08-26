@@ -130,6 +130,14 @@
   .g-good .ico { color: var(--good); } .g-warning .ico { color: var(--warning); }
   .g-serious .ico { color: var(--serious); } .g-critical .ico { color: var(--critical); }
 
+  /* Section bands. The provider report reads top-down — roster, then efficiency, then
+     supervision — and an invisible HTML comment does not tell a reader that. */
+  .band { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 9px; margin: 8px 0 -3px; }
+  .band .t { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--ink-1); flex-shrink: 0; }
+  .band .d { font-size: 9px; color: var(--ink-muted); }
+  .band .r { flex: 1; border-top: 1px solid var(--border); min-width: 12px; }
+  .page.on > .band:first-child { margin-top: 0; }
+
   /* Role groups — a headcount roll-up with no chart in it. The question is which licence
      sits under which role, and a bar cannot say that. Four columns, one per role. */
   .roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
@@ -656,7 +664,7 @@
                 "Feb 2026", "Jan 2026", "Dec 2025", "Nov 2025", "Oct 2025", "Sep 2025"];
   var CHANNELS = ["Channel: all", "Channel: referrers only", "Channel: self sign-up", "Channel: PCP practices", "Channel: health systems", "Channel: health plans"];
   var ACUITY = ["Acuity: all", "Acuity: severe", "Acuity: high", "Acuity: medium", "Acuity: base"];
-  var SUPS = ["Supervisor: all", "Supervisor A", "Supervisor B", "Supervisor C"];
+  var SUPS = ["Supervisor: all", "K. Delaney", "M. Okonkwo", "S. Barros", "T. Whitfield"];
 
   var OPTIONS = {
     /* report-level slicers */
@@ -672,6 +680,7 @@
     "Acuity: all": { head: "Acuity", opts: ACUITY },
     "Acuity: severe": { head: "Acuity", opts: ACUITY },
     "Supervisor: all": { head: "Supervisor", opts: SUPS },
+    "Role: all": { head: "Role", opts: ["Role: all", "Role: behavioral health specialists", "Role: prescribers", "Role: other"] },
     "Baseline \u22659": { head: "HEDIS baseline", opts: ["Baseline \u22659", "Baseline \u22655", "Baseline: any score"] },
     "Stage: first session": { head: "Conversion stage", opts: ["Stage: registration complete", "Stage: DI attended", "Stage: first session"] },
     "Stage: all": { head: "Journey stage", opts: ["Stage: all", "Stage: registered, never assessed", "Stage: A5 done, no DI", "Stage: DI attended, no first session", "Stage: in care, left early", "Stage: completed 90-day care"] },

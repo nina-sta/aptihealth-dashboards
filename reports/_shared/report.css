@@ -127,6 +127,14 @@
   .g-good .ico { color: var(--good); } .g-warning .ico { color: var(--warning); }
   .g-serious .ico { color: var(--serious); } .g-critical .ico { color: var(--critical); }
 
+  /* Section bands. The provider report reads top-down — roster, then efficiency, then
+     supervision — and an invisible HTML comment does not tell a reader that. */
+  .band { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 9px; margin: 8px 0 -3px; }
+  .band .t { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--ink-1); flex-shrink: 0; }
+  .band .d { font-size: 9px; color: var(--ink-muted); }
+  .band .r { flex: 1; border-top: 1px solid var(--border); min-width: 12px; }
+  .page.on > .band:first-child { margin-top: 0; }
+
   /* Role groups — a headcount roll-up with no chart in it. The question is which licence
      sits under which role, and a bar cannot say that. Four columns, one per role. */
   .roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }

@@ -354,15 +354,34 @@
     if (ddFor) { ddFor.removeAttribute("data-open"); ddFor = null; }
   }
 
+  /* A chip's label is the key into OPTIONS, but only the default label of each list is
+     a key — pick "Jul 2026" and the chip would look itself up, find nothing and fall back
+     to a list of one, stranding itself with no way back. Index every value in every list
+     so any label finds the list it belongs to. */
+  var BY_VALUE = null;
+  function listFor(label) {
+    if (!BY_VALUE) {
+      BY_VALUE = {};
+      for (var k in OPTIONS) {
+        OPTIONS[k].opts.forEach(function (v) { if (!(v in BY_VALUE)) BY_VALUE[v] = OPTIONS[k]; });
+      }
+    }
+    return OPTIONS[label] || BY_VALUE[label] || null;
+  }
+
   function openDD(chip) {
     var cur = chip.textContent.trim();
     /* A chip can carry its own shorter list with data-opts, for a visual that only
        models some of the values — the funnel knows referred and self sign-up, not
        one referrer type at a time. */
     var own = chip.getAttribute("data-opts");
+    /* Remember which list this chip belongs to. A few values sit in two lists —
+       "Aug 2026" is both a month and a period — so resolving by label alone could
+       walk a chip onto the wrong list and lose its way back. Resolved once, kept. */
     var cfg = own
-      ? { head: chip.getAttribute("data-head") || (OPTIONS[cur] || {}).head || "Filter", opts: own.split("|") }
-      : (OPTIONS[cur] || { head: "Filter", opts: [cur] });
+      ? { head: chip.getAttribute("data-head") || (listFor(cur) || {}).head || "Filter", opts: own.split("|") }
+      : (chip.__optList || listFor(cur) || { head: "Filter", opts: [cur] });
+    if (!own) chip.__optList = cfg;
     dd.innerHTML = "";
     var h = document.createElement("div"); h.className = "ddh"; h.textContent = cfg.head; dd.appendChild(h);
     cfg.opts.forEach(function (o) {

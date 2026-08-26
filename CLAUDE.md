@@ -105,7 +105,9 @@ These were decided deliberately. Do not "improve" them without being asked.
    chosen. Keep it accurate; it is what the data team builds from.
 7. **No tables in prose.** Matrix visuals are fine — those are charts.
 8. **A visual that answers a payer question carries a marker** in its header —
-   `<span class="ask">CDPHP asked</span>`.
+   `<span class="ask">CDPHP asked</span>`. The patient-journey report is the exception: it
+   dropped the marker on 26 Aug 2026 and reads as a purely internal report, so what the payer
+   asked for is tracked in the provider report and in the CDPHP report only.
 
 ## Palette (validated, do not substitute by eye)
 

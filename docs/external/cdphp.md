@@ -8,9 +8,9 @@
 
 **Five pages, one report.** The mock-up carries a page tab strip along the bottom, because that
 is what Power BI builds: one report file with several pages, not five separate reports. The
-`## Page` headings below are those tabs, in the order they appear. CDPHP 1, 2 and 3 are
-deliberately empty placeholders — the slots exist so the tab order is settled before the
-content is, and nothing is agreed for them yet.
+`## Page` headings below are those tabs, in the order they appear. The three middle pages are
+named but deliberately empty — the slots exist so the tab order is settled before the content
+is, and nothing is agreed for them yet.
 
 ## How to read the table
 
@@ -41,15 +41,15 @@ care we delivered, and this is the part that decides whether we are paid for it.
 | ACP consent response | How many patients have consented to what we share with the payer? | _unassigned_ | _to agree_ | Blocked — The stored response values are not confirmed. This assumes consented / declined / no response; a fourth value for "request never sent" would change the denominator |
 | Monthly invoice — billed lines by month | Can we show the payer a member's billing history when they query a line? | _unassigned_ | _to agree_ | Built |
 
-## Page — CDPHP 1
+## Page — CDPHP Patient Acquisition
 
 Reserved, no visuals. Nothing agreed yet.
 
-## Page — CDPHP 2
+## Page — CDPHP Patient Acquisition — CN referrals
 
 Reserved, no visuals. Nothing agreed yet.
 
-## Page — CDPHP 3
+## Page — Clinical Outcomes (PHQ9, CDPHP)
 
 Reserved, no visuals. Nothing agreed yet.
 

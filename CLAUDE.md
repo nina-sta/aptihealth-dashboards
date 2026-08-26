@@ -45,9 +45,9 @@ one program and one period, decided when the report is issued, not switched by t
 
 **The CDPHP report is one file holding five pages**, switched by the `<button data-pg="…">`
 tabs in `.ptabs` at the bottom — that is Power BI's own model, one report with a page strip,
-and `render()` in the shared code already implements it. The pages are CDPHP Billing, CDPHP 1,
-CDPHP 2, CDPHP 3 and CDPHP Update; the three numbered ones are reserved placeholders with no
-visuals yet. `sync.py` reads every page in the file, so all five share one specification —
+and `render()` in the shared code already implements it. The pages are CDPHP Billing, CDPHP
+Patient Acquisition, CDPHP Patient Acquisition — CN referrals, Clinical Outcomes (PHQ9, CDPHP)
+and CDPHP Update; the three middle ones are named but still have no visuals. `sync.py` reads every page in the file, so all five share one specification —
 `docs/external/cdphp.md`, sectioned by `## Page` heading. Adding a page means adding a button,
 a `.page` div and a `## Page` section together.
 

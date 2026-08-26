@@ -38,7 +38,7 @@ care we delivered, and this is the part that decides whether we are paid for it.
 | Patients by eligibility and engagement | Of the patients we treated, how many can we actually bill? | _unassigned_ | _to agree_ | Built |
 | Billed panel — how members join it | Is the panel growing on new members, or on the same people coming back? | _unassigned_ | _to agree_ | Built |
 | Current month invoice — sent on the 15th | What exactly are we invoicing this month? | _unassigned_ | _to agree_ | Built |
-| ACP consent response | How many patients have consented to what we share with the payer? | _unassigned_ | _to agree_ | Blocked — The stored response values are not confirmed. This assumes consented / declined / no response; a fourth value for "request never sent" would change the denominator |
+| ACP consent response | How many patients have consented to what we share with the payer? | _unassigned_ | _to agree_ | Blocked — The stored response values are not confirmed. This assumes consented / declined / no response; a fourth value for "request never sent" would change the denominator. No longer shown as a warning on the tile; this document is the record |
 | Monthly invoice — billed lines by month | Can we show the payer a member's billing history when they query a line? | _unassigned_ | _to agree_ | Built |
 
 ## Page — CDPHP Patient Acquisition
@@ -49,7 +49,7 @@ Reserved, no visuals. Nothing agreed yet.
 
 Reserved, no visuals. Nothing agreed yet.
 
-## Page — Clinical Outcomes (PHQ9, CDPHP)
+## Page — Clinical Outcomes (PHQ9)
 
 Reserved, no visuals. Nothing agreed yet.
 
@@ -134,7 +134,7 @@ fast, how much care they got, and whether the documentation behind it holds up.
 
 Across every page.
 
-- **ACP consent response** — The stored response values are not confirmed. This assumes consented / declined / no response; a fourth value for “request never sent” would change the denominator.
+- **ACP consent response** — The stored response values are not confirmed. This assumes consented / declined / no response; a fourth value for “request never sent” would change the denominator. No longer shown as a warning on the tile; this document is the record.
 - **Members in care by tenure** — Blocked: needs an episode-of-care definition — days in care currently run through inactivation.
 - **Payer contracts and credentialing** — Confirm whether “licensed” in the ask means payer credentialing or state licensure — they are different counts.
 - **Post-discharge members reached** — Denominator depends on how we learn about a discharge — payer feed, referrer notification or member self-report. Each gives a different population.

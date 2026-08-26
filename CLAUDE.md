@@ -55,7 +55,7 @@ the third payer arrives, or the new report's visuals start counting as internal 
 **The CDPHP report is one file holding five pages**, switched by the `<button data-pg="…">`
 tabs in `.ptabs` at the bottom — that is Power BI's own model, one report with a page strip,
 and `render()` in the shared code already implements it. The pages are CDPHP Billing, CDPHP
-Patient Acquisition, CDPHP CN referrals, Clinical Outcomes (PHQ9, CDPHP)
+Patient Acquisition, CDPHP CN referrals, Clinical Outcomes (PHQ9)
 and CDPHP Update; the three middle ones are named but still have no visuals. `sync.py` reads every page in the file, so all five share one specification —
 `docs/external/cdphp.md`, sectioned by `## Page` heading. Adding a page means adding a button,
 a `.page` div and a `## Page` section together.

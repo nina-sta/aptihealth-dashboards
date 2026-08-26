@@ -7,7 +7,7 @@
 **Purpose:** Answer what MVP asked for. This report is the CDPHP report with visuals switched off — that is the model for every payer after the first, so a measure missing from [the CDPHP report](cdphp.md) is missing here too.
 
 **Five pages, one report,** mirroring CDPHP page for page so the two can be read side by side:
-MVP Billing, MVP Patient Acquisition, MVP CN referrals, Clinical Outcomes (PHQ9, MVP), MVP
+MVP Billing, MVP Patient Acquisition, MVP CN referrals, Clinical Outcomes (PHQ9), MVP
 Update. Every one of them is currently empty.
 
 ## What is decided and what is not

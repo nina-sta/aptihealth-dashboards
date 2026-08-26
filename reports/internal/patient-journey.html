@@ -204,9 +204,9 @@
 
     <div class="v c7 h3r">
       <div class="vh"><h4>Members by stage &mdash; in stage and inactivated after it</h4>
-        <div class="vf"><span class="wf">All time</span><button class="i" data-tip="Power BI: stacked bar chart. For each journey stage, the members sitting in it now and the members who were inactivated after reaching it. Both series are member counts, so one bar and one axis. The chip is a period filter — the counts shown are all-time, not a month.">&#9432;</button></div>
+        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: stacked bar chart. The same nine stages as the acquisition funnel, and the same month, read a different way: the funnel counts everyone who reached a stage, this counts where they stopped. Each member appears once, at the furthest stage they reached, split into still sitting there and inactivated after it. Both series are member counts, so one bar and one axis.">&#9432;</button></div>
       </div>
-      <p class="info">A member is counted at the furthest stage they reached. Read the pink band as the cost of each stage: Started NDC loses more members than every intake stage put together.</p>
+      <p class="info">Every member referred in the month is on this chart exactly once, so the bars add up to the 781 the funnel starts from. The stages are the funnel's stages.</p>
       <div class="body"><div class="ch" id="c-stagebars"></div>
         <div class="lg">
           <span><i style="background:var(--s1)"></i>Currently in stage</span>
@@ -221,7 +221,6 @@
       </div>
       <p class="info">Two reasons carry three quarters of it, and both are contact problems rather than clinical ones.</p>
       <div class="body"><div class="ch" id="c-inact-reason"></div>
-        <div class="gapnote">&#9888; Reason wording is transcribed from the existing dashboard and two labels were cut off in the source. Take the final wording from the inactivation reason picklist.</div>
       </div>
     </div>
 
@@ -702,35 +701,35 @@ APTI.render(function () {
       funnel = APTI.funnel, spark = APTI.spark, smallMultiples = APTI.smallMultiples, matrix = APTI.matrix;
 
   bars("c-stagebars", {
-    lw: 128, rh: 21, max: 2100,
+    lw: 128, rh: 21, max: 210,
     rows: [
-      { label: "Referred", fmt: "1,266", segments: [
-        { name: "Currently in stage", value: 1206, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 60, color: "var(--critical)" }] },
-      { label: "Registered", fmt: "1,499", segments: [
-        { name: "Currently in stage", value: 1253, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 246, color: "var(--critical)" }] },
-      { label: "Completed any assessment", fmt: "590", segments: [
-        { name: "Currently in stage", value: 451, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 139, color: "var(--critical)" }] },
-      { label: "DI scheduled", fmt: "816", segments: [
-        { name: "Currently in stage", value: 518, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 298, color: "var(--critical)" }] },
-      { label: "DI attended", fmt: "359", segments: [
-        { name: "Currently in stage", value: 93, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 266, color: "var(--critical)" }] },
-      { label: "DI completed", fmt: "708", segments: [
-        { name: "Currently in stage", value: 365, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 343, color: "var(--critical)" }] },
-      { label: "Started NDC", fmt: "1,883", segments: [
-        { name: "Currently in stage", value: 1060, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 823, color: "var(--critical)" }] },
-      { label: "Completed NDC", fmt: "87", segments: [
-        { name: "Currently in stage", value: 64, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 23, color: "var(--critical)" }] },
-      { label: "Started extended care", fmt: "1,674", segments: [
-        { name: "Currently in stage", value: 1114, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 560, color: "var(--critical)" }] }
+      { label: "Referral created", fmt: "211", segments: [
+        { name: "Currently in stage", value: 138, color: "var(--s1)" },
+        { name: "Inactivated after this stage", value: 73, color: "var(--critical)" }] },
+      { label: "Registration complete", fmt: "85", segments: [
+        { name: "Currently in stage", value: 44, color: "var(--s1)" },
+        { name: "Inactivated after this stage", value: 41, color: "var(--critical)" }] },
+      { label: "Eligibility accepted", fmt: "50", segments: [
+        { name: "Currently in stage", value: 12, color: "var(--s1)" },
+        { name: "Inactivated after this stage", value: 38, color: "var(--critical)" }] },
+      { label: "Email + consents", fmt: "88", segments: [
+        { name: "Currently in stage", value: 55, color: "var(--s1)" },
+        { name: "Inactivated after this stage", value: 33, color: "var(--critical)" }] },
+      { label: "A5 complete", fmt: "45", segments: [
+        { name: "Currently in stage", value: 16, color: "var(--s1)" },
+        { name: "Inactivated after this stage", value: 29, color: "var(--critical)" }] },
+      { label: "DI booked", fmt: "67", segments: [
+        { name: "Currently in stage", value: 39, color: "var(--s1)" },
+        { name: "Inactivated after this stage", value: 28, color: "var(--critical)" }] },
+      { label: "DI attended", fmt: "21", segments: [
+        { name: "Currently in stage", value: 9, color: "var(--s1)" },
+        { name: "Inactivated after this stage", value: 12, color: "var(--critical)" }] },
+      { label: "Admitted to 90-day care", fmt: "19", segments: [
+        { name: "Currently in stage", value: 12, color: "var(--s1)" },
+        { name: "Inactivated after this stage", value: 7, color: "var(--critical)" }] },
+      { label: "First session attended", fmt: "195", segments: [
+        { name: "Currently in stage", value: 181, color: "var(--s1)" },
+        { name: "Inactivated after this stage", value: 14, color: "var(--critical)" }] }
     ]
   });
 

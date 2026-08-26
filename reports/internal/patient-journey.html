@@ -221,7 +221,6 @@
       </div>
       <p class="info">Two reasons carry three quarters of it, and both are contact problems rather than clinical ones.</p>
       <div class="body"><div class="ch" id="c-inact-reason"></div>
-        <div class="gapnote">&#9888; Two reason labels are still the truncated strings copied from the source dashboard. Take the final wording from the inactivation reason picklist before this goes near a payer.</div>
       </div>
     </div>
 
@@ -284,6 +283,22 @@
       </div>
     </div>
 
+    <div class="v c6 h2r">
+      <div class="vh"><h4>Onboarding completion rate</h4>
+        <div class="vf"><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: clustered column with a constant line for target. Of the members who completed registration in the month, the share who finished the rest of onboarding — eligibility, email and consents, and the A5 assessment. It is the middle of the funnel expressed as one rate, so it can be trended and given a target.">&#9432;</button></div>
+      </div>
+      <p class="info">The four in ten who do not finish are the largest single loss in the whole journey, and they leave before anyone clinical has met them.</p>
+      <div class="body"><div class="ch" id="c-onboard"></div></div>
+    </div>
+
+    <div class="v c6 h2r">
+      <div class="vh"><h4>First-appointment no-show</h4>
+        <div class="vf"><span class="wf">Milestone: DI attended</span><button class="i" data-tip="Power BI: line chart, one series, with a constant line at the 15% standard. Booked first appointments where the member did not attend, as a share of first appointments booked in the month. Cancellations with notice count as no-shows here because the slot is lost either way. The milestone chip switches between the DI and the first therapy session.">&#9432;</button></div>
+      </div>
+      <p class="info">Counted against the month the appointment was booked for, not the month it was booked in, so a slot lost in August lands in August.</p>
+      <div class="body"><div class="ch" id="c-noshow"></div></div>
+    </div>
+
     <div class="v c7 h3r">
       <div class="vh"><h4>Urgent referrals &mdash; time to care by reason</h4>
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Volume, median days to DI attended, and the share seen within 7 days, per urgent reason.">&#9432;</button></div>
@@ -292,31 +307,21 @@
       <div class="body" id="u-mx"></div>
     </div>
 
-    <div class="v c5 h3r">
-      <div class="vh"><h4>Acuity 4 by referral channel and admission source</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Exists to test the claim that acuity 4 is mostly hospital and ED discharges. Admission source is the referrer's stated origin, not a derived field.">&#9432;</button></div>
-      </div>
-      <p class="info">On this month the claim only half holds: inpatient and ED together are under half of acuity 4, and self sign-up carries more high-acuity volume than expected.</p>
-      <div class="body" id="x-ac4mx"></div>
-    </div>
-
-    <div class="v c7 h2r">
+    <div class="v c5 h2r">
       <div class="vh"><h4>ACP consent to touchpoints met</h4>
         <div class="vf"><span class="wf">Jul 2026</span><button class="i" data-tip="Power BI: funnel. Three stages of the advanced care planning path: members eligible, members who gave consent, and members whose touchpoints met the contractual minimum. Each stage is a member count, so one funnel rather than three cards.">&#9432;</button></div>
       </div>
       <p class="info">The first two stages are a standing state; the third is read over the last full month, because a month still running cannot have met a monthly minimum.</p>
       <div class="body"><div class="ch" id="c-acp-funnel"></div>
-        <div class="gapnote">&#9888; Confirm where ACP eligibility and consent are stored. The touchpoint count is built today; neither flag has a confirmed field.</div>
       </div>
     </div>
 
-    <div class="v c5 h2r">
+    <div class="v c12 h2r">
       <div class="vh"><h4>Diagnostic interviews &mdash; first-time vs repeat</h4>
         <div class="vf"><button class="i" data-tip="Power BI: stacked column chart. Both series are DI counts, so one axis. Repeat means a member who had a completed DI before this one.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="x-direpeat"></div>
         <div class="lg"><span><i style="background:var(--s1)"></i>First-time</span><span><i style="background:var(--s2)"></i>Repeat</span></div>
-        <div class="gapnote">&#9888; &ldquo;Repeat&rdquo; is not defined on our side. The only written rules are the annual re-assessment for returning members and A5R every 90 days.</div>
       </div>
     </div>
   </div>
@@ -789,6 +794,17 @@ APTI.render(function () {
     ]
   });
 
+  columns("c-onboard", {
+    labels: MO, h: 74, rule: 70, ruleLabel: "target 70%", max: 100, unit: "%",
+    series: [{ name: "Completed onboarding", color: "var(--s1)", values: [52, 54, 53, 51, 56, 57, 55, 58, 59, 58, 60, 61] }],
+    fmt: function (v) { return Math.round(v) + "%"; }
+  });
+
+  lines("c-noshow", {
+    labels: MO, h: 78, max: 40, rule: 15, ruleLabel: "15% standard",
+    series: [{ name: "No-show", color: "var(--s1)", values: [27, 26, 28, 29, 25, 24, 26, 23, 24, 25, 23, 22] }]
+  });
+
   matrix("u-mx",
     ["Urgent reason", "Referrals", "Median days to DI", "Seen ≤ 7 days", "≤ 48h"],
     [
@@ -836,19 +852,6 @@ APTI.render(function () {
       { name: "Repeat", color: "var(--s2)", values: [54, 58, 51, 47, 62, 65, 61, 66, 69, 66, 70, 68] }
     ]
   });
-
-  matrix("x-ac4mx",
-    ["Admission source", "Acuity 4", "Share of acuity 4", "Self sign-up", "PCP", "Health system", "CDPHP-direct"],
-    [
-      ["Inpatient BH discharge", { v: "34", bar: 100 }, { v: "27%", cf: "w" }, "2", "4", "21", "7"],
-      ["ED presentation", { v: "23", bar: 68 }, { v: "18%", cf: "w" }, "3", "3", "14", "3"],
-      ["Crisis line / mobile crisis", { v: "19", bar: 56 }, { v: "15%", cf: "w" }, "6", "2", "8", "3"],
-      ["PCP escalation", { v: "17", bar: 50 }, { v: "13%", cf: "g" }, "0", "15", "1", "1"],
-      ["Member self-report at intake", { v: "26", bar: 76 }, { v: "21%", cf: "c" }, "24", "1", "0", "1"],
-      ["Not recorded", { v: "7", bar: 21 }, { v: "6%", cf: "c" }, "4", "1", "1", "1"],
-      ["Total acuity 4", { v: "126", bar: 100 }, { v: "100%" }, "39", "26", "45", "16"]
-    ]
-  );
 
 });
 </script>

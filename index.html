@@ -137,7 +137,15 @@
 
   .gapnote { font-size: 8.5px; color: var(--critical); font-weight: 600; margin-top: 4px; }
 
-  .ptabs { display: flex; gap: 2px; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 7px; align-items: center; }
+  /* The report switcher stays on screen — these pages are long and it is the only
+     way between reports. */
+  .ptabs {
+    display: flex; gap: 2px; margin-top: 10px; border-top: 1px solid var(--border);
+    padding-top: 7px; align-items: center;
+    position: sticky; bottom: 0; z-index: 60;
+    background: var(--plane); padding-bottom: 7px;
+    box-shadow: 0 -6px 12px -8px rgba(11, 11, 11, 0.35);
+  }
   .ptabs button {
     appearance: none; border: 1px solid transparent; background: none; cursor: pointer; font: inherit;
     font-size: 11px; font-weight: 550; color: var(--ink-muted); padding: 4px 12px; border-radius: 3px;

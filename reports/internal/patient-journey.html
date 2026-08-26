@@ -132,7 +132,15 @@
 
   .gapnote { font-size: 8.5px; color: var(--critical); font-weight: 600; margin-top: 4px; }
 
-  .ptabs { display: flex; gap: 2px; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 7px; align-items: center; }
+  /* The report switcher stays on screen — these pages are long and it is the only
+     way between reports. */
+  .ptabs {
+    display: flex; gap: 2px; margin-top: 10px; border-top: 1px solid var(--border);
+    padding-top: 7px; align-items: center;
+    position: sticky; bottom: 0; z-index: 60;
+    background: var(--plane); padding-bottom: 7px;
+    box-shadow: 0 -6px 12px -8px rgba(11, 11, 11, 0.35);
+  }
   .ptabs button {
     appearance: none; border: 1px solid transparent; background: none; cursor: pointer; font: inherit;
     font-size: 11px; font-weight: 550; color: var(--ink-muted); padding: 4px 12px; border-radius: 3px;
@@ -178,33 +186,12 @@
   </div>
 
   <div class="page on" id="pg-patient">
-    <div class="v c6 h3r">
-      <div class="vh"><h4>Acquisition and access funnel &mdash; referred members</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Channel: referrers only</span><button class="i" data-tip="Power BI: funnel. Members a referrer sent us — PCP practices, health systems and health plans. It starts one stage earlier than the self sign-up funnel because a referral is created by somebody else before the member has done anything at all. Stages in red have a named drop reason on hover.">ⓘ</button></div>
-      </div>
-      <p class="info">Starts with an event the member did not cause. A quarter of referrals never reach a completed registration, which is a handover problem rather than a member one.</p>
-      <div class="body"><div class="ch" id="c-funnel"></div></div>
-    </div>
-
-    <div class="v c6 h3r">
-      <div class="vh"><h4>Acquisition and access funnel &mdash; self sign-up</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Channel: self sign-up</span><button class="i" data-tip="Power BI: funnel. The same stages as the referred funnel with one exception: there is no referral created row, because nobody creates a referral for a member who arrives on their own. The first row is the member's own first completed step, so the two funnels are comparable from registration complete downwards, not from the top.">ⓘ</button></div>
-      </div>
-      <p class="info">No referral event exists here, so this funnel is one stage shorter. Members who abandon registration halfway never appear on it — that loss sits before the first row.</p>
-      <div class="body"><div class="ch" id="c-funnel-self"></div></div>
-    </div>
-
     <div class="v c7 h3r">
-      <div class="vh"><h4>Members by stage &mdash; in stage and inactivated after it</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: stacked bar chart. The same stages as the two acquisition funnels, and the same month, read a different way: a funnel counts everyone who reached a stage, this counts where they stopped. Both channels are in here together. Each member appears once, at the furthest stage they reached, split into still sitting there and inactivated after it. Both series are member counts, so one bar and one axis.">&#9432;</button></div>
+      <div class="vh"><h4>Acquisition and access funnel</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: funnel. Both chips filter this visual for real — pick a month to see that month, or all months for the year. The channel chip switches between everyone, the members a referrer sent, and the members who arrived on their own. A self sign-up has no referral to create, so on that selection the first stage is empty and the funnel starts a row down; the two are comparable from registration complete downwards. Stages in red have a named drop reason on hover.">&#9432;</button></div>
       </div>
-      <p class="info">Every member the month brought in is on this chart exactly once, referred and self sign-up together, so the bars add up to 781 — the two funnels side by side.</p>
-      <div class="body"><div class="ch" id="c-stagebars"></div>
-        <div class="lg">
-          <span><i style="background:var(--s1)"></i>Currently in stage</span>
-          <span><i style="background:var(--s2)"></i>Inactivated after this stage</span>
-        </div>
-      </div>
+      <p class="info">On all channels the first drop is gentle, because a self sign-up who reaches the platform has already chosen to be there. Switch to referrers only and it steepens: a quarter of referrals never reach a completed registration, which is a handover problem rather than a member one.</p>
+      <div class="body"><div class="ch" id="c-funnel"></div></div>
     </div>
 
     <div class="v c5 h3r">
@@ -213,6 +200,28 @@
       </div>
       <p class="info">Two reasons carry three quarters of it, and both are contact problems rather than clinical ones.</p>
       <div class="body"><div class="ch" id="c-inact-reason"></div>
+      </div>
+    </div>
+
+    <div class="v c7 h3r">
+      <div class="vh"><h4>Members by stage &mdash; in stage and inactivated after it</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: stacked bar chart. The same stages as the two acquisition funnels, and the same month, read a different way: a funnel counts everyone who reached a stage, this counts where they stopped. Both channels are in here together. Each member appears once, at the furthest stage they reached, split into still sitting there and inactivated after it. Both series are member counts, so one bar and one axis.">&#9432;</button></div>
+      </div>
+      <p class="info">Every member the period brought in is on this chart exactly once, at the furthest stage they reached, so the bars add up to the funnel’s first row. Its chips move it the same way.</p>
+      <div class="body"><div class="ch" id="c-stagebars"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Currently in stage</span>
+          <span><i style="background:var(--s2)"></i>Inactivated after this stage</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c5 h2r">
+      <div class="vh"><h4>Days from registration to inactivation</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Stage: all</span><button class="i" data-tip="Power BI: clustered column chart used as a histogram (bucketed days as the axis). Buckets come from a DAX calculated column, not from the visual — Power BI cannot bin a measure.">ⓘ</button></div>
+      </div>
+      <p class="info">The 0–7 day spike is people who never really started. The 90–120 band is expected — that's the end of the 90-day programme.</p>
+      <div class="body"><div class="ch" id="c-inact-days"></div>
       </div>
     </div>
 
@@ -250,16 +259,6 @@
     </div>
 
     <div class="v c6 h2r">
-      <div class="vh"><h4>Days from registration to inactivation</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Stage: all</span><button class="i" data-tip="Power BI: clustered column chart used as a histogram (bucketed days as the axis). Buckets come from a DAX calculated column, not from the visual — Power BI cannot bin a measure.">ⓘ</button></div>
-      </div>
-      <p class="info">The 0–7 day spike is people who never really started. The 90–120 band is expected — that's the end of the 90-day programme.</p>
-      <div class="body"><div class="ch" id="c-inact-days"></div>
-        <div class="gapnote">⚠ Needs an inactivation reason field to separate lapsed from clinically discharged.</div>
-      </div>
-    </div>
-
-    <div class="v c6 h2r">
       <div class="vh"><h4>Onboarding completion rate</h4>
         <div class="vf"><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: clustered column with a constant line for target. Of the members who completed registration in the month, the share who finished the rest of onboarding — eligibility, email and consents, and the A5 assessment. It is the middle of the funnel expressed as one rate, so it can be trended and given a target.">&#9432;</button></div>
       </div>
@@ -275,21 +274,12 @@
       <div class="body"><div class="ch" id="c-noshow"></div></div>
     </div>
 
-    <div class="v c7 h2r">
+    <div class="v c6 h2r">
       <div class="vh"><h4>Access by referral channel</h4>
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with a data bar on the volume column. Sorted by the share reaching a diagnostic interview, best first, so the ranking is the message rather than the colours. The bar is a share of all referrals in the month. Put month on columns for a trended view.">ⓘ</button></div>
       </div>
-      <p class="info">Sorted by conversion, not by volume. Self sign-up brings more than half the referrals but converts below the PCP practices that bring a fifth of it.</p>
+      <p class="info">Sorted by conversion, not by volume. Self sign-up brings more than half the volume and converts best; the two channels sending the fewest members convert them worst and make them wait longest.</p>
       <div class="body" id="c-mx-chan"></div>
-    </div>
-
-    <div class="v c5 h2r">
-      <div class="vh"><h4>Median days to first appointment &mdash; urgent vs routine</h4>
-        <div class="vf"><span class="wf">Milestone: DI attended</span><button class="i" data-tip="Power BI: line chart, two series, with a constant line at 7 days. The milestone chip switches between DI scheduled, DI attended and first therapy session.">&#9432;</button></div>
-      </div>
-      <div class="body"><div class="ch" id="u-days"></div>
-        <div class="lg"><span><i style="background:var(--s2)"></i>Urgent</span><span><i style="background:var(--s1)"></i>Routine</span></div>
-      </div>
     </div>
 
     <div class="v c7 h3r">
@@ -301,6 +291,15 @@
     </div>
 
     <div class="v c5 h2r">
+      <div class="vh"><h4>Median days to first appointment &mdash; urgent vs routine</h4>
+        <div class="vf"><span class="wf">Milestone: DI attended</span><button class="i" data-tip="Power BI: line chart, two series, with a constant line at 7 days. The milestone chip switches between DI scheduled, DI attended and first therapy session.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="u-days"></div>
+        <div class="lg"><span><i style="background:var(--s2)"></i>Urgent</span><span><i style="background:var(--s1)"></i>Routine</span></div>
+      </div>
+    </div>
+
+    <div class="v c5 h2r">
       <div class="vh"><h4>ACP consent to touchpoints met</h4>
         <div class="vf"><span class="wf">Jul 2026</span><button class="i" data-tip="Power BI: funnel. Three stages of the advanced care planning path: members eligible, members who gave consent, and members whose touchpoints met the contractual minimum. Each stage is a member count, so one funnel rather than three cards.">&#9432;</button></div>
       </div>
@@ -309,7 +308,7 @@
       </div>
     </div>
 
-    <div class="v c12 h2r">
+    <div class="v c7 h2r">
       <div class="vh"><h4>Diagnostic interviews &mdash; first-time vs repeat</h4>
         <div class="vf"><button class="i" data-tip="Power BI: stacked column chart. Both series are DI counts, so one axis. Repeat means a member who had a completed DI before this one.">&#9432;</button></div>
       </div>
@@ -487,12 +486,26 @@
     var host = document.getElementById(id); if (!host) return;
     var rh = 20, bh = 15, W = Math.max(host.clientWidth || 400, 260);
     var H = rows.length * rh + 4, s = svg(W, H);
-    var lw = 126, aw = W - lw - 74, cx = lw + aw / 2, max = rows[0].value;
-    var wid = rows.map(function (r) { return Math.max(aw * (r.value / max), 2); });
+    var lw = 126, aw = W - lw - 74, cx = lw + aw / 2;
+    /* A stage can be empty — a self sign-up has no referral to create — so the scale
+       comes from the first stage that has a value, and the empty row draws as a rule. */
+    var max = 0;
+    rows.forEach(function (r) { if (r.value != null && r.value > max) max = r.value; });
+    var wid = rows.map(function (r) { return r.value == null ? 0 : Math.max(aw * (r.value / max), 2); });
 
     rows.forEach(function (r, i) {
       var y = i * rh + 2;
-      if (i < rows.length - 1) {
+      if (r.value == null) {
+        s.appendChild(txt(r.label, 0, y + bh - 4, { fill: "var(--ink-muted)", fs: 8.5 }));
+        s.appendChild(el("line", { x1: cx - 14, x2: cx + 14, y1: y + bh / 2, y2: y + bh / 2,
+          stroke: "var(--baseline)", "stroke-width": 1.4 }));
+        var em = el("rect", { x: cx - 16, y: y, width: 32, height: bh, fill: "transparent" });
+        tip(em, r.label + ": " + (r.emptyTxt || "no such stage for this selection"));
+        s.appendChild(em);
+        s.appendChild(txt("—", W - 34, y + bh - 4, { anchor: "end", fill: "var(--ink-muted)", fs: 8.5 }));
+        return;
+      }
+      if (i < rows.length - 1 && rows[i + 1].value != null) {
         var pts = [
           [cx - wid[i] / 2, y + bh], [cx + wid[i] / 2, y + bh],
           [cx + wid[i + 1] / 2, y + rh], [cx - wid[i + 1] / 2, y + rh]
@@ -569,6 +582,32 @@
     host.appendChild(t);
   }
 
+  /* Visual-level filters that actually filter. A visual registers a draw function; the
+     function is handed the current labels of the chips inside its own tile and redraws
+     into a cleared host whenever one of them changes. Report-level slicers are not wired
+     to anything — a chip only ever affects the visual it sits in, as in Power BI. */
+  var REACTIVE = [];
+
+  function reactive(id, draw) {
+    var host = document.getElementById(id); if (!host) return;
+    REACTIVE.push({ host: host, tile: host.closest(".v"), draw: draw });
+  }
+
+  function chipsOf(tile) {
+    return Array.prototype.slice.call(tile.querySelectorAll(".wf")).map(function (c) {
+      return c.textContent.trim();
+    });
+  }
+
+  function drawReactive(e) {
+    e.host.innerHTML = "";
+    e.draw(chipsOf(e.tile), e.tile);
+  }
+
+  function redrawTile(tile) {
+    REACTIVE.forEach(function (e) { if (e.tile === tile) drawReactive(e); });
+  }
+
   /* Charts size themselves from host.clientWidth, so every page is made visible
      for the duration of the draw and then hidden again. A hidden page measures
      as zero width and the charts render at a fallback size. Do not remove this. */
@@ -576,6 +615,7 @@
     var pages = Array.prototype.slice.call(document.querySelectorAll(".page"));
     pages.forEach(function (p) { p.classList.add("on"); });
     draw();
+    REACTIVE.forEach(drawReactive);
     pages.forEach(function (p, i) { p.classList.toggle("on", i === 0); });
     wire();
   }
@@ -596,7 +636,8 @@
   });
 
   /* ---- slicer / visual-filter dropdowns (mock: they open and set the label, nothing filters) ---- */
-  var MONTHS = ["Aug 2026", "Jul 2026", "Jun 2026", "May 2026", "Apr 2026", "Q3 2026", "Rolling 3 months"];
+  var MONTHS = ["All months", "Aug 2026", "Jul 2026", "Jun 2026", "May 2026", "Apr 2026", "Mar 2026",
+                "Feb 2026", "Jan 2026", "Dec 2025", "Nov 2025", "Oct 2025", "Sep 2025"];
   var CHANNELS = ["Channel: all", "Channel: referrers only", "Channel: self sign-up", "Channel: PCP practices", "Channel: health systems", "Channel: health plans"];
   var ACUITY = ["Acuity: all", "Acuity: severe", "Acuity: high", "Acuity: medium", "Acuity: base"];
   var SUPS = ["Supervisor: all", "Supervisor A", "Supervisor B", "Supervisor C"];
@@ -629,6 +670,16 @@
     "Month end": { head: "Measured at", opts: ["Month end", "Monthly peak", "Monthly average"] }
   };
 
+  /* Every option in a list is also a key into that list. Without this a chip can be
+     switched once and then has nowhere to go back to — picking a month would strand the
+     visual on that month with no way back to all of them. */
+  [[MONTHS, "Month"], [CHANNELS, "Referral channel"], [ACUITY, "Acuity"], [SUPS, "Supervisor"]]
+    .forEach(function (pair) {
+      pair[0].forEach(function (o) {
+        if (!OPTIONS[o]) OPTIONS[o] = { head: pair[1], opts: pair[0] };
+      });
+    });
+
   var dd = document.getElementById("dd"), ddFor = null;
 
   function closeDD() {
@@ -650,8 +701,10 @@
       b.appendChild(document.createTextNode(o));
       b.addEventListener("click", function (ev) {
         ev.stopPropagation();
-        chip.textContent = o;   /* label only — this mock does not re-query anything */
+        chip.textContent = o;
         closeDD();
+        var tile = chip.closest(".v");
+        if (tile) redrawTile(tile);   /* visuals that registered a draw follow their chips */
       });
       dd.appendChild(b);
     });
@@ -691,7 +744,8 @@
   g.APTI = {
     MO: MO, render: render,
     columns: columns, lines: lines, bars: bars,
-    funnel: funnel, spark: spark, smallMultiples: smallMultiples, matrix: matrix
+    funnel: funnel, spark: spark, smallMultiples: smallMultiples, matrix: matrix,
+    reactive: reactive
   };
 })(window);
 </script>
@@ -699,99 +753,193 @@
 <script>
 APTI.render(function () {
   var MO = APTI.MO, columns = APTI.columns, lines = APTI.lines, bars = APTI.bars,
-      funnel = APTI.funnel, spark = APTI.spark, smallMultiples = APTI.smallMultiples, matrix = APTI.matrix;
+      funnel = APTI.funnel, spark = APTI.spark, matrix = APTI.matrix, reactive = APTI.reactive;
 
-  bars("c-stagebars", {
-    lw: 128, rh: 21, max: 210,
-    rows: [
-      { label: "Referral created", fmt: "211", segments: [
-        { name: "Currently in stage", value: 138, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 73, color: "var(--s2)" }] },
-      { label: "Registration complete", fmt: "85", segments: [
-        { name: "Currently in stage", value: 44, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 41, color: "var(--s2)" }] },
-      { label: "Eligibility accepted", fmt: "50", segments: [
-        { name: "Currently in stage", value: 12, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 38, color: "var(--s2)" }] },
-      { label: "Email + consents", fmt: "88", segments: [
-        { name: "Currently in stage", value: 55, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 33, color: "var(--s2)" }] },
-      { label: "A5 complete", fmt: "45", segments: [
-        { name: "Currently in stage", value: 16, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 29, color: "var(--s2)" }] },
-      { label: "DI booked", fmt: "67", segments: [
-        { name: "Currently in stage", value: 39, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 28, color: "var(--s2)" }] },
-      { label: "DI attended", fmt: "21", segments: [
-        { name: "Currently in stage", value: 9, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 12, color: "var(--s2)" }] },
-      { label: "Admitted to 90-day care", fmt: "19", segments: [
-        { name: "Currently in stage", value: 12, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 7, color: "var(--s2)" }] },
-      { label: "First session attended", fmt: "195", segments: [
-        { name: "Currently in stage", value: 181, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 14, color: "var(--s2)" }] }
-    ]
+  /* ------------------------------------------------------------------ *
+   * One monthly model. Every visual with a month chip reads from it, so
+   * a month picked on one visual gives the same numbers as the same month
+   * picked on another. "All months" is the twelve summed, which is what
+   * the chip returns to.
+   * ------------------------------------------------------------------ */
+  var MK = ["Sep 2025", "Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026",
+            "Mar 2026", "Apr 2026", "May 2026", "Jun 2026", "Jul 2026", "Aug 2026"];
+  var INBOUND = [712, 740, 690, 655, 781, 802, 764, 799, 812, 786, 803, 781];
+  var SELFPCT = [38, 40, 42, 43, 45, 46, 47, 48, 50, 51, 52, 53];
+  var URGENT  = [118, 122, 114, 108, 128, 132, 126, 132, 134, 130, 133, 126];
+
+  function months(chip) {
+    var i = MK.indexOf(chip);
+    return i < 0 ? MK.map(function (_, k) { return k; }) : [i];
+  }
+
+  function volume(chip) {
+    var ref = 0, self = 0, urg = 0;
+    months(chip).forEach(function (k) {
+      var sp = Math.round(INBOUND[k] * SELFPCT[k] / 100);
+      self += sp; ref += INBOUND[k] - sp; urg += URGENT[k];
+    });
+    return { ref: ref, self: self, all: ref + self, urgent: urg, n: months(chip).length };
+  }
+
+  function pick(chips, prefix) {
+    for (var i = 0; i < chips.length; i++) if (chips[i].indexOf(prefix) === 0) return chips[i];
+    return null;
+  }
+  function month(chips) { return pick(chips, "All months") || MK.filter(function (m) { return chips.indexOf(m) >= 0; })[0] || "All months"; }
+  function num(n) { return Math.round(n).toLocaleString(); }
+
+  /* ---------------------------- the funnel ---------------------------- */
+  var STAGES = ["Referral created", "Registration complete", "Eligibility accepted", "Email + consents",
+                "A5 complete", "DI booked", "DI attended", "Admitted to 90-day care", "First session attended"];
+  var REF_R  = [0.747, 0.865, 0.903, 0.799, 0.871, 0.718, 0.916, 0.908];
+  var SELF_R = [0.879, 0.857, 0.907, 0.795, 0.871, 0.837, 0.909, 0.913];
+  var LEAK = { "Eligibility accepted": "plan not covered, ID mismatch",
+               "A5 complete": "abandoned mid-assessment",
+               "DI attended": "no-show, cancelled" };
+  var REFSHARE = { "Channel: PCP practices": 0.469, "Channel: health systems": 0.341, "Channel: health plans": 0.190 };
+
+  function chain(base, ratios) {
+    var out = [base], v = base;
+    ratios.forEach(function (r) { v = v * r; out.push(v); });
+    return out;
+  }
+
+  function funnelData(chips) {
+    var v = volume(month(chips)), ch = pick(chips, "Channel") || "Channel: all";
+    var refBase = v.ref, selfBase = v.self;
+    if (REFSHARE[ch]) { refBase = v.ref * REFSHARE[ch]; selfBase = 0; }
+    else if (ch === "Channel: referrers only") selfBase = 0;
+    else if (ch === "Channel: self sign-up") refBase = 0;
+
+    var r = refBase ? chain(refBase, REF_R) : null;
+    var f = selfBase ? chain(selfBase, SELF_R) : null;
+    var rows = STAGES.map(function (label, i) {
+      var value;
+      if (i === 0) value = ch === "Channel: self sign-up" ? null : Math.round(refBase + selfBase);
+      else value = Math.round((r ? r[i] : 0) + (f ? f[i] : 0));
+      return { label: label, value: value, leak: !!LEAK[label], leakTxt: LEAK[label],
+               emptyTxt: "a self sign-up creates no referral — this funnel starts a row down" };
+    });
+    rows.forEach(function (row, i) {
+      var prev = i === 0 ? null : rows[i - 1].value;
+      row.conv = prev == null ? "—" : Math.round(row.value / prev * 100) + "%";
+    });
+    return rows;
+  }
+
+  reactive("c-funnel", function (chips) { funnel("c-funnel", funnelData(chips)); });
+
+  /* --------- members by stage: the same funnel read as where they stopped --------- */
+  var INACT = [0.35, 0.48, 0.76, 0.38, 0.64, 0.42, 0.57, 0.37, 0.07];
+
+  reactive("c-stagebars", function (chips) {
+    var f = funnelData(chips).filter(function (r) { return r.value != null; });
+    var rows = f.map(function (r, i) {
+      var stopped = i < f.length - 1 ? r.value - f[i + 1].value : r.value;
+      var gone = Math.round(stopped * INACT[i]);
+      return { label: r.label, fmt: num(stopped), segments: [
+        { name: "Currently in stage", value: stopped - gone, color: "var(--s1)" },
+        { name: "Inactivated after this stage", value: gone, color: "var(--s2)" }] };
+    });
+    var top = 0;
+    rows.forEach(function (r) { var t = r.segments[0].value + r.segments[1].value; if (t > top) top = t; });
+    bars("c-stagebars", { lw: 128, rh: 21, max: top * 1.06, rows: rows });
   });
 
-  bars("c-inact-reason", {
-    lw: 132, rh: 19, max: 3000,
-    rows: [
-      { label: "Unresponsive to outreach", value: 2714, fmt: "2,714" },
-      { label: "Declined services", value: 1768, fmt: "1,768" },
-      { label: "Outside the service area", value: 183, fmt: "183" },
-      { label: "No-show policy violation", value: 576, fmt: "576" },
-      { label: "Member and provider …", value: 225, fmt: "225" },
-      { label: "Out-of-network insurance", value: 115, fmt: "115" },
-      { label: "Duplicate account", value: 432, fmt: "432" },
-      { label: "Member feels they …", value: 118, fmt: "118" },
-      { label: "Patient referred out", value: 332, fmt: "332" },
-      { label: "Refusal to pay", value: 13, fmt: "13" },
-      { label: "Unacceptable behaviour", value: 11, fmt: "11" },
-      { label: "Deceased", value: 13, fmt: "13" }
-    ]
+  /* ------------------------- inactivation reasons ------------------------- */
+  var REASONS = [
+    ["Unresponsive to outreach", 2714], ["Declined services", 1768], ["Outside the service area", 183],
+    ["No-show policy violation", 576], ["Member and provider …", 225], ["Out-of-network insurance", 115],
+    ["Duplicate account", 432], ["Member feels they …", 118], ["Patient referred out", 332],
+    ["Refusal to pay", 13], ["Unacceptable behaviour", 11], ["Deceased", 13]
+  ];
+
+  reactive("c-inact-reason", function (chips) {
+    var sel = chips[0], f = sel === "All time" ? 1 : (sel === "Rolling 12 months" ? 0.384 : 0.032);
+    var rows = REASONS.map(function (r) {
+      return { label: r[0], value: Math.max(Math.round(r[1] * f), 0), fmt: num(r[1] * f) };
+    });
+    bars("c-inact-reason", { lw: 132, rh: 19, max: 2714 * f * 1.1, rows: rows });
   });
 
+  /* ------------------------ days to inactivation ------------------------ */
+  var DAYBUCKETS = [61, 24, 19, 22, 17, 31, 14, 12, 8];
+
+  reactive("c-inact-days", function (chips) {
+    var v = volume(month(chips)), f = v.all / 781;
+    columns("c-inact-days", {
+      labels: ["0–7", "8–14", "15–30", "31–60", "61–90", "91–120", "121–180", "181–365", "365+"],
+      h: 96, xfs: 7.5, pl: 26,
+      series: [{ name: "Members", color: "var(--s1)", values: DAYBUCKETS.map(function (d) { return Math.round(d * f); }) }]
+    });
+  });
+
+  /* ---------------------------- the three cards ---------------------------- */
   spark("k-served", [286, 301, 274, 262, 330, 348, 322, 361, 379, 366, 388, 412], "var(--s1)");
   spark("k-engaged", [5180, 5240, 5190, 5090, 5410, 5520, 5480, 5610, 5680, 5720, 5924, 5740], "var(--s1)");
-  spark("k-routine", [608, 631, 592, 563, 668, 684, 652, 680, 688, 668, 681, 655], "var(--s1)");
 
-  funnel("c-funnel", [
-    { label: "Referral created", value: 367, conv: "—" },
-    { label: "Registration complete", value: 274, conv: "75%" },
-    { label: "Eligibility accepted", value: 237, conv: "86%", leak: true, leakTxt: "plan not covered, ID mismatch" },
-    { label: "Email + consents", value: 214, conv: "90%" },
-    { label: "A5 complete", value: 171, conv: "80%", leak: true, leakTxt: "abandoned mid-assessment" },
-    { label: "DI booked", value: 149, conv: "87%" },
-    { label: "DI attended", value: 107, conv: "72%", leak: true, leakTxt: "no-show, cancelled" },
-    { label: "Admitted to 90-day care", value: 98, conv: "92%" },
-    { label: "First session attended", value: 89, conv: "91%" }
-  ]);
+  reactive("k-routine", function (chips, tile) {
+    var m = month(chips), v = volume(m), routine = v.all - v.urgent;
+    tile.querySelector(".big").textContent = num(routine);
+    tile.querySelector(".sub").textContent = "of " + num(v.all) + " referrals " +
+      (m === "All months" ? "across the year" : "in " + m.split(" ")[0]);
+    spark("k-routine", INBOUND.map(function (t, k) { return t - URGENT[k]; }), "var(--s1)");
+  });
 
-  funnel("c-funnel-self", [
-    { label: "Registration complete", value: 296, conv: "—" },
-    { label: "Eligibility accepted", value: 248, conv: "84%", leak: true, leakTxt: "plan not covered, ID mismatch" },
-    { label: "Email + consents", value: 221, conv: "89%" },
-    { label: "A5 complete", value: 176, conv: "80%", leak: true, leakTxt: "abandoned mid-assessment" },
-    { label: "DI booked", value: 153, conv: "87%" },
-    { label: "DI attended", value: 128, conv: "84%", leak: true, leakTxt: "no-show, cancelled" },
-    { label: "Admitted to 90-day care", value: 116, conv: "91%" },
-    { label: "First session attended", value: 106, conv: "91%" }
-  ]);
+  /* --------------------------- access by channel --------------------------- */
+  var CHAN = [
+    { label: "Self sign-up", self: true, di: 40, days: "9.4" },
+    { label: "PCP practices", share: 0.469, di: 38, days: "7.1" },
+    { label: "Health systems", share: 0.341, di: 22, days: "11.8" },
+    { label: "Health plans", share: 0.190, di: 20, days: "12.6" }
+  ];
 
-  matrix("c-mx-chan",
-    ["Channel", "Referrals", "Reached DI", "Median days to DI"],
-    [
-      ["PCP practices", { v: "172", bar: 22 }, "38%", "7.1"],
-      ["Self sign-up", { v: "414", bar: 53 }, "31%", "9.4"],
-      ["Health systems", { v: "125", bar: 16 }, "24%", "11.8"],
-      ["Health plans", { v: "70", bar: 9 }, "22%", "12.6"],
-      ["All channels", { v: "781", bar: 100 }, "30%", "8.6"]
-    ]
-  );
+  reactive("c-mx-chan", function (chips) {
+    var v = volume(month(chips)), rows = [], di = 0;
+    CHAN.forEach(function (c) {
+      var n = c.self ? v.self : Math.round(v.ref * c.share);
+      di += n * c.di / 100;
+      rows.push([c.label, { v: num(n), bar: Math.round(n / v.all * 100) }, c.di + "%", c.days]);
+    });
+    rows.push(["All channels", { v: num(v.all), bar: 100 }, Math.round(di / v.all * 100) + "%", "8.6"]);
+    matrix("c-mx-chan", ["Channel", "Referrals", "Reached DI", "Median days to DI"], rows);
+  });
 
-  /* ---------------- ACCESS & URGENCY (on the patient page) ---------------- */
+  /* ----------------------------- urgent reasons ----------------------------- */
+  var UREASON = [
+    ["Post BH hospital discharge (7-day follow-up)", 38, "3.1", "g", "94%", "g", "42%"],
+    ["Suicidal ideation or self-harm risk", 31, "2.4", "g", "97%", "g", "61%"],
+    ["Rapid deterioration / acute decompensation", 18, "4.6", "w", "83%", "w", "28%"],
+    ["Acute grief / loss", 14, "6.8", "w", "71%", "c", "14%"],
+    ["Risk to others (homicidal/violent ideation)", 9, "2.0", "g", "100%", "g", "78%"],
+    ["Perinatal / postpartum crisis", 9, "5.2", "w", "78%", "w", "33%"],
+    ["Grave disability / unable to care for self", 7, "8.4", "c", "57%", "c", "14%"]
+  ];
 
+  reactive("u-mx", function (chips) {
+    var v = volume(month(chips)), f = v.urgent / 126;
+    var rows = UREASON.map(function (r) {
+      var n = Math.round(r[1] * f);
+      return [r[0], { v: num(n), bar: Math.round(r[1] / 38 * 100) }, { v: r[2], cf: r[3] }, { v: r[4], cf: r[5] }, r[6]];
+    });
+    rows.push(["Total urgent", { v: num(v.urgent), bar: 100 }, { v: "4.1" }, { v: "81%" }, "41%"]);
+    matrix("u-mx", ["Urgent reason", "Referrals", "Median days to DI", "Seen ≤ 7 days", "≤ 48h"], rows);
+  });
+
+  /* -------------------------------- ACP path -------------------------------- */
+  var ACPMET = [980, 995, 1012, 1030, 1044, 1058, 1066, 1074, 1082, 1090, 1109, 1096];
+
+  reactive("c-acp-funnel", function (chips) {
+    var m = month(chips), ks = months(m);
+    var met = Math.round(ks.reduce(function (a, k) { return a + ACPMET[k]; }, 0) / ks.length);
+    funnel("c-acp-funnel", [
+      { label: "ACP eligible", value: 2140, conv: "—" },
+      { label: "ACP consent given", value: 1463, conv: "68%" },
+      { label: "Touchpoint minimum met", value: met, conv: Math.round(met / 1463 * 100) + "%" }
+    ]);
+  });
+
+  /* ------------------------- twelve-month trends ------------------------- */
   lines("u-days", {
     labels: MO, h: 82, max: 16, unit: " d", rule: 7, ruleLabel: "7-day standard",
     series: [
@@ -811,34 +959,6 @@ APTI.render(function () {
     series: [{ name: "No-show", color: "var(--s1)", values: [27, 26, 28, 29, 25, 24, 26, 23, 24, 25, 23, 22] }]
   });
 
-  matrix("u-mx",
-    ["Urgent reason", "Referrals", "Median days to DI", "Seen ≤ 7 days", "≤ 48h"],
-    [
-      ["Post BH hospital discharge (7-day follow-up)", { v: "38", bar: 100 }, { v: "3.1", cf: "g" }, { v: "94%", cf: "g" }, "42%"],
-      ["Suicidal ideation or self-harm risk", { v: "31", bar: 82 }, { v: "2.4", cf: "g" }, { v: "97%", cf: "g" }, "61%"],
-      ["Rapid deterioration / acute decompensation", { v: "18", bar: 47 }, { v: "4.6", cf: "w" }, { v: "83%", cf: "w" }, "28%"],
-      ["Acute grief / loss", { v: "14", bar: 37 }, { v: "6.8", cf: "w" }, { v: "71%", cf: "c" }, "14%"],
-      ["Risk to others (homicidal/violent ideation)", { v: "9", bar: 24 }, { v: "2.0", cf: "g" }, { v: "100%", cf: "g" }, "78%"],
-      ["Perinatal / postpartum crisis", { v: "9", bar: 24 }, { v: "5.2", cf: "w" }, { v: "78%", cf: "w" }, "33%"],
-      ["Grave disability / unable to care for self", { v: "7", bar: 18 }, { v: "8.4", cf: "c" }, { v: "57%", cf: "c" }, "14%"],
-      ["Total urgent", { v: "126", bar: 100 }, { v: "4.1" }, { v: "81%" }, "41%"]
-    ]
-  );
-
-  funnel("c-acp-funnel", [
-    { label: "ACP eligible", value: 2140, conv: "—" },
-    { label: "ACP consent given", value: 1463, conv: "68%" },
-    { label: "Touchpoint minimum met", value: 1109, conv: "76%" }
-  ]);
-
-  /* NEW — inactivation by journey stage */
-  /* NEW — days from registration to inactivation, histogram */
-  columns("c-inact-days", {
-    labels: ["0–7", "8–14", "15–30", "31–60", "61–90", "91–120", "121–180", "181–365", "365+"],
-    h: 96, xfs: 7.5, pl: 22,
-    series: [{ name: "Members", color: "var(--s1)", values: [61, 24, 19, 22, 17, 31, 14, 12, 8] }]
-  });
-
   columns("x-direpeat", {
     labels: MO, h: 76, stacked: true, unit: " DIs",
     series: [
@@ -846,6 +966,5 @@ APTI.render(function () {
       { name: "Repeat", color: "var(--s2)", values: [54, 58, 51, 47, 62, 65, 61, 66, 69, 66, 70, 68] }
     ]
   });
-
 });
 </script>

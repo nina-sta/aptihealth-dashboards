@@ -153,12 +153,26 @@
     var host = document.getElementById(id); if (!host) return;
     var rh = 20, bh = 15, W = Math.max(host.clientWidth || 400, 260);
     var H = rows.length * rh + 4, s = svg(W, H);
-    var lw = 126, aw = W - lw - 74, cx = lw + aw / 2, max = rows[0].value;
-    var wid = rows.map(function (r) { return Math.max(aw * (r.value / max), 2); });
+    var lw = 126, aw = W - lw - 74, cx = lw + aw / 2;
+    /* A stage can be empty — a self sign-up has no referral to create — so the scale
+       comes from the first stage that has a value, and the empty row draws as a rule. */
+    var max = 0;
+    rows.forEach(function (r) { if (r.value != null && r.value > max) max = r.value; });
+    var wid = rows.map(function (r) { return r.value == null ? 0 : Math.max(aw * (r.value / max), 2); });
 
     rows.forEach(function (r, i) {
       var y = i * rh + 2;
-      if (i < rows.length - 1) {
+      if (r.value == null) {
+        s.appendChild(txt(r.label, 0, y + bh - 4, { fill: "var(--ink-muted)", fs: 8.5 }));
+        s.appendChild(el("line", { x1: cx - 14, x2: cx + 14, y1: y + bh / 2, y2: y + bh / 2,
+          stroke: "var(--baseline)", "stroke-width": 1.4 }));
+        var em = el("rect", { x: cx - 16, y: y, width: 32, height: bh, fill: "transparent" });
+        tip(em, r.label + ": " + (r.emptyTxt || "no such stage for this selection"));
+        s.appendChild(em);
+        s.appendChild(txt("—", W - 34, y + bh - 4, { anchor: "end", fill: "var(--ink-muted)", fs: 8.5 }));
+        return;
+      }
+      if (i < rows.length - 1 && rows[i + 1].value != null) {
         var pts = [
           [cx - wid[i] / 2, y + bh], [cx + wid[i] / 2, y + bh],
           [cx + wid[i + 1] / 2, y + rh], [cx - wid[i + 1] / 2, y + rh]
@@ -235,6 +249,32 @@
     host.appendChild(t);
   }
 
+  /* Visual-level filters that actually filter. A visual registers a draw function; the
+     function is handed the current labels of the chips inside its own tile and redraws
+     into a cleared host whenever one of them changes. Report-level slicers are not wired
+     to anything — a chip only ever affects the visual it sits in, as in Power BI. */
+  var REACTIVE = [];
+
+  function reactive(id, draw) {
+    var host = document.getElementById(id); if (!host) return;
+    REACTIVE.push({ host: host, tile: host.closest(".v"), draw: draw });
+  }
+
+  function chipsOf(tile) {
+    return Array.prototype.slice.call(tile.querySelectorAll(".wf")).map(function (c) {
+      return c.textContent.trim();
+    });
+  }
+
+  function drawReactive(e) {
+    e.host.innerHTML = "";
+    e.draw(chipsOf(e.tile), e.tile);
+  }
+
+  function redrawTile(tile) {
+    REACTIVE.forEach(function (e) { if (e.tile === tile) drawReactive(e); });
+  }
+
   /* Charts size themselves from host.clientWidth, so every page is made visible
      for the duration of the draw and then hidden again. A hidden page measures
      as zero width and the charts render at a fallback size. Do not remove this. */
@@ -242,6 +282,7 @@
     var pages = Array.prototype.slice.call(document.querySelectorAll(".page"));
     pages.forEach(function (p) { p.classList.add("on"); });
     draw();
+    REACTIVE.forEach(drawReactive);
     pages.forEach(function (p, i) { p.classList.toggle("on", i === 0); });
     wire();
   }
@@ -262,7 +303,8 @@
   });
 
   /* ---- slicer / visual-filter dropdowns (mock: they open and set the label, nothing filters) ---- */
-  var MONTHS = ["Aug 2026", "Jul 2026", "Jun 2026", "May 2026", "Apr 2026", "Q3 2026", "Rolling 3 months"];
+  var MONTHS = ["All months", "Aug 2026", "Jul 2026", "Jun 2026", "May 2026", "Apr 2026", "Mar 2026",
+                "Feb 2026", "Jan 2026", "Dec 2025", "Nov 2025", "Oct 2025", "Sep 2025"];
   var CHANNELS = ["Channel: all", "Channel: referrers only", "Channel: self sign-up", "Channel: PCP practices", "Channel: health systems", "Channel: health plans"];
   var ACUITY = ["Acuity: all", "Acuity: severe", "Acuity: high", "Acuity: medium", "Acuity: base"];
   var SUPS = ["Supervisor: all", "Supervisor A", "Supervisor B", "Supervisor C"];
@@ -295,6 +337,16 @@
     "Month end": { head: "Measured at", opts: ["Month end", "Monthly peak", "Monthly average"] }
   };
 
+  /* Every option in a list is also a key into that list. Without this a chip can be
+     switched once and then has nowhere to go back to — picking a month would strand the
+     visual on that month with no way back to all of them. */
+  [[MONTHS, "Month"], [CHANNELS, "Referral channel"], [ACUITY, "Acuity"], [SUPS, "Supervisor"]]
+    .forEach(function (pair) {
+      pair[0].forEach(function (o) {
+        if (!OPTIONS[o]) OPTIONS[o] = { head: pair[1], opts: pair[0] };
+      });
+    });
+
   var dd = document.getElementById("dd"), ddFor = null;
 
   function closeDD() {
@@ -316,8 +368,10 @@
       b.appendChild(document.createTextNode(o));
       b.addEventListener("click", function (ev) {
         ev.stopPropagation();
-        chip.textContent = o;   /* label only — this mock does not re-query anything */
+        chip.textContent = o;
         closeDD();
+        var tile = chip.closest(".v");
+        if (tile) redrawTile(tile);   /* visuals that registered a draw follow their chips */
       });
       dd.appendChild(b);
     });
@@ -357,6 +411,7 @@
   g.APTI = {
     MO: MO, render: render,
     columns: columns, lines: lines, bars: bars,
-    funnel: funnel, spark: spark, smallMultiples: smallMultiples, matrix: matrix
+    funnel: funnel, spark: spark, smallMultiples: smallMultiples, matrix: matrix,
+    reactive: reactive
   };
 })(window);

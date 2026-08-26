@@ -188,7 +188,7 @@
   <div class="page on" id="pg-patient">
     <div class="v c7 h3r">
       <div class="vh"><h4>Acquisition and access funnel</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: funnel. Both chips filter this visual for real — pick a month to see that month, or all months for the year. The channel chip switches between everyone, the members a referrer sent, and the members who arrived on their own. A self sign-up has no referral to create, so on that selection the first stage is empty and the funnel starts a row down; the two are comparable from registration complete downwards. Stages in red have a named drop reason on hover.">&#9432;</button></div>
+        <div class="vf"><span class="wf">Aug 2026</span><span class="wf" data-opts="Channel: all|Channel: referrers only|Channel: self sign-up" data-head="Referral channel">Channel: all</span><button class="i" data-tip="Power BI: funnel. Both chips filter this visual for real — pick a month to see that month, or all months for the year. The channel chip switches between everyone, the members a referrer sent, and the members who arrived on their own. A self sign-up has no referral to create, so on that selection the first stage is empty and the funnel starts a row down; the two are comparable from registration complete downwards. Stages in red have a named drop reason on hover.">&#9432;</button></div>
       </div>
       <p class="info">On all channels the first drop is gentle, because a self sign-up who reaches the platform has already chosen to be there. Switch to referrers only and it steepens: a quarter of referrals never reach a completed registration, which is a handover problem rather than a member one.</p>
       <div class="body"><div class="ch" id="c-funnel"></div></div>
@@ -205,7 +205,7 @@
 
     <div class="v c7 h3r">
       <div class="vh"><h4>Members by stage &mdash; in stage and inactivated after it</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: stacked bar chart. The same stages as the two acquisition funnels, and the same month, read a different way: a funnel counts everyone who reached a stage, this counts where they stopped. Both channels are in here together. Each member appears once, at the furthest stage they reached, split into still sitting there and inactivated after it. Both series are member counts, so one bar and one axis.">&#9432;</button></div>
+        <div class="vf"><span class="wf">Aug 2026</span><span class="wf" data-opts="Channel: all|Channel: referrers only|Channel: self sign-up" data-head="Referral channel">Channel: all</span><button class="i" data-tip="Power BI: stacked bar chart. The same stages as the two acquisition funnels, and the same month, read a different way: a funnel counts everyone who reached a stage, this counts where they stopped. Both channels are in here together. Each member appears once, at the furthest stage they reached, split into still sitting there and inactivated after it. Both series are member counts, so one bar and one axis.">&#9432;</button></div>
       </div>
       <p class="info">Every member the period brought in is on this chart exactly once, at the furthest stage they reached, so the bars add up to the funnel’s first row. Its chips move it the same way.</p>
       <div class="body"><div class="ch" id="c-stagebars"></div>
@@ -260,7 +260,7 @@
 
     <div class="v c6 h2r">
       <div class="vh"><h4>Onboarding completion rate</h4>
-        <div class="vf"><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: clustered column with a constant line for target. Of the members who completed registration in the month, the share who finished the rest of onboarding — eligibility, email and consents, and the A5 assessment. It is the middle of the funnel expressed as one rate, so it can be trended and given a target.">&#9432;</button></div>
+        <div class="vf"><span class="wf" data-opts="Channel: all|Channel: referrers only|Channel: self sign-up" data-head="Referral channel">Channel: all</span><button class="i" data-tip="Power BI: clustered column with a constant line for target. Of the members who completed registration in the month, the share who finished the rest of onboarding — eligibility, email and consents, and the A5 assessment. It is the middle of the funnel expressed as one rate, so it can be trended and given a target.">&#9432;</button></div>
       </div>
       <p class="info">The four in ten who do not finish are the largest single loss in the whole journey, and they leave before anyone clinical has met them.</p>
       <div class="body"><div class="ch" id="c-onboard"></div></div>
@@ -689,7 +689,13 @@
 
   function openDD(chip) {
     var cur = chip.textContent.trim();
-    var cfg = OPTIONS[cur] || { head: "Filter", opts: [cur] };
+    /* A chip can carry its own shorter list with data-opts, for a visual that only
+       models some of the values — the funnel knows referred and self sign-up, not
+       one referrer type at a time. */
+    var own = chip.getAttribute("data-opts");
+    var cfg = own
+      ? { head: chip.getAttribute("data-head") || (OPTIONS[cur] || {}).head || "Filter", opts: own.split("|") }
+      : (OPTIONS[cur] || { head: "Filter", opts: [cur] });
     dd.innerHTML = "";
     var h = document.createElement("div"); h.className = "ddh"; h.textContent = cfg.head; dd.appendChild(h);
     cfg.opts.forEach(function (o) {

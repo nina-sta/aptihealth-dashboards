@@ -356,7 +356,13 @@
 
   function openDD(chip) {
     var cur = chip.textContent.trim();
-    var cfg = OPTIONS[cur] || { head: "Filter", opts: [cur] };
+    /* A chip can carry its own shorter list with data-opts, for a visual that only
+       models some of the values — the funnel knows referred and self sign-up, not
+       one referrer type at a time. */
+    var own = chip.getAttribute("data-opts");
+    var cfg = own
+      ? { head: chip.getAttribute("data-head") || (OPTIONS[cur] || {}).head || "Filter", opts: own.split("|") }
+      : (OPTIONS[cur] || { head: "Filter", opts: [cur] });
     dd.innerHTML = "";
     var h = document.createElement("div"); h.className = "ddh"; h.textContent = cfg.head; dd.appendChild(h);
     cfg.opts.forEach(function (o) {

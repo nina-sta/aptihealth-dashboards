@@ -40,7 +40,8 @@ HANDOFF.md                              state of play between sessions
 **Internal reports** are how we run the business. Every visual should trace to a named person
 who acts on it. **External reports** go to payers. CDPHP is built first and deliberately the
 largest — every other payer report is this one with visuals switched off — so a measure
-missing from CDPHP is missing everywhere.
+missing from CDPHP is missing everywhere. It carries no report-level slicers: the payer sees
+one program and one period, decided when the report is issued, not switched by the reader.
 
 The payer report is allowed to keep a visual after it leaves every internal report. What the
 payer is owed and what we run the business on are two different lists (decided 26 Aug 2026).
@@ -104,12 +105,12 @@ These were decided deliberately. Do not "improve" them without being asked.
 6. **The ⓘ tooltip names the native Power BI visual** for that tile, plus the reason it was
    chosen. Keep it accurate; it is what the data team builds from.
 7. **No tables in prose.** Matrix visuals are fine — those are charts.
-8. **A visual that answers a payer question carries a marker** in its header —
-   `<span class="ask">CDPHP asked</span>`. Both internal reports are now exceptions: patient
-   journey dropped the marker on 26 Aug 2026, provider journey the same day, and each reads
-   as a purely internal report. What the payer asked for is tracked in the CDPHP report only.
-   The `sync.py` check that every marked visual reaches the CDPHP report therefore has
-   nothing left to check — keep it for whichever internal report next carries a marker.
+8. **No report currently marks a visual as payer-asked.** The convention is a
+   `<span class="ask">CDPHP asked</span>` in the tile header, and all three reports dropped it
+   on 26 Aug 2026 — the two internal reports because each reads as purely internal, the CDPHP
+   report because every tile in it answers the ask, so marking all of them said nothing. The
+   `sync.py` check that every marked visual reaches the CDPHP report therefore has nothing
+   left to check — keep it, and the `.ask` style, for whichever internal report next needs it.
 
 ## Palette (validated, do not substitute by eye)
 

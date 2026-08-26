@@ -207,18 +207,13 @@
   <div class="rpthead">
     <h1>CDPHP &mdash; payer report</h1>
     <span class="mock">&#9888; <b>Prototype only.</b> The real report will be built in Power BI, so the finished thing follows whatever Power BI allows. This is here to agree the metrics.</span>
-    <div class="slicers">
-      <span class="lbl">Report</span>
-      <span class="sl">Program: All</span>
-      <span class="sl">Rolling 12 months</span>
-    </div>
   </div>
 
   <div class="page on" id="pg-cdphp">
     <!-- ============ POPULATION AND ENGAGEMENT ============ -->
 
     <div class="v kpi c2 h1r">
-      <div class="vh"><h4>Members served</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Members served</h4>
         <div class="vf"><button class="i" data-tip="Power BI: card + line. All-time distinct members with a completed DI who have ever been a CDPHP member — the payer slicer sets the &quot;ever&quot; qualifier, it does not filter to current coverage. The line is new members per month.">ⓘ</button></div>
       </div>
       <div class="body">
@@ -229,7 +224,7 @@
     </div>
 
     <div class="v kpi c2 h1r">
-      <div class="vh"><h4>Engaged members</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Engaged members</h4>
         <div class="vf"><span class="wf">60-day lookback</span><button class="i" data-tip="Power BI: KPI + line. The chip switches between the 60-day billing lookback and a strict in-month count — the two differ by roughly 8%.">ⓘ</button></div>
       </div>
       <div class="body">
@@ -240,7 +235,7 @@
     </div>
 
     <div class="v c5 h2r">
-      <div class="vh"><h4>Engaged members &mdash; two definitions side by side</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Engaged members &mdash; two definitions side by side</h4>
         <div class="vf"><button class="i" data-tip="Power BI: clustered column chart. Both series count members, so one axis. The 60-day lookback is the billing definition; strictly in-month counts only members with a service dated inside the month. Showing both is the point &mdash; the gap is the size of the definition problem.">&#9432;</button></div>
       </div>
       <p class="info">The two definitions are not reconcilable after the fact, so the report carries both until one is agreed. The gap runs 7&ndash;9% of the engaged count.</p>
@@ -250,7 +245,7 @@
     </div>
 
     <div class="v c4 h2r">
-      <div class="vh"><h4>Retained members</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Retained members</h4>
         <div class="vf"><span class="wf">60-day lookback</span><button class="i" data-tip="Power BI: clustered column chart. Retained = engaged this month and engaged in the prior month. Both series are member counts, so one axis. The retention rate is the ratio of the two bars and is in the tooltip, not on a second axis.">&#9432;</button></div>
       </div>
       <p class="info">Retention inherits whichever engagement definition is selected. Under the strict in-month rule the retained count drops with it.</p>
@@ -260,7 +255,7 @@
     </div>
 
     <div class="v c5 h2r">
-      <div class="vh"><h4>Members in care by tenure</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Members in care by tenure</h4>
         <div class="vf"><span class="wf">Acuity: all</span><button class="i" data-tip="Power BI: stacked column chart. Tenure mix month over month — the growing 365d+ band is the 'lifers' question in one picture.">ⓘ</button></div>
       </div>
       <div class="body"><div class="ch" id="c-tenure"></div>
@@ -273,7 +268,7 @@
     </div>
 
     <div class="v c3 h2r">
-      <div class="vh"><h4>Payer contracts and credentialing</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Payer contracts and credentialing</h4>
         <div class="vf"><button class="i" data-tip="Power BI: clustered column chart. Contracted = a signed payer agreement. Credentialed = the medical group is enrolled and can bill that payer. A payer can be contracted without being billable yet, which is the gap this visual exists to show.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="x-payers"></div>
@@ -282,20 +277,10 @@
       </div>
     </div>
 
-    <div class="v c5 h2r">
-      <div class="vh"><h4>Members with a medication management service</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">Of: active members</span><button class="i" data-tip="Power BI: line chart, two series, both percentages of active members. Ever = at least one medication management service at any point. In month = at least one dated inside the month. This replaces the unverified 40% figure with a measured number.">&#9432;</button></div>
-      </div>
-      <p class="info">Replaces the 40% quoted in conversation, which is not sourced anywhere. The two readings differ by roughly three times, so the qualifier has to travel with the number.</p>
-      <div class="body"><div class="ch" id="x-medmgmt"></div>
-        <div class="lg"><span><i style="background:var(--s1)"></i>Ever</span><span><i style="background:var(--s2)"></i>In the month</span></div>
-      </div>
-    </div>
-
     <!-- ============ ACCESS AND REFERRALS ============ -->
 
     <div class="v c5 h1r">
-      <div class="vh"><h4>Referrals and members reaching first session</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Referrals and members reaching first session</h4>
         <div class="vf"><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: clustered column chart. Both measures share a unit, so one axis — do not add conversion % as a second axis here.">ⓘ</button></div>
       </div>
       <div class="body"><div class="ch" id="c-conv"></div>
@@ -304,7 +289,7 @@
     </div>
 
     <div class="v c3 h1r">
-      <div class="vh"><h4>Channel mix</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Channel mix</h4>
         <div class="vf"><button class="i" data-tip="Power BI: 100% stacked column chart. Share of referrals by channel each month — this is where the CDPHP-direct decline against self sign-up growth becomes visible.">ⓘ</button></div>
       </div>
       <div class="body"><div class="ch" id="c-mix"></div>
@@ -316,60 +301,42 @@
     </div>
 
     <div class="v c4 h2r">
-      <div class="vh"><h4>Access by referral channel</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Access by referral channel</h4>
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Put month on columns for a trended view.">ⓘ</button></div>
       </div>
       <div class="body" id="c-mx-chan"></div>
     </div>
 
     <div class="v c5 h3r">
-      <div class="vh"><h4>Self sign-up by how they heard about us</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Self sign-up by how they heard about us</h4>
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Source is the member's own answer at registration, so it is self-reported and optional - the unanswered row is kept visible rather than hidden.">&#9432;</button></div>
       </div>
       <div class="body" id="x-selfsrc"></div>
     </div>
 
     <div class="v c4 h2r">
-      <div class="vh"><h4>CDPHP-direct referral volume</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>CDPHP-direct referral volume</h4>
         <div class="vf"><button class="i" data-tip="Power BI: clustered column chart. Referrals where CDPHP itself is the referrer, as opposed to a CDPHP member arriving through another channel. The decline is the trend worth the conversation.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="x-cdphpvol"></div></div>
     </div>
 
     <div class="v c5 h3r">
-      <div class="vh"><h4>CDPHP-direct referrers</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>CDPHP-direct referrers</h4>
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Who inside CDPHP is actually sending members, with the acuity 4 share so volume is not read without severity.">&#9432;</button></div>
       </div>
       <div class="body" id="x-cdphpref"></div>
     </div>
 
     <div class="v c5 h2r">
-      <div class="vh"><h4>Channel mix &mdash; CDPHP vs comparable payer</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Channel mix &mdash; CDPHP vs comparable payer</h4>
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with conditional formatting. Two payers of similar size side by side. Shares are within-payer, so each column sums to 100% and the delta column is what to read.">&#9432;</button></div>
       </div>
       <div class="body" id="x-paymix"></div>
     </div>
 
-    <div class="v c5 h2r">
-      <div class="vh"><h4>Conversion to first session by copay cohort</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">Stage: first session</span><button class="i" data-tip="Power BI: line chart, two series. Cohorts split on the copay returned by the eligibility check. The stage chip walks the whole path the ask names — registration complete, DI attended, first session — one stage at a time, because three stages times two cohorts is six lines and unreadable.">ⓘ</button></div>
-      </div>
-      <div class="body"><div class="ch" id="c-copay"></div>
-        <div class="lg"><span><i style="background:var(--s1)"></i>$0 copay</span><span><i style="background:var(--s2)"></i>Copay &gt; $0</span></div>
-      </div>
-    </div>
-
-    <div class="v c5 h2r">
-      <div class="vh"><h4>Median sessions by copay cohort</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><button class="i" data-tip="Power BI: line chart, two series, same unit. Cohorts split on the copay returned by the eligibility check, the same split as the conversion visual, so the two can be read together.">&#9432;</button></div>
-      </div>
-      <div class="body"><div class="ch" id="x-copaysess"></div>
-        <div class="lg"><span><i style="background:var(--s1)"></i>$0 copay</span><span><i style="background:var(--s2)"></i>Copay &gt; $0</span></div>
-      </div>
-    </div>
-
     <div class="v c4 h2r">
-      <div class="vh"><h4>Paywall exposure and conversion</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Paywall exposure and conversion</h4>
         <div class="vf"><button class="i" data-tip="Power BI: clustered column chart. Both series are member counts, so one axis. The conversion rate is the ratio of the two bars and sits in the tooltip rather than on a second axis.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="x-paywall"></div>
@@ -380,7 +347,7 @@
     <!-- ============ URGENCY AND TIME TO CARE ============ -->
 
     <div class="v kpi c2 h2r">
-      <div class="vh"><h4>Urgent seen &le; 7 days</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Urgent seen &le; 7 days</h4>
         <div class="vf"><button class="i" data-tip="Power BI: KPI + line. Share of urgent referrals with a completed DI within 7 days. 126 urgent referrals in August, 16% of all volume.">&#9432;</button></div>
       </div>
       <div class="body">
@@ -391,7 +358,7 @@
     </div>
 
     <div class="v c5 h2r">
-      <div class="vh"><h4>Median days to first appointment &mdash; urgent vs routine</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Median days to first appointment &mdash; urgent vs routine</h4>
         <div class="vf"><span class="wf">Milestone: DI attended</span><button class="i" data-tip="Power BI: line chart, two series, with a constant line at 7 days. The milestone chip switches between DI scheduled, DI attended and first therapy session.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="u-days"></div>
@@ -399,35 +366,10 @@
       </div>
     </div>
 
-    <div class="v c7 h3r">
-      <div class="vh"><h4>Urgent referrals &mdash; time to care by reason</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Volume, median days to DI attended, and the share seen within 7 days, per urgent reason.">&#9432;</button></div>
-      </div>
-      <p class="info">Reason is the referrer&rsquo;s stated cause of admission. Post-discharge follow-up carries a contractual 7-day standard; the rest are clinical priority, not contractual.</p>
-      <div class="body" id="u-mx"></div>
-    </div>
-
-    <div class="v c5 h3r">
-      <div class="vh"><h4>Median days to care by reason</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: clustered bar chart with a constant line at 7 days. Sorted slowest first so the outlier reason is always at the top.">&#9432;</button></div>
-      </div>
-      <div class="body"><div class="ch" id="u-bars"></div>
-        <div class="lg"><span>Black rule = 7-day follow-up standard</span></div>
-      </div>
-    </div>
-
-    <!-- ============ DISCHARGE FOLLOW-UP AND ACUITY ============ -->
-
-    <div class="v c8 h3r">
-      <div class="vh"><h4>Acuity 4 by referral channel and admission source</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Exists to test the claim that acuity 4 is mostly hospital and ED discharges. Admission source is the referrer's stated origin, not a derived field.">&#9432;</button></div>
-      </div>
-      <p class="info">On this month the claim only half holds: inpatient and ED together are under half of acuity 4, and self sign-up carries more high-acuity volume than expected.</p>
-      <div class="body" id="x-ac4mx"></div>
-    </div>
+    <!-- ============ DISCHARGE FOLLOW-UP ============ -->
 
     <div class="v c4 h2r">
-      <div class="vh"><h4>Post-discharge members reached</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Post-discharge members reached</h4>
         <div class="vf"><span class="wf">Within 7 days</span><button class="i" data-tip="Power BI: clustered column with a constant line for target. Share of members with a known discharge who had a two-way contact inside the window. The chip switches the window (7 / 14 / 30 days) and moves the target with it.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="x-pdout"></div>
@@ -435,53 +377,20 @@
       </div>
     </div>
 
-    <div class="v c6 h2r">
-      <div class="vh"><h4>FUM and FUH &mdash; HEDIS follow-up</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">30-day</span><button class="i" data-tip="Power BI: line chart, two series, both percentages, with a constant line at the HEDIS threshold. Measured the HEDIS way: discharge date to the date of a completed visit. The chip switches between the 7-day and 30-day numerator.">&#9432;</button></div>
-      </div>
-      <p class="info">FUM is follow-up after an ED visit for mental illness; FUH is follow-up after hospitalisation. Both use the completed-visit date, not the booking date.</p>
-      <div class="body"><div class="ch" id="x-fum"></div>
-        <div class="lg"><span><i style="background:var(--s1)"></i>FUH</span><span><i style="background:var(--s2)"></i>FUM</span></div>
-      </div>
-    </div>
-
-    <div class="v c6 h2r">
-      <div class="vh"><h4>Acuity 4 criteria &mdash; appendix</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><button class="i" data-tip="Not a visual. This is the criteria list to send as an attachment alongside the report, kept here so the definition travels with the numbers instead of living in an email.">&#9432;</button></div>
-      </div>
-      <p class="info">Send as an attachment with any acuity figure. A member meets acuity 4 on any one of these.</p>
-      <div class="body">
-        <ol class="appx">
-          <li>Discharge from inpatient behavioural health or an ED behavioural health presentation in the last 30 days</li>
-          <li>Active suicidal ideation, a plan, or self-harm within the last 30 days</li>
-          <li>PHQ-9 of 20 or above, or GAD-7 of 15 or above, at intake</li>
-          <li>Two or more behavioural health crisis contacts in the last 90 days</li>
-          <li>Co-occurring substance use requiring concurrent treatment</li>
-          <li>Clinician override with a documented reason</li>
-        </ol>
-      </div>
-    </div>
-
     <!-- ============ INTAKE ============ -->
 
-    <div class="v c4 h2r">
-      <div class="vh"><h4>Intake providers covering ages 5&ndash;17</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">Of: intake providers</span><button class="i" data-tip="Power BI: clustered column with a constant line for target. Share of intake-capable providers whose configured age range covers the full 5-17 band. A provider covering 13-17 only does not count here.">&#9432;</button></div>
+    <div class="v kpi c2 h1r">
+      <div class="vh"><h4>Intake providers covering ages 5&ndash;17</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: card. A count, as configured today &mdash; intake-capable providers whose configured age range covers the full 5-17 band. A provider covering 13-17 only does not count here. A snapshot rather than a trend: the answer the payer wants is whether we can take an adolescent now.">&#9432;</button></div>
       </div>
-      <div class="body"><div class="ch" id="x-agecov"></div></div>
-    </div>
-
-    <div class="v c3 h2r">
-      <div class="vh"><h4>Adolescent DIs booked outside the age range</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart. A diagnostic interview for a member under 18 booked with a provider whose configured age range does not cover that age. Every one of these is a booking the matching rules should have prevented.">&#9432;</button></div>
-      </div>
-      <div class="body"><div class="ch" id="x-agemis"></div>
-        <div class="gapnote">&#9888; Assumes the booking stores the provider age range as configured at booking time, not as configured today.</div>
+      <div class="body">
+        <div class="big">8</div>
+        <div class="sub">of 19 intake providers</div>
       </div>
     </div>
 
     <div class="v c5 h2r">
-      <div class="vh"><h4>Diagnostic interviews &mdash; first-time vs repeat</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Diagnostic interviews &mdash; first-time vs repeat</h4>
         <div class="vf"><button class="i" data-tip="Power BI: stacked column chart. Both series are DI counts, so one axis. Repeat means a member who had a completed DI before this one.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="x-direpeat"></div>
@@ -491,7 +400,7 @@
     </div>
 
     <div class="v c4 h2r">
-      <div class="vh"><h4>Assessment instrument reference</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Assessment instrument reference</h4>
         <div class="vf"><span class="wf">Current version</span><button class="i" data-tip="Power BI: matrix. A snapshot, not a trend - question counts change only when the instrument is re-versioned, and the chip carries the version. Counts are what is live in the platform today.">&#9432;</button></div>
       </div>
       <p class="info">Counted in the platform, current version. Conditional questions only appear on a qualifying answer, so a member rarely sees the full count.</p>
@@ -501,7 +410,7 @@
     <!-- ============ ENGAGEMENT DEPTH AND OUTCOMES ============ -->
 
     <div class="v c5 h2r">
-      <div class="vh"><h4>Sessions per member &mdash; mean and median</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Sessions per member &mdash; mean and median</h4>
         <div class="vf"><span class="wf">Of: members in care</span><button class="i" data-tip="Power BI: line chart, two series, same unit. Mean and median are shown together because the mean is dragged up by long-tenure members - the gap between the two lines is the skew.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="x-sess"></div>
@@ -510,7 +419,7 @@
     </div>
 
     <div class="v c4 h2r">
-      <div class="vh"><h4>Median length of active care</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Median length of active care</h4>
         <div class="vf"><span class="wf">Cut-off: 60 idle days</span><button class="i" data-tip="Power BI: line chart, one series, in days. Active care runs from first session to the last session before the cut-off. The chip switches the idle cut-off (30 / 60 / 90 days), which is what decides when care is treated as ended.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="x-loc"></div>
@@ -518,22 +427,8 @@
       </div>
     </div>
 
-    <div class="v c3 h2r">
-      <div class="vh"><h4>2+ BH sessions in first 60 days</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><button class="i" data-tip="Power BI: clustered column with a constant line for target. Share of members whose first 60 days after admission contain at least two behavioural health sessions. The cohort is dated by admission, so the last two months are still filling.">&#9432;</button></div>
-      </div>
-      <div class="body"><div class="ch" id="x-2in60"></div></div>
-    </div>
-
-    <div class="v c3 h2r">
-      <div class="vh"><h4>Outcomes</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">Baseline ≥9</span><button class="i" data-tip="Power BI: small multiples (area). HEDIS starts these measures at a baseline score of 9 — the chip toggles that filter.">ⓘ</button></div>
-      </div>
-      <div class="body" id="c-sm-out"></div>
-    </div>
-
     <div class="v c6 h2r">
-      <div class="vh"><h4>Median days to 50% reduction &mdash; PHQ-9 and GAD-7</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Median days to 50% reduction &mdash; PHQ-9 and GAD-7</h4>
         <div class="vf"><button class="i" data-tip="Power BI: line chart, four series, all in days. Both instruments are shown with the HEDIS baseline filter on and off, because the filter changes the population and therefore the answer. Series order follows the fixed categorical palette.">&#9432;</button></div>
       </div>
       <p class="info">Dropping the baseline filter pulls in mild presentations that reach 50% quickly, which shortens the median by roughly two weeks. Neither reading is wrong; they answer different questions.</p>
@@ -546,7 +441,7 @@
     </div>
 
     <div class="v c3 h2r">
-      <div class="vh"><h4>Active members with a current PHQ-9 or GAD-7</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Active members with a current PHQ-9 or GAD-7</h4>
         <div class="vf"><span class="wf">Scored within 30 days</span><span class="wf">Of: active members</span><button class="i" data-tip="Power BI: clustered column with a constant line for target. Numerator: active members with at least one PHQ-9 or GAD-7 recorded in the trailing 30 days. Denominator: all active members that month. The 30-day chip switches the window (30 / 60 / 90 days) &mdash; it changes the definition, not just the filter, so the target moves with it.">ⓘ</button></div>
       </div>
       <p class="info">Scores are captured at a visit, so this tracks how recently members were seen, not clinician compliance. Members between visits cannot have a fresh score, which is why the line sits below 100% by design.</p>
@@ -554,7 +449,7 @@
     </div>
 
     <div class="v c7 h3r">
-      <div class="vh"><h4>Where members drop out — inactivation by journey stage</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Where members drop out — inactivation by journey stage</h4>
         <div class="vf"><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: 100% stacked column chart. Stage is derived from the furthest milestone reached before the inactivation date — registered only, assessed, DI attended, in care, or completed 90-day care.">ⓘ</button></div>
       </div>
       <p class="info">Answers whether members leave right after signing up or after finishing treatment. Only the last band is a good outcome; the first two are acquisition waste.</p>
@@ -570,7 +465,7 @@
     </div>
 
     <div class="v c5 h3r">
-      <div class="vh"><h4>Days from registration to inactivation</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Days from registration to inactivation</h4>
         <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Stage: all</span><button class="i" data-tip="Power BI: clustered column chart used as a histogram (bucketed days as the axis). Buckets come from a DAX calculated column, not from the visual — Power BI cannot bin a measure.">ⓘ</button></div>
       </div>
       <p class="info">The 0–7 day spike is people who never really started. The 90–120 band is expected — that's the end of the 90-day programme.</p>
@@ -581,15 +476,8 @@
 
     <!-- ============ WORKFORCE ============ -->
 
-    <div class="v c4 h3r">
-      <div class="vh"><h4>Medical group headcount by licence type</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><button class="i" data-tip="Power BI: small multiples (area). Seven licence types will not fit the five-colour categorical palette, so this is faceted rather than stacked - one panel per licence, each with its own monthly trend.">&#9432;</button></div>
-      </div>
-      <div class="body" id="x-lic"></div>
-    </div>
-
     <div class="v c4 h2r">
-      <div class="vh"><h4>Co-sign obligations and supervisor capacity</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Co-sign obligations and supervisor capacity</h4>
         <div class="vf"><button class="i" data-tip="Power BI: clustered column chart. Both series are headcounts, so one axis. Providers requiring co-sign are pre-independent clinicians; the supervisor count is active LCSWs actually carrying a co-sign panel, not everyone credentialed to supervise.">&#9432;</button></div>
       </div>
       <p class="info">The ratio between the two bars is the supervision load. It has roughly doubled over the year, which is what the co-sign queue depth is downstream of.</p>
@@ -601,7 +489,7 @@
     <!-- ============ DOCUMENTATION QUALITY ============ -->
 
     <div class="v kpi c2 h1r">
-      <div class="vh"><h4>Notes signed &lt; 24h</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Notes signed &lt; 24h</h4>
         <div class="vf"><span class="wf">All note types</span><button class="i" data-tip="Power BI: KPI + line. Session end to signed note. The chip isolates guided session notes, which are 73% of all documentation.">ⓘ</button></div>
       </div>
       <div class="body">
@@ -612,7 +500,7 @@
     </div>
 
     <div class="v c5 h1r">
-      <div class="vh"><h4>Note timeliness</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Note timeliness</h4>
         <div class="vf"><span class="wf">Supervisor: all</span><button class="i" data-tip="Power BI: 100% stacked column chart. Status colors always ship with labels, never color alone.">ⓘ</button></div>
       </div>
       <div class="body"><div class="ch" id="p-time"></div>
@@ -624,7 +512,7 @@
     </div>
 
     <div class="v c4 h2r">
-      <div class="vh"><h4>Median time from session end to signed note</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Median time from session end to signed note</h4>
         <div class="vf"><span class="wf">All note types</span><button class="i" data-tip="Power BI: line chart, one series, in hours, with a constant line at the 24-hour standard. The share-based view is the note timeliness visual; this is the median the share cannot show.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="x-notemed"></div>
@@ -633,7 +521,7 @@
     </div>
 
     <div class="v kpi c2 h2r">
-      <div class="vh"><h4>Co-sign queue</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Co-sign queue</h4>
         <div class="vf"><span class="wf">Month end</span><button class="i" data-tip="Power BI: card + line. Notes are not billable until co-signed. The chip switches between month-end depth and monthly peak.">ⓘ</button></div>
       </div>
       <div class="body">
@@ -643,22 +531,8 @@
       </div>
     </div>
 
-    <div class="v c5 h3r">
-      <div class="vh"><h4>Co-sign rejections by reason</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Rejection rate alone does not tell a supervisor what to fix; the reason and the days it adds back to the queue do.">&#9432;</button></div>
-      </div>
-      <div class="body" id="x-rejmx"></div>
-    </div>
-
-    <div class="v c8 h2r">
-      <div class="vh"><h4>Documentation and quality by supervisor group</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. PHQ-9 delta is acuity-adjusted — publishing it raw is how the report loses clinician trust on day one.">ⓘ</button></div>
-      </div>
-      <div class="body" id="p-mx"></div>
-    </div>
-
     <div class="v c4 h3r">
-      <div class="vh"><h4>Golden Thread completeness</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Golden Thread completeness</h4>
         <div class="vf"><button class="i" data-tip="Power BI: small multiples (area). One panel per required element rather than a stacked bar, because the question is which element is missing, not what the blended score is. A note counts as complete only when all four are present.">&#9432;</button></div>
       </div>
       <div class="body" id="x-gt"></div>
@@ -669,7 +543,7 @@
     <a href="../internal/patient-journey.html">Patient journey</a>
     <a href="../internal/provider-journey.html">Provider journey</a>
     <a href="../external/cdphp.html" aria-current="page">CDPHP payer report</a>
-    <span class="hint">Every measure is monthly. Every visual here answers a statistic CDPHP asked for. Hover &#9432; for the Power BI visual type.</span>
+    <span class="hint">Every measure is monthly unless the tile says otherwise. Hover &#9432; for the Power BI visual type.</span>
   </div>
 
   <div class="dd" id="dd" role="listbox"></div>
@@ -1169,14 +1043,6 @@ APTI.render(function () {
     ]
   });
 
-  lines("x-medmgmt", {
-    labels: MO, h: 80, max: 40,
-    series: [
-      { name: "Ever", color: "var(--s1)", values: [24, 25, 25, 26, 26, 27, 27, 28, 28, 29, 29, 30] },
-      { name: "In the month", color: "var(--s2)", values: [9, 9, 10, 9, 10, 10, 11, 11, 11, 11, 12, 12] }
-    ]
-  });
-
   columns("c-conv", {
     labels: MO, h: 56,
     series: [
@@ -1250,23 +1116,6 @@ APTI.render(function () {
   );
 
 
-
-  lines("c-copay", {
-    labels: MO, h: 80,
-    series: [
-      { name: "$0 copay", color: "var(--s1)", values: [50, 51, 49, 48, 52, 53, 52, 54, 55, 54, 55, 54] },
-      { name: "Copay > $0", color: "var(--s2)", values: [30, 31, 29, 27, 31, 32, 31, 33, 34, 32, 34, 33] }
-    ]
-  });
-
-  lines("x-copaysess", {
-    labels: MO, h: 80, max: 14, unit: "",
-    series: [
-      { name: "$0 copay", color: "var(--s1)", values: [7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9] },
-      { name: "Copay > $0", color: "var(--s2)", values: [5, 5, 5, 4, 5, 5, 5, 6, 6, 6, 6, 6] }
-    ]
-  });
-
   columns("x-paywall", {
     labels: MO, h: 74, unit: " members",
     series: [
@@ -1286,69 +1135,10 @@ APTI.render(function () {
     ]
   });
 
-  matrix("u-mx",
-    ["Urgent reason", "Referrals", "Median days to DI", "Seen ≤ 7 days", "≤ 48h"],
-    [
-      ["Post BH hospital discharge (7-day follow-up)", { v: "38", bar: 100 }, { v: "3.1", cf: "g" }, { v: "94%", cf: "g" }, "42%"],
-      ["Suicidal ideation or self-harm risk", { v: "31", bar: 82 }, { v: "2.4", cf: "g" }, { v: "97%", cf: "g" }, "61%"],
-      ["Rapid deterioration / acute decompensation", { v: "18", bar: 47 }, { v: "4.6", cf: "w" }, { v: "83%", cf: "w" }, "28%"],
-      ["Acute grief / loss", { v: "14", bar: 37 }, { v: "6.8", cf: "w" }, { v: "71%", cf: "c" }, "14%"],
-      ["Risk to others (homicidal/violent ideation)", { v: "9", bar: 24 }, { v: "2.0", cf: "g" }, { v: "100%", cf: "g" }, "78%"],
-      ["Perinatal / postpartum crisis", { v: "9", bar: 24 }, { v: "5.2", cf: "w" }, { v: "78%", cf: "w" }, "33%"],
-      ["Grave disability / unable to care for self", { v: "7", bar: 18 }, { v: "8.4", cf: "c" }, { v: "57%", cf: "c" }, "14%"],
-      ["Total urgent", { v: "126", bar: 100 }, { v: "4.1" }, { v: "81%" }, "41%"]
-    ]
-  );
-
-  bars("u-bars", {
-    lw: 116, rh: 20, max: 10, rule: 7,
-    rows: [
-      { label: "Grave disability", value: 8.4, fmt: "8.4 d", color: "var(--critical)" },
-      { label: "Acute grief / loss", value: 6.8, fmt: "6.8 d", color: "var(--serious)" },
-      { label: "Perinatal crisis", value: 5.2, fmt: "5.2 d", color: "var(--s2)" },
-      { label: "Rapid deterioration", value: 4.6, fmt: "4.6 d", color: "var(--s2)" },
-      { label: "Post BH discharge", value: 3.1, fmt: "3.1 d", color: "var(--s1)" },
-      { label: "Suicidal ideation", value: 2.4, fmt: "2.4 d", color: "var(--s1)" },
-      { label: "Risk to others", value: 2.0, fmt: "2.0 d", color: "var(--s1)" }
-    ]
-  });
-
-  matrix("x-ac4mx",
-    ["Admission source", "Acuity 4", "Share of acuity 4", "Self sign-up", "PCP", "Health system", "CDPHP-direct"],
-    [
-      ["Inpatient BH discharge", { v: "34", bar: 100 }, { v: "27%", cf: "w" }, "2", "4", "21", "7"],
-      ["ED presentation", { v: "23", bar: 68 }, { v: "18%", cf: "w" }, "3", "3", "14", "3"],
-      ["Crisis line / mobile crisis", { v: "19", bar: 56 }, { v: "15%", cf: "w" }, "6", "2", "8", "3"],
-      ["PCP escalation", { v: "17", bar: 50 }, { v: "13%", cf: "g" }, "0", "15", "1", "1"],
-      ["Member self-report at intake", { v: "26", bar: 76 }, { v: "21%", cf: "c" }, "24", "1", "0", "1"],
-      ["Not recorded", { v: "7", bar: 21 }, { v: "6%", cf: "c" }, "4", "1", "1", "1"],
-      ["Total acuity 4", { v: "126", bar: 100 }, { v: "100%" }, "39", "26", "45", "16"]
-    ]
-  );
-
   columns("x-pdout", {
     labels: MO, h: 74, rule: 75, ruleLabel: "target 75%", max: 100, unit: "%",
     series: [{ name: "Reached within 7 days", color: "var(--s1)", values: [52, 54, 51, 49, 57, 59, 58, 61, 63, 62, 64, 66] }],
     fmt: function (v) { return Math.round(v) + "%"; }
-  });
-
-  lines("x-fum", {
-    labels: MO, h: 80, max: 100, rule: 60, ruleLabel: "HEDIS 30-day threshold",
-    series: [
-      { name: "FUH", color: "var(--s1)", values: [58, 60, 57, 55, 62, 64, 63, 66, 68, 67, 69, 71] },
-      { name: "FUM", color: "var(--s2)", values: [44, 46, 43, 41, 48, 50, 49, 52, 54, 53, 55, 57] }
-    ]
-  });
-
-  columns("x-agecov", {
-    labels: MO, h: 74, rule: 60, ruleLabel: "target 60%", max: 100, unit: "%",
-    series: [{ name: "Covering 5-17", color: "var(--s1)", values: [31, 32, 32, 34, 35, 35, 37, 38, 38, 40, 41, 42] }],
-    fmt: function (v) { return Math.round(v) + "%"; }
-  });
-
-  columns("x-agemis", {
-    labels: MO, h: 74, pl: 16, unit: " DIs",
-    series: [{ name: "Mismatched adolescent DIs", color: "var(--critical)", values: [11, 12, 14, 15, 13, 12, 12, 11, 10, 10, 9, 8] }]
   });
 
   columns("x-direpeat", {
@@ -1379,18 +1169,6 @@ APTI.render(function () {
     labels: MO, h: 80, max: 160, unit: " d",
     series: [{ name: "Median length of active care", color: "var(--s1)", values: [104, 108, 111, 115, 112, 116, 119, 121, 124, 126, 129, 132] }]
   });
-
-  columns("x-2in60", {
-    labels: MO, h: 74, rule: 80, ruleLabel: "target 80%", max: 100, unit: "%",
-    series: [{ name: "2+ sessions in 60 days", color: "var(--s1)", values: [64, 66, 63, 61, 68, 70, 69, 72, 74, 73, 71, 68] }],
-    fmt: function (v) { return Math.round(v) + "%"; }
-  });
-
-  smallMultiples("c-sm-out", [
-    { label: "Reached 50% reduction", value: "44%", color: "var(--s1)", unit: "%", spark: [33, 35, 34, 37, 38, 40, 39, 41, 42, 43, 43, 44] },
-    { label: "In remission (<5)", value: "21%", color: "var(--s1)", unit: "%", spark: [15, 16, 16, 17, 18, 18, 19, 19, 20, 20, 21, 21] },
-    { label: "Median days to 50%", value: "58", color: "var(--s2)", unit: " days", spark: [76, 74, 73, 71, 69, 68, 66, 64, 62, 61, 59, 58] }
-  ]);
 
   lines("x-50pct", {
     labels: MO, h: 88, max: 85, unit: " d",
@@ -1428,16 +1206,6 @@ APTI.render(function () {
     series: [{ name: "Members", color: "var(--s1)", values: [61, 24, 19, 22, 17, 31, 14, 12, 8] }]
   });
 
-  smallMultiples("x-lic", [
-    { label: "LCSW", value: "38", color: "var(--s1)", spark: [32, 32, 33, 34, 34, 35, 35, 36, 36, 37, 37, 38] },
-    { label: "LCSW-R", value: "12", color: "var(--s1)", spark: [9, 9, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12] },
-    { label: "LMHC", value: "27", color: "var(--s1)", spark: [22, 23, 23, 24, 24, 25, 25, 26, 26, 26, 27, 27] },
-    { label: "LMSW", value: "24", color: "var(--s1)", spark: [19, 20, 20, 21, 21, 22, 22, 23, 23, 23, 24, 24] },
-    { label: "LMFT", value: "11", color: "var(--s1)", spark: [9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 11] },
-    { label: "PMHNP-BC", value: "21", color: "var(--s2)", spark: [17, 17, 18, 18, 19, 19, 20, 20, 20, 21, 21, 21] },
-    { label: "RN", value: "15", color: "var(--s3)", spark: [12, 12, 13, 13, 13, 14, 14, 14, 15, 15, 15, 15] }
-  ]);
-
   columns("x-cosignreq", {
     labels: MO, h: 76, pl: 16, unit: " providers",
     series: [
@@ -1466,29 +1234,6 @@ APTI.render(function () {
     labels: MO, h: 80, max: 48, unit: " h", rule: 24, ruleLabel: "24-hour standard",
     series: [{ name: "Median hours to signed note", color: "var(--s1)", values: [31, 30, 29, 30, 27, 26, 25, 24, 23, 22, 21, 19] }]
   });
-
-  matrix("x-rejmx",
-    ["Rejection reason", "Notes", "Share", "Days added"],
-    [
-      ["Missing or thin medical necessity", { v: "38", bar: 100 }, { v: "34%", cf: "c" }, { v: "2.6", cf: "c" }],
-      ["Goal not linked to the intervention", { v: "26", bar: 68 }, { v: "23%", cf: "c" }, { v: "1.9", cf: "w" }],
-      ["Diagnosis not supported by the note", { v: "21", bar: 55 }, { v: "19%", cf: "w" }, { v: "2.1", cf: "w" }],
-      ["Wrong service code or duration", { v: "16", bar: 42 }, { v: "14%", cf: "w" }, { v: "1.2", cf: "g" }],
-      ["Other, free text", { v: "11", bar: 29 }, { v: "10%", cf: "w" }, { v: "1.7", cf: "w" }],
-      ["Total rejected", { v: "112", bar: 100 }, { v: "6.1%" }, { v: "2.1" }]
-    ]
-  );
-
-  matrix("p-mx",
-    ["Supervisor group", "Providers", "Notes", "<24h", "Pending co-sign", "Rejection", "PHQ-9 delta (adj.)"],
-    [
-      ["Group A", "14", { v: "2,412", bar: 100 }, { v: "61%", cf: "c" }, { v: "31", bar: 100 }, { v: "8.4%", cf: "c" }, "−5.8"],
-      ["Group B", "12", { v: "1,986", bar: 82 }, { v: "72%", cf: "g" }, { v: "18", bar: 58 }, { v: "5.1%", cf: "g" }, "−6.4"],
-      ["Group C", "11", { v: "1,744", bar: 72 }, { v: "69%", cf: "w" }, { v: "14", bar: 45 }, { v: "6.0%", cf: "w" }, "−6.1"],
-      ["Group D", "9", { v: "1,208", bar: 50 }, { v: "74%", cf: "g" }, { v: "10", bar: 32 }, { v: "4.4%", cf: "g" }, "−6.6"],
-      ["Total", "46", { v: "7,350", bar: 100 }, { v: "68%" }, { v: "73", bar: 100 }, { v: "6.1%" }, "−6.2"]
-    ]
-  );
 
   smallMultiples("x-gt", [
     { label: "Diagnosis recorded", value: "97%", color: "var(--s1)", unit: "%", spark: [92, 92, 93, 93, 94, 94, 95, 95, 96, 96, 97, 97] },

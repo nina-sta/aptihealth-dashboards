@@ -178,12 +178,20 @@
   </div>
 
   <div class="page on" id="pg-patient">
-    <div class="v c7 h3r">
-      <div class="vh"><h4>Acquisition and access funnel</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: funnel. Both chips are visual-level slicers — the month chip is what makes this a monthly funnel rather than a period total.">ⓘ</button></div>
+    <div class="v c6 h3r">
+      <div class="vh"><h4>Acquisition and access funnel &mdash; referred members</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Channel: referrers only</span><button class="i" data-tip="Power BI: funnel. Members a referrer sent us — PCP practices, health systems and health plans. It starts one stage earlier than the self sign-up funnel because a referral is created by somebody else before the member has done anything at all. Stages in red have a named drop reason on hover.">ⓘ</button></div>
       </div>
-      <p class="info">Stages in red have a named drop reason on hover. A stage without one is a build gap, not a display choice.</p>
+      <p class="info">Starts with an event the member did not cause. A quarter of referrals never reach a completed registration, which is a handover problem rather than a member one.</p>
       <div class="body"><div class="ch" id="c-funnel"></div></div>
+    </div>
+
+    <div class="v c6 h3r">
+      <div class="vh"><h4>Acquisition and access funnel &mdash; self sign-up</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Channel: self sign-up</span><button class="i" data-tip="Power BI: funnel. The same stages as the referred funnel with one exception: there is no referral created row, because nobody creates a referral for a member who arrives on their own. The first row is the member's own first completed step, so the two funnels are comparable from registration complete downwards, not from the top.">ⓘ</button></div>
+      </div>
+      <p class="info">No referral event exists here, so this funnel is one stage shorter. Members who abandon registration halfway never appear on it — that loss sits before the first row.</p>
+      <div class="body"><div class="ch" id="c-funnel-self"></div></div>
     </div>
 
     <div class="v c5 h3r">
@@ -204,9 +212,9 @@
 
     <div class="v c7 h3r">
       <div class="vh"><h4>Members by stage &mdash; in stage and inactivated after it</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: stacked bar chart. The same nine stages as the acquisition funnel, and the same month, read a different way: the funnel counts everyone who reached a stage, this counts where they stopped. Each member appears once, at the furthest stage they reached, split into still sitting there and inactivated after it. Both series are member counts, so one bar and one axis.">&#9432;</button></div>
+        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: stacked bar chart. The same stages as the two acquisition funnels, and the same month, read a different way: a funnel counts everyone who reached a stage, this counts where they stopped. Both channels are in here together. Each member appears once, at the furthest stage they reached, split into still sitting there and inactivated after it. Both series are member counts, so one bar and one axis.">&#9432;</button></div>
       </div>
-      <p class="info">Every member referred in the month is on this chart exactly once, so the bars add up to the 781 the funnel starts from. The stages are the funnel's stages.</p>
+      <p class="info">Every member the month brought in is on this chart exactly once, referred and self sign-up together, so the bars add up to 781 — the two funnels side by side.</p>
       <div class="body"><div class="ch" id="c-stagebars"></div>
         <div class="lg">
           <span><i style="background:var(--s1)"></i>Currently in stage</span>
@@ -221,6 +229,16 @@
       </div>
       <p class="info">Two reasons carry three quarters of it, and both are contact problems rather than clinical ones.</p>
       <div class="body"><div class="ch" id="c-inact-reason"></div>
+      </div>
+    </div>
+
+    <div class="v c7 h3r">
+      <div class="vh"><h4>Days from registration to inactivation</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Stage: all</span><button class="i" data-tip="Power BI: clustered column chart used as a histogram (bucketed days as the axis). Buckets come from a DAX calculated column, not from the visual — Power BI cannot bin a measure.">ⓘ</button></div>
+      </div>
+      <p class="info">The 0–7 day spike is people who never really started. The 90–120 band is expected — that's the end of the 90-day programme.</p>
+      <div class="body"><div class="ch" id="c-inact-days"></div>
+        <div class="gapnote">⚠ Needs an inactivation reason field to separate lapsed from clinically discharged.</div>
       </div>
     </div>
 
@@ -246,16 +264,6 @@
       </div>
     </div>
 
-    <div class="v c8 h2r">
-      <div class="vh"><h4>Days from registration to inactivation</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Stage: all</span><button class="i" data-tip="Power BI: clustered column chart used as a histogram (bucketed days as the axis). Buckets come from a DAX calculated column, not from the visual — Power BI cannot bin a measure.">ⓘ</button></div>
-      </div>
-      <p class="info">The 0–7 day spike is people who never really started. The 90–120 band is expected — that's the end of the 90-day programme.</p>
-      <div class="body"><div class="ch" id="c-inact-days"></div>
-        <div class="gapnote">⚠ Needs an inactivation reason field to separate lapsed from clinically discharged.</div>
-      </div>
-    </div>
-
     <div class="v kpi c2 h1r">
       <div class="vh"><h4>Routine referrals</h4>
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: card + line. Routine referrals created in the month on the chip — every referral not flagged urgent. The line is the same count across the previous twelve months.">&#9432;</button></div>
@@ -267,7 +275,23 @@
       </div>
     </div>
 
+    <div class="v c6 h2r">
+      <div class="vh"><h4>Onboarding completion rate</h4>
+        <div class="vf"><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: clustered column with a constant line for target. Of the members who completed registration in the month, the share who finished the rest of onboarding — eligibility, email and consents, and the A5 assessment. It is the middle of the funnel expressed as one rate, so it can be trended and given a target.">&#9432;</button></div>
+      </div>
+      <p class="info">The four in ten who do not finish are the largest single loss in the whole journey, and they leave before anyone clinical has met them.</p>
+      <div class="body"><div class="ch" id="c-onboard"></div></div>
+    </div>
+
     <div class="v c5 h2r">
+      <div class="vh"><h4>First-appointment no-show</h4>
+        <div class="vf"><span class="wf">Milestone: DI attended</span><button class="i" data-tip="Power BI: line chart, one series, with a constant line at the 15% standard. Booked first appointments where the member did not attend, as a share of first appointments booked in the month. Cancellations with notice count as no-shows here because the slot is lost either way. The milestone chip switches between the DI and the first therapy session.">&#9432;</button></div>
+      </div>
+      <p class="info">Counted against the month the appointment was booked for, not the month it was booked in, so a slot lost in August lands in August.</p>
+      <div class="body"><div class="ch" id="c-noshow"></div></div>
+    </div>
+
+    <div class="v c7 h2r">
       <div class="vh"><h4>Access by referral channel</h4>
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Put month on columns for a trended view.">ⓘ</button></div>
       </div>
@@ -281,22 +305,6 @@
       <div class="body"><div class="ch" id="u-days"></div>
         <div class="lg"><span><i style="background:var(--s2)"></i>Urgent</span><span><i style="background:var(--s1)"></i>Routine</span></div>
       </div>
-    </div>
-
-    <div class="v c6 h2r">
-      <div class="vh"><h4>Onboarding completion rate</h4>
-        <div class="vf"><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: clustered column with a constant line for target. Of the members who completed registration in the month, the share who finished the rest of onboarding — eligibility, email and consents, and the A5 assessment. It is the middle of the funnel expressed as one rate, so it can be trended and given a target.">&#9432;</button></div>
-      </div>
-      <p class="info">The four in ten who do not finish are the largest single loss in the whole journey, and they leave before anyone clinical has met them.</p>
-      <div class="body"><div class="ch" id="c-onboard"></div></div>
-    </div>
-
-    <div class="v c6 h2r">
-      <div class="vh"><h4>First-appointment no-show</h4>
-        <div class="vf"><span class="wf">Milestone: DI attended</span><button class="i" data-tip="Power BI: line chart, one series, with a constant line at the 15% standard. Booked first appointments where the member did not attend, as a share of first appointments booked in the month. Cancellations with notice count as no-shows here because the slot is lost either way. The milestone chip switches between the DI and the first therapy session.">&#9432;</button></div>
-      </div>
-      <p class="info">Counted against the month the appointment was booked for, not the month it was booked in, so a slot lost in August lands in August.</p>
-      <div class="body"><div class="ch" id="c-noshow"></div></div>
     </div>
 
     <div class="v c7 h3r">
@@ -316,7 +324,7 @@
       </div>
     </div>
 
-    <div class="v c12 h2r">
+    <div class="v c7 h2r">
       <div class="vh"><h4>Diagnostic interviews &mdash; first-time vs repeat</h4>
         <div class="vf"><button class="i" data-tip="Power BI: stacked column chart. Both series are DI counts, so one axis. Repeat means a member who had a completed DI before this one.">&#9432;</button></div>
       </div>
@@ -604,7 +612,7 @@
 
   /* ---- slicer / visual-filter dropdowns (mock: they open and set the label, nothing filters) ---- */
   var MONTHS = ["Aug 2026", "Jul 2026", "Jun 2026", "May 2026", "Apr 2026", "Q3 2026", "Rolling 3 months"];
-  var CHANNELS = ["Channel: all", "Channel: self sign-up", "Channel: PCP practices", "Channel: health systems", "Channel: health plans"];
+  var CHANNELS = ["Channel: all", "Channel: referrers only", "Channel: self sign-up", "Channel: PCP practices", "Channel: health systems", "Channel: health plans"];
   var ACUITY = ["Acuity: all", "Acuity: severe", "Acuity: high", "Acuity: medium", "Acuity: base"];
   var SUPS = ["Supervisor: all", "Supervisor A", "Supervisor B", "Supervisor C"];
 
@@ -617,6 +625,8 @@
     "Aug 2026": { head: "Month", opts: MONTHS },
     "All time": { head: "Period", opts: ["All time", "Aug 2026", "Rolling 12 months"] },
     "Channel: all": { head: "Referral channel", opts: CHANNELS },
+    "Channel: referrers only": { head: "Referral channel", opts: CHANNELS },
+    "Channel: self sign-up": { head: "Referral channel", opts: CHANNELS },
     "Acuity: all": { head: "Acuity", opts: ACUITY },
     "Acuity: severe": { head: "Acuity", opts: ACUITY },
     "Supervisor: all": { head: "Supervisor", opts: SUPS },
@@ -762,15 +772,26 @@ APTI.render(function () {
   spark("k-routine", [608, 631, 592, 563, 668, 684, 652, 680, 688, 668, 681, 655], "var(--s1)");
 
   funnel("c-funnel", [
-    { label: "Referral created", value: 781, conv: "—" },
-    { label: "Registration complete", value: 570, conv: "73%" },
-    { label: "Eligibility accepted", value: 485, conv: "85%", leak: true, leakTxt: "plan not covered, ID mismatch" },
-    { label: "Email + consents", value: 435, conv: "90%" },
-    { label: "A5 complete", value: 347, conv: "80%", leak: true, leakTxt: "abandoned mid-assessment" },
-    { label: "DI booked", value: 302, conv: "87%" },
-    { label: "DI attended", value: 235, conv: "78%", leak: true, leakTxt: "no-show, cancelled" },
-    { label: "Admitted to 90-day care", value: 214, conv: "91%" },
-    { label: "First session attended", value: 195, conv: "92%" }
+    { label: "Referral created", value: 367, conv: "—" },
+    { label: "Registration complete", value: 274, conv: "75%" },
+    { label: "Eligibility accepted", value: 237, conv: "86%", leak: true, leakTxt: "plan not covered, ID mismatch" },
+    { label: "Email + consents", value: 214, conv: "90%" },
+    { label: "A5 complete", value: 171, conv: "80%", leak: true, leakTxt: "abandoned mid-assessment" },
+    { label: "DI booked", value: 149, conv: "87%" },
+    { label: "DI attended", value: 107, conv: "72%", leak: true, leakTxt: "no-show, cancelled" },
+    { label: "Admitted to 90-day care", value: 98, conv: "92%" },
+    { label: "First session attended", value: 89, conv: "91%" }
+  ]);
+
+  funnel("c-funnel-self", [
+    { label: "Registration complete", value: 296, conv: "—" },
+    { label: "Eligibility accepted", value: 248, conv: "84%", leak: true, leakTxt: "plan not covered, ID mismatch" },
+    { label: "Email + consents", value: 221, conv: "89%" },
+    { label: "A5 complete", value: 176, conv: "80%", leak: true, leakTxt: "abandoned mid-assessment" },
+    { label: "DI booked", value: 153, conv: "87%" },
+    { label: "DI attended", value: 128, conv: "84%", leak: true, leakTxt: "no-show, cancelled" },
+    { label: "Admitted to 90-day care", value: 116, conv: "91%" },
+    { label: "First session attended", value: 106, conv: "91%" }
   ]);
 
   matrix("c-mx-chan",

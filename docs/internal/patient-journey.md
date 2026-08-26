@@ -23,7 +23,8 @@ and is the point of this document.
 
 | Visual | Business question | Owner | Business impact | Status |
 | --- | --- | --- | --- | --- |
-| Acquisition and access funnel | Where in sign-up do people fall out? | _unassigned_ | _to agree_ | Built |
+| Acquisition and access funnel — referred members | Where do referred members fall out on the way to care? | _unassigned_ | _to agree_ | Built |
+| Acquisition and access funnel — self sign-up | Where do members who arrive on their own fall out, and does it differ from referrals? | _unassigned_ | _to agree_ | Built |
 | Where members drop out — inactivation by journey stage | Do people leave before care starts or after it finishes? | _unassigned_ | _to agree_ | Built |
 | Members by stage — in stage and inactivated after it | How many members sit at each stage, and what does each stage cost us in inactivations? | _unassigned_ | _to agree_ | Built |
 | Inactivated members by latest reason | Why do members leave, and is it clinical or a contact problem? | _unassigned_ | _to agree_ | Built |

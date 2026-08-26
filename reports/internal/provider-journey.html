@@ -642,7 +642,7 @@
 
   /* ---- slicer / visual-filter dropdowns (mock: they open and set the label, nothing filters) ---- */
   var MONTHS = ["Aug 2026", "Jul 2026", "Jun 2026", "May 2026", "Apr 2026", "Q3 2026", "Rolling 3 months"];
-  var CHANNELS = ["Channel: all", "Channel: self sign-up", "Channel: PCP practices", "Channel: health systems", "Channel: health plans"];
+  var CHANNELS = ["Channel: all", "Channel: referrers only", "Channel: self sign-up", "Channel: PCP practices", "Channel: health systems", "Channel: health plans"];
   var ACUITY = ["Acuity: all", "Acuity: severe", "Acuity: high", "Acuity: medium", "Acuity: base"];
   var SUPS = ["Supervisor: all", "Supervisor A", "Supervisor B", "Supervisor C"];
 
@@ -655,6 +655,8 @@
     "Aug 2026": { head: "Month", opts: MONTHS },
     "All time": { head: "Period", opts: ["All time", "Aug 2026", "Rolling 12 months"] },
     "Channel: all": { head: "Referral channel", opts: CHANNELS },
+    "Channel: referrers only": { head: "Referral channel", opts: CHANNELS },
+    "Channel: self sign-up": { head: "Referral channel", opts: CHANNELS },
     "Acuity: all": { head: "Acuity", opts: ACUITY },
     "Acuity: severe": { head: "Acuity", opts: ACUITY },
     "Supervisor: all": { head: "Supervisor", opts: SUPS },

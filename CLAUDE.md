@@ -42,6 +42,11 @@ who acts on it. **External reports** go to payers. CDPHP is built first and deli
 largest — every other payer report is this one with visuals switched off — so a measure
 missing from CDPHP is missing everywhere.
 
+The payer report is allowed to keep a visual after it leaves every internal report. What the
+payer is owed and what we run the business on are two different lists (decided 26 Aug 2026).
+`sync.py` prints those as *payer-only* on every run instead of failing — treat the list as a
+maintenance warning: nobody internally is looking at them.
+
 Work **top-down**: agree the shape of a report before arguing about a single tile.
 
 ## The rule that matters most

@@ -20,9 +20,9 @@ switched off. Work top-down: agree the shape before arguing about a tile.
 
 Live at **https://nina-sta.github.io/aptihealth-dashboards/** (public repo, GitHub Pages).
 
-- Three reports built, 106 visuals total: patient 42, provider 18, CDPHP 46.
-- The CDPHP report is exactly the 46 visuals marked *CDPHP asked* across the two internal
-  reports — verified by set comparison, not by eye.
+- Three reports built, 100 visuals total: patient 36, provider 18, CDPHP 46.
+- The CDPHP report holds every visual marked *CDPHP asked* across the two internal reports,
+  plus seven the internal reports have since dropped — see the decision below.
 - Three specifications under `docs/`, one row per visual, business question drafted.
 - `tools/sync.py` passes and is tested against a deliberately broken doc.
 
@@ -53,27 +53,23 @@ visuals ship with a `gapnote` instead of a clean number because of them.
 - **Both engagement definitions are shown side by side** rather than hidden behind a chip,
   because the gap between them is the decision.
 
-## Live inconsistency — needs a decision before anything ships
+## Decided 26 Aug 2026 — the payer report may keep visuals we dropped internally
 
-Another session removed seven visuals from the internal patient-journey report (`fbc6e28`,
-committed locally, **not pushed**) and republished that artifact. It updated the spec rows in
-the same commit, which is correct. But **all seven are marked *CDPHP asked* and all seven are
-still in the payer report**, so the payer report now carries seven visuals that exist in no
-internal report:
+Seven visuals left the internal patient-journey report in `fbc6e28` and stayed in the CDPHP
+report, which `sync.py` then flagged as orphans:
 
   Referrals and members reaching first session · Channel mix · Conversion to first session by
   copay cohort · Active members with a current PHQ-9 or GAD-7 · Urgent seen ≤ 7 days ·
   Median days to care by reason · Members in care by tenure
 
-`tools/sync.py` did not catch this — the payer cross-check only ran one way. Fixed; it now
-fails on orphans, and it is failing on these seven right now. Two coherent resolutions:
+**The divergence is accepted.** What the payer is owed and what we run the business on are
+two different lists, so the payer report is no longer strictly assembled from internal ones.
+`sync.py` still checks that everything marked *CDPHP asked* reaches the payer report; the
+reverse direction now prints a *payer-only* note and does not fail. The risk that buys is
+real and is the reason the note prints every run: those seven are maintained in one place and
+nobody internally looks at them, so they will rot quietly. Revisit if the list grows.
 
-- **Restore them internally.** They answer payer questions, so we look at them too.
-- **Accept the payer report owning visuals no internal report shows**, and change the model
-  and the checker to allow it.
-
-Do not push `fbc6e28` until this is settled — pushing it puts the payer report and the
-internal reports out of step on the live site.
+`fbc6e28` is safe to push.
 
 ## Open questions for a person
 

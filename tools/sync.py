@@ -14,12 +14,14 @@ It enforces four things:
 2. Every report has a specification under docs/.
 3. The set of visuals in a report and the set of rows in its specification match exactly.
    This is the docs-and-mock-ups-agree rule. Add a visual, add a row, in the same commit.
-4. The CDPHP payer report and the internal reports agree, in both directions:
-   - every visual marked "CDPHP asked" internally reaches the payer report, because that
-     report is meant to be the full answer to their ask; and
-   - every visual in the payer report still exists in some internal report. The payer report
-     is assembled from the internal ones, so a visual with no internal home is an orphan —
-     usually a visual deleted internally without deciding what the payer should see.
+4. Every visual marked "CDPHP asked" in an internal report also appears in the CDPHP
+   payer report, because that report is meant to be the full answer to their ask.
+
+The reverse direction is reported but does not fail. The payer report is allowed to keep a
+visual after it leaves every internal report: we decided on 26 Aug 2026 that what the payer
+is owed and what we run the business on are two different lists. Those visuals are listed
+on every run as payer-only, because they are maintained in one place and nobody internally
+is looking at them.
 
 No dependencies. Python 3 only.
 """
@@ -108,10 +110,7 @@ def main():
     for rel in REPORTS:
         if rel != CDPHP_REPORT:
             internal_visuals |= set(visuals(read(rel)))
-    for orphan in sorted(cdphp_visuals - internal_visuals):
-        problems.append("%s: %r is in the payer report but in no internal report — restore it "
-                        "internally, or decide the payer should stop seeing it and remove it here"
-                        % (CDPHP_REPORT, orphan))
+    payer_only = sorted(cdphp_visuals - internal_visuals)
 
     for rel, doc in sorted(REPORTS.items()):
         src = read(rel)
@@ -137,8 +136,15 @@ def main():
                     problems.append("%s: %r is marked CDPHP asked but is missing from %s"
                                     % (rel, title, CDPHP_REPORT))
 
+    if payer_only:
+        print("\nnote — %d payer-only visual(s): in %s, in no internal report.\n"
+              "Allowed, but maintained in one place only:\n" % (len(payer_only), CDPHP_REPORT))
+        for title in payer_only:
+            print("  · " + title)
+        print("")
+
     if problems:
-        print("\n%d problem(s):\n" % len(problems))
+        print("%d problem(s):\n" % len(problems))
         for p in problems:
             print("  - " + p)
         return 1

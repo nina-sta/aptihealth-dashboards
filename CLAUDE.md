@@ -105,9 +105,11 @@ These were decided deliberately. Do not "improve" them without being asked.
    chosen. Keep it accurate; it is what the data team builds from.
 7. **No tables in prose.** Matrix visuals are fine — those are charts.
 8. **A visual that answers a payer question carries a marker** in its header —
-   `<span class="ask">CDPHP asked</span>`. The patient-journey report is the exception: it
-   dropped the marker on 26 Aug 2026 and reads as a purely internal report, so what the payer
-   asked for is tracked in the provider report and in the CDPHP report only.
+   `<span class="ask">CDPHP asked</span>`. Both internal reports are now exceptions: patient
+   journey dropped the marker on 26 Aug 2026, provider journey the same day, and each reads
+   as a purely internal report. What the payer asked for is tracked in the CDPHP report only.
+   The `sync.py` check that every marked visual reaches the CDPHP report therefore has
+   nothing left to check — keep it for whichever internal report next carries a marker.
 
 ## Palette (validated, do not substitute by eye)
 

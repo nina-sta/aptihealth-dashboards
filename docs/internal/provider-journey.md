@@ -9,7 +9,8 @@
 ## How to read the table
 
 `Visual` matches the tile heading in the report exactly — that is the join key between this
-document and the mock-up. A ⬥ means the visual answers a statistic CDPHP asked for.
+document and the mock-up. This report carries no *CDPHP asked* markers: it reads as a purely
+internal report, and what the payer asked for is tracked in the CDPHP report.
 
 **The measure definition is not repeated here.** It lives in the ⓘ tooltip on the tile, so
 there is exactly one copy of it and it cannot drift. This document owns the three things the
@@ -21,28 +22,21 @@ visual. Every row currently reads `_unassigned_`; assigning them is the next wor
 and is the point of this document.
 
 
-### General
-
 | Visual | Business question | Owner | Business impact | Status |
 | --- | --- | --- | --- | --- |
 | Providers in matching pool | How many providers can actually take a new patient? | _unassigned_ | _to agree_ | Built |
-| Notes signed < 24h ⬥ | Is documentation keeping up? | _unassigned_ | _to agree_ | Built |
-| Co-sign queue ⬥ | How much unbillable work is stuck waiting for a supervisor? | _unassigned_ | _to agree_ | Built |
-| Co-sign load by supervisor | Is the co-sign burden spread or concentrated? | _unassigned_ | _to agree_ | Built |
+| Notes signed < 24h | Is documentation keeping up? | _unassigned_ | _to agree_ | Built |
+| Co-sign queue | How much unbillable work is stuck waiting for a supervisor? | _unassigned_ | _to agree_ | Built |
 | Readiness flags | Which providers are silently invisible to matching? | _unassigned_ | _to agree_ | Built |
-| Documentation and quality by supervisor group ⬥ | Which supervisor group is struggling on documentation and quality? | _unassigned_ | _to agree_ | Built |
+| Documentation and quality by supervisor group | Which supervisor group is struggling on documentation and quality? | _unassigned_ | _to agree_ | Built |
+| Co-sign load by supervisor | Is the co-sign burden spread or concentrated? | _unassigned_ | _to agree_ | Built |
 | Sessions held — billed vs unbilled | How much delivered care never gets billed? | _unassigned_ | _to agree_ | Built |
-
-### CDPHP Ask: Workforce And Documentation
-
-| Visual | Business question | Owner | Business impact | Status |
-| --- | --- | --- | --- | --- |
-| Medical group headcount by licence type ⬥ | Which roles is the medical group made of, and what licence does each one hold? | _unassigned_ | _to agree_ | Blocked — Needs a provider role attribute in the model (BHS, prescriber, case manager, peer). If only licence type is stored, peers cannot be counted at all and the role split has to be inferred |
-| Median time from session end to signed note ⬥ | How long does a note actually take to get signed? | _unassigned_ | _to agree_ | Blocked — Depends on a session-end timestamp existing in the model. If only a session date is stored, this measure cannot be built as specified |
-| Co-sign rejections by reason ⬥ | Why do supervisors send notes back? | _unassigned_ | _to agree_ | Built |
-| Golden Thread completeness ⬥ | Are our notes defensible in an audit? | _unassigned_ | _to agree_ | Built |
+| Medical group headcount by licence type | Which roles is the medical group made of, and what licence does each one hold? | _unassigned_ | _to agree_ | Blocked — Needs a provider role attribute in the model (BHS, prescriber). If only licence type is stored, the role split has to be inferred from the licence |
+| Co-sign rejections by reason | Why do supervisors send notes back? | _unassigned_ | _to agree_ | Built |
+| Median time from session end to signed note | How long does a note actually take to get signed? | _unassigned_ | _to agree_ | Blocked — Depends on a session-end timestamp existing in the model. If only a session date is stored, this measure cannot be built as specified |
+| Golden Thread completeness | Are our notes defensible in an audit? | _unassigned_ | _to agree_ | Built |
 
 ## Open items
 
-- **Medical group headcount by licence type** — Needs a provider role attribute in the model (BHS, prescriber, case manager, peer). If only licence type is stored, peers cannot be counted at all and the role split has to be inferred from the licence, which is a guess for anyone holding none.
-- **Median time from session end to signed note** — Depends on a session-end timestamp existing in the model. If only a session date is stored, this measure cannot be built as specified.
+- **Medical group headcount by licence type** — Needs a provider role attribute in the model (BHS, prescriber). If only licence type is stored, the role split has to be inferred from the licence. No longer shown as a warning on the tile; this document is the record.
+- **Median time from session end to signed note** — Depends on a session-end timestamp existing in the model. If only a session date is stored, this measure cannot be built as specified. No longer shown as a warning on the tile; this document is the record.

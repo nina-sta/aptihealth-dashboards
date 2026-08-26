@@ -137,11 +137,9 @@
 
   /* Role groups — a headcount roll-up with no chart in it. The question is which licence
      sits under which role, and a bar cannot say that. Four columns, one per role. */
-  .roles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
   .roles .rg { border-left: 2px solid var(--s1); padding-left: 7px; }
   .roles .rg.pr { border-left-color: var(--s2); }
-  .roles .rg.cm { border-left-color: var(--s3); }
-  .roles .rg.pe { border-left-color: var(--s4); }
   .roles .rgh { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; padding-bottom: 3px; border-bottom: 1px solid var(--grid); }
   .roles .rgh b { font-size: 10px; font-weight: 650; color: var(--ink-1); }
   .roles .rgh .n { font-size: 15px; font-weight: 600; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
@@ -151,7 +149,6 @@
   .roles .rl li:last-child { border-bottom: 0; }
   .roles .rl li span { color: var(--ink-1); font-weight: 650; font-variant-numeric: tabular-nums; }
   .roles .rl li.none { color: var(--ink-muted); font-style: italic; }
-  @media (max-width: 900px) { .roles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
   .gapnote { font-size: 8.5px; color: var(--critical); font-weight: 600; margin-top: 4px; }
 

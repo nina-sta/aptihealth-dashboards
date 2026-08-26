@@ -132,11 +132,9 @@
 
   /* Role groups — a headcount roll-up with no chart in it. The question is which licence
      sits under which role, and a bar cannot say that. Four columns, one per role. */
-  .roles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
   .roles .rg { border-left: 2px solid var(--s1); padding-left: 7px; }
   .roles .rg.pr { border-left-color: var(--s2); }
-  .roles .rg.cm { border-left-color: var(--s3); }
-  .roles .rg.pe { border-left-color: var(--s4); }
   .roles .rgh { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; padding-bottom: 3px; border-bottom: 1px solid var(--grid); }
   .roles .rgh b { font-size: 10px; font-weight: 650; color: var(--ink-1); }
   .roles .rgh .n { font-size: 15px; font-weight: 600; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
@@ -146,7 +144,6 @@
   .roles .rl li:last-child { border-bottom: 0; }
   .roles .rl li span { color: var(--ink-1); font-weight: 650; font-variant-numeric: tabular-nums; }
   .roles .rl li.none { color: var(--ink-muted); font-style: italic; }
-  @media (max-width: 900px) { .roles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
   .gapnote { font-size: 8.5px; color: var(--critical); font-weight: 600; margin-top: 4px; }
 
@@ -210,13 +207,13 @@
       </div>
       <div class="body">
         <div class="big">112</div>
-        <div class="sub">of 161 in the medical group</div>
+        <div class="sub">of 130 in the medical group</div>
         <div class="spark ch" id="k-pool"></div>
       </div>
     </div>
 
     <div class="v kpi c4 h1r">
-      <div class="vh"><h4>Notes signed &lt; 24h</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Notes signed &lt; 24h</h4>
         <div class="vf"><span class="wf">All note types</span><button class="i" data-tip="Power BI: KPI + line. Session end to signed note. The chip isolates guided session notes, which are 73% of all documentation.">&#9432;</button></div>
       </div>
       <div class="body">
@@ -227,7 +224,7 @@
     </div>
 
     <div class="v kpi c4 h1r">
-      <div class="vh"><h4>Co-sign queue</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Co-sign queue</h4>
         <div class="vf"><span class="wf">Month end</span><button class="i" data-tip="Power BI: card + line. Notes are not billable until co-signed. The chip switches between month-end depth and monthly peak.">&#9432;</button></div>
       </div>
       <div class="body">
@@ -253,7 +250,7 @@
     </div>
 
     <div class="v c8 h2r">
-      <div class="vh"><h4>Documentation and quality by supervisor group</h4><span class="ask">CDPHP asked</span>
+      <div class="vh"><h4>Documentation and quality by supervisor group</h4>
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. PHQ-9 delta is acuity-adjusted — publishing it raw is how the report loses clinician trust on day one.">&#9432;</button></div>
       </div>
       <div class="body" id="p-mx"></div>
@@ -275,24 +272,22 @@
       </div>
     </div>
 
-    <!-- ============ CDPHP ASK: WORKFORCE AND DOCUMENTATION ============ -->
-
-    <div class="v c12 h2r">
-      <div class="vh"><h4>Medical group headcount by licence type</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix — role as the outer row group, licence type as the inner, headcount as the value. Deliberately not a chart: the question a payer asks is which licence sits under which role, and no bar or facet can show that nesting.">&#9432;</button></div>
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Medical group headcount by licence type</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix — role as the outer row group, licence type as the inner, headcount as the value. Deliberately not a chart: the question is which licence sits under which role, and no bar or facet can show that nesting.">&#9432;</button></div>
       </div>
-      <p class="info">Four roles, and the licences each one is staffed with. Peer specialists hold no clinical licence, which is why the licence list alone has never answered this question.</p>
+      <p class="info">The licences behind each role, so the count reads as a workforce rather than a flat list of credentials.</p>
       <div class="body">
         <div class="roles">
           <div class="rg">
-            <div class="rgh"><b>Behavioral health specialists</b><span class="n">112</span></div>
+            <div class="rgh"><b>Behavioral health specialists</b><span class="n">109</span></div>
             <div class="rgs">Therapy and assessment</div>
             <ul class="rl">
               <li>LCSW<span>38</span></li>
               <li>LMHC<span>27</span></li>
               <li>LMSW<span>24</span></li>
               <li>LCSW-R<span>12</span></li>
-              <li>LMFT<span>11</span></li>
+              <li>LMFT<span>8</span></li>
             </ul>
           </div>
           <div class="rg pr">
@@ -302,43 +297,27 @@
               <li>PMHNP-BC<span>21</span></li>
             </ul>
           </div>
-          <div class="rg cm">
-            <div class="rgh"><b>Case managers</b><span class="n">15</span></div>
-            <div class="rgs">Care coordination</div>
-            <ul class="rl">
-              <li>RN<span>15</span></li>
-            </ul>
-          </div>
-          <div class="rg pe">
-            <div class="rgh"><b>Peer specialists</b><span class="n">13</span></div>
-            <div class="rgs">Lived-experience support</div>
-            <ul class="rl">
-              <li class="none">No clinical licence<span>13</span></li>
-            </ul>
-          </div>
         </div>
-        <div class="gapnote">&#9888; Needs a provider role attribute in the model — BHS, prescriber, case manager, peer. If only licence type is stored, peers cannot be counted at all and the role split has to be inferred from the licence, which is a guess for anyone holding none.</div>
       </div>
     </div>
 
-    <div class="v c4 h3r">
-      <div class="vh"><h4>Median time from session end to signed note</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">All note types</span><button class="i" data-tip="Power BI: line chart, one series, in hours, with a constant line at the 24-hour standard. The share-based view is the notes-signed KPI; this is the median the share cannot show.">&#9432;</button></div>
-      </div>
-      <div class="body"><div class="ch" id="x-notemed"></div>
-        <div class="gapnote">&#9888; Depends on a session-end timestamp existing in the model. If only a session date is stored, this measure cannot be built as specified.</div>
-      </div>
-    </div>
-
-    <div class="v c4 h3r">
-      <div class="vh"><h4>Co-sign rejections by reason</h4><span class="ask">CDPHP asked</span>
+    <div class="v c8 h3r">
+      <div class="vh"><h4>Co-sign rejections by reason</h4>
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Rejection rate alone does not tell a supervisor what to fix; the reason and the days it adds back to the queue do.">&#9432;</button></div>
       </div>
       <div class="body" id="x-rejmx"></div>
     </div>
 
-    <div class="v c4 h3r">
-      <div class="vh"><h4>Golden Thread completeness</h4><span class="ask">CDPHP asked</span>
+    <div class="v c6 h2r">
+      <div class="vh"><h4>Median time from session end to signed note</h4>
+        <div class="vf"><span class="wf">All note types</span><button class="i" data-tip="Power BI: line chart, one series, in hours, with a constant line at the 24-hour standard. The share-based view is the notes-signed KPI; this is the median the share cannot show.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="x-notemed"></div>
+      </div>
+    </div>
+
+    <div class="v c6 h2r">
+      <div class="vh"><h4>Golden Thread completeness</h4>
         <div class="vf"><button class="i" data-tip="Power BI: small multiples (area). One panel per required element rather than a stacked bar, because the question is which element is missing, not what the blended score is. A note counts as complete only when all four are present.">&#9432;</button></div>
       </div>
       <div class="body" id="x-gt"></div>

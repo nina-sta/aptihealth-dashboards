@@ -13,11 +13,13 @@
      empty pages, a narrow window — it would sit halfway up the screen. Making
      .root fill the viewport as a flex column and pushing .ptabs down with an
      auto top margin keeps the strip on the bottom edge whether the page
-     scrolls or not. */
+     scrolls or not. .root carries no bottom padding — the strip's own
+     padding-bottom is the last gap, so bottom: 0 lands flush against the
+     window instead of 8px short of it. */
   .root {
     font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
     background: var(--plane); color: var(--ink-1);
-    padding: 14px 14px 8px; line-height: 1.35;
+    padding: 14px 14px 0; line-height: 1.35;
     box-sizing: border-box; min-height: 100vh;
     display: flex; flex-direction: column;
   }

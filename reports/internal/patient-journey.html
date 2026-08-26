@@ -788,6 +788,9 @@
   }
 
   function wire() {
+    /* Page tabs. Single-report pages use links instead of buttons, so this is an
+       empty list there — harmless, and it keeps one wiring path for both shapes. */
+    var btns = Array.prototype.slice.call(document.querySelectorAll(".ptabs button"));
 
   btns.forEach(function (b) {
     b.addEventListener("click", function () {

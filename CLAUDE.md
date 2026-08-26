@@ -157,6 +157,12 @@ builders while making a content change — it makes the diff unreadable.
 
 **Finish every piece of work with `python3 tools/sync.py`.**
 
+`sync.py` is a static check — it compares text. It cannot tell you the page still *works*.
+After touching `reports/_shared/charts.js`, open a report in a browser and confirm two things
+the chart count will not reveal: a grey chip opens its dropdown, and the ⓘ shows a tooltip.
+Both are wired in `wire()`, which runs after the charts are drawn, so a throw there leaves a
+page that looks perfect and does nothing.
+
 ## Handing off between sessions
 
 Long chats degrade. At roughly **200–300k tokens of context**, stop and write `HANDOFF.md`:

@@ -283,13 +283,6 @@
       <div class="body" id="x-ac4mx"></div>
     </div>
 
-    <div class="v c12 h2r">
-      <div class="vh"><h4>Self sign-up by how they heard about us</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Source is the member's own answer at registration, so it is self-reported and optional - the unanswered row is kept visible rather than hidden.">&#9432;</button></div>
-      </div>
-      <div class="body" id="x-selfsrc"></div>
-    </div>
-
     <div class="v c7 h2r">
       <div class="vh"><h4>ACP consent to touchpoints met</h4>
         <div class="vf"><span class="wf">Jul 2026</span><button class="i" data-tip="Power BI: funnel. Three stages of the advanced care planning path: members eligible, members who gave consent, and members whose touchpoints met the contractual minimum. Each stage is a member count, so one funnel rather than three cards.">&#9432;</button></div>
@@ -767,19 +760,6 @@ APTI.render(function () {
       ["Member self-report at intake", { v: "26", bar: 76 }, { v: "21%", cf: "c" }, "24", "1", "0", "1"],
       ["Not recorded", { v: "7", bar: 21 }, { v: "6%", cf: "c" }, "4", "1", "1", "1"],
       ["Total acuity 4", { v: "126", bar: 100 }, { v: "100%" }, "39", "26", "45", "16"]
-    ]
-  );
-
-  matrix("x-selfsrc",
-    ["How they heard about us", "Members", "Share", "Acuity 4"],
-    [
-      ["Search engine", { v: "141", bar: 100 }, { v: "34%", cf: "g" }, "11%"],
-      ["Health plan mailing or portal", { v: "88", bar: 62 }, { v: "21%", cf: "g" }, "8%"],
-      ["Friend or family", { v: "62", bar: 44 }, { v: "15%", cf: "w" }, "9%"],
-      ["Employer or school", { v: "45", bar: 32 }, { v: "11%", cf: "w" }, "6%"],
-      ["Social media", { v: "31", bar: 22 }, { v: "7%", cf: "w" }, "14%"],
-      ["Not answered", { v: "47", bar: 33 }, { v: "11%", cf: "c" }, "12%"],
-      ["Total self sign-up", { v: "414", bar: 100 }, { v: "100%" }, "9%"]
     ]
   );
 

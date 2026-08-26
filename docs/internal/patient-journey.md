@@ -26,7 +26,7 @@ and is the point of this document.
 | Acquisition and access funnel | Where in sign-up do people fall out? | _unassigned_ | _to agree_ | Built |
 | Where members drop out — inactivation by journey stage | Do people leave before care starts or after it finishes? | _unassigned_ | _to agree_ | Built |
 | Members by stage — in stage and inactivated after it | How many members sit at each stage, and what does each stage cost us in inactivations? | _unassigned_ | _to agree_ | Built |
-| Inactivated members by latest reason | Why do members leave, and is it clinical or a contact problem? | _unassigned_ | _to agree_ | Built |
+| Inactivated members by latest reason | Why do members leave, and is it clinical or a contact problem? | _unassigned_ | _to agree_ | Blocked — two reason labels are truncated placeholders; needs the inactivation reason picklist |
 | Members served | How many people have we ever treated for this payer? | _unassigned_ | _to agree_ | Built |
 | Engaged members | How many are in care right now? | _unassigned_ | _to agree_ | Built |
 | Days from registration to inactivation | How long do people last before going inactive? | _unassigned_ | _to agree_ | Blocked — Needs an inactivation reason field to separate lapsed from clinically discharged |

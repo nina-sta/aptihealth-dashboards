@@ -127,7 +127,7 @@
   .g-good .ico { color: var(--good); } .g-warning .ico { color: var(--warning); }
   .g-serious .ico { color: var(--serious); } .g-critical .ico { color: var(--critical); }
 
-  /* Section bands. The provider report reads top-down — roster, then efficiency, then
+  /* Section bands. The provider report reads top-down — providers, then efficiency, then
      supervision — and an invisible HTML comment does not tell a reader that. */
   .band { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 9px; margin: 8px 0 -3px; }
   .band .t { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--ink-1); flex-shrink: 0; }

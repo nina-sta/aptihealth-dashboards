@@ -130,7 +130,7 @@
   .g-good .ico { color: var(--good); } .g-warning .ico { color: var(--warning); }
   .g-serious .ico { color: var(--serious); } .g-critical .ico { color: var(--critical); }
 
-  /* Section bands. The provider report reads top-down — roster, then efficiency, then
+  /* Section bands. The provider report reads top-down — providers, then efficiency, then
      supervision — and an invisible HTML comment does not tell a reader that. */
   .band { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 9px; margin: 8px 0 -3px; }
   .band .t { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--ink-1); flex-shrink: 0; }
@@ -211,7 +211,7 @@
 
   <div class="page on" id="pg-provider">
 
-    <div class="band"><span class="t">Roster</span><span class="d">Who exists, who is configured, and who can actually be matched to a member.</span><span class="r"></span></div>
+    <div class="band"><span class="t">Providers</span><span class="d">Who exists, who is configured, and who can actually be matched to a member.</span><span class="r"></span></div>
 
     <div class="v kpi c3 h1r">
       <div class="vh"><h4>Providers in matching pool</h4>
@@ -813,7 +813,7 @@ APTI.render(function () {
       funnel = APTI.funnel, spark = APTI.spark, smallMultiples = APTI.smallMultiples, matrix = APTI.matrix;
 
 
-  /* ---- roster ---- */
+  /* ---- providers ---- */
 
   spark("k-pool", [96, 98, 99, 101, 103, 104, 106, 107, 109, 110, 111, 112], "var(--s1)");
 

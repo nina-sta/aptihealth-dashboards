@@ -4,7 +4,7 @@
 > same commit. `tools/sync.py` fails if the visuals in the two disagree.
 
 **Audience:** aptihealth clinical operations and leadership, and the data team.
-**Purpose:** Follow a provider the way the business does — who is on the roster and can be
+**Purpose:** Follow a provider the way the business does — which providers exist and can be
 matched, how long each step takes once they are, and who carries the co-sign load behind them.
 That is where delivered care turns into billable, defensible care.
 
@@ -26,7 +26,7 @@ visual. Every row currently reads `_unassigned_`; assigning them is the next wor
 and is the point of this document.
 
 
-### Roster
+### Providers
 
 Who exists, who is configured, and who can actually be matched to a member.
 
@@ -67,7 +67,7 @@ Who cannot sign their own notes, who reviews them, and how that review goes.
 
 ## What the sections are for
 
-**Roster** is a monthly headcount question and the funnel is the shape of it: active, configured,
+**Providers** is a monthly headcount question and the funnel is the shape of it: active, configured,
 accepting, matchable. The readiness flags are the reasons behind the drops, so the two visuals
 have to reconcile — the five flag counts add to the gap between active and matchable, and a
 change to one is a change to both.

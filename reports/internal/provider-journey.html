@@ -6,7 +6,7 @@
     --plane: #ffffff; --surface: #ffffff;
     --ink-1: #0b0b0b; --ink-2: #52514e; --ink-muted: #898781;
     --grid: #e6e5df; --baseline: #c3c2b7; --border: rgba(11, 11, 11, 0.14);
-    --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4;
+    --s1: #2a78d6; --s2: #eda100; --s3: #10457e; --s4: #f2cd6b; --s5: #7fa9d9;
     --good: #0ca30c; --warning: #fab219; --serious: #ec835a; --critical: #d03b3b;
     --success-text: #006300; --track: #eeece7; --chipbg: #f5f4f0;
   }
@@ -317,7 +317,7 @@
         <div class="vf"><span class="wf">Supervisor: all</span><span class="wf">Note type: all</span><button class="i" data-tip="Power BI: stacked column chart. Same unit, one axis — do not model the billed rate as a second axis on this visual.">ⓘ</button></div>
       </div>
       <div class="body"><div class="ch" id="p-combo"></div>
-        <div class="lg"><span><i style="background:var(--s1)"></i>Billed</span><span><i style="background:var(--critical)"></i>Not billed — note, co-sign or guardrail</span></div>
+        <div class="lg"><span><i style="background:var(--s1)"></i>Billed</span><span><i style="background:var(--s2)"></i>Not billed — note, co-sign or guardrail</span></div>
       </div>
     </div>
 
@@ -748,8 +748,8 @@ APTI.render(function () {
 
 
   spark("k-pool", [96, 98, 99, 101, 103, 104, 106, 107, 109, 110, 111, 112], "var(--s1)");
-  spark("k-24h", [55, 56, 58, 57, 60, 61, 62, 63, 65, 66, 67, 68], "var(--good)", "%");
-  spark("k-cosign", [48, 52, 55, 58, 60, 63, 65, 67, 69, 70, 71, 73], "var(--critical)");
+  spark("k-24h", [55, 56, 58, 57, 60, 61, 62, 63, 65, 66, 67, 68], "var(--s1)", "%");
+  spark("k-cosign", [48, 52, 55, 58, 60, 63, 65, 67, 69, 70, 71, 73], "var(--s1)");
 
   columns("p-time", {
     labels: MO, h: 56, stacked: true, pct: true, max: 100, pl: 20, unit: "%",
@@ -781,7 +781,7 @@ APTI.render(function () {
   ]);
 
   smallMultiples("p-sm", [
-    { label: "Supervisor A", value: "31", color: "var(--critical)", spark: [12, 14, 18, 20, 22, 24, 26, 27, 28, 29, 30, 31] },
+    { label: "Supervisor A", value: "31", color: "var(--s2)", spark: [12, 14, 18, 20, 22, 24, 26, 27, 28, 29, 30, 31] },
     { label: "Supervisor B", value: "18", color: "var(--s1)", spark: [22, 22, 21, 21, 20, 20, 19, 19, 19, 18, 18, 18] },
     { label: "Supervisor C", value: "14", color: "var(--s1)", spark: [19, 19, 18, 18, 17, 17, 16, 16, 15, 15, 14, 14] }
   ]);
@@ -820,7 +820,7 @@ APTI.render(function () {
     labels: MO, h: 84, stacked: true, max: 13000,
     series: [
       { name: "Billed", color: "var(--s1)", values: [9184, 9528, 8829, 8336, 9920, 10234, 9878, 10475, 10630, 10527, 10805, 10912] },
-      { name: "Not billed", color: "var(--critical)", values: [2016, 1952, 2071, 2084, 1890, 1806, 1882, 1705, 1730, 1573, 1615, 1568] }
+      { name: "Not billed", color: "var(--s2)", values: [2016, 1952, 2071, 2084, 1890, 1806, 1882, 1705, 1730, 1573, 1615, 1568] }
     ],
     fmt: function (v) { return (v / 1000).toFixed(0) + "k"; }
   });
@@ -867,8 +867,8 @@ APTI.render(function () {
     { label: "Diagnosis recorded", value: "97%", color: "var(--s1)", unit: "%", spark: [92, 92, 93, 93, 94, 94, 95, 95, 96, 96, 97, 97] },
     { label: "Goal stated and current", value: "84%", color: "var(--s1)", unit: "%", spark: [71, 72, 74, 75, 76, 78, 79, 80, 81, 82, 83, 84] },
     { label: "Intervention linked to goal", value: "76%", color: "var(--s2)", unit: "%", spark: [61, 62, 64, 65, 67, 68, 70, 71, 72, 73, 75, 76] },
-    { label: "Progress toward goal", value: "68%", color: "var(--critical)", unit: "%", spark: [54, 55, 56, 58, 59, 60, 62, 63, 64, 65, 67, 68] },
-    { label: "All four present", value: "63%", color: "var(--critical)", unit: "%", spark: [48, 49, 51, 52, 54, 55, 57, 58, 59, 60, 62, 63] }
+    { label: "Progress toward goal", value: "68%", color: "var(--s1)", unit: "%", spark: [54, 55, 56, 58, 59, 60, 62, 63, 64, 65, 67, 68] },
+    { label: "All four present", value: "63%", color: "var(--s1)", unit: "%", spark: [48, 49, 51, 52, 54, 55, 57, 58, 59, 60, 62, 63] }
   ]);
 
 

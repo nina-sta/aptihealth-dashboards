@@ -6,7 +6,7 @@
     --plane: #ffffff; --surface: #ffffff;
     --ink-1: #0b0b0b; --ink-2: #52514e; --ink-muted: #898781;
     --grid: #e6e5df; --baseline: #c3c2b7; --border: rgba(11, 11, 11, 0.14);
-    --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4;
+    --s1: #2a78d6; --s2: #eda100; --s3: #10457e; --s4: #f2cd6b; --s5: #7fa9d9;
     --good: #0ca30c; --warning: #fab219; --serious: #ec835a; --critical: #d03b3b;
     --success-text: #006300; --track: #eeece7; --chipbg: #f5f4f0;
   }
@@ -202,7 +202,7 @@
       <div class="body"><div class="ch" id="c-stagebars"></div>
         <div class="lg">
           <span><i style="background:var(--s1)"></i>Currently in stage</span>
-          <span><i style="background:var(--critical)"></i>Inactivated after this stage</span>
+          <span><i style="background:var(--s2)"></i>Inactivated after this stage</span>
         </div>
       </div>
     </div>
@@ -277,8 +277,9 @@
 
     <div class="v c7 h2r">
       <div class="vh"><h4>Access by referral channel</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Put month on columns for a trended view.">ⓘ</button></div>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with a data bar on the volume column. Sorted by the share reaching a diagnostic interview, best first, so the ranking is the message rather than the colours. The bar is a share of all referrals in the month. Put month on columns for a trended view.">ⓘ</button></div>
       </div>
+      <p class="info">Sorted by conversion, not by volume. Self sign-up brings more than half the referrals but converts below the PCP practices that bring a fifth of it.</p>
       <div class="body" id="c-mx-chan"></div>
     </div>
 
@@ -705,31 +706,31 @@ APTI.render(function () {
     rows: [
       { label: "Referral created", fmt: "211", segments: [
         { name: "Currently in stage", value: 138, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 73, color: "var(--critical)" }] },
+        { name: "Inactivated after this stage", value: 73, color: "var(--s2)" }] },
       { label: "Registration complete", fmt: "85", segments: [
         { name: "Currently in stage", value: 44, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 41, color: "var(--critical)" }] },
+        { name: "Inactivated after this stage", value: 41, color: "var(--s2)" }] },
       { label: "Eligibility accepted", fmt: "50", segments: [
         { name: "Currently in stage", value: 12, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 38, color: "var(--critical)" }] },
+        { name: "Inactivated after this stage", value: 38, color: "var(--s2)" }] },
       { label: "Email + consents", fmt: "88", segments: [
         { name: "Currently in stage", value: 55, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 33, color: "var(--critical)" }] },
+        { name: "Inactivated after this stage", value: 33, color: "var(--s2)" }] },
       { label: "A5 complete", fmt: "45", segments: [
         { name: "Currently in stage", value: 16, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 29, color: "var(--critical)" }] },
+        { name: "Inactivated after this stage", value: 29, color: "var(--s2)" }] },
       { label: "DI booked", fmt: "67", segments: [
         { name: "Currently in stage", value: 39, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 28, color: "var(--critical)" }] },
+        { name: "Inactivated after this stage", value: 28, color: "var(--s2)" }] },
       { label: "DI attended", fmt: "21", segments: [
         { name: "Currently in stage", value: 9, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 12, color: "var(--critical)" }] },
+        { name: "Inactivated after this stage", value: 12, color: "var(--s2)" }] },
       { label: "Admitted to 90-day care", fmt: "19", segments: [
         { name: "Currently in stage", value: 12, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 7, color: "var(--critical)" }] },
+        { name: "Inactivated after this stage", value: 7, color: "var(--s2)" }] },
       { label: "First session attended", fmt: "195", segments: [
         { name: "Currently in stage", value: 181, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: 14, color: "var(--critical)" }] }
+        { name: "Inactivated after this stage", value: 14, color: "var(--s2)" }] }
     ]
   });
 
@@ -779,13 +780,13 @@ APTI.render(function () {
   ]);
 
   matrix("c-mx-chan",
-    ["Channel", "Referrals", "→ DI", "Med. days"],
+    ["Channel", "Referrals", "Reached DI", "Median days to DI"],
     [
-      ["Self sign-up", { v: "414", bar: 100 }, { v: "31%", cf: "w" }, "9.4"],
-      ["PCP practices", { v: "172", bar: 42 }, { v: "38%", cf: "g" }, "7.1"],
-      ["Health systems", { v: "125", bar: 30 }, { v: "24%", cf: "c" }, "11.8"],
-      ["Health plans", { v: "70", bar: 17 }, { v: "22%", cf: "c" }, "12.6"],
-      ["Total", { v: "781", bar: 100 }, { v: "30%" }, "8.6"]
+      ["PCP practices", { v: "172", bar: 22 }, "38%", "7.1"],
+      ["Self sign-up", { v: "414", bar: 53 }, "31%", "9.4"],
+      ["Health systems", { v: "125", bar: 16 }, "24%", "11.8"],
+      ["Health plans", { v: "70", bar: 9 }, "22%", "12.6"],
+      ["All channels", { v: "781", bar: 100 }, "30%", "8.6"]
     ]
   );
 

@@ -111,14 +111,22 @@ These were decided deliberately. Do not "improve" them without being asked.
 
 ## Palette (validated, do not substitute by eye)
 
-Categorical: `--s1 #2a78d6` `--s2 #eb6834` `--s3 #1baf7a` `--s4 #eda100` `--s5 #e87ba4`,
-assigned in that fixed order and never cycled.
+Categorical: `--s1 #2a78d6` `--s2 #eda100` `--s3 #10457e` `--s4 #f2cd6b` `--s5 #7fa9d9`,
+assigned in that fixed order and never cycled. Blue and amber alternating, then their shades
+— decided 26 Aug 2026, replacing the earlier orange/green/pink set.
 Status: good `#0ca30c`, warning `#fab219`, serious `#ec835a`, critical `#d03b3b`.
 Ink: primary `#0b0b0b`, secondary `#52514e`, muted `#898781`.
 
-The order is a colour-blindness-safety mechanism, not decoration. **If you need a sixth
-series, facet or fold into "Other"** — that is why licence-type headcount is small multiples
-rather than a stacked bar.
+**Red and green are reserved for judgement, never for categories.** A series is blue or amber
+whatever it represents; red says this is badly wrong and green says this is genuinely good, so
+they appear only in status scales that ship with a label, in conditional formatting, in the
+flag lists, and on a count that should be zero. A category that happens to be unwelcome —
+inactivations, unbilled sessions — is amber, not red.
+
+The order is a colour-blindness-safety mechanism, not decoration. Blue against amber is the
+one pairing that survives every common form of colour blindness. **If you need a sixth series,
+facet or fold into "Other"** — that is why licence-type headcount is small multiples rather
+than a stacked bar.
 
 ## How a report page is built
 

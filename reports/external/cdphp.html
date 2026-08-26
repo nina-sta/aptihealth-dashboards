@@ -6,7 +6,7 @@
     --plane: #ffffff; --surface: #ffffff;
     --ink-1: #0b0b0b; --ink-2: #52514e; --ink-muted: #898781;
     --grid: #e6e5df; --baseline: #c3c2b7; --border: rgba(11, 11, 11, 0.14);
-    --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4;
+    --s1: #2a78d6; --s2: #eda100; --s3: #10457e; --s4: #f2cd6b; --s5: #7fa9d9;
     --good: #0ca30c; --warning: #fab219; --serious: #ec835a; --critical: #d03b3b;
     --success-text: #006300; --track: #eeece7; --chipbg: #f5f4f0;
   }
@@ -1335,8 +1335,8 @@ APTI.render(function () {
 
 
   spark("k-pool", [96, 98, 99, 101, 103, 104, 106, 107, 109, 110, 111, 112], "var(--s1)");
-  spark("k-24h", [55, 56, 58, 57, 60, 61, 62, 63, 65, 66, 67, 68], "var(--good)", "%");
-  spark("k-cosign", [48, 52, 55, 58, 60, 63, 65, 67, 69, 70, 71, 73], "var(--critical)");
+  spark("k-24h", [55, 56, 58, 57, 60, 61, 62, 63, 65, 66, 67, 68], "var(--s1)", "%");
+  spark("k-cosign", [48, 52, 55, 58, 60, 63, 65, 67, 69, 70, 71, 73], "var(--s1)");
 
   columns("p-time", {
     labels: MO, h: 56, stacked: true, pct: true, max: 100, pl: 20, unit: "%",
@@ -1381,8 +1381,8 @@ APTI.render(function () {
     { label: "Diagnosis recorded", value: "97%", color: "var(--s1)", unit: "%", spark: [92, 92, 93, 93, 94, 94, 95, 95, 96, 96, 97, 97] },
     { label: "Goal stated and current", value: "84%", color: "var(--s1)", unit: "%", spark: [71, 72, 74, 75, 76, 78, 79, 80, 81, 82, 83, 84] },
     { label: "Intervention linked to goal", value: "76%", color: "var(--s2)", unit: "%", spark: [61, 62, 64, 65, 67, 68, 70, 71, 72, 73, 75, 76] },
-    { label: "Progress toward goal", value: "68%", color: "var(--critical)", unit: "%", spark: [54, 55, 56, 58, 59, 60, 62, 63, 64, 65, 67, 68] },
-    { label: "All four present", value: "63%", color: "var(--critical)", unit: "%", spark: [48, 49, 51, 52, 54, 55, 57, 58, 59, 60, 62, 63] }
+    { label: "Progress toward goal", value: "68%", color: "var(--s1)", unit: "%", spark: [54, 55, 56, 58, 59, 60, 62, 63, 64, 65, 67, 68] },
+    { label: "All four present", value: "63%", color: "var(--s1)", unit: "%", spark: [48, 49, 51, 52, 54, 55, 57, 58, 59, 60, 62, 63] }
   ]);
 
 

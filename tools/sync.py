@@ -38,8 +38,12 @@ REPORTS = {
     "reports/internal/patient-journey.html": "docs/internal/patient-journey.md",
     "reports/internal/provider-journey.html": "docs/internal/provider-journey.md",
     "reports/external/cdphp.html": "docs/external/cdphp.md",
+    "reports/external/mvp.html": "docs/external/mvp.md",
 }
 CDPHP_REPORT = "reports/external/cdphp.html"
+# Payer reports. They are excluded from the internal set below, so a payer report keeping a
+# visual no internal report has does not read as an internal report having lost it.
+EXTERNAL = [CDPHP_REPORT, "reports/external/mvp.html"]
 # Pages that need the shared stylesheet but no chart code and no specification.
 CSS_ONLY = ["index.html"]
 
@@ -108,7 +112,7 @@ def main():
     cdphp_visuals = set(visuals(read(CDPHP_REPORT)))
     internal_visuals = set()
     for rel in REPORTS:
-        if rel != CDPHP_REPORT:
+        if rel not in EXTERNAL:
             internal_visuals |= set(visuals(read(rel)))
     payer_only = sorted(cdphp_visuals - internal_visuals)
 
@@ -130,7 +134,7 @@ def main():
         for extra in sorted(rows - set(vis)):
             problems.append("%s: %r is documented but not in the report" % (doc, extra))
 
-        if rel != CDPHP_REPORT:
+        if rel not in EXTERNAL:
             for title, asked in sorted(vis.items()):
                 if asked and title not in cdphp_visuals:
                     problems.append("%s: %r is marked CDPHP asked but is missing from %s"

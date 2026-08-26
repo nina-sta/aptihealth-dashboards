@@ -27,12 +27,14 @@ reports/
   _shared/charts.js                     canonical chart builders and page behaviour
   internal/patient-journey.html         internal — the member's path
   internal/provider-journey.html        internal — documentation, supervision, matching
-  external/cdphp.html                   external — the payer report, five pages in one file
+  external/cdphp.html                   external — the CDPHP payer report, five pages in one file
+  external/mvp.html                     external — the MVP payer report, five empty pages
 docs/
   README.md                             how the specs work
   internal/patient-journey.md           spec paired with the patient mock-up
   internal/provider-journey.md          spec paired with the provider mock-up
   external/cdphp.md                     spec paired with the CDPHP mock-up
+  external/mvp.md                       spec paired with the MVP mock-up
 tools/sync.py                           consistency check — run it before finishing
 HANDOFF.md                              state of play between sessions
 ```
@@ -43,10 +45,17 @@ largest — every other payer report is this one with visuals switched off — s
 missing from CDPHP is missing everywhere. It carries no report-level slicers: the payer sees
 one program and one period, decided when the report is issued, not switched by the reader.
 
+**MVP is the second payer report** and the first test of "CDPHP with visuals switched off".
+It is a real report file with five pages mirroring CDPHP's, all empty: nobody has written down
+what MVP asked for, and which CDPHP visuals are switched on for them is a contractual question
+as much as a data one. It is registered in `sync.py` so the pairing bites the moment a visual
+lands. `EXTERNAL` in `sync.py` lists the payer reports — add to it, not just to `REPORTS`, when
+the third payer arrives, or the new report's visuals start counting as internal ones.
+
 **The CDPHP report is one file holding five pages**, switched by the `<button data-pg="…">`
 tabs in `.ptabs` at the bottom — that is Power BI's own model, one report with a page strip,
 and `render()` in the shared code already implements it. The pages are CDPHP Billing, CDPHP
-Patient Acquisition, CDPHP Patient Acquisition — CN referrals, Clinical Outcomes (PHQ9, CDPHP)
+Patient Acquisition, CDPHP CN referrals, Clinical Outcomes (PHQ9, CDPHP)
 and CDPHP Update; the three middle ones are named but still have no visuals. `sync.py` reads every page in the file, so all five share one specification —
 `docs/external/cdphp.md`, sectioned by `## Page` heading. Adding a page means adding a button,
 a `.page` div and a `## Page` section together.

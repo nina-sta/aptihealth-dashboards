@@ -1,4 +1,4 @@
-<title>aptihealth — Patient journey</title>
+<title>MVP payer report</title>
 <!-- shared:css:start -->
 <style>
   .root {
@@ -210,149 +210,50 @@
 
 <div class="root">
   <div class="rpthead">
-    <h1>aptihealth &mdash; Patient journey</h1>
+    <h1>MVP &mdash; payer report</h1>
     <span class="mock">&#9888; <b>Prototype only.</b> The real report will be built in Power BI, so the finished thing follows whatever Power BI allows. This is here to agree the metrics.</span>
   </div>
 
-  <div class="page on" id="pg-patient">
-    <div class="v c7 h3r">
-      <div class="vh"><h4>Acquisition and access funnel</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><span class="wf" data-opts="Channel: all|Channel: referrers only|Channel: self sign-up" data-head="Referral channel">Channel: all</span><button class="i" data-tip="Power BI: funnel. Both chips filter this visual for real — pick a month to see that month, or all months for the year. The channel chip switches between everyone, the members a referrer sent, and the members who arrived on their own. A self sign-up has no referral to create, so on that selection the first stage is empty and the funnel starts a row down; the two are comparable from registration complete downwards. Stages in red have a named drop reason on hover.">&#9432;</button></div>
+  <div class="page on" id="pg-mvp-billing">
+    <div class="band"><span class="t">MVP Billing</span><span class="d">Reserved. Nothing is switched on for MVP yet &mdash; the visuals and their definitions come next.</span><span class="r"></span></div>
+    <div class="v c12 h2r">
+      <div class="vh"><h4>What this report is for</h4>
+        <div class="vf"><button class="i" data-tip="Not a visual. The note that says what has and has not been decided about this report, so an empty page cannot be mistaken for a finished one.">&#9432;</button></div>
       </div>
-      <p class="info">On all channels the first drop is gentle, because a self sign-up who reaches the platform has already chosen to be there. Switch to referrers only and it steepens: a quarter of referrals never reach a completed registration, which is a handover problem rather than a member one.</p>
-      <div class="body"><div class="ch" id="c-funnel"></div></div>
-    </div>
-
-    <div class="v c5 h3r">
-      <div class="vh"><h4>Inactivated members by latest reason</h4>
-        <div class="vf"><span class="wf">All time</span><button class="i" data-tip="Power BI: clustered bar chart. Members grouped by the last inactivation reason recorded on the account. An account can carry several reasons over its life; only the most recent one counts here, so the rows do not add up to every reason ever given.">&#9432;</button></div>
-      </div>
-      <p class="info">Two reasons carry three quarters of it, and both are contact problems rather than clinical ones.</p>
-      <div class="body"><div class="ch" id="c-inact-reason"></div>
-      </div>
-    </div>
-
-    <div class="v c7 h3r">
-      <div class="vh"><h4>Members by stage &mdash; in stage and inactivated after it</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><span class="wf" data-opts="Channel: all|Channel: referrers only|Channel: self sign-up" data-head="Referral channel">Channel: all</span><button class="i" data-tip="Power BI: stacked bar chart. The same stages as the two acquisition funnels, and the same month, read a different way: a funnel counts everyone who reached a stage, this counts where they stopped. Both channels are in here together. Each member appears once, at the furthest stage they reached, split into still sitting there and inactivated after it. Both series are member counts, so one bar and one axis.">&#9432;</button></div>
-      </div>
-      <p class="info">Every member the period brought in is on this chart exactly once, at the furthest stage they reached, so the bars add up to the funnel’s first row. Its chips move it the same way.</p>
-      <div class="body"><div class="ch" id="c-stagebars"></div>
-        <div class="lg">
-          <span><i style="background:var(--s1)"></i>Currently in stage</span>
-          <span><i style="background:var(--s2)"></i>Inactivated after this stage</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="v c5 h2r">
-      <div class="vh"><h4>Days from registration to inactivation</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Stage: all</span><button class="i" data-tip="Power BI: clustered column chart used as a histogram (bucketed days as the axis). Buckets come from a DAX calculated column, not from the visual — Power BI cannot bin a measure.">ⓘ</button></div>
-      </div>
-      <p class="info">The 0–7 day spike is people who never really started. The 90–120 band is expected — that's the end of the 90-day programme.</p>
-      <div class="body"><div class="ch" id="c-inact-days"></div>
-      </div>
-    </div>
-
-    <div class="v kpi c2 h1r">
-      <div class="vh"><h4>Members served</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: card + line. All-time distinct members with a completed DI. There is no payer slicer on this report any more, so this counts every member, not a payer cut. The line is new members per month.">ⓘ</button></div>
-      </div>
+      <p class="info">Every payer report is the CDPHP report with visuals switched off &mdash; that is the model, so a measure missing from CDPHP is missing here too. The page structure mirrors CDPHP so the two can be read side by side.</p>
       <div class="body">
-        <div class="big">18,420</div>
-        <div class="sub">+412 in August</div>
-        <div class="spark ch" id="k-served"></div>
-      </div>
-    </div>
-
-    <div class="v kpi c2 h1r">
-      <div class="vh"><h4>Engaged members</h4>
-        <div class="vf"><span class="wf">60-day lookback</span><button class="i" data-tip="Power BI: KPI + line. The chip switches between the 60-day billing lookback and a strict in-month count — the two differ by roughly 8%.">ⓘ</button></div>
-      </div>
-      <div class="body">
-        <div class="big">5,740</div>
-        <div class="sub"><span class="down">▾ 3.1%</span> vs July</div>
-        <div class="spark ch" id="k-engaged"></div>
-      </div>
-    </div>
-
-    <div class="v kpi c2 h1r">
-      <div class="vh"><h4>Routine referrals</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: card + line. Routine referrals created in the month on the chip — every referral not flagged urgent. The line is the same count across the previous twelve months.">&#9432;</button></div>
-      </div>
-      <div class="body">
-        <div class="big">655</div>
-        <div class="sub">of 781 referrals in August</div>
-        <div class="spark ch" id="k-routine"></div>
-      </div>
-    </div>
-
-    <div class="v c6 h2r">
-      <div class="vh"><h4>Onboarding completion rate</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: clustered column with a constant line for target. Of the members who completed registration in the month, the share who finished the rest of onboarding &mdash; eligibility, email and consents, and the A5 assessment. It is the middle of the funnel expressed as one rate, so it can be trended and given a target. No channel chip: the two channels run within a point of each other through this stretch, so splitting it would dress a rounding difference up as a finding.">&#9432;</button></div>
-      </div>
-      <p class="info">The four in ten who do not finish are the largest single loss in the whole journey, and they leave before anyone clinical has met them.</p>
-      <div class="body"><div class="ch" id="c-onboard"></div></div>
-    </div>
-
-    <div class="v c6 h2r">
-      <div class="vh"><h4>First-appointment no-show</h4>
-        <div class="vf"><span class="wf">Milestone: DI attended</span><button class="i" data-tip="Power BI: line chart, one series, with a constant line at the 15% standard. Booked first appointments where the member did not attend, as a share of first appointments booked in the month. Cancellations with notice count as no-shows here because the slot is lost either way. The milestone chip switches between the DI and the first therapy session.">&#9432;</button></div>
-      </div>
-      <p class="info">Counted against the month the appointment was booked for, not the month it was booked in, so a slot lost in August lands in August.</p>
-      <div class="body"><div class="ch" id="c-noshow"></div></div>
-    </div>
-
-    <div class="v c6 h2r">
-      <div class="vh"><h4>Access by referral channel</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with a data bar on the volume column. Sorted by the share reaching a diagnostic interview, best first, so the ranking is the message rather than the colours. The bar is a share of all referrals in the month. Put month on columns for a trended view.">ⓘ</button></div>
-      </div>
-      <p class="info">Sorted by conversion, not by volume. Self sign-up brings more than half the volume and converts best; the two channels sending the fewest members convert them worst and make them wait longest.</p>
-      <div class="body" id="c-mx-chan"></div>
-    </div>
-
-    <div class="v c7 h3r">
-      <div class="vh"><h4>Urgent referrals &mdash; time to care by reason</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Volume, median days to DI attended, and the share seen within 7 days, per urgent reason.">&#9432;</button></div>
-      </div>
-      <p class="info">Reason is the referrer&rsquo;s stated cause of admission. Post-discharge follow-up carries a contractual 7-day standard; the rest are clinical priority, not contractual.</p>
-      <div class="body" id="u-mx"></div>
-    </div>
-
-    <div class="v c5 h2r">
-      <div class="vh"><h4>Median days to first appointment &mdash; urgent vs routine</h4>
-        <div class="vf"><span class="wf">Milestone: DI attended</span><button class="i" data-tip="Power BI: line chart, two series, with a constant line at 7 days. The milestone chip switches between DI scheduled, DI attended and first therapy session.">&#9432;</button></div>
-      </div>
-      <div class="body"><div class="ch" id="u-days"></div>
-        <div class="lg"><span><i style="background:var(--s2)"></i>Urgent</span><span><i style="background:var(--s1)"></i>Routine</span></div>
-      </div>
-    </div>
-
-    <div class="v c5 h2r">
-      <div class="vh"><h4>ACP consent to touchpoints met</h4>
-        <div class="vf"><span class="wf">Jul 2026</span><button class="i" data-tip="Power BI: funnel. Three stages of the advanced care planning path: members eligible, members who gave consent, and members whose touchpoints met the contractual minimum. Each stage is a member count, so one funnel rather than three cards.">&#9432;</button></div>
-      </div>
-      <p class="info">The first two stages are a standing state; the third is read over the last full month, because a month still running cannot have met a monthly minimum.</p>
-      <div class="body"><div class="ch" id="c-acp-funnel"></div>
-      </div>
-    </div>
-
-    <div class="v c7 h2r">
-      <div class="vh"><h4>Diagnostic interviews &mdash; first-time vs repeat</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart. Both series are DI counts, so one axis. Repeat means a member who had a completed DI before this one.">&#9432;</button></div>
-      </div>
-      <div class="body"><div class="ch" id="x-direpeat"></div>
-        <div class="lg"><span><i style="background:var(--s1)"></i>First-time</span><span><i style="background:var(--s2)"></i>Repeat</span></div>
+        <div class="gapnote">&#9888; Blocked on two decisions: what MVP actually asked for, and which CDPHP visuals are switched on for them. Until both are answered there is nothing honest to draw here.</div>
       </div>
     </div>
   </div>
 
-  <div class="ptabs" role="group" aria-label="Reports">
-    <a href="../internal/patient-journey.html" aria-current="page">Patient journey</a>
+  <div class="page" id="pg-mvp-acq">
+    <div class="band"><span class="t">MVP Patient Acquisition</span><span class="d">Reserved. Nothing is switched on for MVP yet &mdash; the visuals and their definitions come next.</span><span class="r"></span></div>
+  </div>
+
+  <div class="page" id="pg-mvp-cn">
+    <div class="band"><span class="t">MVP CN referrals</span><span class="d">Reserved. Nothing is switched on for MVP yet &mdash; the visuals and their definitions come next.</span><span class="r"></span></div>
+  </div>
+
+  <div class="page" id="pg-mvp-outcomes">
+    <div class="band"><span class="t">Clinical Outcomes (PHQ9, MVP)</span><span class="d">Reserved. Nothing is switched on for MVP yet &mdash; the visuals and their definitions come next.</span><span class="r"></span></div>
+  </div>
+
+  <div class="page" id="pg-mvp-update">
+    <div class="band"><span class="t">MVP Update</span><span class="d">Reserved. Nothing is switched on for MVP yet &mdash; the visuals and their definitions come next.</span><span class="r"></span></div>
+  </div>
+
+  <div class="ptabs" role="group" aria-label="Reports and MVP pages">
+    <a href="../internal/patient-journey.html">Patient journey</a>
     <a href="../internal/provider-journey.html">Provider journey</a>
     <a href="../external/cdphp.html">CDPHP payer report</a>
-    <a href="../external/mvp.html">MVP payer report</a>
-    <span class="hint">Every measure is monthly. Chips inside a visual are visual-level filters; hover &#9432; for the Power BI visual type.</span>
+    <span class="sep"></span>
+    <button data-pg="pg-mvp-billing" aria-pressed="true">MVP Billing</button>
+    <button data-pg="pg-mvp-acq" aria-pressed="false">MVP Patient Acquisition</button>
+    <button data-pg="pg-mvp-cn" aria-pressed="false">MVP CN referrals</button>
+    <button data-pg="pg-mvp-outcomes" aria-pressed="false">Clinical Outcomes (PHQ9, MVP)</button>
+    <button data-pg="pg-mvp-update" aria-pressed="false">MVP Update</button>
+    <span class="hint">Five pages mirroring CDPHP, all still empty. Every measure is monthly unless the tile says otherwise.</span>
   </div>
 
   <div class="dd" id="dd" role="listbox"></div>
@@ -806,221 +707,9 @@
 })(window);
 </script>
 <!-- shared:js:end -->
+
 <script>
 APTI.render(function () {
-  var MO = APTI.MO, columns = APTI.columns, lines = APTI.lines, bars = APTI.bars,
-      funnel = APTI.funnel, spark = APTI.spark, matrix = APTI.matrix, reactive = APTI.reactive;
-
-  /* ------------------------------------------------------------------ *
-   * One monthly model. Every visual with a month chip reads from it, so
-   * a month picked on one visual gives the same numbers as the same month
-   * picked on another. "All months" is the twelve summed, which is what
-   * the chip returns to.
-   * ------------------------------------------------------------------ */
-  var MK = ["Sep 2025", "Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026",
-            "Mar 2026", "Apr 2026", "May 2026", "Jun 2026", "Jul 2026", "Aug 2026"];
-  var INBOUND = [712, 740, 690, 655, 781, 802, 764, 799, 812, 786, 803, 781];
-  var SELFPCT = [38, 40, 42, 43, 45, 46, 47, 48, 50, 51, 52, 53];
-  var URGENT  = [118, 122, 114, 108, 128, 132, 126, 132, 134, 130, 133, 126];
-
-  function months(chip) {
-    var i = MK.indexOf(chip);
-    return i < 0 ? MK.map(function (_, k) { return k; }) : [i];
-  }
-
-  function volume(chip) {
-    var ref = 0, self = 0, urg = 0;
-    months(chip).forEach(function (k) {
-      var sp = Math.round(INBOUND[k] * SELFPCT[k] / 100);
-      self += sp; ref += INBOUND[k] - sp; urg += URGENT[k];
-    });
-    return { ref: ref, self: self, all: ref + self, urgent: urg, n: months(chip).length };
-  }
-
-  function pick(chips, prefix) {
-    for (var i = 0; i < chips.length; i++) if (chips[i].indexOf(prefix) === 0) return chips[i];
-    return null;
-  }
-  function month(chips) { return pick(chips, "All months") || MK.filter(function (m) { return chips.indexOf(m) >= 0; })[0] || "All months"; }
-  function num(n) { return Math.round(n).toLocaleString(); }
-
-  /* ---------------------------- the funnel ---------------------------- */
-  var STAGES = ["Referral created", "Registration complete", "Eligibility accepted", "Email + consents",
-                "A5 complete", "DI booked", "DI attended", "Admitted to 90-day care", "First session attended"];
-  var REF_R  = [0.747, 0.865, 0.903, 0.799, 0.871, 0.718, 0.916, 0.908];
-  var SELF_R = [0.879, 0.857, 0.907, 0.795, 0.871, 0.837, 0.909, 0.913];
-  var LEAK = { "Eligibility accepted": "plan not covered, ID mismatch",
-               "A5 complete": "abandoned mid-assessment",
-               "DI attended": "no-show, cancelled" };
-  var REFSHARE = { "Channel: PCP practices": 0.469, "Channel: health systems": 0.341, "Channel: health plans": 0.190 };
-
-  function chain(base, ratios) {
-    var out = [base], v = base;
-    ratios.forEach(function (r) { v = v * r; out.push(v); });
-    return out;
-  }
-
-  function funnelData(chips) {
-    var v = volume(month(chips)), ch = pick(chips, "Channel") || "Channel: all";
-    var refBase = v.ref, selfBase = v.self;
-    if (REFSHARE[ch]) { refBase = v.ref * REFSHARE[ch]; selfBase = 0; }
-    else if (ch === "Channel: referrers only") selfBase = 0;
-    else if (ch === "Channel: self sign-up") refBase = 0;
-
-    var r = refBase ? chain(refBase, REF_R) : null;
-    var f = selfBase ? chain(selfBase, SELF_R) : null;
-    var rows = STAGES.map(function (label, i) {
-      var value;
-      if (i === 0) value = ch === "Channel: self sign-up" ? null : Math.round(refBase + selfBase);
-      else value = Math.round((r ? r[i] : 0) + (f ? f[i] : 0));
-      return { label: label, value: value, leak: !!LEAK[label], leakTxt: LEAK[label],
-               emptyTxt: "a self sign-up creates no referral — this funnel starts a row down" };
-    });
-    rows.forEach(function (row, i) {
-      var prev = i === 0 ? null : rows[i - 1].value;
-      row.conv = prev == null ? "—" : Math.round(row.value / prev * 100) + "%";
-    });
-    return rows;
-  }
-
-  reactive("c-funnel", function (chips) { funnel("c-funnel", funnelData(chips)); });
-
-  /* --------- members by stage: the same funnel read as where they stopped --------- */
-  var INACT = [0.35, 0.48, 0.76, 0.38, 0.64, 0.42, 0.57, 0.37, 0.07];
-
-  reactive("c-stagebars", function (chips) {
-    var f = funnelData(chips).filter(function (r) { return r.value != null; });
-    var rows = f.map(function (r, i) {
-      var stopped = i < f.length - 1 ? r.value - f[i + 1].value : r.value;
-      var gone = Math.round(stopped * INACT[i]);
-      return { label: r.label, fmt: num(stopped), segments: [
-        { name: "Currently in stage", value: stopped - gone, color: "var(--s1)" },
-        { name: "Inactivated after this stage", value: gone, color: "var(--s2)" }] };
-    });
-    var top = 0;
-    rows.forEach(function (r) { var t = r.segments[0].value + r.segments[1].value; if (t > top) top = t; });
-    bars("c-stagebars", { lw: 128, rh: 21, max: top * 1.06, rows: rows });
-  });
-
-  /* ------------------------- inactivation reasons ------------------------- */
-  var REASONS = [
-    ["Unresponsive to outreach", 2714], ["Declined services", 1768], ["Outside the service area", 183],
-    ["No-show policy violation", 576], ["Member and provider …", 225], ["Out-of-network insurance", 115],
-    ["Duplicate account", 432], ["Member feels they …", 118], ["Patient referred out", 332],
-    ["Refusal to pay", 13], ["Unacceptable behaviour", 11], ["Deceased", 13]
-  ];
-
-  reactive("c-inact-reason", function (chips) {
-    var sel = chips[0], f = sel === "All time" ? 1 : (sel === "Rolling 12 months" ? 0.384 : 0.032);
-    var rows = REASONS.map(function (r) {
-      return { label: r[0], value: Math.max(Math.round(r[1] * f), 0), fmt: num(r[1] * f) };
-    });
-    bars("c-inact-reason", { lw: 132, rh: 19, max: 2714 * f * 1.1, rows: rows });
-  });
-
-  /* ------------------------ days to inactivation ------------------------ */
-  var DAYBUCKETS = [61, 24, 19, 22, 17, 31, 14, 12, 8];
-
-  reactive("c-inact-days", function (chips) {
-    var v = volume(month(chips)), f = v.all / 781;
-    columns("c-inact-days", {
-      labels: ["0–7", "8–14", "15–30", "31–60", "61–90", "91–120", "121–180", "181–365", "365+"],
-      h: 96, xfs: 7.5, pl: 26,
-      series: [{ name: "Members", color: "var(--s1)", values: DAYBUCKETS.map(function (d) { return Math.round(d * f); }) }]
-    });
-  });
-
-  /* ---------------------------- the three cards ---------------------------- */
-  spark("k-served", [286, 301, 274, 262, 330, 348, 322, 361, 379, 366, 388, 412], "var(--s1)");
-  spark("k-engaged", [5180, 5240, 5190, 5090, 5410, 5520, 5480, 5610, 5680, 5720, 5924, 5740], "var(--s1)");
-
-  reactive("k-routine", function (chips, tile) {
-    var m = month(chips), v = volume(m), routine = v.all - v.urgent;
-    tile.querySelector(".big").textContent = num(routine);
-    tile.querySelector(".sub").textContent = "of " + num(v.all) + " referrals " +
-      (m === "All months" ? "across the year" : "in " + m.split(" ")[0]);
-    spark("k-routine", INBOUND.map(function (t, k) { return t - URGENT[k]; }), "var(--s1)");
-  });
-
-  /* --------------------------- access by channel --------------------------- */
-  var CHAN = [
-    { label: "Self sign-up", self: true, di: 40, days: "9.4" },
-    { label: "PCP practices", share: 0.469, di: 38, days: "7.1" },
-    { label: "Health systems", share: 0.341, di: 22, days: "11.8" },
-    { label: "Health plans", share: 0.190, di: 20, days: "12.6" }
-  ];
-
-  reactive("c-mx-chan", function (chips) {
-    var v = volume(month(chips)), rows = [], di = 0;
-    CHAN.forEach(function (c) {
-      var n = c.self ? v.self : Math.round(v.ref * c.share);
-      di += n * c.di / 100;
-      rows.push([c.label, { v: num(n), bar: Math.round(n / v.all * 100) }, c.di + "%", c.days]);
-    });
-    rows.push(["All channels", { v: num(v.all), bar: 100 }, Math.round(di / v.all * 100) + "%", "8.6"]);
-    matrix("c-mx-chan", ["Channel", "Referrals", "Reached DI", "Median days to DI"], rows);
-  });
-
-  /* ----------------------------- urgent reasons ----------------------------- */
-  var UREASON = [
-    ["Post BH hospital discharge (7-day follow-up)", 38, "3.1", "g", "94%", "g", "42%"],
-    ["Suicidal ideation or self-harm risk", 31, "2.4", "g", "97%", "g", "61%"],
-    ["Rapid deterioration / acute decompensation", 18, "4.6", "w", "83%", "w", "28%"],
-    ["Acute grief / loss", 14, "6.8", "w", "71%", "c", "14%"],
-    ["Risk to others (homicidal/violent ideation)", 9, "2.0", "g", "100%", "g", "78%"],
-    ["Perinatal / postpartum crisis", 9, "5.2", "w", "78%", "w", "33%"],
-    ["Grave disability / unable to care for self", 7, "8.4", "c", "57%", "c", "14%"]
-  ];
-
-  reactive("u-mx", function (chips) {
-    var v = volume(month(chips)), f = v.urgent / 126;
-    var rows = UREASON.map(function (r) {
-      var n = Math.round(r[1] * f);
-      return [r[0], { v: num(n), bar: Math.round(r[1] / 38 * 100) }, { v: r[2], cf: r[3] }, { v: r[4], cf: r[5] }, r[6]];
-    });
-    rows.push(["Total urgent", { v: num(v.urgent), bar: 100 }, { v: "4.1" }, { v: "81%" }, "41%"]);
-    matrix("u-mx", ["Urgent reason", "Referrals", "Median days to DI", "Seen ≤ 7 days", "≤ 48h"], rows);
-  });
-
-  /* -------------------------------- ACP path -------------------------------- */
-  var ACPMET = [980, 995, 1012, 1030, 1044, 1058, 1066, 1074, 1082, 1090, 1109, 1096];
-
-  reactive("c-acp-funnel", function (chips) {
-    var m = month(chips), ks = months(m);
-    var met = Math.round(ks.reduce(function (a, k) { return a + ACPMET[k]; }, 0) / ks.length);
-    funnel("c-acp-funnel", [
-      { label: "ACP eligible", value: 2140, conv: "—" },
-      { label: "ACP consent given", value: 1463, conv: "68%" },
-      { label: "Touchpoint minimum met", value: met, conv: Math.round(met / 1463 * 100) + "%" }
-    ]);
-  });
-
-  /* ------------------------- twelve-month trends ------------------------- */
-  lines("u-days", {
-    labels: MO, h: 82, max: 16, unit: " d", rule: 7, ruleLabel: "7-day standard",
-    series: [
-      { name: "Urgent", color: "var(--s2)", values: [8, 8, 9, 10, 8, 7, 7, 6, 6, 6, 7, 5] },
-      { name: "Routine", color: "var(--s1)", values: [12, 12, 13, 14, 12, 11, 11, 10, 10, 11, 10, 9] }
-    ]
-  });
-
-  columns("c-onboard", {
-    labels: MO, h: 74, rule: 70, ruleLabel: "target 70%", max: 100, unit: "%",
-    series: [{ name: "Completed onboarding", color: "var(--s1)", values: [52, 54, 53, 51, 56, 57, 55, 58, 59, 58, 60, 61] }],
-    fmt: function (v) { return Math.round(v) + "%"; }
-  });
-
-  lines("c-noshow", {
-    labels: MO, h: 78, max: 40, rule: 15, ruleLabel: "15% standard",
-    series: [{ name: "No-show", color: "var(--s1)", values: [27, 26, 28, 29, 25, 24, 26, 23, 24, 25, 23, 22] }]
-  });
-
-  columns("x-direpeat", {
-    labels: MO, h: 76, stacked: true, unit: " DIs",
-    series: [
-      { name: "First-time", color: "var(--s1)", values: [232, 240, 218, 204, 254, 262, 248, 264, 271, 259, 268, 261] },
-      { name: "Repeat", color: "var(--s2)", values: [54, 58, 51, 47, 62, 65, 61, 66, 69, 66, 70, 68] }
-    ]
-  });
+  /* No visuals yet. render() still runs so the page tabs and the ⓘ tooltip wire up. */
 });
 </script>

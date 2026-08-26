@@ -27,28 +27,22 @@ and is the point of this document.
 | --- | --- | --- | --- | --- |
 | Providers in matching pool | How many providers can actually take a new patient? | _unassigned_ | _to agree_ | Built |
 | Notes signed < 24h ⬥ | Is documentation keeping up? | _unassigned_ | _to agree_ | Built |
-| Note timeliness ⬥ | How late is late, when it is late? | _unassigned_ | _to agree_ | Built |
-| Roster by credential | What does the clinical roster look like month to month? | _unassigned_ | _to agree_ | Built |
 | Co-sign queue ⬥ | How much unbillable work is stuck waiting for a supervisor? | _unassigned_ | _to agree_ | Built |
-| Documentation to money | Where does documentation lateness turn into lost revenue? | _unassigned_ | _to agree_ | Built |
 | Co-sign load by supervisor | Is the co-sign burden spread or concentrated? | _unassigned_ | _to agree_ | Built |
 | Readiness flags | Which providers are silently invisible to matching? | _unassigned_ | _to agree_ | Built |
-| Panel size vs target | Who is over or under their panel target? | _unassigned_ | _to agree_ | Built |
-| Match failures by cause | Why can we not match some members at all? | _unassigned_ | _to agree_ | Built |
 | Documentation and quality by supervisor group ⬥ | Which supervisor group is struggling on documentation and quality? | _unassigned_ | _to agree_ | Built |
-| Offboarding controls | What is left dangling when a provider leaves? | _unassigned_ | _to agree_ | Built |
 | Sessions held — billed vs unbilled | How much delivered care never gets billed? | _unassigned_ | _to agree_ | Built |
 
 ### CDPHP Ask: Workforce And Documentation
 
 | Visual | Business question | Owner | Business impact | Status |
 | --- | --- | --- | --- | --- |
-| Medical group headcount by licence type ⬥ | What licences does the medical group actually hold? | _unassigned_ | _to agree_ | Built |
-| Co-sign obligations and supervisor capacity ⬥ | Do we have enough supervisors for the clinicians who need co-sign? | _unassigned_ | _to agree_ | Built |
+| Medical group headcount by licence type ⬥ | Which roles is the medical group made of, and what licence does each one hold? | _unassigned_ | _to agree_ | Blocked — Needs a provider role attribute in the model (BHS, prescriber, case manager, peer). If only licence type is stored, peers cannot be counted at all and the role split has to be inferred |
 | Median time from session end to signed note ⬥ | How long does a note actually take to get signed? | _unassigned_ | _to agree_ | Blocked — Depends on a session-end timestamp existing in the model. If only a session date is stored, this measure cannot be built as specified |
 | Co-sign rejections by reason ⬥ | Why do supervisors send notes back? | _unassigned_ | _to agree_ | Built |
 | Golden Thread completeness ⬥ | Are our notes defensible in an audit? | _unassigned_ | _to agree_ | Built |
 
 ## Open items
 
+- **Medical group headcount by licence type** — Needs a provider role attribute in the model (BHS, prescriber, case manager, peer). If only licence type is stored, peers cannot be counted at all and the role split has to be inferred from the licence, which is a guess for anyone holding none.
 - **Median time from session end to signed note** — Depends on a session-end timestamp existing in the model. If only a session date is stored, this measure cannot be built as specified.

@@ -130,6 +130,24 @@
   .g-good .ico { color: var(--good); } .g-warning .ico { color: var(--warning); }
   .g-serious .ico { color: var(--serious); } .g-critical .ico { color: var(--critical); }
 
+  /* Role groups — a headcount roll-up with no chart in it. The question is which licence
+     sits under which role, and a bar cannot say that. Four columns, one per role. */
+  .roles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .roles .rg { border-left: 2px solid var(--s1); padding-left: 7px; }
+  .roles .rg.pr { border-left-color: var(--s2); }
+  .roles .rg.cm { border-left-color: var(--s3); }
+  .roles .rg.pe { border-left-color: var(--s4); }
+  .roles .rgh { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; padding-bottom: 3px; border-bottom: 1px solid var(--grid); }
+  .roles .rgh b { font-size: 10px; font-weight: 650; color: var(--ink-1); }
+  .roles .rgh .n { font-size: 15px; font-weight: 600; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .roles .rgs { font-size: 8.5px; color: var(--ink-muted); margin: 2px 0 3px; }
+  .roles .rl { list-style: none; margin: 0; padding: 0; }
+  .roles .rl li { display: flex; justify-content: space-between; gap: 6px; font-size: 9.5px; color: var(--ink-2); padding: 2px 0; border-bottom: 1px solid var(--grid); }
+  .roles .rl li:last-child { border-bottom: 0; }
+  .roles .rl li span { color: var(--ink-1); font-weight: 650; font-variant-numeric: tabular-nums; }
+  .roles .rl li.none { color: var(--ink-muted); font-style: italic; }
+  @media (max-width: 900px) { .roles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
   .gapnote { font-size: 8.5px; color: var(--critical); font-weight: 600; margin-top: 4px; }
 
   /* The report switcher stays on screen — these pages are long and it is the only
@@ -183,64 +201,34 @@
   <div class="rpthead">
     <h1>aptihealth &mdash; Provider journey</h1>
     <span class="mock">&#9888; <b>Prototype only.</b> The real report will be built in Power BI, so the finished thing follows whatever Power BI allows. This is here to agree the metrics.</span>
-    <div class="slicers">
-      <span class="lbl">Report</span>
-      <span class="sl">Payer: CDPHP</span>
-      <span class="sl">Program: All</span>
-      <span class="sl">Rolling 12 months</span>
-    </div>
   </div>
 
   <div class="page on" id="pg-provider">
-    <div class="v kpi c2 h1r">
+    <div class="v kpi c4 h1r">
       <div class="vh"><h4>Providers in matching pool</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: card + line. Fully configured and accepting new patients, at month end.">ⓘ</button></div>
+        <div class="vf"><button class="i" data-tip="Power BI: card + line. Fully configured and accepting new patients, at month end.">&#9432;</button></div>
       </div>
       <div class="body">
         <div class="big">112</div>
-        <div class="sub">of 148 active</div>
+        <div class="sub">of 161 in the medical group</div>
         <div class="spark ch" id="k-pool"></div>
       </div>
     </div>
 
-    <div class="v kpi c2 h1r">
+    <div class="v kpi c4 h1r">
       <div class="vh"><h4>Notes signed &lt; 24h</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">All note types</span><button class="i" data-tip="Power BI: KPI + line. Session end to signed note. The chip isolates guided session notes, which are 73% of all documentation.">ⓘ</button></div>
+        <div class="vf"><span class="wf">All note types</span><button class="i" data-tip="Power BI: KPI + line. Session end to signed note. The chip isolates guided session notes, which are 73% of all documentation.">&#9432;</button></div>
       </div>
       <div class="body">
         <div class="big">68<small>%</small></div>
-        <div class="sub"><span class="up">▴ 4pp</span> vs July</div>
+        <div class="sub"><span class="up">&#9652; 4pp</span> vs July</div>
         <div class="spark ch" id="k-24h"></div>
       </div>
     </div>
 
-    <div class="v c5 h1r">
-      <div class="vh"><h4>Note timeliness</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">Supervisor: all</span><button class="i" data-tip="Power BI: 100% stacked column chart. Status colors always ship with labels, never color alone.">ⓘ</button></div>
-      </div>
-      <div class="body"><div class="ch" id="p-time"></div>
-        <div class="lg">
-          <span><i style="background:var(--good)"></i>&lt;24h</span><span><i style="background:var(--warning)"></i>24–48h</span>
-          <span><i style="background:var(--serious)"></i>48–72h</span><span><i style="background:var(--critical)"></i>&gt;72h / unsigned</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="v c3 h1r">
-      <div class="vh"><h4>Roster by credential</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart. Headcount by month — also answers the roster-by-licensure ask permanently instead of a manual pull each time a payer asks.">ⓘ</button></div>
-      </div>
-      <div class="body"><div class="ch" id="p-roster"></div>
-        <div class="lg">
-          <span><i style="background:var(--s1)"></i>BHS</span><span><i style="background:var(--s2)"></i>Prescribers</span>
-          <span><i style="background:var(--s3)"></i>Case mgrs</span><span><i style="background:var(--s4)"></i>CSE</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="v kpi c2 h2r">
+    <div class="v kpi c4 h1r">
       <div class="vh"><h4>Co-sign queue</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">Month end</span><button class="i" data-tip="Power BI: card + line. Notes are not billable until co-signed. The chip switches between month-end depth and monthly peak.">ⓘ</button></div>
+        <div class="vf"><span class="wf">Month end</span><button class="i" data-tip="Power BI: card + line. Notes are not billable until co-signed. The chip switches between month-end depth and monthly peak.">&#9432;</button></div>
       </div>
       <div class="body">
         <div class="big">73</div>
@@ -249,80 +237,38 @@
       </div>
     </div>
 
-    <div class="v c7 h2r">
-      <div class="vh"><h4>Documentation to money</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Supervisor: all</span><button class="i" data-tip="Power BI: funnel. Sessions held through to billed for the month selected on this visual.">ⓘ</button></div>
-      </div>
-      <p class="info">Where documentation lateness turns into revenue. The gap between held and billed is the number worth a standing owner.</p>
-      <div class="body"><div class="ch" id="p-funnel"></div></div>
-    </div>
-
-    <div class="v c3 h2r">
-      <div class="vh"><h4>Co-sign load by supervisor</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: small multiples (area). Pending notes per supervisor by month — a small number of LCSWs carry this whole queue.">ⓘ</button></div>
-      </div>
-      <div class="body" id="p-sm"></div>
-    </div>
-
     <div class="v c4 h2r">
       <div class="vh"><h4>Readiness flags</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: multi-row card with monthly delta. Each row is a silent access failure — a misconfigured provider simply never appears in matching.">ⓘ</button></div>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: multi-row card with monthly delta. Each row is a silent access failure — a misconfigured provider simply never appears in matching.">&#9432;</button></div>
       </div>
       <div class="body">
         <div class="flags">
-          <div class="f g-critical"><div class="ico">●</div><div class="t"><b>No age range</b> — cannot match minors</div><div class="mo">▴ 2</div><div class="n">6</div></div>
-          <div class="f g-serious"><div class="ico">▲</div><div class="t"><b>No working hours</b> — unbookable</div><div class="mo">▾ 1</div><div class="n">4</div></div>
-          <div class="f g-warning"><div class="ico">▲</div><div class="t"><b>No insurance</b> configured</div><div class="mo">— 0</div><div class="n">3</div></div>
-          <div class="f g-warning"><div class="ico">▲</div><div class="t"><b>Credentialing pending</b> — off-platform</div><div class="mo">▴ 3</div><div class="n">9</div></div>
-          <div class="f g-good"><div class="ico">●</div><div class="t"><b>Fully configured</b> and accepting</div><div class="mo">▴ 5</div><div class="n">89</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="v c5 h2r">
-      <div class="vh"><h4>Panel size vs target</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Top 5</span><button class="i" data-tip="Power BI: clustered bar with a constant line for target. The black rule is the 45-patient panel target.">ⓘ</button></div>
-      </div>
-      <div class="body"><div class="ch" id="p-target"></div></div>
-    </div>
-
-    <div class="v c3 h2r">
-      <div class="vh"><h4>Match failures by cause</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart. A member with no eligible provider for their insurance, age or availability combination — the age band is the adolescent intake risk.">ⓘ</button></div>
-      </div>
-      <div class="body"><div class="ch" id="p-match"></div>
-        <div class="lg">
-          <span><i style="background:var(--s1)"></i>Insurance</span><span><i style="background:var(--s2)"></i>Age range</span>
-          <span><i style="background:var(--s3)"></i>Availability</span>
+          <div class="f g-critical"><div class="ico">&#9679;</div><div class="t"><b>No age range</b> — cannot match minors</div><div class="mo">&#9652; 2</div><div class="n">6</div></div>
+          <div class="f g-serious"><div class="ico">&#9650;</div><div class="t"><b>No working hours</b> — unbookable</div><div class="mo">&#9662; 1</div><div class="n">4</div></div>
+          <div class="f g-warning"><div class="ico">&#9650;</div><div class="t"><b>No insurance</b> configured</div><div class="mo">&mdash; 0</div><div class="n">3</div></div>
+          <div class="f g-warning"><div class="ico">&#9650;</div><div class="t"><b>Credentialing pending</b> — off-platform</div><div class="mo">&#9652; 3</div><div class="n">9</div></div>
+          <div class="f g-good"><div class="ico">&#9679;</div><div class="t"><b>Fully configured</b> and accepting</div><div class="mo">&#9652; 5</div><div class="n">89</div></div>
         </div>
       </div>
     </div>
 
     <div class="v c8 h2r">
       <div class="vh"><h4>Documentation and quality by supervisor group</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. PHQ-9 delta is acuity-adjusted — publishing it raw is how the report loses clinician trust on day one.">ⓘ</button></div>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. PHQ-9 delta is acuity-adjusted — publishing it raw is how the report loses clinician trust on day one.">&#9432;</button></div>
       </div>
       <div class="body" id="p-mx"></div>
     </div>
 
     <div class="v c4 h2r">
-      <div class="vh"><h4>Offboarding controls</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: multi-row card with monthly delta. There is no documented handover procedure, so this visual is the control.">ⓘ</button></div>
+      <div class="vh"><h4>Co-sign load by supervisor</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: small multiples (area). Pending notes per supervisor by month — a small number of LCSWs carry this whole queue.">&#9432;</button></div>
       </div>
-      <div class="body">
-        <div class="flags">
-          <div class="f g-critical"><div class="ico">●</div><div class="t"><b>Unsigned notes</b> from departed providers</div><div class="mo">▴ 4</div><div class="n">14</div></div>
-          <div class="f g-critical"><div class="ico">●</div><div class="t"><b>Orphaned co-sign</b> items</div><div class="mo">▴ 2</div><div class="n">7</div></div>
-          <div class="f g-serious"><div class="ico">▲</div><div class="t"><b>Panels not redistributed</b></div><div class="mo">▾ 6</div><div class="n">23</div></div>
-          <div class="f g-warning"><div class="ico">▲</div><div class="t"><b>Supervision left dangling</b></div><div class="mo">— 0</div><div class="n">2</div></div>
-          <div class="f g-good"><div class="ico">●</div><div class="t"><b>Cleanly closed out</b></div><div class="mo">▴ 1</div><div class="n">5</div></div>
-        </div>
-      </div>
+      <div class="body" id="p-sm"></div>
     </div>
 
-    <div class="v c12 h2r">
+    <div class="v c8 h2r">
       <div class="vh"><h4>Sessions held — billed vs unbilled</h4>
-        <div class="vf"><span class="wf">Supervisor: all</span><span class="wf">Note type: all</span><button class="i" data-tip="Power BI: stacked column chart. Same unit, one axis — do not model the billed rate as a second axis on this visual.">ⓘ</button></div>
+        <div class="vf"><span class="wf">Supervisor: all</span><span class="wf">Note type: all</span><button class="i" data-tip="Power BI: stacked column chart. Same unit, one axis — do not model the billed rate as a second axis on this visual.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="p-combo"></div>
         <div class="lg"><span><i style="background:var(--s1)"></i>Billed</span><span><i style="background:var(--s2)"></i>Not billed — note, co-sign or guardrail</span></div>
@@ -331,33 +277,60 @@
 
     <!-- ============ CDPHP ASK: WORKFORCE AND DOCUMENTATION ============ -->
 
-    <div class="v c4 h3r">
+    <div class="v c12 h2r">
       <div class="vh"><h4>Medical group headcount by licence type</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><button class="i" data-tip="Power BI: small multiples (area). Seven licence types will not fit the five-colour categorical palette, so this is faceted rather than stacked - one panel per licence, each with its own monthly trend.">&#9432;</button></div>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix — role as the outer row group, licence type as the inner, headcount as the value. Deliberately not a chart: the question a payer asks is which licence sits under which role, and no bar or facet can show that nesting.">&#9432;</button></div>
       </div>
-      <div class="body" id="x-lic"></div>
+      <p class="info">Four roles, and the licences each one is staffed with. Peer specialists hold no clinical licence, which is why the licence list alone has never answered this question.</p>
+      <div class="body">
+        <div class="roles">
+          <div class="rg">
+            <div class="rgh"><b>Behavioral health specialists</b><span class="n">112</span></div>
+            <div class="rgs">Therapy and assessment</div>
+            <ul class="rl">
+              <li>LCSW<span>38</span></li>
+              <li>LMHC<span>27</span></li>
+              <li>LMSW<span>24</span></li>
+              <li>LCSW-R<span>12</span></li>
+              <li>LMFT<span>11</span></li>
+            </ul>
+          </div>
+          <div class="rg pr">
+            <div class="rgh"><b>Prescribers</b><span class="n">21</span></div>
+            <div class="rgs">Medication management</div>
+            <ul class="rl">
+              <li>PMHNP-BC<span>21</span></li>
+            </ul>
+          </div>
+          <div class="rg cm">
+            <div class="rgh"><b>Case managers</b><span class="n">15</span></div>
+            <div class="rgs">Care coordination</div>
+            <ul class="rl">
+              <li>RN<span>15</span></li>
+            </ul>
+          </div>
+          <div class="rg pe">
+            <div class="rgh"><b>Peer specialists</b><span class="n">13</span></div>
+            <div class="rgs">Lived-experience support</div>
+            <ul class="rl">
+              <li class="none">No clinical licence<span>13</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="gapnote">&#9888; Needs a provider role attribute in the model — BHS, prescriber, case manager, peer. If only licence type is stored, peers cannot be counted at all and the role split has to be inferred from the licence, which is a guess for anyone holding none.</div>
+      </div>
     </div>
 
-    <div class="v c4 h2r">
-      <div class="vh"><h4>Co-sign obligations and supervisor capacity</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart. Both series are headcounts, so one axis. Providers requiring co-sign are pre-independent clinicians; the supervisor count is active LCSWs actually carrying a co-sign panel, not everyone credentialed to supervise.">&#9432;</button></div>
-      </div>
-      <p class="info">The ratio between the two bars is the supervision load. It has roughly doubled over the year, which is what the co-sign queue depth is downstream of.</p>
-      <div class="body"><div class="ch" id="x-cosignreq"></div>
-        <div class="lg"><span><i style="background:var(--s1)"></i>Providers requiring co-sign</span><span><i style="background:var(--s2)"></i>Active LCSW supervisors</span></div>
-      </div>
-    </div>
-
-    <div class="v c4 h2r">
+    <div class="v c4 h3r">
       <div class="vh"><h4>Median time from session end to signed note</h4><span class="ask">CDPHP asked</span>
-        <div class="vf"><span class="wf">All note types</span><button class="i" data-tip="Power BI: line chart, one series, in hours, with a constant line at the 24-hour standard. The share-based view is the note timeliness visual; this is the median the share cannot show.">&#9432;</button></div>
+        <div class="vf"><span class="wf">All note types</span><button class="i" data-tip="Power BI: line chart, one series, in hours, with a constant line at the 24-hour standard. The share-based view is the notes-signed KPI; this is the median the share cannot show.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="x-notemed"></div>
         <div class="gapnote">&#9888; Depends on a session-end timestamp existing in the model. If only a session date is stored, this measure cannot be built as specified.</div>
       </div>
     </div>
 
-    <div class="v c5 h3r">
+    <div class="v c4 h3r">
       <div class="vh"><h4>Co-sign rejections by reason</h4><span class="ask">CDPHP asked</span>
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Rejection rate alone does not tell a supervisor what to fix; the reason and the days it adds back to the queue do.">&#9432;</button></div>
       </div>
@@ -831,42 +804,13 @@
 <!-- shared:js:end -->
 <script>
 APTI.render(function () {
-  var MO = APTI.MO, columns = APTI.columns, lines = APTI.lines, bars = APTI.bars,
-      funnel = APTI.funnel, spark = APTI.spark, smallMultiples = APTI.smallMultiples, matrix = APTI.matrix;
+  var MO = APTI.MO, columns = APTI.columns, lines = APTI.lines,
+      spark = APTI.spark, smallMultiples = APTI.smallMultiples, matrix = APTI.matrix;
 
 
   spark("k-pool", [96, 98, 99, 101, 103, 104, 106, 107, 109, 110, 111, 112], "var(--s1)");
   spark("k-24h", [55, 56, 58, 57, 60, 61, 62, 63, 65, 66, 67, 68], "var(--s1)", "%");
   spark("k-cosign", [48, 52, 55, 58, 60, 63, 65, 67, 69, 70, 71, 73], "var(--s1)");
-
-  columns("p-time", {
-    labels: MO, h: 56, stacked: true, pct: true, max: 100, pl: 20, unit: "%",
-    series: [
-      { name: "<24h", color: "var(--good)", values: [55, 56, 58, 57, 60, 61, 62, 63, 65, 66, 67, 68] },
-      { name: "24-48h", color: "var(--warning)", values: [24, 24, 23, 24, 22, 22, 21, 21, 20, 20, 19, 19] },
-      { name: "48-72h", color: "var(--serious)", values: [12, 12, 11, 11, 11, 10, 10, 9, 9, 9, 8, 8] },
-      { name: ">72h", color: "var(--critical)", values: [9, 8, 8, 8, 7, 7, 7, 7, 6, 5, 6, 5] }
-    ],
-    fmt: function (v) { return Math.round(v) + "%"; }
-  });
-
-  columns("p-roster", {
-    labels: MO, h: 52, stacked: true, pl: 20,
-    series: [
-      { name: "BHS", color: "var(--s1)", values: [84, 85, 86, 88, 89, 90, 91, 92, 93, 94, 95, 96] },
-      { name: "Prescribers", color: "var(--s2)", values: [17, 17, 18, 18, 19, 19, 20, 20, 20, 21, 21, 21] },
-      { name: "Case mgrs", color: "var(--s3)", values: [14, 15, 15, 16, 16, 17, 17, 17, 18, 18, 18, 18] },
-      { name: "CSE", color: "var(--s4)", values: [11, 11, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13] }
-    ]
-  });
-
-  funnel("p-funnel", [
-    { label: "Sessions held", value: 12480, conv: "—" },
-    { label: "Note signed", value: 12104, conv: "97%" },
-    { label: "Co-sign complete", value: 11946, conv: "99%", leak: true, leakTxt: "pending, returned" },
-    { label: "Billable", value: 11388, conv: "95%" },
-    { label: "Billed", value: 10912, conv: "96%", leak: true, leakTxt: "guardrail exclusion" }
-  ]);
 
   smallMultiples("p-sm", [
     { label: "Supervisor A", value: "31", color: "var(--s2)", spark: [12, 14, 18, 20, 22, 24, 26, 27, 28, 29, 30, 31] },
@@ -874,33 +818,14 @@ APTI.render(function () {
     { label: "Supervisor C", value: "14", color: "var(--s1)", spark: [19, 19, 18, 18, 17, 17, 16, 16, 15, 15, 14, 14] }
   ]);
 
-  bars("p-target", {
-    lw: 82, rh: 19, rows: [
-      { label: "M. Renwick", value: 58, target: 45, fmt: "58 / 45" },
-      { label: "D. Ashby", value: 51, target: 45, fmt: "51 / 45" },
-      { label: "P. Larkin", value: 46, target: 45, fmt: "46 / 45" },
-      { label: "T. Vance", value: 39, target: 45, fmt: "39 / 45" },
-      { label: "R. Okoye", value: 31, target: 45, fmt: "31 / 45" }
-    ]
-  });
-
-  columns("p-match", {
-    labels: MO, h: 74, stacked: true, pl: 18,
-    series: [
-      { name: "Insurance", color: "var(--s1)", values: [18, 19, 20, 21, 20, 21, 22, 21, 22, 23, 22, 22] },
-      { name: "Age range", color: "var(--s2)", values: [9, 10, 11, 12, 13, 14, 15, 16, 16, 17, 18, 18] },
-      { name: "Availability", color: "var(--s3)", values: [14, 13, 13, 12, 12, 12, 11, 11, 11, 11, 11, 11] }
-    ]
-  });
-
   matrix("p-mx",
     ["Supervisor group", "Providers", "Notes", "<24h", "Pending co-sign", "Rejection", "PHQ-9 delta (adj.)"],
     [
-      ["Group A", "14", { v: "2,412", bar: 100 }, { v: "61%", cf: "c" }, { v: "31", bar: 100 }, { v: "8.4%", cf: "c" }, "−5.8"],
-      ["Group B", "12", { v: "1,986", bar: 82 }, { v: "72%", cf: "g" }, { v: "18", bar: 58 }, { v: "5.1%", cf: "g" }, "−6.4"],
-      ["Group C", "11", { v: "1,744", bar: 72 }, { v: "69%", cf: "w" }, { v: "14", bar: 45 }, { v: "6.0%", cf: "w" }, "−6.1"],
-      ["Group D", "9", { v: "1,208", bar: 50 }, { v: "74%", cf: "g" }, { v: "10", bar: 32 }, { v: "4.4%", cf: "g" }, "−6.6"],
-      ["Total", "46", { v: "7,350", bar: 100 }, { v: "68%" }, { v: "73", bar: 100 }, { v: "6.1%" }, "−6.2"]
+      ["Group A", "14", { v: "2,412", bar: 100 }, { v: "61%", cf: "c" }, { v: "31", bar: 100 }, { v: "8.4%", cf: "c" }, "\u22125.8"],
+      ["Group B", "12", { v: "1,986", bar: 82 }, { v: "72%", cf: "g" }, { v: "18", bar: 58 }, { v: "5.1%", cf: "g" }, "\u22126.4"],
+      ["Group C", "11", { v: "1,744", bar: 72 }, { v: "69%", cf: "w" }, { v: "14", bar: 45 }, { v: "6.0%", cf: "w" }, "\u22126.1"],
+      ["Group D", "9", { v: "1,208", bar: 50 }, { v: "74%", cf: "g" }, { v: "10", bar: 32 }, { v: "4.4%", cf: "g" }, "\u22126.6"],
+      ["Total", "46", { v: "7,350", bar: 100 }, { v: "68%" }, { v: "73", bar: 100 }, { v: "6.1%" }, "\u22126.2"]
     ]
   );
 
@@ -913,26 +838,6 @@ APTI.render(function () {
     fmt: function (v) { return (v / 1000).toFixed(0) + "k"; }
   });
 
-
-
-
-  smallMultiples("x-lic", [
-    { label: "LCSW", value: "38", color: "var(--s1)", spark: [32, 32, 33, 34, 34, 35, 35, 36, 36, 37, 37, 38] },
-    { label: "LCSW-R", value: "12", color: "var(--s1)", spark: [9, 9, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12] },
-    { label: "LMHC", value: "27", color: "var(--s1)", spark: [22, 23, 23, 24, 24, 25, 25, 26, 26, 26, 27, 27] },
-    { label: "LMSW", value: "24", color: "var(--s1)", spark: [19, 20, 20, 21, 21, 22, 22, 23, 23, 23, 24, 24] },
-    { label: "LMFT", value: "11", color: "var(--s1)", spark: [9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 11] },
-    { label: "PMHNP-BC", value: "21", color: "var(--s2)", spark: [17, 17, 18, 18, 19, 19, 20, 20, 20, 21, 21, 21] },
-    { label: "RN", value: "15", color: "var(--s3)", spark: [12, 12, 13, 13, 13, 14, 14, 14, 15, 15, 15, 15] }
-  ]);
-
-  columns("x-cosignreq", {
-    labels: MO, h: 76, pl: 16, unit: " providers",
-    series: [
-      { name: "Providers requiring co-sign", color: "var(--s1)", values: [19, 20, 22, 24, 26, 28, 30, 31, 33, 34, 35, 36] },
-      { name: "Active LCSW supervisors", color: "var(--s2)", values: [8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10] }
-    ]
-  });
 
   lines("x-notemed", {
     labels: MO, h: 80, max: 48, unit: " h", rule: 24, ruleLabel: "24-hour standard",

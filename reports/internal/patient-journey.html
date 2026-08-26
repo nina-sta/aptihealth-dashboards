@@ -194,22 +194,6 @@
       <div class="body"><div class="ch" id="c-funnel-self"></div></div>
     </div>
 
-    <div class="v c5 h3r">
-      <div class="vh"><h4>Where members drop out — inactivation by journey stage</h4>
-        <div class="vf"><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: 100% stacked column chart. Stage is derived from the furthest milestone reached before the inactivation date — registered only, assessed, DI attended, in care, or completed 90-day care.">ⓘ</button></div>
-      </div>
-      <p class="info">The other half of the funnel: that one ends at the first session, this one is what happens after it. Only the last band is a good outcome; the first two are acquisition waste.</p>
-      <div class="body"><div class="ch" id="c-inact-stage"></div>
-        <div class="lg">
-          <span><i style="background:var(--s5)"></i>Registered, never assessed</span>
-          <span><i style="background:var(--s2)"></i>A5 done, no DI</span>
-          <span><i style="background:var(--s4)"></i>DI attended, no first session</span>
-          <span><i style="background:var(--s1)"></i>In care, left early</span>
-          <span><i style="background:var(--s3)"></i>Completed 90-day care</span>
-        </div>
-      </div>
-    </div>
-
     <div class="v c7 h3r">
       <div class="vh"><h4>Members by stage &mdash; in stage and inactivated after it</h4>
         <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: stacked bar chart. The same stages as the two acquisition funnels, and the same month, read a different way: a funnel counts everyone who reached a stage, this counts where they stopped. Both channels are in here together. Each member appears once, at the furthest stage they reached, split into still sitting there and inactivated after it. Both series are member counts, so one bar and one axis.">&#9432;</button></div>
@@ -229,16 +213,6 @@
       </div>
       <p class="info">Two reasons carry three quarters of it, and both are contact problems rather than clinical ones.</p>
       <div class="body"><div class="ch" id="c-inact-reason"></div>
-      </div>
-    </div>
-
-    <div class="v c7 h3r">
-      <div class="vh"><h4>Days from registration to inactivation</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Stage: all</span><button class="i" data-tip="Power BI: clustered column chart used as a histogram (bucketed days as the axis). Buckets come from a DAX calculated column, not from the visual — Power BI cannot bin a measure.">ⓘ</button></div>
-      </div>
-      <p class="info">The 0–7 day spike is people who never really started. The 90–120 band is expected — that's the end of the 90-day programme.</p>
-      <div class="body"><div class="ch" id="c-inact-days"></div>
-        <div class="gapnote">⚠ Needs an inactivation reason field to separate lapsed from clinically discharged.</div>
       </div>
     </div>
 
@@ -276,6 +250,16 @@
     </div>
 
     <div class="v c6 h2r">
+      <div class="vh"><h4>Days from registration to inactivation</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Stage: all</span><button class="i" data-tip="Power BI: clustered column chart used as a histogram (bucketed days as the axis). Buckets come from a DAX calculated column, not from the visual — Power BI cannot bin a measure.">ⓘ</button></div>
+      </div>
+      <p class="info">The 0–7 day spike is people who never really started. The 90–120 band is expected — that's the end of the 90-day programme.</p>
+      <div class="body"><div class="ch" id="c-inact-days"></div>
+        <div class="gapnote">⚠ Needs an inactivation reason field to separate lapsed from clinically discharged.</div>
+      </div>
+    </div>
+
+    <div class="v c6 h2r">
       <div class="vh"><h4>Onboarding completion rate</h4>
         <div class="vf"><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: clustered column with a constant line for target. Of the members who completed registration in the month, the share who finished the rest of onboarding — eligibility, email and consents, and the A5 assessment. It is the middle of the funnel expressed as one rate, so it can be trended and given a target.">&#9432;</button></div>
       </div>
@@ -283,7 +267,7 @@
       <div class="body"><div class="ch" id="c-onboard"></div></div>
     </div>
 
-    <div class="v c5 h2r">
+    <div class="v c6 h2r">
       <div class="vh"><h4>First-appointment no-show</h4>
         <div class="vf"><span class="wf">Milestone: DI attended</span><button class="i" data-tip="Power BI: line chart, one series, with a constant line at the 15% standard. Booked first appointments where the member did not attend, as a share of first appointments booked in the month. Cancellations with notice count as no-shows here because the slot is lost either way. The milestone chip switches between the DI and the first therapy session.">&#9432;</button></div>
       </div>
@@ -324,7 +308,7 @@
       </div>
     </div>
 
-    <div class="v c7 h2r">
+    <div class="v c12 h2r">
       <div class="vh"><h4>Diagnostic interviews &mdash; first-time vs repeat</h4>
         <div class="vf"><button class="i" data-tip="Power BI: stacked column chart. Both series are DI counts, so one axis. Repeat means a member who had a completed DI before this one.">&#9432;</button></div>
       </div>
@@ -847,18 +831,6 @@ APTI.render(function () {
   ]);
 
   /* NEW — inactivation by journey stage */
-  columns("c-inact-stage", {
-    labels: MO, h: 96, stacked: true, pct: true, max: 100, unit: "%",
-    series: [
-      { name: "Registered, never assessed", color: "var(--s5)", values: [31, 32, 34, 35, 33, 32, 31, 30, 29, 29, 28, 27] },
-      { name: "A5 done, no DI", color: "var(--s2)", values: [22, 22, 21, 21, 21, 20, 20, 20, 19, 19, 19, 18] },
-      { name: "DI attended, no first session", color: "var(--s4)", values: [14, 13, 13, 13, 12, 12, 12, 12, 12, 11, 11, 11] },
-      { name: "In care, left early", color: "var(--s1)", values: [26, 26, 25, 25, 26, 27, 27, 27, 28, 28, 28, 29] },
-      { name: "Completed 90-day care", color: "var(--s3)", values: [7, 7, 7, 6, 8, 9, 10, 11, 12, 13, 14, 15] }
-    ],
-    fmt: function (v) { return Math.round(v) + "%"; }
-  });
-
   /* NEW — days from registration to inactivation, histogram */
   columns("c-inact-days", {
     labels: ["0–7", "8–14", "15–30", "31–60", "61–90", "91–120", "121–180", "181–365", "365+"],

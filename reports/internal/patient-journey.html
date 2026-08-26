@@ -175,12 +175,6 @@
   <div class="rpthead">
     <h1>aptihealth &mdash; Patient journey</h1>
     <span class="mock">&#9888; <b>Prototype only.</b> The real report will be built in Power BI, so the finished thing follows whatever Power BI allows. This is here to agree the metrics.</span>
-    <div class="slicers">
-      <span class="lbl">Report</span>
-      <span class="sl">Payer: CDPHP</span>
-      <span class="sl">Program: All</span>
-      <span class="sl">Rolling 12 months</span>
-    </div>
   </div>
 
   <div class="page on" id="pg-patient">
@@ -208,9 +202,32 @@
       </div>
     </div>
 
+    <div class="v c7 h3r">
+      <div class="vh"><h4>Members by stage &mdash; in stage and inactivated after it</h4>
+        <div class="vf"><span class="wf">All time</span><button class="i" data-tip="Power BI: stacked bar chart. For each journey stage, the members sitting in it now and the members who were inactivated after reaching it. Both series are member counts, so one bar and one axis. The chip is a period filter — the counts shown are all-time, not a month.">&#9432;</button></div>
+      </div>
+      <p class="info">A member is counted at the furthest stage they reached. Read the pink band as the cost of each stage: Started NDC loses more members than every intake stage put together.</p>
+      <div class="body"><div class="ch" id="c-stagebars"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Currently in stage</span>
+          <span><i style="background:var(--critical)"></i>Inactivated after this stage</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c5 h3r">
+      <div class="vh"><h4>Inactivated members by latest reason</h4>
+        <div class="vf"><span class="wf">All time</span><button class="i" data-tip="Power BI: clustered bar chart. Members grouped by the last inactivation reason recorded on the account. An account can carry several reasons over its life; only the most recent one counts here, so the rows do not add up to every reason ever given.">&#9432;</button></div>
+      </div>
+      <p class="info">Two reasons carry three quarters of it, and both are contact problems rather than clinical ones.</p>
+      <div class="body"><div class="ch" id="c-inact-reason"></div>
+        <div class="gapnote">&#9888; Reason wording is transcribed from the existing dashboard and two labels were cut off in the source. Take the final wording from the inactivation reason picklist.</div>
+      </div>
+    </div>
+
     <div class="v kpi c2 h1r">
       <div class="vh"><h4>Members served</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: card + line. All-time distinct members with a completed DI who have ever been a CDPHP member — the payer slicer sets the &quot;ever&quot; qualifier, it does not filter to current coverage. The line is new members per month.">ⓘ</button></div>
+        <div class="vf"><button class="i" data-tip="Power BI: card + line. All-time distinct members with a completed DI. There is no payer slicer on this report any more, so this counts every member, not a payer cut. The line is new members per month.">ⓘ</button></div>
       </div>
       <div class="body">
         <div class="big">18,420</div>
@@ -435,6 +452,24 @@
       var y = i * rh + 3, bh = rh - 8;
       s.appendChild(txt(r.label, 0, y + bh - 1, { fill: "var(--ink-2)", fs: 8.5 }));
       s.appendChild(el("rect", { x: lw, y: y, width: aw, height: bh, rx: 2, fill: "var(--track)" }));
+      /* A row with segments is a stacked bar: the parts share the row's total and are
+         drawn end to end. Without segments the row is a single bar, as before. */
+      if (r.segments) {
+        var acc = 0;
+        r.segments.forEach(function (sg) {
+          var sw = Math.max(aw * (sg.value / max), 1);
+          var sb = el("rect", { x: lw + acc, y: y, width: sw, height: bh, rx: 2, fill: sg.color });
+          tip(sb, r.label + " · " + sg.name + ": " + sg.value.toLocaleString());
+          s.appendChild(sb);
+          if (sw > 22) {
+            s.appendChild(txt(sg.value.toLocaleString(), lw + acc + sw - 4, y + bh - 2,
+              { anchor: "end", fill: "#ffffff", fs: 8, w: 650 }));
+          }
+          acc += sw;
+        });
+        s.appendChild(txt(r.fmt || r.value, W, y + bh - 1, { anchor: "end", fill: "var(--ink-1)", fs: 8.5, w: 650 }));
+        return;
+      }
       var b = el("rect", { x: lw, y: y, width: Math.max(aw * (r.value / max), 1), height: bh, rx: 2, fill: r.color || "var(--s1)" });
       tip(b, r.label + ": " + (r.fmt || r.value)); s.appendChild(b);
       if (r.target) {
@@ -575,6 +610,7 @@
     "Rolling 12 months": { head: "Period", opts: ["Rolling 12 months", "Rolling 6 months", "Rolling 3 months", "Year to date", "Calendar 2025"] },
     /* visual-level filters */
     "Aug 2026": { head: "Month", opts: MONTHS },
+    "All time": { head: "Period", opts: ["All time", "Aug 2026", "Rolling 12 months"] },
     "Channel: all": { head: "Referral channel", opts: CHANNELS },
     "Acuity: all": { head: "Acuity", opts: ACUITY },
     "Acuity: severe": { head: "Acuity", opts: ACUITY },
@@ -664,6 +700,57 @@
 APTI.render(function () {
   var MO = APTI.MO, columns = APTI.columns, lines = APTI.lines, bars = APTI.bars,
       funnel = APTI.funnel, spark = APTI.spark, smallMultiples = APTI.smallMultiples, matrix = APTI.matrix;
+
+  bars("c-stagebars", {
+    lw: 128, rh: 21, max: 2100,
+    rows: [
+      { label: "Referred", fmt: "1,266", segments: [
+        { name: "Currently in stage", value: 1206, color: "var(--s1)" },
+        { name: "Inactivated after this stage", value: 60, color: "var(--critical)" }] },
+      { label: "Registered", fmt: "1,499", segments: [
+        { name: "Currently in stage", value: 1253, color: "var(--s1)" },
+        { name: "Inactivated after this stage", value: 246, color: "var(--critical)" }] },
+      { label: "Completed any assessment", fmt: "590", segments: [
+        { name: "Currently in stage", value: 451, color: "var(--s1)" },
+        { name: "Inactivated after this stage", value: 139, color: "var(--critical)" }] },
+      { label: "DI scheduled", fmt: "816", segments: [
+        { name: "Currently in stage", value: 518, color: "var(--s1)" },
+        { name: "Inactivated after this stage", value: 298, color: "var(--critical)" }] },
+      { label: "DI attended", fmt: "359", segments: [
+        { name: "Currently in stage", value: 93, color: "var(--s1)" },
+        { name: "Inactivated after this stage", value: 266, color: "var(--critical)" }] },
+      { label: "DI completed", fmt: "708", segments: [
+        { name: "Currently in stage", value: 365, color: "var(--s1)" },
+        { name: "Inactivated after this stage", value: 343, color: "var(--critical)" }] },
+      { label: "Started NDC", fmt: "1,883", segments: [
+        { name: "Currently in stage", value: 1060, color: "var(--s1)" },
+        { name: "Inactivated after this stage", value: 823, color: "var(--critical)" }] },
+      { label: "Completed NDC", fmt: "87", segments: [
+        { name: "Currently in stage", value: 64, color: "var(--s1)" },
+        { name: "Inactivated after this stage", value: 23, color: "var(--critical)" }] },
+      { label: "Started extended care", fmt: "1,674", segments: [
+        { name: "Currently in stage", value: 1114, color: "var(--s1)" },
+        { name: "Inactivated after this stage", value: 560, color: "var(--critical)" }] }
+    ]
+  });
+
+  bars("c-inact-reason", {
+    lw: 132, rh: 19, max: 3000,
+    rows: [
+      { label: "Unresponsive to outreach", value: 2714, fmt: "2,714" },
+      { label: "Declined services", value: 1768, fmt: "1,768" },
+      { label: "Outside the service area", value: 183, fmt: "183" },
+      { label: "No-show policy violation", value: 576, fmt: "576" },
+      { label: "Member and provider …", value: 225, fmt: "225" },
+      { label: "Out-of-network insurance", value: 115, fmt: "115" },
+      { label: "Duplicate account", value: 432, fmt: "432" },
+      { label: "Member feels they …", value: 118, fmt: "118" },
+      { label: "Patient referred out", value: 332, fmt: "332" },
+      { label: "Refusal to pay", value: 13, fmt: "13" },
+      { label: "Unacceptable behaviour", value: 11, fmt: "11" },
+      { label: "Deceased", value: 13, fmt: "13" }
+    ]
+  });
 
   spark("k-served", [286, 301, 274, 262, 330, 348, 322, 361, 379, 366, 388, 412], "var(--s1)");
   spark("k-engaged", [5180, 5240, 5190, 5090, 5410, 5520, 5480, 5610, 5680, 5720, 5924, 5740], "var(--s1)");

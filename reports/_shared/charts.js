@@ -116,6 +116,24 @@
       var y = i * rh + 3, bh = rh - 8;
       s.appendChild(txt(r.label, 0, y + bh - 1, { fill: "var(--ink-2)", fs: 8.5 }));
       s.appendChild(el("rect", { x: lw, y: y, width: aw, height: bh, rx: 2, fill: "var(--track)" }));
+      /* A row with segments is a stacked bar: the parts share the row's total and are
+         drawn end to end. Without segments the row is a single bar, as before. */
+      if (r.segments) {
+        var acc = 0;
+        r.segments.forEach(function (sg) {
+          var sw = Math.max(aw * (sg.value / max), 1);
+          var sb = el("rect", { x: lw + acc, y: y, width: sw, height: bh, rx: 2, fill: sg.color });
+          tip(sb, r.label + " · " + sg.name + ": " + sg.value.toLocaleString());
+          s.appendChild(sb);
+          if (sw > 22) {
+            s.appendChild(txt(sg.value.toLocaleString(), lw + acc + sw - 4, y + bh - 2,
+              { anchor: "end", fill: "#ffffff", fs: 8, w: 650 }));
+          }
+          acc += sw;
+        });
+        s.appendChild(txt(r.fmt || r.value, W, y + bh - 1, { anchor: "end", fill: "var(--ink-1)", fs: 8.5, w: 650 }));
+        return;
+      }
       var b = el("rect", { x: lw, y: y, width: Math.max(aw * (r.value / max), 1), height: bh, rx: 2, fill: r.color || "var(--s1)" });
       tip(b, r.label + ": " + (r.fmt || r.value)); s.appendChild(b);
       if (r.target) {
@@ -256,6 +274,7 @@
     "Rolling 12 months": { head: "Period", opts: ["Rolling 12 months", "Rolling 6 months", "Rolling 3 months", "Year to date", "Calendar 2025"] },
     /* visual-level filters */
     "Aug 2026": { head: "Month", opts: MONTHS },
+    "All time": { head: "Period", opts: ["All time", "Aug 2026", "Rolling 12 months"] },
     "Channel: all": { head: "Referral channel", opts: CHANNELS },
     "Acuity: all": { head: "Acuity", opts: ACUITY },
     "Acuity: severe": { head: "Acuity", opts: ACUITY },

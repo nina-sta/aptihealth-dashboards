@@ -184,6 +184,30 @@
   </div>
 
   <div class="page on" id="pg-patient">
+    <div class="v c7 h3r">
+      <div class="vh"><h4>Acquisition and access funnel</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: funnel. Both chips are visual-level slicers — the month chip is what makes this a monthly funnel rather than a period total.">ⓘ</button></div>
+      </div>
+      <p class="info">Stages in red have a named drop reason on hover. A stage without one is a build gap, not a display choice.</p>
+      <div class="body"><div class="ch" id="c-funnel"></div></div>
+    </div>
+
+    <div class="v c5 h3r">
+      <div class="vh"><h4>Where members drop out — inactivation by journey stage</h4>
+        <div class="vf"><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: 100% stacked column chart. Stage is derived from the furthest milestone reached before the inactivation date — registered only, assessed, DI attended, in care, or completed 90-day care.">ⓘ</button></div>
+      </div>
+      <p class="info">The other half of the funnel: that one ends at the first session, this one is what happens after it. Only the last band is a good outcome; the first two are acquisition waste.</p>
+      <div class="body"><div class="ch" id="c-inact-stage"></div>
+        <div class="lg">
+          <span><i style="background:var(--s5)"></i>Registered, never assessed</span>
+          <span><i style="background:var(--s2)"></i>A5 done, no DI</span>
+          <span><i style="background:var(--s4)"></i>DI attended, no first session</span>
+          <span><i style="background:var(--s1)"></i>In care, left early</span>
+          <span><i style="background:var(--s3)"></i>Completed 90-day care</span>
+        </div>
+      </div>
+    </div>
+
     <div class="v kpi c2 h1r">
       <div class="vh"><h4>Members served</h4>
         <div class="vf"><button class="i" data-tip="Power BI: card + line. All-time distinct members with a completed DI who have ever been a CDPHP member — the payer slicer sets the &quot;ever&quot; qualifier, it does not filter to current coverage. The line is new members per month.">ⓘ</button></div>
@@ -206,6 +230,16 @@
       </div>
     </div>
 
+    <div class="v c8 h2r">
+      <div class="vh"><h4>Days from registration to inactivation</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Stage: all</span><button class="i" data-tip="Power BI: clustered column chart used as a histogram (bucketed days as the axis). Buckets come from a DAX calculated column, not from the visual — Power BI cannot bin a measure.">ⓘ</button></div>
+      </div>
+      <p class="info">The 0–7 day spike is people who never really started. The 90–120 band is expected — that's the end of the 90-day programme.</p>
+      <div class="body"><div class="ch" id="c-inact-days"></div>
+        <div class="gapnote">⚠ Needs an inactivation reason field to separate lapsed from clinically discharged.</div>
+      </div>
+    </div>
+
     <div class="v kpi c2 h1r">
       <div class="vh"><h4>Routine referrals</h4>
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: card + line. Routine referrals created in the month on the chip — every referral not flagged urgent. The line is the same count across the previous twelve months.">&#9432;</button></div>
@@ -217,15 +251,7 @@
       </div>
     </div>
 
-    <div class="v c6 h2r">
-      <div class="vh"><h4>Acquisition and access funnel</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: funnel. Both chips are visual-level slicers — the month chip is what makes this a monthly funnel rather than a period total.">ⓘ</button></div>
-      </div>
-      <p class="info">Stages in red have a named drop reason on hover. A stage without one is a build gap, not a display choice.</p>
-      <div class="body"><div class="ch" id="c-funnel"></div></div>
-    </div>
-
-    <div class="v c7 h2r">
+    <div class="v c5 h2r">
       <div class="vh"><h4>Access by referral channel</h4>
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Put month on columns for a trended view.">ⓘ</button></div>
       </div>
@@ -249,7 +275,22 @@
       <div class="body" id="u-mx"></div>
     </div>
 
-    <div class="v c5 h2r">
+    <div class="v c5 h3r">
+      <div class="vh"><h4>Acuity 4 by referral channel and admission source</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Exists to test the claim that acuity 4 is mostly hospital and ED discharges. Admission source is the referrer's stated origin, not a derived field.">&#9432;</button></div>
+      </div>
+      <p class="info">On this month the claim only half holds: inpatient and ED together are under half of acuity 4, and self sign-up carries more high-acuity volume than expected.</p>
+      <div class="body" id="x-ac4mx"></div>
+    </div>
+
+    <div class="v c12 h2r">
+      <div class="vh"><h4>Self sign-up by how they heard about us</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Source is the member's own answer at registration, so it is self-reported and optional - the unanswered row is kept visible rather than hidden.">&#9432;</button></div>
+      </div>
+      <div class="body" id="x-selfsrc"></div>
+    </div>
+
+    <div class="v c7 h2r">
       <div class="vh"><h4>ACP consent to touchpoints met</h4>
         <div class="vf"><span class="wf">Jul 2026</span><button class="i" data-tip="Power BI: funnel. Three stages of the advanced care planning path: members eligible, members who gave consent, and members whose touchpoints met the contractual minimum. Each stage is a member count, so one funnel rather than three cards.">&#9432;</button></div>
       </div>
@@ -259,33 +300,7 @@
       </div>
     </div>
 
-    <div class="v c7 h3r">
-      <div class="vh"><h4>Where members drop out — inactivation by journey stage</h4>
-        <div class="vf"><span class="wf">Channel: all</span><button class="i" data-tip="Power BI: 100% stacked column chart. Stage is derived from the furthest milestone reached before the inactivation date — registered only, assessed, DI attended, in care, or completed 90-day care.">ⓘ</button></div>
-      </div>
-      <p class="info">Answers whether members leave right after signing up or after finishing treatment. Only the last band is a good outcome; the first two are acquisition waste.</p>
-      <div class="body"><div class="ch" id="c-inact-stage"></div>
-        <div class="lg">
-          <span><i style="background:var(--s5)"></i>Registered, never assessed</span>
-          <span><i style="background:var(--s2)"></i>A5 done, no DI</span>
-          <span><i style="background:var(--s4)"></i>DI attended, no first session</span>
-          <span><i style="background:var(--s1)"></i>In care, left early</span>
-          <span><i style="background:var(--s3)"></i>Completed 90-day care</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="v c5 h3r">
-      <div class="vh"><h4>Days from registration to inactivation</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Stage: all</span><button class="i" data-tip="Power BI: clustered column chart used as a histogram (bucketed days as the axis). Buckets come from a DAX calculated column, not from the visual — Power BI cannot bin a measure.">ⓘ</button></div>
-      </div>
-      <p class="info">The 0–7 day spike is people who never really started. The 90–120 band is expected — that's the end of the 90-day programme.</p>
-      <div class="body"><div class="ch" id="c-inact-days"></div>
-        <div class="gapnote">⚠ Needs an inactivation reason field to separate lapsed from clinically discharged.</div>
-      </div>
-    </div>
-
-    <div class="v c4 h2r">
+    <div class="v c5 h2r">
       <div class="vh"><h4>Diagnostic interviews &mdash; first-time vs repeat</h4>
         <div class="vf"><button class="i" data-tip="Power BI: stacked column chart. Both series are DI counts, so one axis. Repeat means a member who had a completed DI before this one.">&#9432;</button></div>
       </div>
@@ -294,22 +309,6 @@
         <div class="gapnote">&#9888; &ldquo;Repeat&rdquo; is not defined on our side. The only written rules are the annual re-assessment for returning members and A5R every 90 days.</div>
       </div>
     </div>
-
-    <div class="v c8 h3r">
-      <div class="vh"><h4>Acuity 4 by referral channel and admission source</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Exists to test the claim that acuity 4 is mostly hospital and ED discharges. Admission source is the referrer's stated origin, not a derived field.">&#9432;</button></div>
-      </div>
-      <p class="info">On this month the claim only half holds: inpatient and ED together are under half of acuity 4, and self sign-up carries more high-acuity volume than expected.</p>
-      <div class="body" id="x-ac4mx"></div>
-    </div>
-
-    <div class="v c12 h3r">
-      <div class="vh"><h4>Self sign-up by how they heard about us</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with data bars and conditional formatting. Source is the member's own answer at registration, so it is self-reported and optional - the unanswered row is kept visible rather than hidden.">&#9432;</button></div>
-      </div>
-      <div class="body" id="x-selfsrc"></div>
-    </div>
-
   </div>
 
   <div class="ptabs" role="group" aria-label="Reports">

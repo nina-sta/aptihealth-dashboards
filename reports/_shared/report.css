@@ -9,10 +9,17 @@
   }
 
   body { margin: 0; background: #ffffff; }
+  /* The page strip is sticky to the bottom of .root, so on a short page — MVP's
+     empty pages, a narrow window — it would sit halfway up the screen. Making
+     .root fill the viewport as a flex column and pushing .ptabs down with an
+     auto top margin keeps the strip on the bottom edge whether the page
+     scrolls or not. */
   .root {
     font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
     background: var(--plane); color: var(--ink-1);
     padding: 14px 14px 8px; line-height: 1.35;
+    box-sizing: border-box; min-height: 100vh;
+    display: flex; flex-direction: column;
   }
 
   .rpthead { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
@@ -157,8 +164,8 @@
      way between reports. */
   .ptabs {
     display: flex; flex-wrap: wrap; gap: 2px; row-gap: 4px;
-    margin-top: 10px; border-top: 1px solid var(--border);
-    padding-top: 7px; align-items: center;
+    margin-top: auto; padding-top: 10px; border-top: 1px solid var(--border);
+    align-items: center;
     position: sticky; bottom: 0; z-index: 60;
     background: var(--plane); padding-bottom: 7px;
     box-shadow: 0 -6px 12px -8px rgba(11, 11, 11, 0.35);

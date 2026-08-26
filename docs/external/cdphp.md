@@ -22,6 +22,19 @@ visual. Every row currently reads `_unassigned_`; assigning them is the next wor
 and is the point of this document.
 
 
+### Billing And Eligibility
+
+The invoice and what gates it. Read this section first: everything below it describes care we
+delivered, and this is the part that decides whether we are paid for it.
+
+| Visual | Business question | Owner | Business impact | Status |
+| --- | --- | --- | --- | --- |
+| Patients by eligibility and engagement | Of the patients we treated, how many can we actually bill? | _unassigned_ | _to agree_ | Built |
+| Billed panel — how members join it | Is the panel growing on new members, or on the same people coming back? | _unassigned_ | _to agree_ | Built |
+| Current month invoice — sent on the 15th | What exactly are we invoicing this month? | _unassigned_ | _to agree_ | Built |
+| ACP consent response | How many patients have consented to what we share with the payer? | _unassigned_ | _to agree_ | Blocked — The stored response values are not confirmed. This assumes consented / declined / no response; a fourth value for "request never sent" would change the denominator |
+| Monthly invoice — billed lines by month | Can we show the payer a member's billing history when they query a line? | _unassigned_ | _to agree_ | Built |
+
 ### Population And Engagement
 
 | Visual | Business question | Owner | Business impact | Status |
@@ -96,6 +109,7 @@ and is the point of this document.
 
 ## Open items
 
+- **ACP consent response** — The stored response values are not confirmed. This assumes consented / declined / no response; a fourth value for “request never sent” would change the denominator.
 - **Members in care by tenure** — Blocked: needs an episode-of-care definition — days in care currently run through inactivation.
 - **Payer contracts and credentialing** — Confirm whether “licensed” in the ask means payer credentialing or state licensure — they are different counts.
 - **Post-discharge members reached** — Denominator depends on how we learn about a discharge — payer feed, referrer notification or member self-report. Each gives a different population.

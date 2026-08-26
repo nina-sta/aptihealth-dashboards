@@ -127,19 +127,35 @@
     host.appendChild(s);
   }
 
+  /* Centred, tapering funnel: every stage is a bar centred on the same axis and
+     scaled against the first stage, with the drop between stages drawn as the
+     sloping shoulder. Values and stage-to-stage conversion sit in the right gutter
+     so they stay aligned however narrow the bars get. */
   function funnel(id, rows) {
     var host = document.getElementById(id); if (!host) return;
-    var rh = 17, W = Math.max(host.clientWidth || 400, 260), H = rows.length * rh + 4, s = svg(W, H);
-    var lw = 126, max = rows[0].value;
+    var rh = 20, bh = 15, W = Math.max(host.clientWidth || 400, 260);
+    var H = rows.length * rh + 4, s = svg(W, H);
+    var lw = 126, aw = W - lw - 74, cx = lw + aw / 2, max = rows[0].value;
+    var wid = rows.map(function (r) { return Math.max(aw * (r.value / max), 2); });
+
     rows.forEach(function (r, i) {
-      var y = i * rh + 2, bh = rh - 6, aw = W - lw - 74;
-      s.appendChild(txt(r.label, 0, y + bh - 1, { fill: r.leak ? "var(--critical)" : "var(--ink-2)", fs: 8.5 }));
-      s.appendChild(el("rect", { x: lw, y: y, width: aw, height: bh, rx: 2, fill: "var(--track)" }));
-      var b = el("rect", { x: lw, y: y, width: Math.max(aw * (r.value / max), 1), height: bh, rx: 2, fill: "var(--s1)" });
+      var y = i * rh + 2;
+      if (i < rows.length - 1) {
+        var pts = [
+          [cx - wid[i] / 2, y + bh], [cx + wid[i] / 2, y + bh],
+          [cx + wid[i + 1] / 2, y + rh], [cx - wid[i + 1] / 2, y + rh]
+        ];
+        s.appendChild(el("polygon", {
+          points: pts.map(function (q) { return q[0] + "," + q[1]; }).join(" "),
+          fill: "var(--s1)", opacity: 0.22
+        }));
+      }
+      s.appendChild(txt(r.label, 0, y + bh - 4, { fill: r.leak ? "var(--critical)" : "var(--ink-2)", fs: 8.5 }));
+      var b = el("rect", { x: cx - wid[i] / 2, y: y, width: wid[i], height: bh, rx: 2, fill: "var(--s1)" });
       tip(b, r.label + ": " + r.value.toLocaleString() + (r.conv ? " · " + r.conv + " of prior stage" : "") + (r.leakTxt ? " · leak: " + r.leakTxt : ""));
       s.appendChild(b);
-      s.appendChild(txt(r.value.toLocaleString(), W - 34, y + bh - 1, { anchor: "end", fill: "var(--ink-1)", fs: 8.5, w: 650 }));
-      s.appendChild(txt(r.conv || "—", W, y + bh - 1, { anchor: "end", fs: 8.5 }));
+      s.appendChild(txt(r.value.toLocaleString(), W - 34, y + bh - 4, { anchor: "end", fill: "var(--ink-1)", fs: 8.5, w: 650 }));
+      s.appendChild(txt(r.conv || "—", W, y + bh - 4, { anchor: "end", fs: 8.5 }));
     });
     host.appendChild(s);
   }

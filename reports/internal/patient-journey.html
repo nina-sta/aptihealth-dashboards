@@ -272,7 +272,7 @@
       </div>
     </div>
 
-    <div class="v c7 h2r">
+    <div class="v c4 h2r">
       <div class="vh"><h4>Members meeting ACP touchpoint minimum</h4>
         <div class="vf"><span class="wf">Acuity: severe</span><button class="i" data-tip="Power BI: clustered column with a constant line at the contractual minimum. The acuity chip switches which minimum applies — Severe 4+, High 2, Medium 1, Base 3 documented attempts.">ⓘ</button></div>
       </div>
@@ -280,6 +280,16 @@
     </div>
 
     <div class="v c5 h2r">
+      <div class="vh"><h4>ACP consent to touchpoints met</h4>
+        <div class="vf"><span class="wf">Jul 2026</span><button class="i" data-tip="Power BI: funnel. Three stages of the advanced care planning path: members eligible, members who gave consent, and members whose touchpoints met the contractual minimum. Each stage is a member count, so one funnel rather than three cards.">&#9432;</button></div>
+      </div>
+      <p class="info">The first two stages are a standing state; the third is read over the last full month, because a month still running cannot have met a monthly minimum.</p>
+      <div class="body"><div class="ch" id="c-acp-funnel"></div>
+        <div class="gapnote">&#9888; Confirm where ACP eligibility and consent are stored. The touchpoint count is built today; neither flag has a confirmed field.</div>
+      </div>
+    </div>
+
+    <div class="v c3 h2r">
       <div class="vh"><h4>Lapse and exit</h4>
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: multi-row card with a month-over-month delta field. Each row drills through to the member list.">ⓘ</button></div>
       </div>
@@ -676,19 +686,35 @@
     host.appendChild(s);
   }
 
+  /* Centred, tapering funnel: every stage is a bar centred on the same axis and
+     scaled against the first stage, with the drop between stages drawn as the
+     sloping shoulder. Values and stage-to-stage conversion sit in the right gutter
+     so they stay aligned however narrow the bars get. */
   function funnel(id, rows) {
     var host = document.getElementById(id); if (!host) return;
-    var rh = 17, W = Math.max(host.clientWidth || 400, 260), H = rows.length * rh + 4, s = svg(W, H);
-    var lw = 126, max = rows[0].value;
+    var rh = 20, bh = 15, W = Math.max(host.clientWidth || 400, 260);
+    var H = rows.length * rh + 4, s = svg(W, H);
+    var lw = 126, aw = W - lw - 74, cx = lw + aw / 2, max = rows[0].value;
+    var wid = rows.map(function (r) { return Math.max(aw * (r.value / max), 2); });
+
     rows.forEach(function (r, i) {
-      var y = i * rh + 2, bh = rh - 6, aw = W - lw - 74;
-      s.appendChild(txt(r.label, 0, y + bh - 1, { fill: r.leak ? "var(--critical)" : "var(--ink-2)", fs: 8.5 }));
-      s.appendChild(el("rect", { x: lw, y: y, width: aw, height: bh, rx: 2, fill: "var(--track)" }));
-      var b = el("rect", { x: lw, y: y, width: Math.max(aw * (r.value / max), 1), height: bh, rx: 2, fill: "var(--s1)" });
+      var y = i * rh + 2;
+      if (i < rows.length - 1) {
+        var pts = [
+          [cx - wid[i] / 2, y + bh], [cx + wid[i] / 2, y + bh],
+          [cx + wid[i + 1] / 2, y + rh], [cx - wid[i + 1] / 2, y + rh]
+        ];
+        s.appendChild(el("polygon", {
+          points: pts.map(function (q) { return q[0] + "," + q[1]; }).join(" "),
+          fill: "var(--s1)", opacity: 0.22
+        }));
+      }
+      s.appendChild(txt(r.label, 0, y + bh - 4, { fill: r.leak ? "var(--critical)" : "var(--ink-2)", fs: 8.5 }));
+      var b = el("rect", { x: cx - wid[i] / 2, y: y, width: wid[i], height: bh, rx: 2, fill: "var(--s1)" });
       tip(b, r.label + ": " + r.value.toLocaleString() + (r.conv ? " · " + r.conv + " of prior stage" : "") + (r.leakTxt ? " · leak: " + r.leakTxt : ""));
       s.appendChild(b);
-      s.appendChild(txt(r.value.toLocaleString(), W - 34, y + bh - 1, { anchor: "end", fill: "var(--ink-1)", fs: 8.5, w: 650 }));
-      s.appendChild(txt(r.conv || "—", W, y + bh - 1, { anchor: "end", fs: 8.5 }));
+      s.appendChild(txt(r.value.toLocaleString(), W - 34, y + bh - 4, { anchor: "end", fill: "var(--ink-1)", fs: 8.5, w: 650 }));
+      s.appendChild(txt(r.conv || "—", W, y + bh - 4, { anchor: "end", fs: 8.5 }));
     });
     host.appendChild(s);
   }
@@ -960,6 +986,12 @@ APTI.render(function () {
     series: [{ name: "% meeting minimum", color: "var(--s1)", values: [72, 74, 71, 69, 76, 78, 77, 79, 81, 80, 83, 85] }],
     fmt: function (v) { return Math.round(v) + "%"; }
   });
+
+  funnel("c-acp-funnel", [
+    { label: "ACP eligible", value: 2140, conv: "—" },
+    { label: "ACP consent given", value: 1463, conv: "68%" },
+    { label: "Touchpoint minimum met", value: 1109, conv: "76%" }
+  ]);
 
   /* NEW — inactivation by journey stage */
   columns("c-inact-stage", {

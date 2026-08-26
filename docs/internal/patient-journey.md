@@ -35,6 +35,7 @@ and is the point of this document.
 | Urgent referrals — time to care by reason ⬥ | Which urgent reasons wait longest? | _unassigned_ | _to agree_ | Built |
 | Routine referrals by requested service | What are routine referrals asking for? | _unassigned_ | _to agree_ | Built |
 | Members meeting ACP touchpoint minimum | Are we hitting the contractual touchpoint minimum? | _unassigned_ | _to agree_ | Built |
+| ACP consent to touchpoints met | Where does the ACP path lose people — eligibility, consent, or the touchpoints themselves? | _unassigned_ | _to agree_ | Blocked — Confirm where ACP eligibility and consent are stored. The touchpoint count is built today; neither flag has a confirmed field |
 | Lapse and exit | Who is going quiet or leaving? | _unassigned_ | _to agree_ | Built |
 | Where members drop out — inactivation by journey stage ⬥ | Do people leave before care starts or after it finishes? | _unassigned_ | _to agree_ | Built |
 | Days from registration to inactivation ⬥ | How long do people last before going inactive? | _unassigned_ | _to agree_ | Blocked — Needs an inactivation reason field to separate lapsed from clinically discharged |
@@ -93,6 +94,7 @@ and is the point of this document.
 
 ## Open items
 
+- **ACP consent to touchpoints met** — Confirm where ACP eligibility and consent are stored. The touchpoint count is built today; neither flag has a confirmed field.
 - **Days from registration to inactivation** — Needs an inactivation reason field to separate lapsed from clinically discharged.
 - **Payer contracts and credentialing** — Confirm whether “licensed” in the ask means payer credentialing or state licensure — they are different counts.
 - **Adolescent DIs booked outside the age range** — Assumes the booking stores the provider age range as configured at booking time, not as configured today.

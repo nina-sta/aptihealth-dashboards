@@ -8,6 +8,7 @@ a single deliverable: **change one, change the other in the same commit.**
 | [Patient journey](internal/patient-journey.md) | [`reports/internal/patient-journey.html`](../reports/internal/patient-journey.html) | Internal — leadership, product, data |
 | [Provider journey](internal/provider-journey.md) | [`reports/internal/provider-journey.html`](../reports/internal/provider-journey.html) | Internal — clinical ops, leadership, data |
 | [CDPHP payer report](external/cdphp.md) | [`reports/external/cdphp.html`](../reports/external/cdphp.html) | External — the payer |
+| [MVP payer report](external/mvp.md) | [`reports/external/mvp.html`](../reports/external/mvp.html) | External — the payer |
 
 ## Why these documents exist
 

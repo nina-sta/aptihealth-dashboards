@@ -1444,16 +1444,21 @@
   /* Shared mode only: somebody else's comment has to turn up without a reload, or the
      panel is a snapshot of whenever the tab was opened. Cheap poll, skipped while a
      popover is open — redrawing under somebody mid-sentence loses what they typed. */
+  function pull() {
+    if (document.hidden || cpop.classList.contains("on")) return;
+    STORE.list(function (all) {
+      var next = JSON.stringify(all || []);
+      if (next === JSON.stringify(CMT)) return;
+      CMT = all || [];
+      refresh();
+    });
+  }
+
   function poll() {
-    setInterval(function () {
-      if (document.hidden || cpop.classList.contains("on")) return;
-      STORE.list(function (all) {
-        var next = JSON.stringify(all || []);
-        if (next === JSON.stringify(CMT)) return;
-        CMT = all || [];
-        refresh();
-      });
-    }, 15000);
+    setInterval(pull, 15000);
+    /* A background tab does not poll, so coming back to one would leave the reader
+       looking at whatever was true when they left it. Catch up the moment they return. */
+    document.addEventListener("visibilitychange", pull);
   }
 
   function openPanel(on) {

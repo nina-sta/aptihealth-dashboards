@@ -33,11 +33,38 @@ and is the point of this document.
 | Access by referral channel | Which channel converts, and how fast? | _unassigned_ | _to agree_ | Built |
 | Median days to first appointment — urgent vs routine | How long is the wait, and does urgency change it? | _unassigned_ | _to agree_ | Built |
 | Onboarding completion rate | How many people who register actually finish onboarding? | _unassigned_ | _to agree_ | Built |
-| First-appointment no-show | How often is a booked first appointment wasted? | _unassigned_ | _to agree_ | Built |
+| First-appointment no-show and late cancel | How often is a booked first appointment wasted, and is it a no-show or a late cancel? | _unassigned_ | _to agree_ | Built |
+| Referral to first appointment conversion rate | Of every referral that arrives, how many actually reach care? | _unassigned_ | _to agree_ | Built |
+| Billable engaged members | How much of the care we deliver can we actually invoice? | _unassigned_ | _to agree_ | Blocked — “Billable” is not written down. Confirm the rule is eligibility good on the date of service, note signed, and co-signed where required, and whether a note signed late still counts. It also inherits the engaged-definition argument |
+| Active members using between-session digital tools | Do members do anything for themselves between appointments? | _unassigned_ | _to agree_ | Blocked — Needs a stored tool-use event. Confirm one exists, which tools count, and whether opening a tool counts or only finishing it |
 | Urgent referrals — time to care by reason | Which urgent reasons wait longest? | _unassigned_ | _to agree_ | Built |
 | ACP consent to touchpoints met | Where does the ACP path lose people — eligibility, consent, or the touchpoints themselves? | _unassigned_ | _to agree_ | Built |
 | Diagnostic interviews — first-time vs repeat | How much intake capacity goes to people we have already assessed? | _unassigned_ | _to agree_ | Built |
 
+## OKR metrics
+
+The six measures the business is currently held to. They carry an **OKR** marker in the tile
+header, and `tools/sync.py` fails if a marked tile is missing from this list or a listed metric
+loses its marker.
+
+This is a different marker from `CDPHP asked`, deliberately. That one obliges the CDPHP payer
+report to carry the visual and `sync.py` enforces it. OKR obliges nothing — it only records that
+the business is measured on the number, so an OKR metric can live in an internal report and
+never reach a payer.
+
+- Referral to first appointment conversion rate
+- Onboarding completion rate
+- Median days to first appointment — urgent vs routine
+- First-appointment no-show and late cancel
+- Billable engaged members
+- Active members using between-session digital tools
+
+Two of the six are **Blocked**, which is worth saying out loud: the business is measured on
+`Billable engaged members` and on `Active members using between-session digital tools`, and
+neither has an agreed definition. See Open items.
+
 ## Open items
 
+- **Billable engaged members** — “Billable” is not written down anywhere. Confirm the rule is eligibility good on the date of service, note signed, and co-signed where required, and whether a note signed late still counts.
+- **Active members using between-session digital tools** — Needs a stored tool-use event. Confirm one exists, which tools count, and whether opening a tool counts or only finishing it — the three give very different numbers. Nobody has tested tool use against outcomes either, so the target is a guess.
 - **Days from registration to inactivation** — Needs an inactivation reason field to separate lapsed from clinically discharged.

@@ -16,6 +16,10 @@ It enforces four things:
    This is the docs-and-mock-ups-agree rule. Add a visual, add a row, in the same commit.
 4. Every visual marked "CDPHP asked" in an internal report also appears in the CDPHP
    payer report, because that report is meant to be the full answer to their ask.
+5. Every visual marked OKR is listed under "## OKR metrics" in its specification, and every
+   metric listed there carries the marker. The two markers mean different things: "CDPHP asked"
+   obliges the payer report to carry it, OKR obliges nothing and only records that the business
+   is measured on it.
 
 The reverse direction is reported but does not fail. The payer report is allowed to keep a
 visual after it leaves every internal report: we decided on 26 Aug 2026 that what the payer
@@ -69,6 +73,28 @@ def visuals(report_src):
         title = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", m.group(1)))).strip()
         found[title] = 'class="ask"' in chunk
     return found
+
+
+def okr_visuals(report_src):
+    """Tile headings carrying the OKR marker."""
+    page = report_src[report_src.index('<div class="page on"'):report_src.index('<div class="ptabs"')]
+    found = set()
+    for chunk in re.split(r'(?m)^(?=    <div class="v )', page):
+        if 'class="okr"' not in chunk:
+            continue
+        m = re.search(r"<h4>(.*?)</h4>", chunk, re.S)
+        if m:
+            found.add(re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", m.group(1)))).strip())
+    return found
+
+
+def okr_rows(doc_src):
+    """Bullets under the specification's "## OKR metrics" heading."""
+    if "## OKR metrics" not in doc_src:
+        return set()
+    tail = doc_src.split("## OKR metrics", 1)[1]
+    tail = re.split(r"(?m)^## ", tail)[0]
+    return set(m.group(1).strip() for m in re.finditer(r"(?m)^- (.+)$", tail))
 
 
 def doc_rows(doc_src):
@@ -133,6 +159,14 @@ def main():
             problems.append("%s: visual %r has no row in %s" % (rel, missing, doc))
         for extra in sorted(rows - set(vis)):
             problems.append("%s: %r is documented but not in the report" % (doc, extra))
+
+        marked, listed = okr_visuals(src), okr_rows(read(doc))
+        for missing in sorted(marked - listed):
+            problems.append("%s: %r is marked OKR but is not listed under '## OKR metrics' in %s"
+                            % (rel, missing, doc))
+        for extra in sorted(listed - marked):
+            problems.append("%s: %r is listed as an OKR but carries no marker in %s"
+                            % (doc, extra, rel))
 
         if rel not in EXTERNAL:
             for title, asked in sorted(vis.items()):

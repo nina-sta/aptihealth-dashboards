@@ -158,12 +158,14 @@ These were decided deliberately. Do not "improve" them without being asked.
 6. **The ⓘ tooltip names the native Power BI visual** for that tile, plus the reason it was
    chosen. Keep it accurate; it is what the data team builds from.
 7. **No tables in prose.** Matrix visuals are fine — those are charts.
-8. **No report currently marks a visual as payer-asked.** The convention is a
-   `<span class="ask">CDPHP asked</span>` in the tile header, and all three reports dropped it
-   on 26 Aug 2026 — the two internal reports because each reads as purely internal, the CDPHP
-   report because every tile in it answers the ask, so marking all of them said nothing. The
-   `sync.py` check that every marked visual reaches the CDPHP report therefore has nothing
-   left to check — keep it, and the `.ask` style, for whichever internal report next needs it.
+8. **Two header markers, meaning different things.** `<span class="okr">OKR</span>` says the
+   business is held to that number; the patient journey carries six. It obliges nothing beyond
+   being listed under `## OKR metrics` in the spec, which `sync.py` enforces in both directions.
+   `<span class="ask">CDPHP asked</span>` says the payer requested it, and obliges the CDPHP
+   report to carry it — also a `sync.py` check. No report marks anything payer-asked today: all
+   three dropped it on 26 Aug 2026, the internal ones because each reads as purely internal and
+   CDPHP because every tile in it answers the ask, so marking all of them said nothing. Keep the
+   check and the `.ask` style for whichever internal report next needs one.
 
 ## Palette (validated, do not substitute by eye)
 

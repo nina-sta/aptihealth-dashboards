@@ -49,7 +49,43 @@ rows cannot have the same one.
 
 ## Page — CDPHP Patient Acquisition
 
-Reserved, no visuals. Nothing agreed yet.
+Every widget from the Sisense **CDPHP Patient Acquisition** report of 20 Aug 2026, in five
+bands: Referral volume, Engagement and delivery, Acuity mix, Time between milestones,
+Experience. The source is filtered to `primary_payor` CDPHP, CDPHP Medicaid and CDPHP Medicare
+over the last four months — that scope is the page, not a slicer the reader moves.
+
+**Most of this page is weekly, not monthly.** Acquisition is managed week to week, so the week
+is the honest grain and this is the second deliberate departure from the every-measure-is-monthly
+rule, after the assessment-period trends on Clinical Outcomes. Where the source carries both
+grains — referral volume — so does the page, and the pair is the point: the weekly chart is for
+spotting a bad week, the monthly one for saying whether volume moved.
+
+Three things worth writing down:
+
+- **"Started with" and "ever had" are different populations.** Referral volume counts members
+  whose payor *at referral* was CDPHP. Session counts keep a member after their coverage
+  changes. The second is larger and the two must never be divided by each other.
+- **Part-weeks are shown, not hidden.** The last bar on the engaged-count, session-count and
+  weekly-acuity charts is an incomplete week. Dropping it would be tidier; it is also how a
+  part-week becomes a story about a collapse.
+- **The doughnut became bars.** The source shows the acuity snapshot as a doughnut. Four ordinal
+  levels compared by size is what bars are for, and the counts and shares both travel on the
+  bars, so nothing is lost. Noted here because the data team builds from the tooltip.
+
+| Visual | Business question | Owner | Business impact | Status |
+| --- | --- | --- | --- | --- |
+| Referrals who started with CDPHP insurance (referral week) | Is referral volume moving, and did any single week go wrong? | _unassigned_ | _to agree_ | Built |
+| Referrals who started with CDPHP insurance (referral month) | Is referral volume actually moving once the weekly noise is out? | _unassigned_ | _to agree_ | Built |
+| Referrals by aptihealth care navigators | How much of acquisition comes from our own navigators rather than outside referrers? | _unassigned_ | _to agree_ | Built |
+| Engaged CDPHP member count | Is the engaged panel growing or shrinking week to week? | _unassigned_ | _to agree_ | Blocked — Inherits the engaged definition argument: 60-day billing lookback against strictly in-month. The tile cannot be signed off before that is settled |
+| Session counts for members who ever had CDPHP insurance | How much care are we actually delivering, and of what kind? | _unassigned_ | _to agree_ | Built |
+| Acuity distribution of engaged members, last 4 weeks | How sick is the panel right now? | _unassigned_ | _to agree_ | Built |
+| Acuity distribution of engaged members by week | Is the panel getting sicker, or just smaller? | _unassigned_ | _to agree_ | Built |
+| Referral to registration | How fast does a referral become a registered member? | _unassigned_ | _to agree_ | Built |
+| Registration to diagnostic interview | How long does a member wait for their assessment? | _unassigned_ | _to agree_ | Built |
+| Diagnostic interview to first session | How long does a member wait for care to actually start? | _unassigned_ | _to agree_ | Built |
+| Diagnostic interview to first session by acuity | Do the sickest members wait least? | _unassigned_ | _to agree_ | Blocked — The wait does not order by acuity, and acuity 2 waits longest. Either matching does not use acuity for scheduling, or the acuity stored at booking is not the one shown here. Confirm which before this goes to the payer |
+| Patient satisfaction scores, last week’s sessions | What do members say about the sessions they had? | _unassigned_ | _to agree_ | Built |
 
 ## Page — CDPHP CN referrals
 
@@ -212,6 +248,8 @@ fast, how much care they got, and whether the documentation behind it holds up.
 
 Across every page.
 
+- **Engaged CDPHP member count** — Inherits the engaged definition argument: 60-day billing lookback against strictly in-month.
+- **Diagnostic interview to first session by acuity** — The wait does not order by acuity and acuity 2 waits longest. Either matching does not use acuity for scheduling, or the acuity stored at booking is not the one shown here.
 - **Members with a 5-point PHQ-9 reduction by Day 0 severity** — The measure is floor-limited: a Day 0 score under 5 cannot fall 5 points, so None-Minimal reads 0% by construction. Agree whether that band is excluded from the denominator or shown at zero with the caveat.
 - **ACP Consent Response - CDPHP Patients** — PLATFORM is the only consent type seen in the source. Confirm whether others exist, and whether Consent Response is strictly boolean or has an unanswered state.
 - **Current Month Invoice (send on the 15th)** — The values `case_mg_ineligible_reason` can hold are not confirmed. The column is in the export; its domain is not written down anywhere.

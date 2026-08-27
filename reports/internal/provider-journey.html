@@ -812,18 +812,23 @@
      for the duration of the draw and then hidden again. A hidden page measures
      as zero width and the charts render at a fallback size. Do not remove this. */
   function render(draw) {
-    /* One frame of delay before anything is measured. This script runs while the document
+    /* Deferred by one task before anything is measured. This script runs while the document
        is still being parsed, and at that point nothing has been laid out — host.clientWidth
        reads 0 and every chart silently falls back to the 460px default. That is invisible on
-       a tile three or four columns wide and glaring on a full-width one. */
-    requestAnimationFrame(function () {
+       a tile three or four columns wide and glaring on a full-width one.
+
+       setTimeout rather than requestAnimationFrame: rAF does not fire at all while the
+       document is hidden, so a report opened in a background tab, printed, or captured
+       headlessly would draw nothing whatsoever. A timer fires either way, and layout is
+       available in a hidden document — it is only the animation callback that is suspended. */
+    setTimeout(function () {
       var pages = Array.prototype.slice.call(document.querySelectorAll(".page"));
       pages.forEach(function (p) { p.classList.add("on"); });
       draw();
       REACTIVE.forEach(drawReactive);
       pages.forEach(function (p, i) { p.classList.toggle("on", i === 0); });
       wire();
-    });
+    }, 0);
   }
 
   function wire() {

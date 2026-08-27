@@ -432,7 +432,128 @@
   </div>
 
   <div class="page" id="pg-acq">
-    <div class="band"><span class="t">CDPHP Patient Acquisition</span><span class="d">Reserved. Nothing is agreed for this page yet &mdash; the visuals and their definitions come next.</span><span class="r"></span></div>
+    <div class="band"><span class="t">Referral volume</span><span class="d">How many CDPHP members are arriving, at the two grains the source report uses.</span><span class="r"></span></div>
+
+    <div class="v c8 h3r">
+      <div class="vh"><h4>Referrals who started with CDPHP insurance (referral week)</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart, one series, referral count by week. &ldquo;Started with&rdquo; means the member&rsquo;s primary payor at referral was CDPHP, CDPHP Medicaid or CDPHP Medicare &mdash; not whoever is paying now, which is a different and larger population. Weekly rather than monthly because acquisition is managed weekly; the monthly view sits beside it.">&#9432;</button></div>
+      </div>
+      <p class="info">Eighteen weeks. The week-to-week swing runs 40 to 70 on a mean near 57, so a single week moving is noise rather than a trend.</p>
+      <div class="body"><div class="ch" id="a-refwk"></div></div>
+    </div>
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Referrals who started with CDPHP insurance (referral month)</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart, one series, the same measure rolled to the month. The weekly view is for spotting a bad week; this one is for saying whether volume is actually moving. Both are in the source report and both are here for that reason.">&#9432;</button></div>
+      </div>
+      <p class="info">Flat across four months. The weekly chart&rsquo;s spikes disappear entirely at this grain.</p>
+      <div class="body"><div class="ch" id="a-refmo"></div></div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Referrals by aptihealth care navigators</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart, one series, monthly. Referrals attributed to our own care navigators rather than to an outside referrer, so this is the part of acquisition we control directly. Roughly one referral in seven.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="a-nav"></div></div>
+    </div>
+
+    <div class="band"><span class="t">Engagement and delivery</span><span class="d">What happens to the members who arrive: how many stay engaged and what care they get.</span><span class="r"></span></div>
+
+    <div class="v c8 h3r">
+      <div class="vh"><h4>Engaged CDPHP member count</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart, one series, members engaged as at each week ending. Engaged carries the same definition argument as everywhere else in this report &mdash; 60-day billing lookback against strictly in-month &mdash; and this tile inherits whichever is agreed.">&#9432;</button></div>
+      </div>
+      <p class="info">The last bar is a part-week, not a fall. It is shown because hiding it is how a part-week becomes a story.</p>
+      <div class="body"><div class="ch" id="a-eng"></div></div>
+    </div>
+
+    <div class="v c12 h3r">
+      <div class="vh"><h4>Session counts for members who ever had CDPHP insurance</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart. All three series are session counts, so one axis and the axis maximum comes from the stacked total. &ldquo;Ever had&rdquo; is deliberately wider than &ldquo;started with&rdquo;: it keeps a member in the population after their coverage changes. Diagnostic interviews are a thin band by design &mdash; roughly 30 a week against a thousand therapy sessions &mdash; so read them off the tooltip, not the height.">&#9432;</button></div>
+      </div>
+      <p class="info">The last bar is a part-week. Therapy dominates the stack, which is why the DI band is a hairline rather than a shape.</p>
+      <div class="body"><div class="ch" id="a-sess"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Med management sessions</span>
+          <span><i style="background:var(--s2)"></i>Therapy sessions</span>
+          <span><i style="background:var(--s3)"></i>DI sessions</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="band"><span class="t">Acuity mix</span><span class="d">How sick the engaged panel is, as a snapshot and week by week.</span><span class="r"></span></div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Acuity distribution of engaged members, last 4 weeks</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: clustered bar chart, not the doughnut the source report uses. Four ordinal acuity levels compared by size is what bars are for; a doughnut makes the reader judge angles and loses the ordering. Counts and shares are both on the bars so nothing is lost in the swap.">&#9432;</button></div>
+      </div>
+      <p class="info">A snapshot over the trailing four weeks, so no trend and a month chip. 968 engaged members.</p>
+      <div class="body"><div class="ch" id="a-acu4"></div></div>
+    </div>
+
+    <div class="v c8 h3r">
+      <div class="vh"><h4>Acuity distribution of engaged members by week</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart, four series, all member counts, so one axis. The same population as the snapshot beside it, week by week. The mix barely moves, which is the point: a change in the total is a change in volume, not in how sick the panel is.">&#9432;</button></div>
+      </div>
+      <p class="info">The last bar is a part-week. The mix holds steady even as the total falls, so the fall is volume rather than case-mix.</p>
+      <div class="body"><div class="ch" id="a-acuwk"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Acuity 1</span><span><i style="background:var(--s2)"></i>Acuity 2</span>
+          <span><i style="background:var(--s3)"></i>Acuity 3</span><span><i style="background:var(--s4)"></i>Acuity 4</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="band"><span class="t">Time between milestones</span><span class="d">How long each step of the path takes, previous month. Mean above, median underneath.</span><span class="r"></span></div>
+
+    <div class="v kpi c4 h1r">
+      <div class="vh"><h4>Referral to registration</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: card. Mean days from referral received to the member completing registration, previous month. A median of zero means most members register the same day the referral lands; the mean sits above it because a tail of members takes weeks.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big">1.0<small> days</small></div>
+        <div class="sub">median 0 days</div>
+      </div>
+    </div>
+
+    <div class="v kpi c4 h1r">
+      <div class="vh"><h4>Registration to diagnostic interview</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: card. Mean days from registration complete to a completed diagnostic interview, previous month. This is the step we control with intake capacity, and the one the adolescent age-coverage tile is upstream of.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big">6.2<small> days</small></div>
+        <div class="sub">median 5 days</div>
+      </div>
+    </div>
+
+    <div class="v kpi c4 h1r">
+      <div class="vh"><h4>Diagnostic interview to first session</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: card. Mean days from a completed diagnostic interview to the first therapy session, previous month. It is twice the registration-to-DI wait, so this &mdash; not intake &mdash; is the longest step on the path to care.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big">13.4<small> days</small></div>
+        <div class="sub">median 13 days</div>
+      </div>
+    </div>
+
+    <div class="v c6 h2r">
+      <div class="vh"><h4>Diagnostic interview to first session by acuity</h4>
+        <div class="vf"><span class="wf">Jul 2026</span><button class="i" data-tip="Power BI: clustered bar chart, in days, previous month. Sorted slowest first. If matching worked on urgency, acuity 4 would be fastest; it is not, and acuity 2 waits longest of all. That is the finding this tile exists for.">&#9432;</button></div>
+      </div>
+      <p class="info">Acuity does not order this. Acuity 2 waits longest and acuity 1 shortest, which is the opposite of what triage should produce.</p>
+      <div class="body"><div class="ch" id="a-di1st"></div></div>
+    </div>
+
+    <div class="band"><span class="t">Experience</span><span class="d">What members say about the sessions they got.</span><span class="r"></span></div>
+
+    <div class="v c6 h2r">
+      <div class="vh"><h4>Patient satisfaction scores, last week&rsquo;s sessions</h4>
+        <div class="vf"><span class="wf">Week ending 8/30/26</span><button class="i" data-tip="Power BI: clustered bar chart, mean score out of 5, one week of sessions. Every bar is the same measure on a different question, so they share one colour &mdash; the source report gives each bar its own, which implies a distinction that is not there. The spread is 0.04 of a point, so the ranking between questions is noise.">&#9432;</button></div>
+      </div>
+      <p class="info">All six answers sit inside 0.04 of a point. Treat the overall score as the measure and the question-level ranking as noise.</p>
+      <div class="body"><div class="ch" id="a-sat"></div></div>
+    </div>
+
   </div>
 
   <div class="page" id="pg-acq-cn">
@@ -1392,18 +1513,23 @@
      for the duration of the draw and then hidden again. A hidden page measures
      as zero width and the charts render at a fallback size. Do not remove this. */
   function render(draw) {
-    /* One frame of delay before anything is measured. This script runs while the document
+    /* Deferred by one task before anything is measured. This script runs while the document
        is still being parsed, and at that point nothing has been laid out — host.clientWidth
        reads 0 and every chart silently falls back to the 460px default. That is invisible on
-       a tile three or four columns wide and glaring on a full-width one. */
-    requestAnimationFrame(function () {
+       a tile three or four columns wide and glaring on a full-width one.
+
+       setTimeout rather than requestAnimationFrame: rAF does not fire at all while the
+       document is hidden, so a report opened in a background tab, printed, or captured
+       headlessly would draw nothing whatsoever. A timer fires either way, and layout is
+       available in a hidden document — it is only the animation callback that is suspended. */
+    setTimeout(function () {
       var pages = Array.prototype.slice.call(document.querySelectorAll(".page"));
       pages.forEach(function (p) { p.classList.add("on"); });
       draw();
       REACTIVE.forEach(drawReactive);
       pages.forEach(function (p, i) { p.classList.toggle("on", i === 0); });
       wire();
-    });
+    }, 0);
   }
 
   function wire() {
@@ -2189,6 +2315,89 @@ APTI.render(function () {
     ],
     { raw: true }
   );
+
+  /* ---------------- PATIENT ACQUISITION ----------------
+     From the Sisense "CDPHP Patient Acquisition" report of 20 Aug 2026. Filtered
+     there to primary_payor CDPHP / CDPHP Medicaid / CDPHP Medicare over the last
+     four months. Most of this page is weekly, not monthly: acquisition is managed
+     week to week, and where the source carries both grains so does the page. */
+  columns("a-refwk", {
+    labels: ["4/02", "4/09", "4/16", "4/23", "4/30", "5/07", "5/14", "5/21", "5/28", "6/04", "6/11", "6/18", "6/25", "7/02", "7/09", "7/16", "7/23", "7/30"],
+    h: 96, pl: 22, xfs: 6.5, unit: " referrals",
+    series: [{ name: "Referrals", color: "var(--s1)", values: [40, 59, 61, 64, 70, 59, 66, 57, 46, 60, 63, 68, 53, 50, 61, 61, 52, 49] }]
+  });
+
+  columns("a-refmo", {
+    labels: ["04/2026", "05/2026", "06/2026", "07/2026"],
+    h: 96, pl: 24, max: 300, unit: " referrals",
+    series: [{ name: "Referrals", color: "var(--s1)", values: [276, 246, 263, 254] }]
+  });
+
+  columns("a-nav", {
+    labels: ["04/2026", "05/2026", "06/2026", "07/2026"],
+    h: 74, pl: 18, max: 45, unit: " referrals",
+    series: [{ name: "Care navigator referrals", color: "var(--s1)", values: [41, 29, 34, 41] }]
+  });
+
+  columns("a-eng", {
+    labels: ["6/28", "7/05", "7/12", "7/19", "7/26", "8/02", "8/09", "8/16", "8/23", "8/30"],
+    h: 96, pl: 24, unit: " members",
+    series: [{ name: "Engaged members", color: "var(--s1)", values: [863, 833, 844, 836, 858, 837, 847, 854, 811, 694] }]
+  });
+
+  columns("a-sess", {
+    labels: ["6/04", "6/11", "6/18", "6/25", "7/02", "7/09", "7/16", "7/23", "7/30", "8/06", "8/13", "8/20"],
+    h: 106, stacked: true, pl: 26, unit: " sessions",
+    series: [
+      { name: "Med management sessions", color: "var(--s1)", values: [214, 191, 200, 187, 206, 183, 228, 210, 167, 209, 183, 92] },
+      { name: "Therapy sessions", color: "var(--s2)", values: [1068, 1013, 884, 1009, 852, 1100, 1079, 1112, 1025, 1105, 1049, 523] },
+      { name: "DI sessions", color: "var(--s3)", values: [34, 26, 38, 33, 29, 43, 40, 33, 34, 40, 26, 8] }
+    ],
+    fmt: function (v) { return v >= 1000 ? (v / 1000).toFixed(1) + "k" : Math.round(v); }
+  });
+
+  bars("a-acu4", {
+    lw: 62, rh: 22, max: 430,
+    rows: [
+      { label: "Acuity 4", value: 390, fmt: "390  ·  40%", color: "var(--s4)" },
+      { label: "Acuity 3", value: 300, fmt: "300  ·  31%", color: "var(--s3)" },
+      { label: "Acuity 2", value: 226, fmt: "226  ·  23%", color: "var(--s2)" },
+      { label: "Acuity 1", value: 52, fmt: "52  ·  5%", color: "var(--s1)" }
+    ]
+  });
+
+  columns("a-acuwk", {
+    labels: ["8/02/26", "8/09/26", "8/16/26", "8/23/26", "8/30/26"],
+    h: 96, stacked: true, pl: 24, unit: " members",
+    series: [
+      { name: "Acuity 1", color: "var(--s1)", values: [45, 45, 46, 44, 39] },
+      { name: "Acuity 2", color: "var(--s2)", values: [192, 198, 198, 192, 162] },
+      { name: "Acuity 3", color: "var(--s3)", values: [269, 266, 260, 241, 207] },
+      { name: "Acuity 4", color: "var(--s4)", values: [321, 331, 343, 327, 279] }
+    ]
+  });
+
+  bars("a-di1st", {
+    lw: 62, rh: 22, max: 18,
+    rows: [
+      { label: "Acuity 2", value: 15.1, fmt: "15.1 d", color: "var(--s1)" },
+      { label: "Acuity 4", value: 13.7, fmt: "13.7 d", color: "var(--s1)" },
+      { label: "Acuity 3", value: 12.3, fmt: "12.3 d", color: "var(--s1)" },
+      { label: "Acuity 1", value: 11.3, fmt: "11.3 d", color: "var(--s1)" }
+    ]
+  });
+
+  bars("a-sat", {
+    lw: 138, rh: 20, max: 5,
+    rows: [
+      { label: "Q2. Understanding", value: 4.84, fmt: "4.84", color: "var(--s1)" },
+      { label: "Q5. Overall satisfaction", value: 4.82, fmt: "4.82", color: "var(--s1)" },
+      { label: "Overall score", value: 4.82, fmt: "4.82", color: "var(--s1)" },
+      { label: "Q3. Meaningful discussion", value: 4.81, fmt: "4.81", color: "var(--s1)" },
+      { label: "Q1. Improvement", value: 4.80, fmt: "4.80", color: "var(--s1)" },
+      { label: "Q4. Overall help", value: 4.80, fmt: "4.80", color: "var(--s1)" }
+    ]
+  });
 
   /* ---------------- CLINICAL OUTCOMES (PHQ9) ----------------
      Every widget from the Sisense "Clinical Outcome - PHQ9, GAD7 Report" of

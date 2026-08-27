@@ -44,12 +44,13 @@
   .sl { cursor: pointer; user-select: none; }
   .sl:hover, .sl[data-open] { border-color: var(--ink-muted); color: var(--ink-1); }
 
-  .page { display: none; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 8px; }
+  .page { display: none; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 8px; position: relative; }
   .page.on { display: grid; }
 
   .v {
     background: var(--surface); border: 1px solid var(--border); border-radius: 4px;
     padding: 8px 10px 9px; overflow: hidden; display: flex; flex-direction: column;
+    position: relative;   /* review pins are placed inside the tile they belong to */
   }
   .vh { display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap; row-gap: 3px; }
   .ask {
@@ -214,6 +215,143 @@
   }
   .ptabs a:hover { color: var(--ink-1); }
   .ptabs a[aria-current="page"] { color: var(--ink-1); background: var(--chipbg); border-color: var(--border); }
+
+  /* ---- Review comments -----------------------------------------------------------
+     How a reader asks for a change. Comment mode turns the report into a surface you
+     can pin a note to: click a visual, type, and the note stays attached to that tile
+     with a numbered pin. Every note collects in the panel on the right — one list for
+     the whole report, plus the open count of the other reports, so nothing is left in
+     somebody's head or in a message that does not say which tile it is about.
+
+     Deliberately quiet: the pin is a small blue bubble, the panel is the same white and
+     hairline borders as everything else, and with comment mode off the report looks
+     exactly as it did. Blue, not red — a comment is a request, not a judgement. */
+
+  .cbar { position: fixed; right: 14px; bottom: 46px; z-index: 76; display: flex; gap: 6px; }
+  .cbar .ctog {
+    appearance: none; font: inherit; font-size: 11px; cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    background: #ffffff; color: var(--ink-1); border: 1px solid var(--border);
+    border-radius: 18px; padding: 6px 13px; box-shadow: 0 4px 14px rgba(11, 11, 11, 0.16);
+  }
+  .cbar .ctog:hover { border-color: var(--ink-muted); }
+  .cbar .ctog[aria-pressed="true"] { background: var(--s1); border-color: var(--s1); color: #ffffff; }
+  .cbar .ctog .cn {
+    font-size: 9.5px; font-weight: 700; font-variant-numeric: tabular-nums;
+    background: var(--s1); color: #ffffff; border-radius: 9px; padding: 0 5px; min-width: 15px; text-align: center;
+  }
+  .cbar .ctog[aria-pressed="true"] .cn { background: #ffffff; color: var(--s1); }
+
+  /* Comment mode. The whole report becomes clickable, so the cursor has to say so and
+     the tile under the pointer has to show which target the click will attach to. */
+  .root.cmt .page { cursor: crosshair; }
+  .root.cmt .v:hover { box-shadow: inset 0 0 0 1.5px var(--s1); }
+  .root.cpo { padding-right: 340px; }   /* the panel moves the report over rather than covering it */
+
+  .cpin {
+    position: absolute; z-index: 40; min-width: 17px; height: 17px; padding: 0 4px;
+    display: none; align-items: center; justify-content: center;
+    font-size: 9.5px; font-weight: 700; font-variant-numeric: tabular-nums;
+    color: #ffffff; background: var(--s1); border: 1.5px solid #ffffff;
+    border-radius: 9px 9px 9px 2px; box-shadow: 0 2px 6px rgba(11, 11, 11, 0.3);
+    cursor: pointer; transform: translate(-2px, -2px);
+  }
+  .root.cmt .cpin, .root.cpo .cpin, .root.cpins .cpin { display: flex; }
+  .cpin.res { background: var(--ink-muted); }
+  .cpin.sel { outline: 2px solid var(--s1); outline-offset: 2px; }
+  .v.cflash { box-shadow: inset 0 0 0 2px var(--s1); }
+
+  /* The composer, and the same popover reused to read a thread. */
+  .cpop {
+    position: fixed; z-index: 79; display: none; width: 274px; background: #ffffff;
+    border: 1px solid rgba(11, 11, 11, 0.18); border-radius: 5px; padding: 9px;
+    box-shadow: 0 8px 22px rgba(11, 11, 11, 0.18);
+  }
+  .cpop.on { display: block; }
+  .cpop .tgt {
+    font-size: 8.5px; color: var(--ink-muted); margin-bottom: 5px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .cpop .tgt b { color: var(--ink-2); font-weight: 650; }
+  .cpop textarea, .cpop input {
+    width: 100%; box-sizing: border-box; font: inherit; font-size: 10.5px; color: var(--ink-1);
+    background: #ffffff; border: 1px solid var(--border); border-radius: 3px; padding: 5px 6px;
+  }
+  .cpop textarea { min-height: 62px; resize: vertical; line-height: 1.4; }
+  .cpop input { margin-bottom: 5px; }
+  .cpop .act { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+  .cpop .hint { font-size: 8.5px; color: var(--ink-muted); margin-right: auto; }
+
+  .cb {
+    appearance: none; font: inherit; font-size: 10px; cursor: pointer;
+    border: 1px solid var(--border); background: var(--chipbg); color: var(--ink-1);
+    border-radius: 3px; padding: 3px 9px;
+  }
+  .cb:hover { border-color: var(--ink-muted); }
+  .cb.p { background: var(--s1); border-color: var(--s1); color: #ffffff; }
+  .cb.q { border-color: transparent; background: none; color: var(--ink-muted); padding: 3px 4px; }
+  .cb.q:hover { color: var(--ink-1); }
+  .cb[disabled] { opacity: 0.45; cursor: default; }
+
+  .cpan {
+    position: fixed; top: 0; right: 0; bottom: 0; width: 326px; z-index: 77; display: none;
+    background: #ffffff; border-left: 1px solid var(--border);
+    box-shadow: -10px 0 26px rgba(11, 11, 11, 0.1);
+    padding: 11px 12px 16px; overflow-y: auto;
+  }
+  .cpan.on { display: block; }
+  .cpan .ph { display: flex; align-items: center; gap: 8px; }
+  .cpan .ph h3 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; margin: 0; }
+  .cpan .ph .n { font-size: 9.5px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+  .cpan .ph .cb.q { margin-left: auto; font-size: 13px; line-height: 1; }
+  .cpan .sub { font-size: 9px; color: var(--ink-muted); margin: 2px 0 8px; }
+  .cpan .opt { display: flex; align-items: center; gap: 5px; font-size: 9px; color: var(--ink-2); margin: 7px 0 3px; }
+  .cpan .opt input { margin: 0; }
+
+  .cit { border-top: 1px solid var(--grid); padding: 8px 0 9px; cursor: pointer; }
+  .cit:hover { background: #fbfbf9; }
+  .cit .hd { display: flex; align-items: center; gap: 6px; }
+  .cit .av {
+    width: 16px; height: 16px; border-radius: 50%; background: var(--s1); color: #ffffff;
+    font-size: 8.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .cit .num { font-size: 9px; color: var(--ink-muted); font-variant-numeric: tabular-nums; min-width: 12px; }
+  .cit .who { font-size: 10px; font-weight: 650; color: var(--ink-1); }
+  .cit .at { font-size: 8.5px; color: var(--ink-muted); margin-left: auto; }
+  .cit .txt { font-size: 10.5px; color: var(--ink-1); white-space: pre-wrap; margin: 4px 0 0; line-height: 1.4; }
+  .cit .tgt { font-size: 8.5px; color: var(--ink-muted); margin-top: 4px; }
+  .cit .tgt b { color: var(--ink-2); font-weight: 650; }
+  .cit .off { color: var(--s1); }
+  .cit .rep { font-size: 10px; color: var(--ink-2); border-left: 2px solid var(--grid); padding: 3px 0 3px 7px; margin-top: 5px; white-space: pre-wrap; }
+  .cit .rep b { color: var(--ink-1); font-weight: 650; }
+  .cit .act { display: flex; gap: 4px; margin-top: 6px; }
+  .cit.done .txt, .cit.done .who { color: var(--ink-muted); }
+  .cpan .none { font-size: 10px; color: var(--ink-muted); padding: 10px 0; line-height: 1.5; }
+
+  .cpan .sect {
+    font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--ink-muted); margin: 14px 0 2px;
+  }
+  .cpan .doc {
+    display: flex; align-items: baseline; gap: 8px; font-size: 10px; color: var(--ink-2);
+    text-decoration: none; padding: 4px 0; border-top: 1px solid var(--grid);
+  }
+  .cpan .doc:hover { color: var(--ink-1); }
+  .cpan .doc .n { margin-left: auto; font-size: 9px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+  .cpan .foot { margin-top: 14px; border-top: 1px solid var(--border); padding-top: 8px; }
+  .cpan .foot .who { display: flex; align-items: center; gap: 5px; }
+  .cpan .foot input {
+    flex: 1; font: inherit; font-size: 10px; color: var(--ink-1); background: #ffffff;
+    border: 1px solid var(--border); border-radius: 3px; padding: 3px 6px;
+  }
+  .cpan .foot .note { font-size: 8.5px; color: var(--ink-muted); margin-top: 6px; line-height: 1.45; }
+  .cpan .foot .exp { display: flex; gap: 4px; margin-top: 7px; flex-wrap: wrap; }
+  .cpan .foot .exp a { text-decoration: none; }
+
+  @media (max-width: 760px) {
+    .cpan { width: 100%; }
+    .root.cpo { padding-right: 14px; }
+  }
 </style>
 <!-- shared:css:end -->
 
@@ -705,10 +843,550 @@
   document.addEventListener("mouseout", function (e) {
     if (e.target.closest("[data-tip]")) tt.style.opacity = "0";
   });
+
+  reviewComments();
+  }
+
+  /* ---- Review comments ------------------------------------------------------------
+     How somebody asks for a visual to change. Comment mode (the button bottom right, or
+     Shift+C) turns the report into a surface you can pin a note to: click a visual, type
+     what should change, and the note stays attached to that tile as a numbered pin. Every
+     note collects in the panel on the right — one list for the whole report, the other
+     reports' open counts underneath it — so a request arrives with its tile attached
+     instead of as "the funnel one, second page, the blue thing".
+
+     Storage. A comment is written to the reader's own browser. That is enough for one
+     person reading a mock-up and marking it up, and it is all a file you can open from
+     disk can honestly do. To make comments shared — everyone opening the report sees the
+     same list, live — set CAPI below to an endpoint speaking the small REST shape in
+     remoteStore() and re-run tools/sync.py --fix. Until then the panel says so plainly,
+     and Copy all / File on GitHub are how a reader's notes reach anybody else. */
+
+  var CAPI = "";                                    /* shared comments endpoint; "" = this browser only */
+  var CREPO = "nina-sta/aptihealth-dashboards";     /* where "File on GitHub" opens a prefilled issue */
+  var CKEY = "apti.comments.v1", CWHOKEY = "apti.comments.who";
+
+  var CMT = [], WHO = "", MODE = false, DOC = "", DOCNAME = "";
+  var CROOT = null, cbar = null, ctog = null, cbadge = null, cpan = null, cpop = null;
+  var STORE = null, DRAFT = null, OPEN_ID = null, MEM = null;
+
+  function clean(s) { return (s || "").replace(/\s+/g, " ").trim(); }
+  function docId(path) {
+    var seg = path.split("/").filter(Boolean);
+    return seg.length > 1 ? seg.slice(-2).join("/") : (seg[0] || "report");
+  }
+  function reportName() {
+    var h = document.querySelector(".rpthead h1");
+    return h ? clean(h.textContent) : clean(document.title);
+  }
+  function pageName(id) {
+    /* Empty on a report that is one page: there is no page strip to take a name from,
+       and repeating the report's own title on every comment says nothing. */
+    var b = id && document.querySelector('.ptabs button[data-pg="' + id + '"]');
+    return b ? clean(b.textContent) : "";
+  }
+  function tileKey(tile) {
+    var pg = tile.closest(".page"), h = tile.querySelector(".vh h4");
+    return (pg ? pg.id : "") + "|" + (h ? clean(h.textContent) : "");
+  }
+  function uid() { return "c" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function clamp(v) { return Math.max(3, Math.min(97, v)); }
+  function when(iso) { var d = new Date(iso); return isNaN(d) ? "" : d.toLocaleDateString(); }
+  function mine() { return CMT.filter(function (c) { return c.doc === DOC; }); }
+  function byId(id) { for (var i = 0; i < CMT.length; i++) if (CMT[i].id === id) return CMT[i]; return null; }
+
+  /* ---- storage. Two implementations behind list/add/patch/drop; the local one is what
+     every reader gets today, the remote one is the seam for a shared endpoint. ---- */
+  function readAll() {
+    if (MEM) return MEM;
+    try { return JSON.parse(localStorage.getItem(CKEY) || "[]") || []; }
+    catch (e) { MEM = []; return MEM; }   /* a browser that refuses storage on file:// */
+  }
+  function writeAll(list) {
+    if (MEM) { MEM = list; return; }
+    try { localStorage.setItem(CKEY, JSON.stringify(list)); }
+    catch (e) { MEM = list; }
+  }
+  function localStore() {
+    return {
+      shared: false,
+      list: function (cb) { cb(readAll()); },
+      add: function (c, cb) { var a = readAll(); a.push(c); writeAll(a); cb(a); },
+      patch: function (id, fn, cb) {
+        var a = readAll();
+        a.forEach(function (c) { if (c.id === id) fn(c); });
+        writeAll(a); cb(a);
+      },
+      drop: function (id, cb) {
+        var a = readAll().filter(function (c) { return c.id !== id; });
+        writeAll(a); cb(a);
+      }
+    };
+  }
+  /* The shape a shared endpoint has to speak. Untested here — there is no endpoint yet;
+     it is written down so that wiring one is a URL and not a rewrite. */
+  function remoteStore(api) {
+    function go(url, opt, cb) {
+      fetch(api + url, opt).then(function (r) { return r.json(); })
+        .then(function (d) { cb(d.comments || d || []); },
+              function () { cb(CMT); });   /* offline: keep showing what we have */
+    }
+    function json(body) {
+      return { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) };
+    }
+    return {
+      shared: true,
+      list: function (cb) { go("/api/comments", null, cb); },
+      add: function (c, cb) { go("/api/comments", json(c), cb); },
+      patch: function (id, fn, cb) {
+        var c = byId(id); if (!c) return cb(CMT);
+        fn(c);
+        go("/api/comments/" + encodeURIComponent(id),
+           { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(c) }, cb);
+      },
+      drop: function (id, cb) { go("/api/comments/" + encodeURIComponent(id), { method: "DELETE" }, cb); }
+    };
+  }
+
+  function readWho() { try { return localStorage.getItem(CWHOKEY) || ""; } catch (e) { return WHO; } }
+  function saveWho(v) { WHO = v; try { localStorage.setItem(CWHOKEY, v); } catch (e) {} }
+
+  /* ---- the pins ---- */
+  function hostOf(c) {
+    if (c.kind === "visual") {
+      var tiles = document.querySelectorAll(".v");
+      for (var i = 0; i < tiles.length; i++) if (tileKey(tiles[i]) === c.key) return tiles[i];
+      return document.getElementById(c.page) || null;   /* tile renamed or gone: fall back to its page */
+    }
+    return document.getElementById(c.key) || null;
+  }
+  function placePins() {
+    var old = document.querySelectorAll(".cpin");
+    Array.prototype.slice.call(old).forEach(function (p) { p.parentNode.removeChild(p); });
+    mine().forEach(function (c) {
+      var host = hostOf(c); if (!host) return;
+      var p = document.createElement("span");
+      p.className = "cpin" + (c.resolved ? " res" : "") + (c.id === OPEN_ID ? " sel" : "");
+      p.textContent = c.n;
+      p.style.left = c.x + "%";
+      p.style.top = c.y + "%";
+      p.setAttribute("data-tip", (c.who || "Someone") + ": " + c.text);
+      p.__cid = c.id;
+      host.appendChild(p);
+    });
+  }
+
+  /* ---- the popover: composing a new comment, and reading a thread ---- */
+  function popAt(x, y) {
+    cpop.classList.add("on");
+    var w = cpop.offsetWidth, h = cpop.offsetHeight;
+    cpop.style.left = Math.max(8, Math.min(x + 10, window.innerWidth - w - 10)) + "px";
+    cpop.style.top = (y + h + 14 < window.innerHeight ? y + 12 : Math.max(8, y - h - 12)) + "px";
+  }
+  function closePop() { cpop.classList.remove("on"); cpop.innerHTML = ""; DRAFT = null; OPEN_ID = null; placePins(); }
+
+  function nameField(box) {
+    if (WHO) return null;
+    var i = document.createElement("input");
+    i.type = "text"; i.placeholder = "Your name";
+    box.appendChild(i);
+    return i;
+  }
+  function targetLine(box, kind, label) {
+    var d = document.createElement("div");
+    d.className = "tgt";
+    d.innerHTML = (kind === "visual" ? "Visual › <b></b>" : "Page › <b></b>");
+    d.querySelector("b").textContent = label;
+    box.appendChild(d);
+  }
+
+  function openComposer(ev, pg) {
+    var tile = ev.target.closest(".v"), host = tile || pg;
+    var r = host.getBoundingClientRect();
+    var h4 = tile && tile.querySelector(".vh h4");
+    DRAFT = {
+      kind: tile ? "visual" : "page",
+      key: tile ? tileKey(tile) : pg.id,
+      label: tile ? (h4 ? clean(h4.textContent) : "untitled visual") : (pageName(pg.id) || DOCNAME),
+      page: pg.id,
+      x: clamp((ev.clientX - r.left) / r.width * 100),
+      y: clamp((ev.clientY - r.top) / r.height * 100)
+    };
+    OPEN_ID = null;
+    cpop.innerHTML = "";
+    targetLine(cpop, DRAFT.kind, DRAFT.label);
+    var who = nameField(cpop);
+    var ta = document.createElement("textarea");
+    ta.placeholder = "What should change here, and why?";
+    cpop.appendChild(ta);
+    var act = document.createElement("div"); act.className = "act";
+    var hint = document.createElement("span"); hint.className = "hint"; hint.textContent = "Enter to post";
+    var send = document.createElement("button"); send.type = "button"; send.className = "cb p"; send.textContent = "Comment";
+    var cancel = document.createElement("button"); cancel.type = "button"; cancel.className = "cb q"; cancel.textContent = "Cancel";
+    act.appendChild(hint); act.appendChild(cancel); act.appendChild(send);
+    cpop.appendChild(act);
+
+    function post() {
+      var text = ta.value.trim(); if (!text) return;
+      if (who && who.value.trim()) saveWho(who.value.trim());
+      var c = {
+        id: uid(), n: nextNumber(), doc: DOC, docName: DOCNAME,
+        page: DRAFT.page, pageName: pageName(DRAFT.page),
+        kind: DRAFT.kind, key: DRAFT.key, label: DRAFT.label, x: DRAFT.x, y: DRAFT.y,
+        text: text, who: WHO || "Anonymous", at: new Date().toISOString(),
+        resolved: false, replies: []
+      };
+      STORE.add(c, function (all) { CMT = all; closePop(); refresh(); openPanel(true); });
+    }
+    send.addEventListener("click", post);
+    cancel.addEventListener("click", closePop);
+    ta.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); post(); }
+    });
+    popAt(ev.clientX, ev.clientY);
+    (who || ta).focus();
+  }
+
+  function pinFor(id) {
+    var pins = document.querySelectorAll(".cpin");
+    for (var i = 0; i < pins.length; i++) if (pins[i].__cid === id) return pins[i];
+    return null;
+  }
+
+  function openThread(c, anchor) {
+    if (!c) return;
+    /* Pins are rebuilt on every refresh, so an anchor handed in by an earlier draw is a
+       detached node measuring zero — look the live one up before placing the popover. */
+    anchor = pinFor(c.id) || anchor;
+    OPEN_ID = c.id;
+    cpop.innerHTML = "";
+    targetLine(cpop, c.kind, c.label);
+    var head = document.createElement("div"); head.className = "cit"; head.style.borderTop = "0"; head.style.padding = "0 0 6px";
+    head.appendChild(itemHead(c));
+    var t = document.createElement("p"); t.className = "txt"; t.textContent = c.text; head.appendChild(t);
+    (c.replies || []).forEach(function (r) {
+      var rp = document.createElement("div"); rp.className = "rep";
+      rp.innerHTML = "<b></b> ";
+      rp.querySelector("b").textContent = (r.who || "Anonymous") + ":";
+      rp.appendChild(document.createTextNode(" " + r.text));
+      head.appendChild(rp);
+    });
+    cpop.appendChild(head);
+    var who = nameField(cpop);
+    var ta = document.createElement("textarea");
+    ta.placeholder = "Reply";
+    ta.style.minHeight = "44px";
+    cpop.appendChild(ta);
+    var act = document.createElement("div"); act.className = "act";
+    var res = document.createElement("button");
+    res.type = "button"; res.className = "cb q"; res.textContent = c.resolved ? "Reopen" : "Resolve";
+    var del = document.createElement("button"); del.type = "button"; del.className = "cb q"; del.textContent = "Delete";
+    var send = document.createElement("button"); send.type = "button"; send.className = "cb p"; send.textContent = "Reply";
+    act.appendChild(res); act.appendChild(del); act.appendChild(send);
+    cpop.appendChild(act);
+
+    function reply() {
+      var text = ta.value.trim(); if (!text) return;
+      if (who && who.value.trim()) saveWho(who.value.trim());
+      STORE.patch(c.id, function (x) {
+        x.replies = x.replies || [];
+        x.replies.push({ who: WHO || "Anonymous", text: text, at: new Date().toISOString() });
+      }, function (all) { CMT = all; refresh(); openThread(byId(c.id), null); });
+    }
+    send.addEventListener("click", reply);
+    ta.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); reply(); }
+    });
+    res.addEventListener("click", function () {
+      STORE.patch(c.id, function (x) { x.resolved = !x.resolved; }, function (all) { CMT = all; closePop(); refresh(); });
+    });
+    del.addEventListener("click", function () {
+      STORE.drop(c.id, function (all) { CMT = all; closePop(); refresh(); });
+    });
+    var r = anchor ? anchor.getBoundingClientRect() : { left: window.innerWidth / 2, top: 120 };
+    popAt(r.left, r.top);
+    placePins();
+  }
+
+  function nextNumber() {
+    var n = 0;
+    mine().forEach(function (c) { if (c.n > n) n = c.n; });
+    return n + 1;
+  }
+
+  /* ---- the panel: every comment on this report, in one list ---- */
+  function itemHead(c) {
+    var hd = document.createElement("div"); hd.className = "hd";
+    var num = document.createElement("span"); num.className = "num"; num.textContent = c.n;
+    var av = document.createElement("span"); av.className = "av";
+    av.textContent = (c.who || "?").trim().charAt(0).toUpperCase();
+    var who = document.createElement("span"); who.className = "who"; who.textContent = c.who || "Anonymous";
+    var at = document.createElement("span"); at.className = "at"; at.textContent = when(c.at);
+    hd.appendChild(num); hd.appendChild(av); hd.appendChild(who); hd.appendChild(at);
+    return hd;
+  }
+
+  function item(c) {
+    var d = document.createElement("div");
+    d.className = "cit" + (c.resolved ? " done" : "");
+    d.appendChild(itemHead(c));
+    var t = document.createElement("p"); t.className = "txt"; t.textContent = c.text; d.appendChild(t);
+    var tg = document.createElement("div"); tg.className = "tgt";
+    tg.innerHTML = (c.kind === "visual" ? "Visual › <b></b>" : "Page › <b></b>");
+    tg.querySelector("b").textContent = c.label;
+    if ((c.replies || []).length) tg.appendChild(document.createTextNode(" · " + c.replies.length + " repl" + (c.replies.length === 1 ? "y" : "ies")));
+    /* Which page it is on, only when you are not looking at that page — and only for a
+       visual, since a page comment is already named after its page. */
+    var cur = document.querySelector(".page.on");
+    if (c.kind === "visual" && cur && cur.id !== c.page && c.pageName) {
+      var off = document.createElement("span"); off.className = "off";
+      off.textContent = " · on " + c.pageName;
+      tg.appendChild(off);
+    }
+    d.appendChild(tg);
+    d.addEventListener("click", function () { goTo(c); });
+    return d;
+  }
+
+  function goTo(c) {
+    var tab = document.querySelector('.ptabs button[data-pg="' + c.page + '"]');
+    if (tab && tab.getAttribute("aria-pressed") !== "true") tab.click();
+    placePins();
+    var host = hostOf(c);
+    if (host) {
+      host.scrollIntoView({ block: "center", behavior: "smooth" });
+      if (host.classList.contains("v")) {
+        host.classList.add("cflash");
+        setTimeout(function () { host.classList.remove("cflash"); }, 1400);
+      }
+    }
+    openThread(c, pinFor(c.id));
+  }
+
+  function otherDocs() {
+    var seen = {}, out = [];
+    Array.prototype.slice.call(document.querySelectorAll(".ptabs a[href]")).forEach(function (a) {
+      var d = docId(new URL(a.getAttribute("href"), location.href).pathname);
+      if (d === DOC || seen[d]) return;
+      seen[d] = 1;
+      out.push({ href: a.getAttribute("href"), doc: d, name: clean(a.textContent) });
+    });
+    return out;
+  }
+
+  function markdown(list) {
+    var out = ["## Comments on " + DOCNAME + " (`" + DOC + "`)", ""];
+    list.forEach(function (c) {
+      out.push("- **" + c.n + ". " + c.label + "**"
+        + (c.pageName && c.pageName !== c.label ? " · " + c.pageName : "")
+        + (c.resolved ? " · resolved" : ""));
+      out.push("  " + c.text.replace(/\n/g, "\n  "));
+      (c.replies || []).forEach(function (r) { out.push("  - " + (r.who || "Anonymous") + ": " + r.text); });
+      out.push("  — " + (c.who || "Anonymous") + ", " + when(c.at));
+      out.push("");
+    });
+    return out.join("\n");
+  }
+
+  function copyText(text, btn) {
+    var label = btn.textContent;
+    function done() { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = label; }, 1300); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else { fallback(); }
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); done(); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+  }
+
+  function renderPanel() {
+    var open = mine().filter(function (c) { return !c.resolved; });
+    var done = mine().filter(function (c) { return c.resolved; });
+    cpan.innerHTML = "";
+
+    var ph = document.createElement("div"); ph.className = "ph";
+    var h3 = document.createElement("h3"); h3.textContent = "Comments";
+    var n = document.createElement("span"); n.className = "n"; n.textContent = open.length + " open";
+    var x = document.createElement("button"); x.type = "button"; x.className = "cb q"; x.textContent = "×";
+    x.setAttribute("aria-label", "Close comments");
+    x.addEventListener("click", function () { openPanel(false); });
+    ph.appendChild(h3); ph.appendChild(n); ph.appendChild(x);
+    cpan.appendChild(ph);
+
+    var sub = document.createElement("div"); sub.className = "sub"; sub.textContent = DOCNAME;
+    cpan.appendChild(sub);
+
+    var nb = document.createElement("button");
+    nb.type = "button"; nb.className = "cb" + (MODE ? " p" : "");
+    nb.textContent = MODE ? "Click a visual to comment · Esc to stop" : "New comment · Shift+C";
+    nb.addEventListener("click", function () { setMode(!MODE); });
+    cpan.appendChild(nb);
+
+    var opt = document.createElement("label"); opt.className = "opt";
+    var cb = document.createElement("input"); cb.type = "checkbox";
+    cb.checked = CROOT.classList.contains("cpins");
+    cb.addEventListener("change", function () { CROOT.classList.toggle("cpins", cb.checked); });
+    opt.appendChild(cb); opt.appendChild(document.createTextNode("Show pins when the panel is closed"));
+    cpan.appendChild(opt);
+
+    if (!open.length && !done.length) {
+      var none = document.createElement("p"); none.className = "none";
+      none.textContent = "No comments yet. Press Shift+C, click the visual you want changed and say what should change.";
+      cpan.appendChild(none);
+    }
+    open.forEach(function (c) { cpan.appendChild(item(c)); });
+
+    if (done.length) {
+      var s = document.createElement("div"); s.className = "sect";
+      s.textContent = "Resolved (" + done.length + ")";
+      cpan.appendChild(s);
+      done.forEach(function (c) { cpan.appendChild(item(c)); });
+    }
+
+    var others = otherDocs();
+    if (others.length) {
+      var s2 = document.createElement("div"); s2.className = "sect"; s2.textContent = "Other reports";
+      cpan.appendChild(s2);
+      others.forEach(function (d) {
+        var cnt = CMT.filter(function (c) { return c.doc === d.doc && !c.resolved; }).length;
+        var a = document.createElement("a");
+        a.className = "doc"; a.href = d.href;
+        a.appendChild(document.createTextNode(d.name));
+        var sp = document.createElement("span"); sp.className = "n";
+        sp.textContent = cnt ? cnt + " open" : "—";
+        a.appendChild(sp);
+        cpan.appendChild(a);
+      });
+    }
+
+    var foot = document.createElement("div"); foot.className = "foot";
+    var wrow = document.createElement("div"); wrow.className = "who";
+    var wl = document.createElement("span"); wl.style.cssText = "font-size:9px;color:var(--ink-muted)";
+    wl.textContent = "You";
+    var wi = document.createElement("input");
+    wi.type = "text"; wi.placeholder = "Set your name"; wi.value = WHO;
+    wi.addEventListener("change", function () { saveWho(clean(wi.value)); refresh(); });
+    wrow.appendChild(wl); wrow.appendChild(wi);
+    foot.appendChild(wrow);
+
+    if (mine().length) {
+      var exp = document.createElement("div"); exp.className = "exp";
+      var cp = document.createElement("button"); cp.type = "button"; cp.className = "cb"; cp.textContent = "Copy all";
+      cp.addEventListener("click", function () { copyText(markdown(mine()), cp); });
+      exp.appendChild(cp);
+      var body = markdown(open.length ? open : mine());
+      var url = "https://github.com/" + CREPO + "/issues/new?title="
+        + encodeURIComponent("Report comments: " + DOCNAME)
+        + "&body=" + encodeURIComponent(body);
+      if (url.length < 7000) {
+        var gh = document.createElement("a");
+        gh.className = "cb"; gh.href = url; gh.target = "_blank"; gh.rel = "noopener";
+        gh.textContent = "File on GitHub";
+        exp.appendChild(gh);
+      }
+      foot.appendChild(exp);
+    }
+
+    var note = document.createElement("p"); note.className = "note";
+    note.textContent = STORE.shared
+      ? "Shared — everyone who opens this report sees the same comments."
+      : (MEM
+        ? "This browser will not keep comments (opened from disk). They last until you close the tab — copy them out before you do."
+        : "Comments are kept in this browser. Copy all, or file them on GitHub, to get them to anybody else.");
+    foot.appendChild(note);
+    cpan.appendChild(foot);
+  }
+
+  function badge() {
+    var open = mine().filter(function (c) { return !c.resolved; }).length;
+    cbadge.textContent = open;
+    cbadge.style.display = open ? "" : "none";
+  }
+  function refresh() { placePins(); renderPanel(); badge(); }
+
+  function openPanel(on) {
+    cpan.classList.toggle("on", on);
+    CROOT.classList.toggle("cpo", on);
+    if (on) renderPanel();
+  }
+  function setMode(on) {
+    MODE = on;
+    CROOT.classList.toggle("cmt", on);
+    ctog.setAttribute("aria-pressed", on ? "true" : "false");
+    if (on) openPanel(true); else closePop();
+    renderPanel();
+  }
+
+  function reviewComments() {
+    var root = document.querySelector(".root");
+    if (!root || root.__comments) return;
+    root.__comments = true;
+    CROOT = root;
+    DOC = docId(location.pathname);
+    DOCNAME = reportName();
+    WHO = readWho();
+    STORE = CAPI ? remoteStore(CAPI) : localStore();
+
+    cbar = document.createElement("div"); cbar.className = "cbar";
+    ctog = document.createElement("button");
+    ctog.type = "button"; ctog.className = "ctog"; ctog.setAttribute("aria-pressed", "false");
+    ctog.title = "Comments (Shift+C)";
+    var lab = document.createElement("span"); lab.textContent = "✎ Comments";
+    cbadge = document.createElement("span"); cbadge.className = "cn";
+    ctog.appendChild(lab); ctog.appendChild(cbadge);
+    ctog.addEventListener("click", function () {
+      if (cpan.classList.contains("on") && !MODE) { openPanel(false); return; }
+      if (MODE) { setMode(false); openPanel(false); return; }
+      setMode(true);
+    });
+    cbar.appendChild(ctog);
+    root.appendChild(cbar);
+
+    cpan = document.createElement("div"); cpan.className = "cpan"; root.appendChild(cpan);
+    cpop = document.createElement("div"); cpop.className = "cpop"; root.appendChild(cpop);
+
+    STORE.list(function (all) { CMT = all || []; refresh(); });
+
+    /* Capture phase: in comment mode a click marks a spot instead of doing what it
+       normally does, so a chip must not open its dropdown under the composer. The tab
+       strip and the panel keep working — you have to be able to change page while
+       commenting. */
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest) return;
+      var pin = e.target.closest(".cpin");
+      if (pin) { e.preventDefault(); e.stopPropagation(); openThread(byId(pin.__cid), pin); return; }
+      if (e.target.closest(".cpan, .cpop, .cbar")) return;
+      if (!MODE) { if (cpop.classList.contains("on")) closePop(); return; }
+      if (e.target.closest(".ptabs, .dd")) return;
+      var pg = e.target.closest(".page");
+      if (!pg) return;
+      e.preventDefault(); e.stopPropagation();
+      openComposer(e, pg);
+    }, true);
+
+    document.addEventListener("keydown", function (e) {
+      var t = e.target, typing = t && /^(input|textarea)$/i.test(t.tagName);
+      if (e.key === "Escape") {
+        if (cpop.classList.contains("on")) { closePop(); return; }
+        if (MODE) { setMode(false); return; }
+        if (cpan.classList.contains("on")) openPanel(false);
+        return;
+      }
+      if (!typing && e.shiftKey && (e.key === "C" || e.key === "c")) { e.preventDefault(); setMode(!MODE); }
+    });
+
+    window.addEventListener("resize", function () { closePop(); placePins(); });
+    Array.prototype.slice.call(document.querySelectorAll(".ptabs button[data-pg]")).forEach(function (b) {
+      b.addEventListener("click", function () { setTimeout(refresh, 0); });
+    });
   }
 
   g.APTI = {
-    MO: MO, render: render,
+    MO: MO, render: render, comments: reviewComments,
     columns: columns, lines: lines, bars: bars,
     funnel: funnel, spark: spark, smallMultiples: smallMultiples, matrix: matrix,
     reactive: reactive

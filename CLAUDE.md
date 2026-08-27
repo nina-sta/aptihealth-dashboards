@@ -104,6 +104,37 @@ python3 tools/sync.py --fix
 
 `sync.py` without `--fix` fails when a copy is stale, so drift gets caught rather than shipped.
 
+## The review-comment layer
+
+Every report carries a comment layer, built in `reports/_shared/charts.js` (`reviewComments()`)
+and styled in `report.css`. A reader presses **Shift+C** — or the Comments button in the
+bottom right — clicks the visual they want changed and types. The note stays pinned to that
+tile as a numbered pin; the panel on the right lists every comment on the report, with the
+other reports' open counts under it, and carries replies, resolve and the reader's name. It
+is deliberately the same shape as the review tool on the Climber prototype, which is where
+the idea came from.
+
+**It attaches itself.** No report HTML changed: the layer finds `.v` tiles and `.page` divs
+at wire time, so a new visual gets a comment target for free and `sync.py` sees nothing new.
+A comment is not a visual and needs no spec row.
+
+**Where a comment lives.** In the reader's own browser, keyed by report file, page id and the
+tile's `<h4>`. That is all a file you can open from disk can honestly do, so the panel says
+so plainly and offers *Copy all* and *File on GitHub* for getting a pass of notes to somebody
+else. Two consequences:
+
+- rename a tile's heading and its comments lose their tile — they fall back to its page.
+- some browsers refuse storage on `file://`; the layer then keeps comments for the session
+  only and the panel says that instead of pretending they are saved.
+- storage is per origin, so the *other reports* counts only add up when the reports are
+  served from one place — GitHub Pages, or `python3 -m http.server` — not opened from disk
+  one file at a time.
+
+**Making comments shared** — everyone who opens the report sees the same live list — is one
+constant: point `CAPI` at an endpoint speaking the small REST shape in `remoteStore()`, then
+run `python3 tools/sync.py --fix`. That path is written down and has never run against a real
+endpoint. `CREPO` beside it is the repository *File on GitHub* files an issue in.
+
 ## Non-negotiable design rules
 
 These were decided deliberately. Do not "improve" them without being asked.
@@ -188,10 +219,11 @@ builders while making a content change — it makes the diff unreadable.
 **Finish every piece of work with `python3 tools/sync.py`.**
 
 `sync.py` is a static check — it compares text. It cannot tell you the page still *works*.
-After touching `reports/_shared/charts.js`, open a report in a browser and confirm two things
-the chart count will not reveal: a grey chip opens its dropdown, and the ⓘ shows a tooltip.
-Both are wired in `wire()`, which runs after the charts are drawn, so a throw there leaves a
-page that looks perfect and does nothing.
+After touching `reports/_shared/charts.js`, open a report in a browser and confirm three
+things the chart count will not reveal: a grey chip opens its dropdown, the ⓘ shows a
+tooltip, and Shift+C lets you pin a comment to a tile. All three are wired in `wire()`,
+which runs after the charts are drawn, so a throw there leaves a page that looks perfect
+and does nothing.
 
 ## Handing off between sessions
 

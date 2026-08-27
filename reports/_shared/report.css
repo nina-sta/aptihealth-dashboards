@@ -41,12 +41,13 @@
   .sl { cursor: pointer; user-select: none; }
   .sl:hover, .sl[data-open] { border-color: var(--ink-muted); color: var(--ink-1); }
 
-  .page { display: none; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 8px; }
+  .page { display: none; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 8px; position: relative; }
   .page.on { display: grid; }
 
   .v {
     background: var(--surface); border: 1px solid var(--border); border-radius: 4px;
     padding: 8px 10px 9px; overflow: hidden; display: flex; flex-direction: column;
+    position: relative;   /* review pins are placed inside the tile they belong to */
   }
   .vh { display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap; row-gap: 3px; }
   .ask {
@@ -211,3 +212,140 @@
   }
   .ptabs a:hover { color: var(--ink-1); }
   .ptabs a[aria-current="page"] { color: var(--ink-1); background: var(--chipbg); border-color: var(--border); }
+
+  /* ---- Review comments -----------------------------------------------------------
+     How a reader asks for a change. Comment mode turns the report into a surface you
+     can pin a note to: click a visual, type, and the note stays attached to that tile
+     with a numbered pin. Every note collects in the panel on the right — one list for
+     the whole report, plus the open count of the other reports, so nothing is left in
+     somebody's head or in a message that does not say which tile it is about.
+
+     Deliberately quiet: the pin is a small blue bubble, the panel is the same white and
+     hairline borders as everything else, and with comment mode off the report looks
+     exactly as it did. Blue, not red — a comment is a request, not a judgement. */
+
+  .cbar { position: fixed; right: 14px; bottom: 46px; z-index: 76; display: flex; gap: 6px; }
+  .cbar .ctog {
+    appearance: none; font: inherit; font-size: 11px; cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    background: #ffffff; color: var(--ink-1); border: 1px solid var(--border);
+    border-radius: 18px; padding: 6px 13px; box-shadow: 0 4px 14px rgba(11, 11, 11, 0.16);
+  }
+  .cbar .ctog:hover { border-color: var(--ink-muted); }
+  .cbar .ctog[aria-pressed="true"] { background: var(--s1); border-color: var(--s1); color: #ffffff; }
+  .cbar .ctog .cn {
+    font-size: 9.5px; font-weight: 700; font-variant-numeric: tabular-nums;
+    background: var(--s1); color: #ffffff; border-radius: 9px; padding: 0 5px; min-width: 15px; text-align: center;
+  }
+  .cbar .ctog[aria-pressed="true"] .cn { background: #ffffff; color: var(--s1); }
+
+  /* Comment mode. The whole report becomes clickable, so the cursor has to say so and
+     the tile under the pointer has to show which target the click will attach to. */
+  .root.cmt .page { cursor: crosshair; }
+  .root.cmt .v:hover { box-shadow: inset 0 0 0 1.5px var(--s1); }
+  .root.cpo { padding-right: 340px; }   /* the panel moves the report over rather than covering it */
+
+  .cpin {
+    position: absolute; z-index: 40; min-width: 17px; height: 17px; padding: 0 4px;
+    display: none; align-items: center; justify-content: center;
+    font-size: 9.5px; font-weight: 700; font-variant-numeric: tabular-nums;
+    color: #ffffff; background: var(--s1); border: 1.5px solid #ffffff;
+    border-radius: 9px 9px 9px 2px; box-shadow: 0 2px 6px rgba(11, 11, 11, 0.3);
+    cursor: pointer; transform: translate(-2px, -2px);
+  }
+  .root.cmt .cpin, .root.cpo .cpin, .root.cpins .cpin { display: flex; }
+  .cpin.res { background: var(--ink-muted); }
+  .cpin.sel { outline: 2px solid var(--s1); outline-offset: 2px; }
+  .v.cflash { box-shadow: inset 0 0 0 2px var(--s1); }
+
+  /* The composer, and the same popover reused to read a thread. */
+  .cpop {
+    position: fixed; z-index: 79; display: none; width: 274px; background: #ffffff;
+    border: 1px solid rgba(11, 11, 11, 0.18); border-radius: 5px; padding: 9px;
+    box-shadow: 0 8px 22px rgba(11, 11, 11, 0.18);
+  }
+  .cpop.on { display: block; }
+  .cpop .tgt {
+    font-size: 8.5px; color: var(--ink-muted); margin-bottom: 5px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .cpop .tgt b { color: var(--ink-2); font-weight: 650; }
+  .cpop textarea, .cpop input {
+    width: 100%; box-sizing: border-box; font: inherit; font-size: 10.5px; color: var(--ink-1);
+    background: #ffffff; border: 1px solid var(--border); border-radius: 3px; padding: 5px 6px;
+  }
+  .cpop textarea { min-height: 62px; resize: vertical; line-height: 1.4; }
+  .cpop input { margin-bottom: 5px; }
+  .cpop .act { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+  .cpop .hint { font-size: 8.5px; color: var(--ink-muted); margin-right: auto; }
+
+  .cb {
+    appearance: none; font: inherit; font-size: 10px; cursor: pointer;
+    border: 1px solid var(--border); background: var(--chipbg); color: var(--ink-1);
+    border-radius: 3px; padding: 3px 9px;
+  }
+  .cb:hover { border-color: var(--ink-muted); }
+  .cb.p { background: var(--s1); border-color: var(--s1); color: #ffffff; }
+  .cb.q { border-color: transparent; background: none; color: var(--ink-muted); padding: 3px 4px; }
+  .cb.q:hover { color: var(--ink-1); }
+  .cb[disabled] { opacity: 0.45; cursor: default; }
+
+  .cpan {
+    position: fixed; top: 0; right: 0; bottom: 0; width: 326px; z-index: 77; display: none;
+    background: #ffffff; border-left: 1px solid var(--border);
+    box-shadow: -10px 0 26px rgba(11, 11, 11, 0.1);
+    padding: 11px 12px 16px; overflow-y: auto;
+  }
+  .cpan.on { display: block; }
+  .cpan .ph { display: flex; align-items: center; gap: 8px; }
+  .cpan .ph h3 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; margin: 0; }
+  .cpan .ph .n { font-size: 9.5px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+  .cpan .ph .cb.q { margin-left: auto; font-size: 13px; line-height: 1; }
+  .cpan .sub { font-size: 9px; color: var(--ink-muted); margin: 2px 0 8px; }
+  .cpan .opt { display: flex; align-items: center; gap: 5px; font-size: 9px; color: var(--ink-2); margin: 7px 0 3px; }
+  .cpan .opt input { margin: 0; }
+
+  .cit { border-top: 1px solid var(--grid); padding: 8px 0 9px; cursor: pointer; }
+  .cit:hover { background: #fbfbf9; }
+  .cit .hd { display: flex; align-items: center; gap: 6px; }
+  .cit .av {
+    width: 16px; height: 16px; border-radius: 50%; background: var(--s1); color: #ffffff;
+    font-size: 8.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .cit .num { font-size: 9px; color: var(--ink-muted); font-variant-numeric: tabular-nums; min-width: 12px; }
+  .cit .who { font-size: 10px; font-weight: 650; color: var(--ink-1); }
+  .cit .at { font-size: 8.5px; color: var(--ink-muted); margin-left: auto; }
+  .cit .txt { font-size: 10.5px; color: var(--ink-1); white-space: pre-wrap; margin: 4px 0 0; line-height: 1.4; }
+  .cit .tgt { font-size: 8.5px; color: var(--ink-muted); margin-top: 4px; }
+  .cit .tgt b { color: var(--ink-2); font-weight: 650; }
+  .cit .off { color: var(--s1); }
+  .cit .rep { font-size: 10px; color: var(--ink-2); border-left: 2px solid var(--grid); padding: 3px 0 3px 7px; margin-top: 5px; white-space: pre-wrap; }
+  .cit .rep b { color: var(--ink-1); font-weight: 650; }
+  .cit .act { display: flex; gap: 4px; margin-top: 6px; }
+  .cit.done .txt, .cit.done .who { color: var(--ink-muted); }
+  .cpan .none { font-size: 10px; color: var(--ink-muted); padding: 10px 0; line-height: 1.5; }
+
+  .cpan .sect {
+    font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--ink-muted); margin: 14px 0 2px;
+  }
+  .cpan .doc {
+    display: flex; align-items: baseline; gap: 8px; font-size: 10px; color: var(--ink-2);
+    text-decoration: none; padding: 4px 0; border-top: 1px solid var(--grid);
+  }
+  .cpan .doc:hover { color: var(--ink-1); }
+  .cpan .doc .n { margin-left: auto; font-size: 9px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+  .cpan .foot { margin-top: 14px; border-top: 1px solid var(--border); padding-top: 8px; }
+  .cpan .foot .who { display: flex; align-items: center; gap: 5px; }
+  .cpan .foot input {
+    flex: 1; font: inherit; font-size: 10px; color: var(--ink-1); background: #ffffff;
+    border: 1px solid var(--border); border-radius: 3px; padding: 3px 6px;
+  }
+  .cpan .foot .note { font-size: 8.5px; color: var(--ink-muted); margin-top: 6px; line-height: 1.45; }
+  .cpan .foot .exp { display: flex; gap: 4px; margin-top: 7px; flex-wrap: wrap; }
+  .cpan .foot .exp a { text-decoration: none; }
+
+  @media (max-width: 760px) {
+    .cpan { width: 100%; }
+    .root.cpo { padding-right: 14px; }
+  }

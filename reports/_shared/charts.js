@@ -223,9 +223,12 @@
     if (host.lastChild) host.lastChild.style.borderBottom = "0";
   }
 
-  function matrix(id, cols, rows) {
+  /* opt.raw marks a table that is a verbatim data extract rather than a summary: its last
+     row is data, not a total, and its headers are real column names that must not be
+     upper-cased. Omit it and a matrix renders exactly as it always has. */
+  function matrix(id, cols, rows, opt) {
     var host = document.getElementById(id); if (!host) return;
-    var t = document.createElement("table"); t.className = "mx";
+    var t = document.createElement("table"); t.className = (opt && opt.raw) ? "mx raw" : "mx";
     var hr = document.createElement("tr");
     cols.forEach(function (c) { var th = document.createElement("th"); th.textContent = c; hr.appendChild(th); });
     t.appendChild(hr);
@@ -279,12 +282,18 @@
      for the duration of the draw and then hidden again. A hidden page measures
      as zero width and the charts render at a fallback size. Do not remove this. */
   function render(draw) {
-    var pages = Array.prototype.slice.call(document.querySelectorAll(".page"));
-    pages.forEach(function (p) { p.classList.add("on"); });
-    draw();
-    REACTIVE.forEach(drawReactive);
-    pages.forEach(function (p, i) { p.classList.toggle("on", i === 0); });
-    wire();
+    /* One frame of delay before anything is measured. This script runs while the document
+       is still being parsed, and at that point nothing has been laid out — host.clientWidth
+       reads 0 and every chart silently falls back to the 460px default. That is invisible on
+       a tile three or four columns wide and glaring on a full-width one. */
+    requestAnimationFrame(function () {
+      var pages = Array.prototype.slice.call(document.querySelectorAll(".page"));
+      pages.forEach(function (p) { p.classList.add("on"); });
+      draw();
+      REACTIVE.forEach(drawReactive);
+      pages.forEach(function (p, i) { p.classList.toggle("on", i === 0); });
+      wire();
+    });
   }
 
   function wire() {

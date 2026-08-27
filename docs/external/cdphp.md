@@ -35,11 +35,17 @@ care we delivered, and this is the part that decides whether we are paid for it.
 
 | Visual | Business question | Owner | Business impact | Status |
 | --- | --- | --- | --- | --- |
-| Patients by eligibility and engagement | Of the patients we treated, how many can we actually bill? | _unassigned_ | _to agree_ | Built |
-| Billed panel — how members join it | Is the panel growing on new members, or on the same people coming back? | _unassigned_ | _to agree_ | Built |
-| Current month invoice — sent on the 15th | What exactly are we invoicing this month? | _unassigned_ | _to agree_ | Built |
-| ACP consent response | How many patients have consented to what we share with the payer? | _unassigned_ | _to agree_ | Blocked — The stored response values are not confirmed. This assumes consented / declined / no response; a fourth value for "request never sent" would change the denominator. No longer shown as a warning on the tile; this document is the record |
-| Monthly invoice — billed lines by month | Can we show the payer a member's billing history when they query a line? | _unassigned_ | _to agree_ | Built |
+| Count of CDPHP Patients by Eligibility and Engagement | Of the patients we treated, how many can we actually bill? | _unassigned_ | _to agree_ | Built |
+| Count of CDPHP Patients by Eligibility and Engagement (Billing File Month) | Is the billing file growing on new members, or on the same people coming back? | _unassigned_ | _to agree_ | Built |
+| Current Month Invoice (send on the 15th) | What exactly are we invoicing this month? | _unassigned_ | _to agree_ | Blocked — The values `case_mg_ineligible_reason` can hold are not confirmed on our side. The column is in the export; its domain is not written down anywhere |
+| Monthly Invoice | Can we show the payer a member's billing history when they query a line? | _unassigned_ | _to agree_ | Built |
+| ACP Consent Response - CDPHP Patients | Which patients have answered the consent request, and how? | _unassigned_ | _to agree_ | Blocked — PLATFORM is the only consent type seen in the source. Confirm whether others exist, and whether Consent Response is strictly boolean or has an unanswered state |
+
+Visual titles on this page are the source dashboard's own, `snake_case` column names and all,
+because the column list is what the data team builds from and a tidied-up name loses the join
+back to the query. The two eligibility visuals share a title in the dashboard; the second
+carries its axis in brackets here, because the tile heading is this document's join key and two
+rows cannot have the same one.
 
 ## Page — CDPHP Patient Acquisition
 
@@ -134,7 +140,8 @@ fast, how much care they got, and whether the documentation behind it holds up.
 
 Across every page.
 
-- **ACP consent response** — The stored response values are not confirmed. This assumes consented / declined / no response; a fourth value for “request never sent” would change the denominator. No longer shown as a warning on the tile; this document is the record.
+- **ACP Consent Response - CDPHP Patients** — PLATFORM is the only consent type seen in the source. Confirm whether others exist, and whether Consent Response is strictly boolean or has an unanswered state.
+- **Current Month Invoice (send on the 15th)** — The values `case_mg_ineligible_reason` can hold are not confirmed. The column is in the export; its domain is not written down anywhere.
 - **Members in care by tenure** — Blocked: needs an episode-of-care definition — days in care currently run through inactivation.
 - **Payer contracts and credentialing** — Confirm whether “licensed” in the ask means payer credentialing or state licensure — they are different counts.
 - **Post-discharge members reached** — Denominator depends on how we learn about a discharge — payer feed, referrer notification or member self-report. Each gives a different population.

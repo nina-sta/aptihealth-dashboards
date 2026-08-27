@@ -118,6 +118,9 @@
   table.mx th:first-child, table.mx td:first-child { text-align: left; }
   table.mx td { padding: 3px 4px; border-bottom: 1px solid var(--grid); color: var(--ink-1); }
   table.mx tr:last-child td { border-bottom: 0; font-weight: 650; }
+  /* A verbatim extract has no total row to bold, and its headers are column names. */
+  table.mx.raw tr:last-child td { font-weight: 400; }
+  table.mx.raw th { text-transform: none; letter-spacing: 0; }
   table.mx td.b { position: relative; }
   table.mx td.b .bar { position: absolute; inset: 2px auto 2px 3px; background: var(--s1); opacity: 0.24; border-radius: 2px; }
   table.mx td.b span { position: relative; }

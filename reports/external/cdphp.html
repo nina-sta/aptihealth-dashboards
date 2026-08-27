@@ -126,6 +126,9 @@
   table.mx th:first-child, table.mx td:first-child { text-align: left; }
   table.mx td { padding: 3px 4px; border-bottom: 1px solid var(--grid); color: var(--ink-1); }
   table.mx tr:last-child td { border-bottom: 0; font-weight: 650; }
+  /* A verbatim extract has no total row to bold, and its headers are column names. */
+  table.mx.raw tr:last-child td { font-weight: 400; }
+  table.mx.raw th { text-transform: none; letter-spacing: 0; }
   table.mx td.b { position: relative; }
   table.mx td.b .bar { position: absolute; inset: 2px auto 2px 3px; background: var(--s1); opacity: 0.24; border-radius: 2px; }
   table.mx td.b span { position: relative; }
@@ -373,62 +376,57 @@
 
   <div class="page on" id="pg-billing">
 
-    <div class="v c6 h2r">
-      <div class="vh"><h4>Patients by eligibility and engagement</h4>
-        <div class="vf"><span class="wf">Acuity: all</span><button class="i" data-tip="Power BI: clustered column chart. Three counts of engaged CDPHP patients, so one axis &mdash; do not add a billable % as a second axis. Eligible and ineligible are the eligibility check at billing time; the third series is engaged patients whose AC note or case-management requirement was not met that month, so the line cannot be billed however eligible the member is.">&#9432;</button></div>
+    <div class="v c12 h3r">
+      <div class="vh"><h4>Count of CDPHP Patients by Eligibility and Engagement</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart. Four counts of CDPHP patients per month, all in members, so one axis. Eligible and ineligible are the eligibility verdict at billing time; AC Note/CM Req Not Met is engaged patients whose AC note or case-management requirement was not met, so the line cannot be billed however eligible the member is. Future Session Scheduled counts patients with a session already booked in a month that has not started.">&#9432;</button></div>
       </div>
-      <p class="info">The three counts are not a partition &mdash; a member can be eligible and still fail the AC note requirement. The third bar is the billable revenue we lose to documentation, not to coverage.</p>
+      <p class="info">The four counts are not a partition &mdash; a patient can be eligible and still fail the AC note. September carries only Future Session Scheduled, because nothing has been delivered or billed in it yet.</p>
       <div class="body"><div class="ch" id="b-elig"></div>
         <div class="lg">
-          <span><i style="background:var(--s1)"></i>Engaged and eligible</span>
-          <span><i style="background:var(--s2)"></i>Engaged and ineligible</span>
-          <span><i style="background:var(--s3)"></i>AC note / CM requirement not met</span>
+          <span><i style="background:var(--s1)"></i>[CDPHP] Future Session Scheduled</span>
+          <span><i style="background:var(--s2)"></i>[CDPHP] Engaged and Ineligible</span>
+          <span><i style="background:var(--s3)"></i>[CDPHP] Engaged and Eligible</span>
+          <span><i style="background:var(--s4)"></i>AC Note/CM Req Not Met</span>
         </div>
       </div>
     </div>
 
-    <div class="v c6 h2r">
-      <div class="vh"><h4>Billed panel &mdash; how members join it</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart. Every series is a count of billed members, so one axis and the axis maximum comes from the stacked total. Dated by billing month, not by service date. Returning bands are members billed this month whose previous billed month was 1, 2, or 3+ months back &mdash; they are not new, and counting them as new overstates acquisition. The month-on-month recurring base is deliberately not a fifth band here: at roughly 700 members it flattens every band that matters. It is the retained members visual.">&#9432;</button></div>
+    <div class="v c12 h3r">
+      <div class="vh"><h4>Count of CDPHP Patients by Eligibility and Engagement (Billing File Month)</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart. Member count on the y axis, billing file month on the x axis &mdash; dated by the file we bill from, not by service date. Every series is a member count, so one axis and the axis maximum comes from the stacked total. The returning bands are members on this month&rsquo;s file whose previous billed month was 1, 2, or 3+ months back: they are not new, and counting them as new overstates acquisition.">&#9432;</button></div>
       </div>
-      <p class="info">Only the members who joined or rejoined the billed panel this month. The month-on-month recurring base &mdash; around four in five billed members &mdash; is the retained members visual below.</p>
+      <p class="info">Same population as the visual above, cut by how each member arrived on the billing file. Four in five are month-on-month recurring.</p>
       <div class="body"><div class="ch" id="b-panel"></div>
         <div class="lg">
-          <span><i style="background:var(--s1)"></i>New</span>
-          <span><i style="background:var(--s2)"></i>Returning, 1 month absent</span>
-          <span><i style="background:var(--s3)"></i>Returning, 2 months</span>
-          <span><i style="background:var(--s4)"></i>Returning, 3+ months</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="v c8 h3r">
-      <div class="vh"><h4>Current month invoice &mdash; sent on the 15th</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: table visual, not a matrix &mdash; one row per billed member, no aggregation. This is the invoice itself, so the column list is the deliverable and it has to be agreed field by field. The export also carries billing_month, no_insurance_check and carrier_group_id, which are dropped here only to fit the tile.">&#9432;</button></div>
-      </div>
-      <p class="info">1,192 candidate lines on the August invoice, 842 of them billable; five shown. Member ids and practice names in this mock-up are invented.</p>
-      <div class="body" id="b-inv"></div>
-    </div>
-
-    <div class="v c4 h3r">
-      <div class="vh"><h4>ACP consent response</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: 100% stacked column chart. Share of CDPHP patients by their recorded response to the ACP consent request. Consent gates what we may share with the payer, so no response is an operational queue, not a neutral answer.">&#9432;</button></div>
-      </div>
-      <div class="body"><div class="ch" id="b-acp"></div>
-        <div class="lg">
-          <span><i style="background:var(--s1)"></i>Consented</span>
-          <span><i style="background:var(--s2)"></i>Declined</span>
-          <span><i style="background:var(--s3)"></i>No response</span>
+          <span><i style="background:var(--s1)"></i>MoM Recurring</span>
+          <span><i style="background:var(--s2)"></i>New</span>
+          <span><i style="background:var(--s3)"></i>Recurring - absent last 2 months</span>
+          <span><i style="background:var(--s4)"></i>Recurring - absent last 3+ months</span>
+          <span><i style="background:var(--s5)"></i>Recurring - absent last month</span>
         </div>
       </div>
     </div>
 
     <div class="v c12 h2r">
-      <div class="vh"><h4>Monthly invoice &mdash; billed lines by month</h4>
-        <div class="vf"><span class="wf">All months</span><button class="i" data-tip="Power BI: table visual. The same billed line as the current-month invoice, but one row per member per billing month rather than this month only. It exists so a member's eligibility can be read across months &mdash; a line that flips from eligible to ineligible is a re-check, not a new member.">&#9432;</button></div>
+      <div class="vh"><h4>Current Month Invoice (send on the 15th)</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: table visual, not a matrix &mdash; one row per member, no aggregation. This is the invoice itself, so the column list is the deliverable and has to be agreed field by field. Note case_mg_ineligible_reason: the set of reason values it can hold is not confirmed on our side.">&#9432;</button></div>
       </div>
-      <p class="info">The audit trail behind the invoice. Same member appearing twice with different eligibility is the case the payer queries most.</p>
+      <p class="info">Five rows shown of the full export. Member ids here are invented, in the real format.</p>
+      <div class="body" id="b-inv"></div>
+    </div>
+
+    <div class="v c7 h2r">
+      <div class="vh"><h4>Monthly Invoice</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: table visual. The same billed line as the current-month invoice but across invoice months rather than this month only, so a member&rsquo;s eligibility can be read month to month. A line that flips from eligible to ineligible is a re-check, not a new member.">&#9432;</button></div>
+      </div>
       <div class="body" id="b-invhist"></div>
+    </div>
+
+    <div class="v c5 h2r">
+      <div class="vh"><h4>ACP Consent Response - CDPHP Patients</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: table visual. One row per consent answer: the consent asked for, the date the patient answered, and the answer. Consent gates what we may share with the payer, so a false is an operational queue rather than a neutral answer. PLATFORM is the only consent type present in the source.">&#9432;</button></div>
+      </div>
+      <div class="body" id="b-acp"></div>
     </div>
 
   </div>
@@ -1018,9 +1016,12 @@
     if (host.lastChild) host.lastChild.style.borderBottom = "0";
   }
 
-  function matrix(id, cols, rows) {
+  /* opt.raw marks a table that is a verbatim data extract rather than a summary: its last
+     row is data, not a total, and its headers are real column names that must not be
+     upper-cased. Omit it and a matrix renders exactly as it always has. */
+  function matrix(id, cols, rows, opt) {
     var host = document.getElementById(id); if (!host) return;
-    var t = document.createElement("table"); t.className = "mx";
+    var t = document.createElement("table"); t.className = (opt && opt.raw) ? "mx raw" : "mx";
     var hr = document.createElement("tr");
     cols.forEach(function (c) { var th = document.createElement("th"); th.textContent = c; hr.appendChild(th); });
     t.appendChild(hr);
@@ -1074,12 +1075,18 @@
      for the duration of the draw and then hidden again. A hidden page measures
      as zero width and the charts render at a fallback size. Do not remove this. */
   function render(draw) {
-    var pages = Array.prototype.slice.call(document.querySelectorAll(".page"));
-    pages.forEach(function (p) { p.classList.add("on"); });
-    draw();
-    REACTIVE.forEach(drawReactive);
-    pages.forEach(function (p, i) { p.classList.toggle("on", i === 0); });
-    wire();
+    /* One frame of delay before anything is measured. This script runs while the document
+       is still being parsed, and at that point nothing has been laid out — host.clientWidth
+       reads 0 and every chart silently falls back to the 460px default. That is invisible on
+       a tile three or four columns wide and glaring on a full-width one. */
+    requestAnimationFrame(function () {
+      var pages = Array.prototype.slice.call(document.querySelectorAll(".page"));
+      pages.forEach(function (p) { p.classList.add("on"); });
+      draw();
+      REACTIVE.forEach(drawReactive);
+      pages.forEach(function (p, i) { p.classList.toggle("on", i === 0); });
+      wire();
+    });
   }
 
   function wire() {
@@ -1800,59 +1807,70 @@ APTI.render(function () {
       funnel = APTI.funnel, spark = APTI.spark, smallMultiples = APTI.smallMultiples, matrix = APTI.matrix;
 
 
-  /* ---------------- BILLING AND ELIGIBILITY ---------------- */
+  /* ---------------- BILLING AND ELIGIBILITY ----------------
+     Four months, not twelve, and three on the stacked one: that is the window the
+     source dashboard carries. Sep 2026 has not started, so only Future Session
+     Scheduled has a value in it. */
   columns("b-elig", {
-    labels: MO, h: 78, unit: " patients",
+    labels: ["06/2026", "07/2026", "08/2026", "09/2026"],
+    h: 118, max: 1250, pl: 30, unit: " patients",
     series: [
-      { name: "Engaged and eligible", color: "var(--s1)", values: [714, 733, 748, 706, 771, 790, 804, 819, 836, 850, 862, 842] },
-      { name: "Engaged and ineligible", color: "var(--s2)", values: [243, 251, 248, 239, 262, 271, 280, 292, 301, 313, 322, 350] },
-      { name: "AC note / CM requirement not met", color: "var(--s3)", values: [502, 519, 527, 513, 551, 570, 588, 605, 623, 649, 667, 732] }
-    ]
+      { name: "[CDPHP] Future Session Scheduled", color: "var(--s1)", values: [0, 0, 0, 1010] },
+      { name: "[CDPHP] Engaged and Ineligible", color: "var(--s2)", values: [305, 322, 352, 0] },
+      { name: "[CDPHP] Engaged and Eligible", color: "var(--s3)", values: [805, 862, 838, 0] },
+      { name: "AC Note/CM Req Not Met", color: "var(--s4)", values: [625, 667, 735, 0] }
+    ],
+    fmt: function (v) { return v >= 1000 ? (v / 1000).toFixed(2) + "K" : Math.round(v); }
   });
 
   columns("b-panel", {
-    labels: MO, h: 78, stacked: true, pl: 20, unit: " billed members",
+    labels: ["Jun 2026", "Jul 2026", "Aug 2026"],
+    h: 118, stacked: true, max: 1000, pl: 30, unit: " members",
     series: [
-      { name: "New", color: "var(--s1)", values: [41, 38, 33, 29, 26, 22, 18, 79, 56, 37, 45, 43] },
-      { name: "Returning, 1 month absent", color: "var(--s2)", values: [52, 55, 58, 54, 57, 59, 60, 69, 39, 68, 61, 64] },
-      { name: "Returning, 2 months", color: "var(--s3)", values: [14, 15, 13, 12, 15, 14, 16, 22, 11, 7, 12, 13] },
-      { name: "Returning, 3+ months", color: "var(--s4)", values: [9, 8, 10, 7, 11, 9, 0, 13, 35, 27, 19, 22] }
-    ]
+      { name: "MoM Recurring", color: "var(--s1)", values: [671, 688, 693] },
+      { name: "New", color: "var(--s2)", values: [37, 43, 67] },
+      { name: "Recurring - absent last 2 months", color: "var(--s3)", values: [7, 26, 16] },
+      { name: "Recurring - absent last 3+ months", color: "var(--s4)", values: [27, 25, 26] },
+      { name: "Recurring - absent last month", color: "var(--s5)", values: [68, 81, 41] }
+    ],
+    fmt: function (v) { return v >= 1000 ? (v / 1000).toFixed(0) + "K" : Math.round(v); }
   });
 
   matrix("b-inv",
-    ["Member", "Acuity", "Eligibility", "Case mgmt ineligible", "Insurance line", "Plan", "Referring practice"],
+    ["aptihealth_member_id", "billing_month", "acuity", "engaged_eligible", "case_mg_ineligible_reason",
+     "no_insurance_check", "plan_monthly", "carrier_group_id", "referral_practice_name", "Insurance_lob"],
     [
-      ["APT-4192-8837", "4", { v: "Engaged and eligible", cf: "g" }, "No", "Essential", "Essential Plan 250", "Hudson Valley Family Care"],
-      ["APT-4188-2140", "3", { v: "Engaged and eligible", cf: "g" }, "No", "Commercial", "Commercial HMO", "Rensselaer Primary Partners"],
-      ["APT-4207-6519", "2", { v: "Engaged and ineligible", cf: "w" }, "Yes", "Essential", "Essential Plan 200", "Self sign-up"],
-      ["APT-4173-9902", "4", { v: "AC note not met", cf: "c" }, "No", "Medicaid", "Medicaid Managed Care", "Capital Region Health Center"],
-      ["APT-4211-3376", "1", { v: "Engaged and eligible", cf: "g" }, "No", "Commercial", "Commercial PPO", "Mohawk Valley Pediatrics"],
-      ["Total — 1,192 lines", "avg 2.8", { v: "842 billable" }, "350 yes", "—", "—", "61 practices"]
-    ]
+      ["010f34ac-c1b4-410a-8bda-197e27a241fb", "7/1/26", "1", "[CDPHP] Engaged and Eligible", "N\\A", "True", "HARP NO HCBS", "N\\A", "aptihealth In-House Referrals", "HARP"],
+      ["4a1c7e02-3b9d-4f18-9c26-5e0a7d41b8f3", "7/1/26", "4", "[CDPHP] Engaged and Eligible", "N\\A", "True", "MEDICAID MANAGED CARE", "N\\A", "aptihealth In-House Referrals", "MEDICAID"],
+      ["7f3d9b51-8c04-4a2e-b7d1-2069c5ea3417", "7/1/26", "2", "[CDPHP] Engaged and Ineligible", "No AC note in month", "True", "HARP NO HCBS", "N\\A", "Community referral", "HARP"],
+      ["2e8b0416-d75a-4c93-8f60-91b4de27a05c", "7/1/26", "3", "[CDPHP] Engaged and Eligible", "N\\A", "False", "ESSENTIAL PLAN 250", "N\\A", "aptihealth In-House Referrals", "ESSENTIAL"],
+      ["9c05f7ad-1e62-4b80-a3d7-64f8102bc9e1", "7/1/26", "1", "AC Note/CM Req Not Met", "CM requirement not met", "True", "MEDICAID MANAGED CARE", "N\\A", "PCP referral", "MEDICAID"]
+    ],
+    { raw: true }
   );
 
-  columns("b-acp", {
-    labels: MO, h: 74, stacked: true, pct: true, max: 100, pl: 20, unit: "%",
-    series: [
-      { name: "Consented", color: "var(--s1)", values: [61, 63, 64, 62, 66, 68, 69, 71, 72, 74, 75, 77] },
-      { name: "Declined", color: "var(--s2)", values: [11, 11, 10, 11, 10, 10, 10, 9, 9, 9, 8, 8] },
-      { name: "No response", color: "var(--s3)", values: [28, 26, 26, 27, 24, 22, 21, 20, 19, 17, 17, 15] }
-    ],
-    fmt: function (v) { return Math.round(v) + "%"; }
-  });
-
   matrix("b-invhist",
-    ["Member", "Billing month", "Eligibility", "Case mgmt ineligible", "Acuity", "Months billed to date"],
+    ["aptihealth_member_id", "Invoice Month", "Acuity Index", "engaged_eligible", "case_mg_ineligible_reason", "no_insurance_check"],
     [
-      ["APT-4192-8837", "Aug 2026", { v: "Engaged and eligible", cf: "g" }, "No", "4", { v: "7", bar: 78 }],
-      ["APT-4192-8837", "Jul 2026", { v: "Engaged and eligible", cf: "g" }, "No", "4", { v: "6", bar: 67 }],
-      ["APT-4207-6519", "Aug 2026", { v: "Engaged and ineligible", cf: "w" }, "Yes", "2", { v: "3", bar: 33 }],
-      ["APT-4207-6519", "Jun 2026", { v: "Engaged and eligible", cf: "g" }, "No", "2", { v: "2", bar: 22 }],
-      ["APT-4173-9902", "Aug 2026", { v: "AC note not met", cf: "c" }, "No", "4", { v: "9", bar: 100 }],
-      ["APT-4173-9902", "Jul 2026", { v: "Engaged and eligible", cf: "g" }, "No", "4", { v: "8", bar: 89 }],
-      ["Total — 12,847 lines", "12 months", { v: "9,475 billable" }, "3,372 yes", "avg 2.9", "avg 4.6"]
-    ]
+      ["009af89f-a49e-4618-8c93-1481d02798fc", "8/1/26", "4", "[CDPHP] Engaged and Eligible", "N\\A", "True"],
+      ["009af89f-a49e-4618-8c93-1481d02798fc", "7/1/26", "4", "[CDPHP] Engaged and Eligible", "N\\A", "True"],
+      ["5b62d81f-40a9-4e17-96c3-7ad0e35f2b48", "8/1/26", "2", "[CDPHP] Engaged and Ineligible", "No AC note in month", "True"],
+      ["5b62d81f-40a9-4e17-96c3-7ad0e35f2b48", "6/1/26", "2", "[CDPHP] Engaged and Eligible", "N\\A", "True"],
+      ["4a1c7e02-3b9d-4f18-9c26-5e0a7d41b8f3", "8/1/26", "4", "[CDPHP] Engaged and Eligible", "N\\A", "False"]
+    ],
+    { raw: true }
+  );
+
+  matrix("b-acp",
+    ["Consent Type", "Answer Date", "Consent Response"],
+    [
+      ["PLATFORM", "8/19/26", "false"],
+      ["PLATFORM", "8/14/26", "true"],
+      ["PLATFORM", "8/11/26", "true"],
+      ["PLATFORM", "8/7/26", "false"],
+      ["PLATFORM", "8/3/26", "true"]
+    ],
+    { raw: true }
   );
 
   spark("k-served", [286, 301, 274, 262, 330, 348, 322, 361, 379, 366, 388, 412], "var(--s1)");

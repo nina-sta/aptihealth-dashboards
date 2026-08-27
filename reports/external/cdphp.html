@@ -1667,7 +1667,7 @@
 
     var note = document.createElement("p"); note.className = "note";
     note.textContent = STORE.shared
-      ? "Shared — everyone who opens this report sees the same comments."
+      ? "Shared — everyone who opens this report sees the same comments, refreshed every 15 seconds."
       : (MEM
         ? "This browser will not keep comments (opened from disk). They last until you close the tab — copy them out before you do."
         : "Comments are kept in this browser. Copy all, or file them on GitHub, to get them to anybody else.");
@@ -1681,6 +1681,21 @@
     cbadge.style.display = open ? "" : "none";
   }
   function refresh() { placePins(); renderPanel(); badge(); }
+
+  /* Shared mode only: somebody else's comment has to turn up without a reload, or the
+     panel is a snapshot of whenever the tab was opened. Cheap poll, skipped while a
+     popover is open — redrawing under somebody mid-sentence loses what they typed. */
+  function poll() {
+    setInterval(function () {
+      if (document.hidden || cpop.classList.contains("on")) return;
+      STORE.list(function (all) {
+        var next = JSON.stringify(all || []);
+        if (next === JSON.stringify(CMT)) return;
+        CMT = all || [];
+        refresh();
+      });
+    }, 15000);
+  }
 
   function openPanel(on) {
     cpan.classList.toggle("on", on);
@@ -1724,6 +1739,7 @@
     cpop = document.createElement("div"); cpop.className = "cpop"; root.appendChild(cpop);
 
     STORE.list(function (all) { CMT = all || []; refresh(); });
+    if (STORE.shared) poll();
 
     /* Capture phase: in comment mode a click marks a spot instead of doing what it
        normally does, so a chip must not open its dropdown under the composer. The tab

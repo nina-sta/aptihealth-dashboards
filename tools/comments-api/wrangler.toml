@@ -1,0 +1,18 @@
+# Deploy with: npx wrangler deploy   (run it from this directory)
+# The full walk-through, including the KV namespace, is in README.md next to this file.
+
+name = "apti-report-comments"
+main = "worker.js"
+compatibility_date = "2026-08-01"
+
+# The store. Create it once with:
+#   npx wrangler kv namespace create COMMENTS
+# and paste the id it prints below.
+[[kv_namespaces]]
+binding = "COMMENTS"
+id = "PASTE-THE-KV-NAMESPACE-ID-HERE"
+
+[vars]
+# Which pages may call this Worker. Comma-separated, no trailing slash.
+# Leave it empty only while testing — an empty list answers anybody.
+ALLOW_ORIGINS = "https://nina-sta.github.io"

@@ -36,6 +36,7 @@ docs/
   external/cdphp.md                     spec paired with the CDPHP mock-up
   external/mvp.md                       spec paired with the MVP mock-up
 tools/sync.py                           consistency check — run it before finishing
+tools/comments-api/                     Cloudflare Worker behind shared review comments
 HANDOFF.md                              state of play between sessions
 ```
 
@@ -131,9 +132,13 @@ else. Two consequences:
   one file at a time.
 
 **Making comments shared** — everyone who opens the report sees the same live list — is one
-constant: point `CAPI` at an endpoint speaking the small REST shape in `remoteStore()`, then
-run `python3 tools/sync.py --fix`. That path is written down and has never run against a real
-endpoint. `CREPO` beside it is the repository *File on GitHub* files an issue in.
+constant: point `CAPI` in `charts.js` at the Cloudflare Worker in `tools/comments-api/`, then
+run `python3 tools/sync.py --fix`. Shared mode also polls every 15 seconds, so somebody
+else's comment arrives without a reload, and the panel's footnote changes by itself to say
+the list is shared. The Worker is written and its four-route contract is tested against the
+real client; what has never run is a deployment of it — `tools/comments-api/README.md` has
+the steps and is explicit about what is untested. `CREPO` beside `CAPI` is the repository
+*File on GitHub* files an issue in.
 
 ## Non-negotiable design rules
 

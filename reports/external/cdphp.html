@@ -565,7 +565,77 @@
   </div>
 
   <div class="page" id="pg-acq-cn">
-    <div class="band"><span class="t">CDPHP CN referrals</span><span class="d">Reserved. Nothing is agreed for this page yet &mdash; the visuals and their definitions come next.</span><span class="r"></span></div>
+    <div class="band"><span class="t">Referral volume</span><span class="d">How much CN referral volume arrives, and whether a short month explains a quiet one.</span><span class="r"></span></div>
+
+    <div class="v kpi c4 h1r">
+      <div class="vh"><h4>Total CN referrals</h4>
+        <div class="vf"><span class="wf">Rolling 12 months</span><button class="i" data-tip="Power BI: card. Every CN referral over the window, with the members who went on to complete registration underneath. The gap is the conversion the volume charts cannot show: a little over half of referrals become a registered member.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big">1,602</div>
+        <div class="sub">896 registered members &mdash; 56%</div>
+      </div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>CN referrals per month</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart, one series, referral count by month. The source report puts this on the same visual as referrals per working day, on a second axis. A count and a rate are different units, so here they are two visuals &mdash; the pair beside each other says the same thing without asking the reader to track two scales.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="cn-mo"></div></div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>CN referrals per working day</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: line chart, one series, referrals divided by the working days in the month. This is the tile that stops a short month reading as a slump &mdash; February has the lowest count of the year and a middling rate. Read it against the count beside it, never instead of it.">&#9432;</button></div>
+      </div>
+      <p class="info">February has the year&rsquo;s lowest referral count and an unremarkable rate. The count fell because the month is short.</p>
+      <div class="body"><div class="ch" id="cn-wd"></div></div>
+    </div>
+
+    <div class="band"><span class="t">By CN</span><span class="d">Volume per named care navigator. The source report labels this axis &ldquo;Facility&rdquo; while the values are people.</span><span class="r"></span></div>
+
+    <div class="v c12 h3r">
+      <div class="vh"><h4>Weekly CN referral counts by care navigator</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart, three series, all referral counts, so one axis. Fifty-one weeks, labelled monthly because fifty-one labels do not fit and every fourth one carries no information the reader needs. Two navigators carry almost all of it and swap places in March: the third appears only in a scattered stretch over the winter.">&#9432;</button></div>
+      </div>
+      <p class="info">The two main navigators trade the lead in March 2026 and never trade it back. Whether that is a caseload change, a leaver or a rota is not in the data.</p>
+      <div class="body"><div class="ch" id="cn-wk"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Nowak J.</span>
+          <span><i style="background:var(--s2)"></i>Kowalska A.</span>
+          <span><i style="background:var(--s3)"></i>Wisniewski P.</span>
+        </div>
+        <div class="gapnote">&#9888; Names are invented placeholders. And the source labels this dimension &ldquo;Facility&rdquo; while the values are individuals &mdash; confirm which field is actually being grouped before this is built.</div>
+      </div>
+    </div>
+
+    <div class="band"><span class="t">By referring facility</span><span class="d">Which facilities send CN referrals, and whether we can still tell once a member registers.</span><span class="r"></span></div>
+
+    <div class="v c8 h3r">
+      <div class="vh"><h4>Monthly CN referrals by referring facility</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart. Every series is a referral count, so one axis and the maximum comes from the stacked total. Four facilities plus Other: the source report carries thirteen series, which no palette can separate and which the five-colour rule in this repo forbids. The source also labels its y axis Growth Rate (%) while plotting counts &mdash; that is a mislabel, not a different measure.">&#9432;</button></div>
+      </div>
+      <p class="info">Two facilities send roughly two thirds of everything. The April peak is both of them rising at once, not a new source appearing.</p>
+      <div class="body"><div class="ch" id="cn-fac"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Facility A</span><span><i style="background:var(--s2)"></i>Facility B</span>
+          <span><i style="background:var(--s3)"></i>Facility C</span><span><i style="background:var(--s4)"></i>Facility D</span>
+          <span><i style="background:var(--s5)"></i>Other facilities</span>
+        </div>
+        <div class="gapnote">&#9888; Facility names are labels here on purpose. In the source the same facility appears two or three times over &mdash; a typed name and a system slug counted as separate series &mdash; so the real totals per facility are higher than any one of its rows. That has to be resolved before a facility figure means anything.</div>
+      </div>
+    </div>
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Registered members by referring facility</h4>
+        <div class="vf"><span class="wf">Rolling 12 months</span><button class="i" data-tip="Power BI: clustered bar chart, not the doughnut the source uses &mdash; with one category at 96% a doughnut is a circle with three slivers, and bars at least let the slivers be read. Members who completed registration, grouped by the facility that referred them.">&#9432;</button></div>
+      </div>
+      <p class="info">The facility survives the referral and not the registration. On 859 of 896 registered members there is nothing recorded, so this cannot be joined to outcomes for anyone.</p>
+      <div class="body"><div class="ch" id="cn-reg"></div>
+        <div class="gapnote">&#9888; Blocked: 96% of registered members carry no referring facility. Until that field is populated at registration, no facility-level outcome or conversion measure can be built at all.</div>
+      </div>
+    </div>
+
   </div>
 
   <div class="page" id="pg-outcomes">
@@ -2328,6 +2398,54 @@ APTI.render(function () {
     ],
     { raw: true }
   );
+
+  /* ---------------- CN REFERRALS ----------------
+     From the Sisense "CDPHP CN referrals" widgets of 27 Aug 2026. Weekly and monthly
+     grains both, as the source carries both. Navigator names and facility names are
+     placeholders — see the gapnotes on the tiles. */
+  var CNMO = ["09/2025", "10/2025", "11/2025", "12/2025", "01/2026", "02/2026",
+              "03/2026", "04/2026", "05/2026", "06/2026", "07/2026", "08/2026"];
+
+  columns("cn-mo", {
+    labels: CNMO, h: 76, pl: 24, xfs: 6.5, unit: " referrals",
+    series: [{ name: "Referrals", color: "var(--s1)", values: [108, 140, 119, 112, 118, 103, 160, 190, 141, 153, 149, 109] }]
+  });
+
+  lines("cn-wd", {
+    labels: CNMO, h: 76, max: 14, xfs: 6.5, unit: " / day",
+    series: [{ name: "Referrals per working day", color: "var(--s1)", values: [7.2, 7.78, 7.45, 6.6, 7.87, 6.87, 10.0, 11.2, 9.4, 8.1, 7.85, 7.27] }]
+  });
+
+  columns("cn-wk", {
+    labels: ["9/04", "", "", "", "10/02", "", "", "", "", "11/06", "", "", "", "12/04", "", "", "", "1/01", "", "", "", "", "2/05", "", "", "", "3/05", "", "", "", "4/02", "", "", "", "", "5/07", "", "", "", "6/04", "", "", "", "7/02", "", "", "", "", "8/06", "", ""],
+    h: 108, pl: 22, xfs: 6.5, unit: " referrals",
+    series: [
+      { name: "Nowak J.", color: "var(--s1)", values: [17, 16, 10, 15, 20, 17, 15, 11, 8, 16, 9, 8, 9, 12, 8, 8, 6, 4, 14, 13, 7, 9, 8, 8, 10, 3, 11, 21, 28, 27, 24, 25, 26, 30, 26, 24, 26, 28, 21, 18, 23, 27, 19, 21, 20, 32, 25, 24, 29, 27, 12] },
+      { name: "Kowalska A.", color: "var(--s2)", values: [10, 11, 3, 16, 14, 13, 15, 25, 12, 16, 18, 21, 16, 21, 16, 11, 10, 10, 21, 21, 15, 9, 20, 23, 10, 15, 8, 15, 10, 17, 16, 17, 19, 13, 15, 6, 13, 8, 6, 13, 18, 5, 17, 13, 6, 4, 11, 8, 18, 13, 7] },
+      { name: "Wisniewski P.", color: "var(--s3)", values: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 5, 2, 0, 1, 1, 1, 0, 4, 2, 1, 0, 3, 0, 1, 1, 3, 2, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0] }
+    ]
+  });
+
+  columns("cn-fac", {
+    labels: CNMO, h: 106, stacked: true, pl: 26, xfs: 6.5, unit: " referrals",
+    series: [
+      { name: "Facility A", color: "var(--s1)", values: [44, 70, 41, 53, 45, 48, 51, 67, 37, 60, 33, 35] },
+      { name: "Facility B", color: "var(--s2)", values: [33, 38, 46, 29, 32, 24, 52, 47, 40, 46, 63, 36] },
+      { name: "Facility C", color: "var(--s3)", values: [21, 21, 13, 10, 14, 12, 36, 48, 42, 37, 36, 25] },
+      { name: "Facility D", color: "var(--s4)", values: [5, 5, 9, 9, 12, 12, 6, 6, 6, 6, 14, 8] },
+      { name: "Other facilities", color: "var(--s5)", values: [5, 6, 10, 11, 15, 7, 15, 22, 16, 4, 3, 5] }
+    ]
+  });
+
+  bars("cn-reg", {
+    lw: 96, rh: 22, max: 940,
+    rows: [
+      { label: "Not recorded", value: 859, fmt: "859  \u00b7  96%", color: "var(--critical)" },
+      { label: "Facility A", value: 20, fmt: "20  \u00b7  2%", color: "var(--s1)" },
+      { label: "Facility B", value: 12, fmt: "12  \u00b7  1%", color: "var(--s2)" },
+      { label: "Facility C", value: 5, fmt: "5  \u00b7  1%", color: "var(--s3)" }
+    ]
+  });
 
   /* ---------------- PATIENT ACQUISITION ----------------
      From the Sisense "CDPHP Patient Acquisition" report of 20 Aug 2026. Filtered

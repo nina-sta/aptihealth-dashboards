@@ -89,7 +89,41 @@ Three things worth writing down:
 
 ## Page — CDPHP CN referrals
 
-Reserved, no visuals. Nothing agreed yet.
+Every widget from the CN referrals set of 27 Aug 2026, in three bands: Referral volume, By CN,
+By referring facility. **CN is not expanded anywhere in the source** — care navigator is the
+obvious reading and matches the referrals-by-navigator tile on Patient Acquisition, but nobody
+has written it down, so the page uses the initials as given.
+
+Weekly and monthly both, as the source carries both. That makes this the third page to depart
+from the every-measure-is-monthly rule, and for the same reason as Patient Acquisition:
+referral flow is managed weekly.
+
+**Four of the six visuals are blocked, and three of those are the same kind of problem** — the
+data cannot answer the question yet:
+
+- The navigator chart is grouped by a dimension the source labels *Facility* while the values
+  are people's names.
+- The facility chart carries the same facility two or three times over — a typed name and a
+  system slug counted as separate series — so no per-facility total is real.
+- 96% of registered members carry no referring facility at all. That single gap blocks every
+  facility-level conversion and outcome measure, not just the tile it sits on.
+
+Two departures from the source. Its referral count and referrals-per-working-day share one
+visual on two axes; a count and a rate are different units, so they are two tiles here, side by
+side. And its two doughnuts are bars — with one category at 96%, a doughnut is a circle with
+three slivers.
+
+Names on this page — navigators and facilities alike — are placeholders. The source carries real
+people and real hospitals, and neither belongs in a mock-up that gets published.
+
+| Visual | Business question | Owner | Business impact | Status |
+| --- | --- | --- | --- | --- |
+| Total CN referrals | How much CN referral volume is there, and how much of it registers? | _unassigned_ | _to agree_ | Built |
+| CN referrals per month | Is CN referral volume moving? | _unassigned_ | _to agree_ | Built |
+| CN referrals per working day | Is a quiet month quiet, or just short? | _unassigned_ | _to agree_ | Built |
+| Weekly CN referral counts by care navigator | Who is sending the referrals, and has that changed? | _unassigned_ | _to agree_ | Blocked — The source groups this by a dimension it labels “Facility” while the values are individuals. Confirm which field is actually being grouped |
+| Monthly CN referrals by referring facility | Which facilities send us CN referrals? | _unassigned_ | _to agree_ | Blocked — The same facility appears two or three times in the source, as a typed name and as a system slug counted separately. Per-facility totals are meaningless until that is resolved |
+| Registered members by referring facility | Can we still tell where a member came from once they register? | _unassigned_ | _to agree_ | Blocked — 96% of registered members carry no referring facility. No facility-level conversion or outcome measure can be built until that field is populated at registration |
 
 ## Page — Clinical Outcomes (PHQ9)
 
@@ -248,6 +282,9 @@ fast, how much care they got, and whether the documentation behind it holds up.
 
 Across every page.
 
+- **Registered members by referring facility** — 96% of registered members carry no referring facility. Until that field is populated at registration, no facility-level conversion or outcome measure can be built at all.
+- **Monthly CN referrals by referring facility** — The same facility appears two or three times in the source, as a typed name and as a system slug counted separately.
+- **Weekly CN referral counts by care navigator** — The source groups this by a dimension it labels “Facility” while the values are individuals. Confirm which field is being grouped.
 - **Engaged CDPHP member count** — Inherits the engaged definition argument: 60-day billing lookback against strictly in-month.
 - **Diagnostic interview to first session by acuity** — The wait does not order by acuity and acuity 2 waits longest. Either matching does not use acuity for scheduling, or the acuity stored at booking is not the one shown here.
 - **Members with a 5-point PHQ-9 reduction by Day 0 severity** — The measure is floor-limited: a Day 0 score under 5 cannot fall 5 points, so None-Minimal reads 0% by construction. Agree whether that band is excluded from the denominator or shown at zero with the caveat.

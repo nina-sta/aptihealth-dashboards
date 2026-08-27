@@ -1,18 +1,21 @@
 # Deploy with: npx wrangler deploy   (run it from this directory)
-# The full walk-through, including the KV namespace, is in README.md next to this file.
+# The full walk-through, including the database, is in README.md next to this file.
 
 name = "apti-report-comments"
 main = "worker.js"
 compatibility_date = "2026-08-01"
 
 # The store. Create it once with:
-#   npx wrangler kv namespace create COMMENTS
-# and paste the id it prints below.
-[[kv_namespaces]]
-binding = "COMMENTS"
-id = "b61b6a49a0f34c4580d73d0e25ae9b72"
+#   npx wrangler d1 create apti-report-comments
+# and paste the database_id it prints below. D1 rather than KV on purpose: KV took 30 to
+# 40 seconds to make a new comment visible, which a conversation cannot live with.
+[[d1_databases]]
+binding = "DB"
+database_name = "apti-report-comments"
+database_id = "PASTE-THE-DATABASE-ID-HERE"
 
 [vars]
 # Which pages may call this Worker. Comma-separated, no trailing slash.
+# "null" is what a browser sends for a report opened straight from disk.
 # Leave it empty only while testing — an empty list answers anybody.
-ALLOW_ORIGINS = "https://nina-sta.github.io"
+ALLOW_ORIGINS = "https://nina-sta.github.io,null"

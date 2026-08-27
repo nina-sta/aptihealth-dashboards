@@ -409,7 +409,7 @@
 
     <div class="v c12 h2r">
       <div class="vh"><h4>Current Month Invoice (send on the 15th)</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: table visual, not a matrix &mdash; one row per member, no aggregation. This is the invoice itself, so the column list is the deliverable and has to be agreed field by field. Note case_mg_ineligible_reason: the set of reason values it can hold is not confirmed on our side.">&#9432;</button></div>
+        <div class="vf"><button class="i" data-tip="Power BI: table visual, not a matrix &mdash; one row per member, no aggregation. This is the invoice itself, so the column list is the deliverable and has to be agreed field by field. Note case_mg_ineligible_reason: the set of reason values it can hold is not confirmed on our side, which is why this tile shows REASON 1 and REASON 2 rather than guessing at them.">&#9432;</button></div>
       </div>
       <p class="info">Five rows shown of the full export. Member ids here are invented, in the real format.</p>
       <div class="body" id="b-inv"></div>
@@ -752,9 +752,9 @@
 
     <div class="v c12 h3r">
       <div class="vh"><h4>CDPHP_PHQ9_aptihealth_MMddyyyy</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: table visual, not a matrix &mdash; one row per assessment, no aggregation. This is the submission file itself, so the column list is the deliverable. LOINC is not carried here &mdash; CDPHP takes the CPT code instead, which is the one structural difference from the MVP file.">&#9432;</button></div>
+        <div class="vf"><button class="i" data-tip="Power BI: table visual, not a matrix &mdash; one row per assessment, no aggregation. This is the submission file itself, so the column list is the deliverable and the values deliberately are not: the code column holds an invalid placeholder so nobody builds against a number read off a mock-up. Structurally, CDPHP takes a CPT code where MVP takes a LOINC code and a date-of-service range. Which CPT code belongs here is an open question, not something this tile answers.">&#9432;</button></div>
       </div>
-      <p class="info">Five rows of the full file. <b>Every name, member id and date of birth here is invented</b> &mdash; the real file carries protected health information and none of it belongs in a mock-up.</p>
+      <p class="info">Five rows of the shape of the file, not of the file. <b>Every value here is a deliberate placeholder</b> &mdash; the names are Kowalski and Nowak, the ids count up from one, the dates of birth are round numbers, and the code column is zeros because <b>00000 is not a CPT code and 00000-0 is not a LOINC code</b>. The real file is protected health information. Nothing here can be mistaken for a real member, which is the point.</p>
       <div class="body" id="pg-outcomes-sub"></div>
     </div>
 
@@ -2157,11 +2157,11 @@ APTI.render(function () {
     ["aptihealth_member_id", "billing_month", "acuity", "engaged_eligible", "case_mg_ineligible_reason",
      "no_insurance_check", "plan_monthly", "carrier_group_id", "referral_practice_name", "Insurance_lob"],
     [
-      ["7c41e9a0-2b8d-4f16-9e35-0a7d64b1c8f2", "7/1/26", "1", "[CDPHP] Engaged and Eligible", "N\\A", "True", "HARP NO HCBS", "N\\A", "aptihealth In-House Referrals", "HARP"],
-      ["4a1c7e02-3b9d-4f18-9c26-5e0a7d41b8f3", "7/1/26", "4", "[CDPHP] Engaged and Eligible", "N\\A", "True", "MEDICAID MANAGED CARE", "N\\A", "aptihealth In-House Referrals", "MEDICAID"],
-      ["7f3d9b51-8c04-4a2e-b7d1-2069c5ea3417", "7/1/26", "2", "[CDPHP] Engaged and Ineligible", "No AC note in month", "True", "HARP NO HCBS", "N\\A", "Community referral", "HARP"],
-      ["2e8b0416-d75a-4c93-8f60-91b4de27a05c", "7/1/26", "3", "[CDPHP] Engaged and Eligible", "N\\A", "False", "ESSENTIAL PLAN 250", "N\\A", "aptihealth In-House Referrals", "ESSENTIAL"],
-      ["9c05f7ad-1e62-4b80-a3d7-64f8102bc9e1", "7/1/26", "1", "AC Note/CM Req Not Met", "CM requirement not met", "True", "MEDICAID MANAGED CARE", "N\\A", "PCP referral", "MEDICAID"]
+      ["00000000-0000-0000-0000-000000000001", "7/1/26", "1", "[CDPHP] Engaged and Eligible", "N\\A", "True", "PLAN TYPE A", "N\\A", "aptihealth In-House Referrals", "LOB A"],
+      ["00000000-0000-0000-0000-000000000002", "7/1/26", "4", "[CDPHP] Engaged and Eligible", "N\\A", "True", "PLAN TYPE B", "N\\A", "aptihealth In-House Referrals", "LOB B"],
+      ["00000000-0000-0000-0000-000000000003", "7/1/26", "2", "[CDPHP] Engaged and Ineligible", "REASON 1", "True", "PLAN TYPE A", "N\\A", "PCP group A", "LOB A"],
+      ["00000000-0000-0000-0000-000000000004", "7/1/26", "3", "[CDPHP] Engaged and Eligible", "N\\A", "False", "PLAN TYPE C", "N\\A", "aptihealth In-House Referrals", "LOB C"],
+      ["00000000-0000-0000-0000-000000000005", "7/1/26", "1", "AC Note/CM Req Not Met", "REASON 2", "True", "PLAN TYPE B", "N\\A", "Health system A", "LOB B"]
     ],
     { raw: true }
   );
@@ -2169,11 +2169,11 @@ APTI.render(function () {
   matrix("b-invhist",
     ["aptihealth_member_id", "Invoice Month", "Acuity Index", "engaged_eligible", "case_mg_ineligible_reason", "no_insurance_check"],
     [
-      ["3f80b6d1-5c27-4a93-8e40-91b7de025a6c", "8/1/26", "4", "[CDPHP] Engaged and Eligible", "N\\A", "True"],
-      ["3f80b6d1-5c27-4a93-8e40-91b7de025a6c", "7/1/26", "4", "[CDPHP] Engaged and Eligible", "N\\A", "True"],
-      ["5b62d81f-40a9-4e17-96c3-7ad0e35f2b48", "8/1/26", "2", "[CDPHP] Engaged and Ineligible", "No AC note in month", "True"],
-      ["5b62d81f-40a9-4e17-96c3-7ad0e35f2b48", "6/1/26", "2", "[CDPHP] Engaged and Eligible", "N\\A", "True"],
-      ["4a1c7e02-3b9d-4f18-9c26-5e0a7d41b8f3", "8/1/26", "4", "[CDPHP] Engaged and Eligible", "N\\A", "False"]
+      ["00000000-0000-0000-0000-000000000001", "8/1/26", "1", "[CDPHP] Engaged and Eligible", "N\\A", "True"],
+      ["00000000-0000-0000-0000-000000000001", "7/1/26", "1", "[CDPHP] Engaged and Eligible", "N\\A", "True"],
+      ["00000000-0000-0000-0000-000000000003", "8/1/26", "2", "[CDPHP] Engaged and Ineligible", "REASON 1", "True"],
+      ["00000000-0000-0000-0000-000000000003", "6/1/26", "2", "[CDPHP] Engaged and Eligible", "N\\A", "True"],
+      ["00000000-0000-0000-0000-000000000002", "8/1/26", "4", "[CDPHP] Engaged and Eligible", "N\\A", "False"]
     ],
     { raw: true }
   );
@@ -2556,11 +2556,11 @@ labels: ["None-\u2060Minimal", "Mild", "Moderate", "Severe"],
   matrix("pg-outcomes-sub",
     ["CDPHP Member ID", "Member Last Name", "Member First Name", "Member DOB", "Member Gender", "Date of Service", "CPT Code", "Result"],
     [
-      ["00CD9014772", "Ashford", "Marguerite", "19640318", "F", "20260702", "96127", "7"],
-      ["00CD9021460", "Bellweather", "Desmond", "19910725", "M", "20260713", "96127", "2"],
-      ["00CD9033815", "Cranmore", "Odette", "19830612", "F", "20260729", "96127", "18"],
-      ["00DAM90417T", "Fenwick", "Rupert", "19770104", "M", "20260704", "96127", "11"],
-      ["00DBZ91882A", "Halloway", "Perpetua", "20010930", "Others", "20260714", "96127", "0"]
+      ["00CD0000001", "Kowalska", "Anna", "19700101", "F", "20260701", "00000", "7"],
+      ["00CD0000002", "Kowalski", "Jan", "19800202", "M", "20260702", "00000", "2"],
+      ["00CD0000003", "Nowak", "Maria", "19900303", "F", "20260703", "00000", "18"],
+      ["00CD0000004", "Nowak", "Piotr", "20000404", "M", "20260704", "00000", "11"],
+      ["00CD0000005", "Wisniewska", "Ewa", "20100505", "Others", "20260705", "00000", "0"]
     ],
     { raw: true }
   );

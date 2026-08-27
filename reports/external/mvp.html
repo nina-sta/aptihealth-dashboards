@@ -708,9 +708,9 @@
 
     <div class="v c12 h3r">
       <div class="vh"><h4>mvp_MMddyyyy_PHQ9</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: table visual, not a matrix &mdash; one row per assessment, no aggregation. This is the submission file itself, so the column list is the deliverable. MVP takes the LOINC code (44261-6, the PHQ-9 total) and a date-of-service range rather than a CPT code, which is the one structural difference from the CDPHP file.">&#9432;</button></div>
+        <div class="vf"><button class="i" data-tip="Power BI: table visual, not a matrix &mdash; one row per assessment, no aggregation. This is the submission file itself, so the column list is the deliverable and the values deliberately are not: the code column holds an invalid placeholder so nobody builds against a number read off a mock-up. Structurally, MVP takes a LOINC code and a date-of-service range where CDPHP takes a CPT code. Which LOINC code identifies the PHQ-9 total is an open question, not something this tile answers.">&#9432;</button></div>
       </div>
-      <p class="info">Five rows of the full file. <b>Every name, member id and date of birth here is invented</b> &mdash; the real file carries protected health information and none of it belongs in a mock-up.</p>
+      <p class="info">Five rows of the shape of the file, not of the file. <b>Every value here is a deliberate placeholder</b> &mdash; the names are Kowalski and Nowak, the ids count up from one, the dates of birth are round numbers, and the code column is zeros because <b>00000 is not a CPT code and 00000-0 is not a LOINC code</b>. The real file is protected health information. Nothing here can be mistaken for a real member, which is the point.</p>
       <div class="body" id="pg-mvp-outcomes-sub"></div>
     </div>
 
@@ -2119,11 +2119,11 @@ labels: ["None-\u2060Minimal", "Mild", "Moderate", "Severe"],
   matrix("pg-mvp-outcomes-sub",
     ["Record ID", "Patient Last Name", "Patient First Name", "Patient DOB", "MVP Member ID", "DOS", "DOS End", "LOINC", "Result"],
     [
-      ["9a10bd41", "Ashford", "Marguerite", "03/18/1964", "829014772", "07/22/2026", "07/22/2026", "44261-6", "7"],
-      ["9b22ce07", "Bellweather", "Desmond", "07/25/1991", "829021460", "07/07/2026", "07/07/2026", "44261-6", "2"],
-      ["9c34df19", "Cranmore", "Odette", "06/12/1983", "829033815", "07/23/2026", "07/23/2026", "44261-6", "18"],
-      ["9d46e022", "Fenwick", "Rupert", "01/04/1977", "829040175", "07/09/2026", "07/09/2026", "44261-6", "11"],
-      ["9e58f135", "Halloway", "Perpetua", "09/30/2001", "829051882", "07/16/2026", "07/16/2026", "44261-6", "0"]
+      ["00000001", "Kowalska", "Anna", "01/01/1970", "800000001", "07/01/2026", "07/01/2026", "00000-0", "7"],
+      ["00000002", "Kowalski", "Jan", "02/02/1980", "800000002", "07/02/2026", "07/02/2026", "00000-0", "2"],
+      ["00000003", "Nowak", "Maria", "03/03/1990", "800000003", "07/03/2026", "07/03/2026", "00000-0", "18"],
+      ["00000004", "Nowak", "Piotr", "04/04/2000", "800000004", "07/04/2026", "07/04/2026", "00000-0", "11"],
+      ["00000005", "Wisniewska", "Ewa", "05/05/2010", "800000005", "07/05/2026", "07/05/2026", "00000-0", "0"]
     ],
     { raw: true }
   );

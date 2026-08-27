@@ -7,3 +7,6 @@ node_modules/
 
 # scratch folder for files this sandbox could not delete — safe to remove
 _to_delete/
+
+# wrangler's local build cache
+.wrangler/

@@ -10,7 +10,7 @@ compatibility_date = "2026-08-01"
 # and paste the id it prints below.
 [[kv_namespaces]]
 binding = "COMMENTS"
-id = "PASTE-THE-KV-NAMESPACE-ID-HERE"
+id = "b61b6a49a0f34c4580d73d0e25ae9b72"
 
 [vars]
 # Which pages may call this Worker. Comma-separated, no trailing slash.

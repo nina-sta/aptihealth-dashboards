@@ -240,6 +240,9 @@
     border-radius: 18px; padding: 6px 13px; box-shadow: 0 4px 14px rgba(11, 11, 11, 0.16);
   }
   .cbar .ctog:hover { border-color: var(--ink-muted); }
+  /* Out from behind the panel while it is open, so the button that closes comment mode
+     is never hidden under the thing it opened. */
+  .root.cpo .cbar { right: 352px; }
   .cbar .ctog[aria-pressed="true"] { background: var(--s1); border-color: var(--s1); color: #ffffff; }
   .cbar .ctog .cn {
     font-size: 9.5px; font-weight: 700; font-variant-numeric: tabular-nums;

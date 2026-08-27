@@ -47,9 +47,9 @@ missing from CDPHP is missing everywhere. It carries no report-level slicers: th
 one program and one period, decided when the report is issued, not switched by the reader.
 
 **MVP is the second payer report** and the first test of "CDPHP with visuals switched off".
-It is a real report file with five pages mirroring CDPHP's, all empty: nobody has written down
-what MVP asked for, and which CDPHP visuals are switched on for them is a contractual question
-as much as a data one. It is registered in `sync.py` so the pairing bites the moment a visual
+It has five pages mirroring CDPHP's; only Clinical Outcomes (PHQ9) is built, and the other four
+are named and empty. Nobody has written down what MVP asked for, and which CDPHP visuals are
+switched on for them is a contractual question as much as a data one. It is registered in `sync.py` so the pairing bites the moment a visual
 lands. `EXTERNAL` in `sync.py` lists the payer reports — add to it, not just to `REPORTS`, when
 the third payer arrives, or the new report's visuals start counting as internal ones.
 

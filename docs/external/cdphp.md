@@ -57,7 +57,36 @@ Reserved, no visuals. Nothing agreed yet.
 
 ## Page — Clinical Outcomes (PHQ9)
 
-Reserved, no visuals. Nothing agreed yet.
+Built from the Sisense **Clinical Outcome - PHQ9, GAD7 Report** of 20 Aug 2026, cut to CDPHP.
+The x axis on every trend here is the assessment period — Day 0, 30, 60 — not a month. These
+follow one cohort forward; they are not monthly measures, which is the one place this page
+departs from the every-measure-is-monthly rule and does so deliberately.
+
+Two things about the source worth writing down, because they are easy to lose:
+
+- **Day 0 severity bands never re-sort.** A member is grouped by the band their first score
+  fell in and followed from there, so a member who improves stays in the band they started in.
+  Re-sorting them each assessment would make every line look flat.
+- **The five-point measure has a floor.** A Day 0 score under 5 cannot fall 5 points, so
+  None-Minimal reads 0% however well those members do.
+
+The source dashboard puts the member count on a second axis of the average-score chart. It is
+constant across all three assessments, so here it is the tile subtitle instead — a second axis
+is not allowed in this repo and in this case carries no information.
+
+| Visual | Business question | Owner | Business impact | Status |
+| --- | --- | --- | --- | --- |
+| Members with any reduction in PHQ-9 | Are members getting better at all? | _unassigned_ | _to agree_ | Built |
+| Members with any reduction in GAD-7 | Are members getting better at all on anxiety, not just depression? | _unassigned_ | _to agree_ | Built |
+| Members in remission at Day 90 | How many finish the programme with a score in the normal range? | _unassigned_ | _to agree_ | Built |
+| Members with a 5-point reduction in PHQ-9 | How many improve by a clinically meaningful amount? | _unassigned_ | _to agree_ | Built |
+| Average and median PHQ-9 across the treatment period | How far does a typical member's score fall, and when? | _unassigned_ | _to agree_ | Built |
+| Average PHQ-9 by Day 0 severity | Does the programme work for the sickest members, or only the mild ones? | _unassigned_ | _to agree_ | Built |
+| Average PHQ-9 by baseline acuity | Does our own acuity call at intake predict the outcome? | _unassigned_ | _to agree_ | Built |
+| Members with a 5-point PHQ-9 reduction by Day 0 severity | Which starting band actually clears the clinical threshold? | _unassigned_ | _to agree_ | Blocked — The measure is floor-limited: a Day 0 score under 5 cannot fall 5 points, so None-Minimal reads 0% by construction. Agree whether that band is excluded from the denominator or shown at zero with the caveat |
+| Members by Day 0 severity | How many members sit behind each band on this page? | _unassigned_ | _to agree_ | Built |
+| Average PHQ-9 at Day 0, 30 and 60 by referral group | Do some referral sources send us members who then do better? | _unassigned_ | _to agree_ | Built |
+| Members in remission by registration year | Is the programme getting better at producing remission year on year? | _unassigned_ | _to agree_ | Built |
 
 ## Page — CDPHP Update
 
@@ -140,6 +169,7 @@ fast, how much care they got, and whether the documentation behind it holds up.
 
 Across every page.
 
+- **Members with a 5-point PHQ-9 reduction by Day 0 severity** — The measure is floor-limited: a Day 0 score under 5 cannot fall 5 points, so None-Minimal reads 0% by construction. Agree whether that band is excluded from the denominator or shown at zero with the caveat.
 - **ACP Consent Response - CDPHP Patients** — PLATFORM is the only consent type seen in the source. Confirm whether others exist, and whether Consent Response is strictly boolean or has an unanswered state.
 - **Current Month Invoice (send on the 15th)** — The values `case_mg_ineligible_reason` can hold are not confirmed. The column is in the export; its domain is not written down anywhere.
 - **Members in care by tenure** — Blocked: needs an episode-of-care definition — days in care currently run through inactivation.

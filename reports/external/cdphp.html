@@ -440,7 +440,118 @@
   </div>
 
   <div class="page" id="pg-outcomes">
-    <div class="band"><span class="t">Clinical Outcomes (PHQ9)</span><span class="d">Reserved. Nothing is agreed for this page yet &mdash; the visuals and their definitions come next.</span><span class="r"></span></div>
+    <div class="band"><span class="t">Clinical Outcomes (PHQ9)</span><span class="d">Where members start, where they get to, and how much of that is real improvement.</span><span class="r"></span></div>
+
+    <div class="v kpi c3 h1r">
+      <div class="vh"><h4>Members with any reduction in PHQ-9</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: card. Share of CDPHP members whose latest PHQ-9 is any number of points below their Day 0 score. Any drop counts, so this is the widest possible reading of improvement and the one to quote alongside the 5-point measure, never instead of it.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big">63.1<small>%</small></div>
+        <div class="sub">of 1,186 scored members</div>
+      </div>
+    </div>
+
+    <div class="v kpi c3 h1r">
+      <div class="vh"><h4>Members with any reduction in GAD-7</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: card. The same measure on GAD-7 rather than PHQ-9. The two populations are not the same &mdash; a member can have one instrument scored and not the other &mdash; so the counts differ and the percentages are not comparable point for point.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big">59.4<small>%</small></div>
+        <div class="sub">of 1,098 scored members</div>
+      </div>
+    </div>
+
+    <div class="v kpi c3 h1r">
+      <div class="vh"><h4>Members in remission at Day 90</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: card. Remission is a final PHQ-9 under 5, measured at the Day 90 assessment. Day 60 sits underneath because the two move together and quoting one without the other invites the question.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big">49.2<small>%</small></div>
+        <div class="sub">Day 60: 46.1%</div>
+      </div>
+    </div>
+
+    <div class="v kpi c3 h1r">
+      <div class="vh"><h4>Members with a 5-point reduction in PHQ-9</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: card. A 5-point drop is the clinically meaningful threshold, which is why it is far below the any-reduction figure. It is also floor-limited: a member starting at 4 cannot fall 5 points, so the None-Minimal band scores zero here by construction.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big">27.8<small>%</small></div>
+        <div class="sub">Severe at Day 0: 57.4%</div>
+      </div>
+    </div>
+
+    <div class="v c6 h2r">
+      <div class="vh"><h4>Average and median PHQ-9 across the treatment period</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: line chart, two series, both PHQ-9 points, so one axis. The source dashboard puts the member count on a second axis; it is constant across the three assessments, so it belongs in the subtitle rather than on an axis of its own. Mean and median together because the gap between them is the skew.">&#9432;</button></div>
+      </div>
+      <p class="info">1,253 members with a Day 0 score. The curve flattens between Day 30 and Day 60 &mdash; most of the movement happens in the first month.</p>
+      <div class="body"><div class="ch" id="pg-outcomes-avg"></div>
+        <div class="lg"><span><i style="background:var(--s1)"></i>Average</span><span><i style="background:var(--s2)"></i>Median</span></div>
+      </div>
+    </div>
+
+    <div class="v c6 h2r">
+      <div class="vh"><h4>Average PHQ-9 by Day 0 severity</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: line chart, five series, all PHQ-9 points. Members are grouped by the band their Day 0 score falls in and then followed, so the bands never re-sort &mdash; a member who improves stays in the band they started in. That is what makes the lines comparable.">&#9432;</button></div>
+      </div>
+      <p class="info">Grouped by where a member started, not by where they are now. The steepest fall is always in the highest band, which is partly regression to the mean.</p>
+      <div class="body"><div class="ch" id="pg-outcomes-sev"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>None-Minimal</span><span><i style="background:var(--s2)"></i>Mild</span>
+          <span><i style="background:var(--s3)"></i>Moderate</span><span><i style="background:var(--s4)"></i>Moderately Severe</span>
+          <span><i style="background:var(--s5)"></i>Severe</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Average PHQ-9 by baseline acuity</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: line chart, four series, all PHQ-9 points. Acuity is our own assignment at intake; Day 0 severity is the instrument&rsquo;s. They agree in direction and not in detail, which is why both are here.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="pg-outcomes-acu"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Acuity 1</span><span><i style="background:var(--s2)"></i>Acuity 2</span>
+          <span><i style="background:var(--s3)"></i>Acuity 3</span><span><i style="background:var(--s4)"></i>Acuity 4</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Members with a 5-point PHQ-9 reduction by Day 0 severity</h4>
+        <div class="vf"><span class="wf">Day 60</span><button class="i" data-tip="Power BI: clustered column chart. Share of each Day 0 band that fell 5 points or more by the selected assessment. None-Minimal is zero because a score under 5 cannot drop 5, not because nobody improved &mdash; read this beside the average-score chart, never on its own.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="pg-outcomes-5pt"></div></div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Members by Day 0 severity</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix. The denominators behind every band on this page. PHQ-9 bands as the instrument defines them: None-Minimal under 5, Mild 5-9, Moderate 10-14, Moderately Severe 15-19, Severe 20 and over. Members with no Day 0 score are excluded, which is why this total is above the count on the average-score tile.">&#9432;</button></div>
+      </div>
+      <div class="body" id="pg-outcomes-cnt"></div>
+    </div>
+
+    <div class="v c7 h3r">
+      <div class="vh"><h4>Average PHQ-9 at Day 0, 30 and 60 by referral group</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix with conditional formatting on the Day 60 column. Referral group is where the member came from, so this asks whether a channel sends us people who then do better or worse. A high Day 0 with a low Day 60 is the pattern to want.">&#9432;</button></div>
+      </div>
+      <div class="body" id="pg-outcomes-grp"></div>
+    </div>
+
+    <div class="v c5 h3r">
+      <div class="vh"><h4>Members in remission by registration year</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart. Every series is a percentage of the same cohort, so one axis. Cohorts are dated by registration year, which is why the newest year has no Day 360 bar &mdash; it has not been in care long enough to have one, and reading its absence as a fall is the mistake this visual invites.">&#9432;</button></div>
+      </div>
+      <p class="info">The newest cohort is still filling. Its missing Day 360 bar is a cohort that has not aged, not a result.</p>
+      <div class="body"><div class="ch" id="pg-outcomes-rem"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Day 60</span><span><i style="background:var(--s2)"></i>Day 90</span>
+          <span><i style="background:var(--s3)"></i>Day 180</span><span><i style="background:var(--s4)"></i>Day 360</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <div class="page" id="pg-update">
@@ -1872,6 +1983,85 @@ APTI.render(function () {
     ],
     { raw: true }
   );
+
+  /* ---------------- CLINICAL OUTCOMES (PHQ9) ----------------
+     From the Sisense "Clinical Outcome - PHQ9, GAD7 Report" of 20 Aug 2026.
+     The x axis is the assessment period, not a month: these follow one cohort
+     forward rather than tracking a monthly measure. */
+  var DAYS = ["Day 0", "Day 30", "Day 60"];
+
+  lines("pg-outcomes-avg", {
+    labels: DAYS, h: 84, max: 16, unit: " pts",
+    series: [
+      { name: "Average", color: "var(--s1)", values: [10.97, 9.28, 7.99] },
+      { name: "Median", color: "var(--s2)", values: [10, 8, 7] }
+    ]
+  });
+
+  lines("pg-outcomes-sev", {
+    labels: DAYS, h: 84, max: 27, unit: " pts",
+    series: [
+      { name: "None-Minimal", color: "var(--s1)", values: [2.2, 2.7, 2.7] },
+      { name: "Mild", color: "var(--s2)", values: [7.1, 6.6, 6.1] },
+      { name: "Moderate", color: "var(--s3)", values: [11.9, 9.6, 8.9] },
+      { name: "Moderately Severe", color: "var(--s4)", values: [16.9, 12.7, 11.5] },
+      { name: "Severe", color: "var(--s5)", values: [22.7, 17.0, 15.7] }
+    ]
+  });
+
+  lines("pg-outcomes-acu", {
+    labels: DAYS, h: 80, max: 16, unit: " pts",
+    series: [
+      { name: "Acuity 1", color: "var(--s1)", values: [4.8, 3.9, 3.6] },
+      { name: "Acuity 2", color: "var(--s2)", values: [6.7, 5.8, 5.4] },
+      { name: "Acuity 3", color: "var(--s3)", values: [10.1, 8.5, 8.1] },
+      { name: "Acuity 4", color: "var(--s4)", values: [12.7, 10.9, 10.1] }
+    ]
+  });
+
+  columns("pg-outcomes-5pt", {
+    labels: ["None-\u2060Minimal", "Mild", "Moderate", "Mod. Severe", "Severe"],
+    h: 80, max: 100, pl: 22, xfs: 7, unit: "%",
+    series: [{ name: "Fell 5+ points", color: "var(--s1)", values: [0, 18.1, 39.2, 57.1, 58.6] }],
+    fmt: function (v) { return Math.round(v) + "%"; }
+  });
+
+  matrix("pg-outcomes-cnt",
+    ["Day 0 severity", "Members", "Share"],
+    [
+      ["Mild (5\u20139)", { v: "559", bar: 100 }, "44.6%"],
+      ["Moderate (10\u201314)", { v: "344", bar: 62 }, "27.5%"],
+      ["Moderately Severe (15\u201319)", { v: "211", bar: 38 }, "16.8%"],
+      ["Severe (20+)", { v: "139", bar: 25 }, "11.1%"],
+      ["Total with a Day 0 score", { v: "1,253" }, "100%"]
+    ]
+  );
+
+  matrix("pg-outcomes-grp",
+    ["Referral group", "Day 0", "Day 30", "Day 60"],
+    [
+      ["CDPHP direct", "10.97", "9.28", { v: "7.99", cf: "g" }],
+      ["Albany Med Health System", "9.61", "8.09", { v: "7.68", cf: "g" }],
+      ["aptihealth self sign-up", "8.97", "7.54", { v: "6.96", cf: "g" }],
+      ["Community Care Physicians", "9.47", "8.15", { v: "7.30", cf: "g" }],
+      ["Independent practices", "10.25", "8.40", { v: "7.94", cf: "g" }],
+      ["Trinity Health", "10.09", "8.40", { v: "8.12", cf: "w" }],
+      ["Carelon", "13.58", "11.25", { v: "10.67", cf: "c" }],
+      ["All CDPHP members", "10.97", "9.28", "7.99", ""]
+    ]
+  );
+
+  columns("pg-outcomes-rem", {
+    labels: ["2023", "2024", "2025", "2026"],
+    h: 96, max: 60, pl: 22, unit: "%",
+    series: [
+      { name: "Day 60", color: "var(--s1)", values: [30.3, 31.4, 33.3, 32.0] },
+      { name: "Day 90", color: "var(--s2)", values: [33.7, 34.9, 37.5, 42.3] },
+      { name: "Day 180", color: "var(--s3)", values: [38.1, 39.6, 41.6, 38.1] },
+      { name: "Day 360", color: "var(--s4)", values: [38.0, 40.0, 42.7, 0] }
+    ],
+    fmt: function (v) { return Math.round(v) + "%"; }
+  });
 
   spark("k-served", [286, 301, 274, 262, 330, 348, 322, 361, 379, 366, 388, 412], "var(--s1)");
   spark("k-engaged", [5180, 5240, 5190, 5090, 5410, 5520, 5480, 5610, 5680, 5720, 5924, 5740], "var(--s1)");

@@ -531,8 +531,8 @@
     </div>
 
     <div class="v c4 h2r">
-      <div class="vh"><h4>Average PHQ-9 by Beacon score bracket</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: matrix. Beacon is the external risk score; PHQ-9 is the instrument. This exists to test whether the two agree, and on this data they track each other closely, which is the argument for trusting either.">&#9432;</button></div>
+      <div class="vh"><h4>Average PHQ-9 by external risk score bracket</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: matrix. The risk score comes from a third-party vendor; PHQ-9 is the instrument. This exists to test whether the two agree, and on this data they track each other closely, which is the argument for trusting either.">&#9432;</button></div>
       </div>
       <div class="body" id="pg-outcomes-beacon"></div>
     </div>
@@ -742,9 +742,9 @@
 
     <div class="v c6 h3r">
       <div class="vh"><h4>Average PHQ-9 at Day 0, 30 and 60 by primary payor</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix. Every payer, so this payer can be read in context. It is here deliberately: a number with nothing to compare it against cannot be argued with.">&#9432;</button></div>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix. Every payer, so this payer can be read in context. Other payers are labelled, never named: this report goes to one of them, and disclosing a competitor&rsquo;s outcomes in it is not something a prototype should teach the team to do.">&#9432;</button></div>
       </div>
-      <p class="info">All payers, unfiltered, so this tile is the one place on the page that is not cut to CDPHP.</p>
+      <p class="info">All payers, unfiltered, so this tile is the one place on the page that is not cut to CDPHP. Other payers are labelled rather than named &mdash; their outcomes are not ours to disclose in a report that goes to a competitor.</p>
       <div class="body" id="pg-outcomes-payor"></div>
     </div>
 
@@ -2157,7 +2157,7 @@ APTI.render(function () {
     ["aptihealth_member_id", "billing_month", "acuity", "engaged_eligible", "case_mg_ineligible_reason",
      "no_insurance_check", "plan_monthly", "carrier_group_id", "referral_practice_name", "Insurance_lob"],
     [
-      ["010f34ac-c1b4-410a-8bda-197e27a241fb", "7/1/26", "1", "[CDPHP] Engaged and Eligible", "N\\A", "True", "HARP NO HCBS", "N\\A", "aptihealth In-House Referrals", "HARP"],
+      ["7c41e9a0-2b8d-4f16-9e35-0a7d64b1c8f2", "7/1/26", "1", "[CDPHP] Engaged and Eligible", "N\\A", "True", "HARP NO HCBS", "N\\A", "aptihealth In-House Referrals", "HARP"],
       ["4a1c7e02-3b9d-4f18-9c26-5e0a7d41b8f3", "7/1/26", "4", "[CDPHP] Engaged and Eligible", "N\\A", "True", "MEDICAID MANAGED CARE", "N\\A", "aptihealth In-House Referrals", "MEDICAID"],
       ["7f3d9b51-8c04-4a2e-b7d1-2069c5ea3417", "7/1/26", "2", "[CDPHP] Engaged and Ineligible", "No AC note in month", "True", "HARP NO HCBS", "N\\A", "Community referral", "HARP"],
       ["2e8b0416-d75a-4c93-8f60-91b4de27a05c", "7/1/26", "3", "[CDPHP] Engaged and Eligible", "N\\A", "False", "ESSENTIAL PLAN 250", "N\\A", "aptihealth In-House Referrals", "ESSENTIAL"],
@@ -2169,8 +2169,8 @@ APTI.render(function () {
   matrix("b-invhist",
     ["aptihealth_member_id", "Invoice Month", "Acuity Index", "engaged_eligible", "case_mg_ineligible_reason", "no_insurance_check"],
     [
-      ["009af89f-a49e-4618-8c93-1481d02798fc", "8/1/26", "4", "[CDPHP] Engaged and Eligible", "N\\A", "True"],
-      ["009af89f-a49e-4618-8c93-1481d02798fc", "7/1/26", "4", "[CDPHP] Engaged and Eligible", "N\\A", "True"],
+      ["3f80b6d1-5c27-4a93-8e40-91b7de025a6c", "8/1/26", "4", "[CDPHP] Engaged and Eligible", "N\\A", "True"],
+      ["3f80b6d1-5c27-4a93-8e40-91b7de025a6c", "7/1/26", "4", "[CDPHP] Engaged and Eligible", "N\\A", "True"],
       ["5b62d81f-40a9-4e17-96c3-7ad0e35f2b48", "8/1/26", "2", "[CDPHP] Engaged and Ineligible", "No AC note in month", "True"],
       ["5b62d81f-40a9-4e17-96c3-7ad0e35f2b48", "6/1/26", "2", "[CDPHP] Engaged and Eligible", "N\\A", "True"],
       ["4a1c7e02-3b9d-4f18-9c26-5e0a7d41b8f3", "8/1/26", "4", "[CDPHP] Engaged and Eligible", "N\\A", "False"]
@@ -2240,7 +2240,7 @@ labels: DAYS, h: 84, max: 16, unit: " pts",
     ]
   );
   matrix("pg-outcomes-beacon",
-    ["Beacon score bracket", "Avg PHQ-9 at Day 0"],
+    ["Risk score bracket", "Avg PHQ-9 at Day 0"],
     [
       ["0–20", "3.16"],
       ["21–40", "6.11"],
@@ -2502,24 +2502,24 @@ labels: ["None-\u2060Minimal", "Mild", "Moderate", "Severe"],
     ["Referral group", "Day 0", "Day 30", "Day 60"],
     [
       ["CDPHP direct", "10.97", "9.28", { v: "7.99", cf: "g" }],
-      ["Albany Med Health System", "9.61", "8.09", { v: "7.68", cf: "g" }],
+      ["Health system A", "9.61", "8.09", { v: "7.68", cf: "g" }],
       ["aptihealth self sign-up", "8.97", "7.54", { v: "6.96", cf: "g" }],
-      ["Community Care Physicians", "9.47", "8.15", { v: "7.30", cf: "g" }],
+      ["PCP group A", "9.47", "8.15", { v: "7.30", cf: "g" }],
       ["Independent practices", "10.25", "8.40", { v: "7.94", cf: "g" }],
-      ["Trinity Health", "10.09", "8.40", { v: "8.12", cf: "w" }],
-      ["Carelon", "13.58", "11.25", { v: "10.67", cf: "c" }],
+      ["Health system B", "10.09", "8.40", { v: "8.12", cf: "w" }],
+      ["Managed care vendor", "13.58", "11.25", { v: "10.67", cf: "c" }],
       ["All CDPHP members", "10.97", "9.28", "7.99"]
     ]
   );
   matrix("pg-outcomes-chan",
     ["Referral channel", "Day 0", "Day 30", "Day 60"],
     [
-      ["Embrace 365", "11.4", "9.6", "8.8"],
-      ["HCP Practices", "9.8", "8.2", "7.6"],
-      ["Health Plans", "10.9", "9.2", "8.6"],
-      ["Health Systems", "11.1", "9.3", "8.5"],
-      ["PCP Practices", "9.5", "8.1", "7.4"],
-      ["Self Sign-Up", "8.9", "7.5", "7.0"]
+      ["Employer channel", "11.4", "9.6", "8.8"],
+      ["HCP practices", "9.8", "8.2", "7.6"],
+      ["Health plans", "10.9", "9.2", "8.6"],
+      ["Health systems", "11.1", "9.3", "8.5"],
+      ["PCP practices", "9.5", "8.1", "7.4"],
+      ["Self sign-up", "8.9", "7.5", "7.0"]
     ]
   );
   matrix("pg-outcomes-selfref",
@@ -2540,17 +2540,17 @@ labels: ["None-\u2060Minimal", "Mild", "Moderate", "Severe"],
   matrix("pg-outcomes-payor",
     ["Payor at referral", "Day 0", "Day 30", "Day 60"],
     [
-      ["Aetna", "7.44", "5.57", "5.21"],
-      ["Aetna MAP", "10", "5", "4.6"],
-      ["Aetna Medicare", "11.47", "10.69", "9.84"],
-      ["Anthem", "8.2", "6.89", "6.4"],
-      ["Anthem Medicaid", "10.31", "10.94", "9.7"],
-      ["Anthem Medicare", "11", "8.5", "8.1"],
-      ["CDPHP", "8.03", "6.67", "6.12"],
-      ["CDPHP Medicaid", "10.55", "9.06", "8.34"],
-      ["CDPHP Medicare", "8.68", "7.36", "6.9"],
-      ["Cigna", "8.56", "7.06", "6.55"],
-      ["MVP", "11.25", "11.08", "12.83"]
+      ["This payer", "8.03", "6.67", "6.12"],
+      ["This payer — Medicaid", "10.55", "9.06", "8.34"],
+      ["This payer — Medicare", "8.68", "7.36", "6.90"],
+      ["Payer B", "7.44", "5.57", "5.21"],
+      ["Payer B — managed plan", "10.00", "5.00", "4.60"],
+      ["Payer B — Medicare", "11.47", "10.69", "9.84"],
+      ["Payer C", "8.20", "6.89", "6.40"],
+      ["Payer C — Medicaid", "10.31", "10.94", "9.70"],
+      ["Payer C — Medicare", "11.00", "8.50", "8.10"],
+      ["Payer D", "8.56", "7.06", "6.55"],
+      ["Payer E", "11.25", "11.08", "12.83"]
     ]
   );
   matrix("pg-outcomes-sub",

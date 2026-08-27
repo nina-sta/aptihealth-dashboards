@@ -487,8 +487,8 @@
     </div>
 
     <div class="v c4 h2r">
-      <div class="vh"><h4>Average PHQ-9 by Beacon score bracket</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: matrix. Beacon is the external risk score; PHQ-9 is the instrument. This exists to test whether the two agree, and on this data they track each other closely, which is the argument for trusting either.">&#9432;</button></div>
+      <div class="vh"><h4>Average PHQ-9 by external risk score bracket</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: matrix. The risk score comes from a third-party vendor; PHQ-9 is the instrument. This exists to test whether the two agree, and on this data they track each other closely, which is the argument for trusting either.">&#9432;</button></div>
       </div>
       <div class="body" id="pg-mvp-outcomes-beacon"></div>
     </div>
@@ -698,9 +698,9 @@
 
     <div class="v c6 h3r">
       <div class="vh"><h4>Average PHQ-9 at Day 0, 30 and 60 by primary payor</h4>
-        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix. Every payer, so this payer can be read in context. It is here deliberately: a number with nothing to compare it against cannot be argued with.">&#9432;</button></div>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix. Every payer, so this payer can be read in context. Other payers are labelled, never named: this report goes to one of them, and disclosing a competitor&rsquo;s outcomes in it is not something a prototype should teach the team to do.">&#9432;</button></div>
       </div>
-      <p class="info">All payers, unfiltered, so this tile is the one place on the page that is not cut to MVP.</p>
+      <p class="info">All payers, unfiltered, so this tile is the one place on the page that is not cut to MVP. Other payers are labelled rather than named &mdash; their outcomes are not ours to disclose in a report that goes to a competitor.</p>
       <div class="body" id="pg-mvp-outcomes-payor"></div>
     </div>
 
@@ -1805,7 +1805,7 @@ labels: DAYS, h: 84, max: 16, unit: " pts",
     ]
   );
   matrix("pg-mvp-outcomes-beacon",
-    ["Beacon score bracket", "Avg PHQ-9 at Day 0"],
+    ["Risk score bracket", "Avg PHQ-9 at Day 0"],
     [
       ["0–20", "3.16"],
       ["21–40", "6.11"],
@@ -2067,22 +2067,22 @@ labels: ["None-\u2060Minimal", "Mild", "Moderate", "Severe"],
     ["Referral group", "Day 0", "Day 30", "Day 60"],
     [
       ["MVP direct", "11.25", "11.08", { v: "12.83", cf: "c" }],
-      ["Albany Med Health System", "10.42", "10.11", { v: "11.60", cf: "c" }],
+      ["Health system A", "10.42", "10.11", { v: "11.60", cf: "c" }],
       ["aptihealth self sign-up", "9.68", "9.20", { v: "10.14", cf: "w" }],
       ["Independent practices", "11.04", "10.87", { v: "12.20", cf: "c" }],
-      ["Trinity Health", "10.88", "10.60", { v: "11.95", cf: "c" }],
+      ["Health system B", "10.88", "10.60", { v: "11.95", cf: "c" }],
       ["All MVP members", "11.25", "11.08", "12.83"]
     ]
   );
   matrix("pg-mvp-outcomes-chan",
     ["Referral channel", "Day 0", "Day 30", "Day 60"],
     [
-      ["Embrace 365", "11.4", "9.6", "8.8"],
-      ["HCP Practices", "9.8", "8.2", "7.6"],
-      ["Health Plans", "10.9", "9.2", "8.6"],
-      ["Health Systems", "11.1", "9.3", "8.5"],
-      ["PCP Practices", "9.5", "8.1", "7.4"],
-      ["Self Sign-Up", "8.9", "7.5", "7.0"]
+      ["Employer channel", "11.4", "9.6", "8.8"],
+      ["HCP practices", "9.8", "8.2", "7.6"],
+      ["Health plans", "10.9", "9.2", "8.6"],
+      ["Health systems", "11.1", "9.3", "8.5"],
+      ["PCP practices", "9.5", "8.1", "7.4"],
+      ["Self sign-up", "8.9", "7.5", "7.0"]
     ]
   );
   matrix("pg-mvp-outcomes-selfref",
@@ -2103,17 +2103,17 @@ labels: ["None-\u2060Minimal", "Mild", "Moderate", "Severe"],
   matrix("pg-mvp-outcomes-payor",
     ["Payor at referral", "Day 0", "Day 30", "Day 60"],
     [
-      ["Aetna", "7.44", "5.57", "5.21"],
-      ["Aetna MAP", "10", "5", "4.6"],
-      ["Aetna Medicare", "11.47", "10.69", "9.84"],
-      ["Anthem", "8.2", "6.89", "6.4"],
-      ["Anthem Medicaid", "10.31", "10.94", "9.7"],
-      ["Anthem Medicare", "11", "8.5", "8.1"],
-      ["CDPHP", "8.03", "6.67", "6.12"],
-      ["CDPHP Medicaid", "10.55", "9.06", "8.34"],
-      ["CDPHP Medicare", "8.68", "7.36", "6.9"],
-      ["Cigna", "8.56", "7.06", "6.55"],
-      ["MVP", "11.25", "11.08", "12.83"]
+      ["This payer", "8.03", "6.67", "6.12"],
+      ["This payer — Medicaid", "10.55", "9.06", "8.34"],
+      ["This payer — Medicare", "8.68", "7.36", "6.90"],
+      ["Payer B", "7.44", "5.57", "5.21"],
+      ["Payer B — managed plan", "10.00", "5.00", "4.60"],
+      ["Payer B — Medicare", "11.47", "10.69", "9.84"],
+      ["Payer C", "8.20", "6.89", "6.40"],
+      ["Payer C — Medicaid", "10.31", "10.94", "9.70"],
+      ["Payer C — Medicare", "11.00", "8.50", "8.10"],
+      ["Payer D", "8.56", "7.06", "6.55"],
+      ["Payer E", "11.25", "11.08", "12.83"]
     ]
   );
   matrix("pg-mvp-outcomes-sub",

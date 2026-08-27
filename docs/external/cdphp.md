@@ -102,7 +102,7 @@ else from that file belongs in a repository.
 | Average PHQ-9 by Day 0 severity through Day 180 | Does improvement continue past 90 days, or stop there? | _unassigned_ | _to agree_ | Built |
 | Average PHQ-9 by baseline acuity | Does our own acuity call at intake predict the outcome? | _unassigned_ | _to agree_ | Built |
 | Average PHQ-9 at Day 0 by Day 0 severity | What is the average starting score inside each band? | _unassigned_ | _to agree_ | Built |
-| Average PHQ-9 by Beacon score bracket | Does the Beacon risk score line up with the instrument? | _unassigned_ | _to agree_ | Built |
+| Average PHQ-9 by external risk score bracket | Does the bought-in risk score line up with the instrument? | _unassigned_ | _to agree_ | Built |
 | Average PHQ-9 by registration year | Are newer cohorts starting sicker or finishing better? | _unassigned_ | _to agree_ | Built |
 | Members by Day 0 severity | How many members sit behind each band on this page? | _unassigned_ | _to agree_ | Built |
 | Population by age at referral | Who are we treating, by age at referral? | _unassigned_ | _to agree_ | Built |

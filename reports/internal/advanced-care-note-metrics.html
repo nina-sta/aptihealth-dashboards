@@ -383,17 +383,120 @@
   </div>
 
   <div class="page on" id="pg-advanced-care-note-metrics">
-    <div class="band"><span class="t">Advanced Care Note Metrics</span><span class="d">How documentation is written, how fast it is signed, and whether it holds together.</span><span class="r"></span></div>
 
-    <div class="v c12 h2r">
-      <div class="vh"><h4>What this report is for</h4>
-        <div class="vf"><button class="i" data-tip="Not a visual. The note that says what has and has not been decided about this report, so an empty report cannot be mistaken for a finished one. It comes out the moment the first real visual goes in.">&#9432;</button></div>
+    <div class="band"><span class="t">Care activity notes</span><span class="d">How many are written, and how often the member was actually there.</span><span class="r"></span></div>
+
+    <div class="v kpi c4 h2r">
+      <div class="vh"><h4>Care activity notes written</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: card + line. Every care activity note written in the month for a member eligible for care management. A care activity note is the record of a touchpoint, so this is the volume of case-management contact attempted &mdash; not of contact made. The tile beside it is the one that says whether anybody was reached.">&#9432;</button></div>
       </div>
-      <p class="info">Named on 8 Sep 2026 and registered empty. Documentation measures already exist on the Provider journey &mdash; <b>Notes signed &lt; 24h</b>, <b>Median time from session end to signed note</b> and <b>Golden Thread completeness</b>. Which of them belong here, and what &ldquo;advanced&rdquo; adds to them, is undecided.</p>
       <div class="body">
-        <div class="gapnote">&#9888; Blocked on scope, and on the session-end timestamp: the whole timeliness family depends on that field existing in the model, which is still unconfirmed.</div>
+        <div class="big">555</div>
+        <div class="sub">Aug 2026 &mdash; nearly six times the September figure</div>
+        <div class="spark ch" id="an-vol"></div>
       </div>
     </div>
+
+    <div class="v c8 h2r">
+      <div class="vh"><h4>Care activity notes &mdash; member attended or not</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart, two series, both note counts, so one axis and the maximum comes from the stacked total. The source shows the count and the attendance rate on one grid; a count and a rate are different units, so the rate is the visual below rather than a second axis here.">&#9432;</button></div>
+      </div>
+      <p class="info">Note volume grew almost six-fold over the year. The number of notes where the member was actually there roughly tripled. Those are not the same thing.</p>
+      <div class="body"><div class="ch" id="an-att"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Member attended</span>
+          <span><i style="background:var(--s2)"></i>Member did not attend</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c8 h2r">
+      <div class="vh"><h4>Share of care activity notes where the member attended</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: line chart, one series, the attended share of the stacked column above. It halves over twelve months. Either the notes are being written for contact that is not happening, or the definition of attended changed under us &mdash; both are worth knowing and the data cannot tell them apart.">&#9432;</button></div>
+      </div>
+      <p class="info">This is the finding on the page: attendance falls from 59% to 32% while volume rises. A rate falling as its denominator grows is usually a definition problem, not a performance one.</p>
+      <div class="body"><div class="ch" id="an-rate"></div></div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Care activity notes by acuity</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: clustered bar chart with each row stacked into attended and not attended. The source uses two separate bar charts side by side for the same split, which asks the reader to line up four rows across two visuals; one stacked row per acuity says it in one place. Sicker members get more notes and are no likelier to be reached.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="an-acu"></div></div>
+    </div>
+
+    <div class="band"><span class="t">Touchpoint adherence</span><span class="d">Whether the contractually required contact actually happened.</span><span class="r"></span></div>
+
+    <div class="v kpi c4 h1r">
+      <div class="vh"><h4>Members meeting their required touchpoints</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: KPI card. Members who had at least the number of successful touchpoints their acuity requires, over the members eligible for care management in the month. No target line: the required number per acuity is an assumption in this mock-up and not a confirmed contractual figure.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big">22<small>%</small></div>
+        <div class="sub">73 of 331 eligible members</div>
+      </div>
+    </div>
+
+    <div class="v kpi c4 h1r">
+      <div class="vh"><h4>Members with no successful touchpoint</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: KPI card. Eligible members for whom every touchpoint attempt in the month failed, or none was attempted. This is a count that should be zero, which is why it is red &mdash; the only category on this page allowed that colour.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big" style="color:var(--critical)">166</div>
+        <div class="sub">of 331 eligible members &mdash; half the panel</div>
+      </div>
+    </div>
+
+    <div class="v c4 h1r">
+      <div class="vh"><h4>Touchpoint outcome by communication type</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: stacked column chart, two series, both attempt counts. Which channel a touchpoint was attempted on and whether it worked. In-app messaging carries most of the volume and almost none of the success; the phone carries the reverse.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="an-chan"></div>
+        <div class="lg"><span><i style="background:var(--s1)"></i>Successful</span><span><i style="background:var(--s2)"></i>Unsuccessful</span></div>
+      </div>
+    </div>
+
+    <div class="v c12 h2r">
+      <div class="vh"><h4>Touchpoint adherence by acuity</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: matrix. Eligible members by acuity, how many touchpoints each managed, and how many cleared the requirement for their acuity. Read the None-successful column first: it is half the panel and it is worst where acuity is highest.">&#9432;</button></div>
+      </div>
+      <div class="body" id="an-adh"></div>
+      <div class="gapnote">&#9888; The required number of touchpoints per acuity is assumed here to rise 1, 2, 3, 4 with acuity. That is a contractual figure nobody has confirmed, and every adherence number on this page moves if it is wrong.</div>
+    </div>
+
+    <div class="v c12 h3r">
+      <div class="vh"><h4>Touchpoints by provider</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Top 5</span><button class="i" data-tip="Power BI: matrix, successful and unsuccessful touchpoint counts per provider, with the success rate as conditional formatting. The source lists all 201 providers on one page with no sort and no rate; the rate is what makes the list readable and the sort is what makes it actionable.">&#9432;</button></div>
+      </div>
+      <div class="body" id="an-prov"></div>
+      <div class="gapnote">&#9888; Provider names are invented. The success rate spans 6% to 71% across the group, which is either a real difference in how people work or a difference in which members they were handed. Nothing here can tell the two apart.</div>
+    </div>
+
+    <div class="band"><span class="t">The lists</span><span class="d">Who is eligible, who is adherent, and who has gone quiet. Every value below is invented.</span><span class="r"></span></div>
+
+    <div class="v c12 h3r">
+      <div class="vh"><h4>Members eligible for care management</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: table &mdash; a worklist rather than a summary, so a case manager can act on a named member. The source carries the member&rsquo;s full name, date of birth, email, mobile number, insurance id and group id in one grid, which is what makes it protected health information rather than a report.">&#9432;</button></div>
+      </div>
+      <p class="info">Column list only. Insurance id, group id, date of birth, email and mobile are in the source and deliberately not here.</p>
+      <div class="body" id="an-elig"></div>
+      <div class="gapnote">&#9888; Invented member ids. Who may open the real list has not been decided, and that decision gates all three worklists on this page.</div>
+    </div>
+
+    <div class="v c6 h3r">
+      <div class="vh"><h4>Touchpoint adherence by member</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: table. One row per eligible member: what their acuity requires, what they got, and whether that clears it. The source runs this twice, current month and prior month, as two separate visuals; a month chip does the same job in one.">&#9432;</button></div>
+      </div>
+      <div class="body" id="an-mem"></div>
+    </div>
+
+    <div class="v c6 h3r">
+      <div class="vh"><h4>Members with no session in 90 days</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: table. Members still on the platform who have not had a session in three months, with the acuity they started at and the acuity they carry now. They are the members care management exists for, and the ones the touchpoint measures above keep failing to reach.">&#9432;</button></div>
+      </div>
+      <div class="body" id="an-quiet"></div>
+    </div>
+
   </div>
 
   <div class="ptabs" role="group" aria-label="Reports">
@@ -409,7 +512,7 @@
     <a href="../internal/satisfaction-survey-report.html">Satisfaction Survey Report</a>
     <a href="../external/cdphp.html">CDPHP payer report</a>
     <a href="../external/mvp.html">MVP payer report</a>
-    <span class="hint">Named and registered, no visuals yet &mdash; the specification says what has to be decided first.</span>
+    <span class="hint">Every measure is monthly. Chips inside a visual are visual-level filters; hover &#9432; for the Power BI visual type.</span>
   </div>
 
   <div class="dd" id="dd" role="listbox"></div>
@@ -1439,9 +1542,130 @@
 </script>
 <!-- shared:js:end -->
 <script>
-/* No visuals yet. render() still runs: it is what shows the page and wires the
-   tooltip and the comment layer, so a reader can ask for the first one. */
-APTI.render(function () {});
+/* From the Sisense care-management dashboard of 27 Aug 2026 — care activity notes
+   and MVP touchpoint adherence. Every figure is invented. */
+APTI.render(function () {
+  var MO = APTI.MO, columns = APTI.columns, lines = APTI.lines, bars = APTI.bars,
+      spark = APTI.spark, matrix = APTI.matrix;
+
+  var NOTES = [96, 113, 121, 131, 139, 156, 175, 226, 279, 516, 573, 555];
+  var ATT   = [57, 63, 62, 65, 64, 66, 71, 86, 104, 177, 189, 180];
+
+  /* ---- care activity notes ---- */
+
+  spark("an-vol", NOTES, "var(--s1)");
+
+  columns("an-att", {
+    labels: MO, h: 96, stacked: true, pl: 26, unit: " notes",
+    series: [
+      { name: "Member attended", color: "var(--s1)", values: ATT },
+      { name: "Member did not attend", color: "var(--s2)",
+        values: NOTES.map(function (n, i) { return n - ATT[i]; }) }
+    ]
+  });
+
+  lines("an-rate", {
+    labels: MO, h: 92, max: 70,
+    series: [{ name: "Attended", color: "var(--s1)",
+      values: [59.0, 55.4, 50.9, 49.3, 45.7, 42.2, 40.8, 38.0, 37.3, 34.3, 33.0, 32.4] }]
+  });
+
+  bars("an-acu", {
+    lw: 62, rh: 24, max: 230,
+    rows: [
+      { label: "Acuity 4", fmt: "212  \u00b7  31% att.", segments: [
+        { name: "Attended", value: 66, color: "var(--s1)" },
+        { name: "Did not attend", value: 146, color: "var(--s2)" }] },
+      { label: "Acuity 3", fmt: "168  \u00b7  32% att.", segments: [
+        { name: "Attended", value: 54, color: "var(--s1)" },
+        { name: "Did not attend", value: 114, color: "var(--s2)" }] },
+      { label: "Acuity 2", fmt: "121  \u00b7  34% att.", segments: [
+        { name: "Attended", value: 41, color: "var(--s1)" },
+        { name: "Did not attend", value: 80, color: "var(--s2)" }] },
+      { label: "Acuity 1", fmt: "54  \u00b7  35% att.", segments: [
+        { name: "Attended", value: 19, color: "var(--s1)" },
+        { name: "Did not attend", value: 35, color: "var(--s2)" }] }
+    ]
+  });
+
+  /* ---- touchpoint adherence ---- */
+
+  columns("an-chan", {
+    labels: ["In-app", "Phone", "Text", "Other"],
+    h: 74, stacked: true, pl: 26, unit: " attempts",
+    series: [
+      { name: "Successful", color: "var(--s1)", values: [48, 121, 39, 6] },
+      { name: "Unsuccessful", color: "var(--s2)", values: [402, 96, 168, 21] }
+    ]
+  });
+
+  matrix("an-adh",
+    ["Acuity", "Eligible members", "Required per month", "Met the requirement",
+     "4+ touchpoints", "3", "2", "1", "None successful", "3+ unsuccessful"],
+    [
+      ["1", "39", "1", { v: "19", cf: "w" }, "3", "4", "5", "7", { v: "20", cf: "c" }, "3"],
+      ["2", "111", "2", { v: "34", cf: "w" }, "4", "13", "17", "20", { v: "57", cf: "c" }, "7"],
+      ["3", "121", "3", { v: "15", cf: "c" }, "4", "11", "14", "26", { v: "66", cf: "c" }, "18"],
+      ["4", "60", "4", { v: "5", cf: "c" }, "5", "4", "13", "15", { v: "23", cf: "c" }, "17"],
+      ["Total", "331", "\u2014", { v: "73", cf: "c" }, "16", "32", "49", "68", { v: "166", cf: "c" }, "45"]
+    ]
+  );
+
+  matrix("an-prov",
+    ["Provider", "Role", "Successful", "Unsuccessful", "Success rate"],
+    [
+      ["A. Winter", "Case manager", { v: "107", bar: 100 }, "137", { v: "43.9%", cf: "w" }],
+      ["A. Thomas", "Case manager", { v: "68", bar: 64 }, "68", { v: "50.0%", cf: "g" }],
+      ["A. McElrath", "Prescriber", { v: "260", bar: 100 }, "543", { v: "32.4%", cf: "c" }],
+      ["A. Caporee", "Prescriber", { v: "108", bar: 100 }, "111", { v: "49.3%", cf: "w" }],
+      ["A. Ditrocchio", "Behavioral", { v: "52", bar: 49 }, "40", { v: "56.5%", cf: "g" }],
+      ["All providers", "\u2014", { v: "214", bar: 100 }, "687", { v: "23.8%", cf: "c" }]
+    ]
+  );
+
+  /* ---- worklists. Every value invented; the real lists are PHI. ---- */
+
+  matrix("an-elig",
+    ["aptihealth_member_id", "Acuity", "Payer", "Line of business", "Referral date",
+     "Registration date", "Referring channel", "Platform status"],
+    [
+      ["00000000-0000-0000-0000-000000000101", "4", "MVP Health Care", "LOB A", "6/18/26", "6/18/26", "Self sign-up", "In care"],
+      ["00000000-0000-0000-0000-000000000102", "3", "MVP Health Care", "LOB A", "6/21/26", "6/29/26", "HCP practice", "In care"],
+      ["00000000-0000-0000-0000-000000000103", "4", "MVP Medicaid", "LOB B", "6/23/26", "6/23/26", "Self sign-up", "Extended care"],
+      ["00000000-0000-0000-0000-000000000104", "2", "MVP Health Care", "LOB A", "7/01/26", "7/11/26", "PCP practice", "In care"],
+      ["00000000-0000-0000-0000-000000000105", "4", "MVP Medicaid", "LOB B", "7/04/26", "7/04/26", "Health system", "Extended care"],
+      ["00000000-0000-0000-0000-000000000106", "1", "MVP Health Care", "LOB C", "7/09/26", "7/17/26", "Self sign-up", "In care"]
+    ],
+    { raw: true }
+  );
+
+  matrix("an-mem",
+    ["aptihealth_member_id", "Acuity", "Required", "Successful", "Unsuccessful", "Adherence"],
+    [
+      ["00000000-0000-0000-0000-000000000101", "4", "4", "0", "4", "Not adherent"],
+      ["00000000-0000-0000-0000-000000000102", "3", "3", "3", "1", "Adherent"],
+      ["00000000-0000-0000-0000-000000000103", "4", "4", "1", "6", "Not adherent"],
+      ["00000000-0000-0000-0000-000000000104", "2", "2", "2", "0", "Adherent"],
+      ["00000000-0000-0000-0000-000000000105", "4", "4", "0", "3", "Not adherent"],
+      ["00000000-0000-0000-0000-000000000106", "1", "1", "0", "0", "No attempt made"]
+    ],
+    { raw: true }
+  );
+
+  matrix("an-quiet",
+    ["aptihealth_member_id", "Baseline acuity", "Current acuity", "Days since last session", "Platform status"],
+    [
+      ["00000000-0000-0000-0000-000000000107", "4", "2", "171", "Extended care"],
+      ["00000000-0000-0000-0000-000000000108", "4", "4", "148", "Extended care"],
+      ["00000000-0000-0000-0000-000000000109", "3", "3", "132", "Active 90-day"],
+      ["00000000-0000-0000-0000-000000000110", "4", "3", "119", "Extended care"],
+      ["00000000-0000-0000-0000-000000000111", "2", "2", "104", "Active 90-day"],
+      ["00000000-0000-0000-0000-000000000112", "4", "4", "93", "Extended care"]
+    ],
+    { raw: true }
+  );
+
+});
 </script>
 </body>
 </html>

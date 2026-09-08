@@ -383,17 +383,159 @@
   </div>
 
   <div class="page on" id="pg-care-navigators">
-    <div class="band"><span class="t">Care Navigators</span><span class="d">What the care navigation team carries and how it is going.</span><span class="r"></span></div>
 
-    <div class="v c12 h2r">
-      <div class="vh"><h4>What this report is for</h4>
-        <div class="vf"><button class="i" data-tip="Not a visual. The note that says what has and has not been decided about this report, so an empty report cannot be mistaken for a finished one. It comes out the moment the first real visual goes in.">&#9432;</button></div>
+    <div class="band"><span class="t">Referral volume</span><span class="d">How much arrives, who logged it, and where it came from.</span><span class="r"></span></div>
+
+    <div class="v kpi c4 h2r">
+      <div class="vh"><h4>Total referrals</h4>
+        <div class="vf"><span class="wf">Rolling 12 months</span><button class="i" data-tip="Power BI: card. Every referral created over the window, all payers and all sources, with the members who went on to complete registration underneath. The gap is the conversion the volume charts cannot show: a little over half of referrals become a registered member. The CDPHP report counts the same measure filtered to that payer, and is the larger part of this number.">&#9432;</button></div>
       </div>
-      <p class="info">Named on 8 Sep 2026 and registered empty. Care navigation appears today only as the CDPHP CN referrals page &mdash; the payer's view of it. Nothing measures the team internally.</p>
       <div class="body">
-        <div class="gapnote">&#9888; Blocked on what this report is for and who reads it. Nothing has been agreed beyond the name.</div>
+        <div class="big">2,180</div>
+        <div class="sub">1,208 registered members &mdash; 55%</div>
+        <div class="spark ch" id="cn-tot"></div>
       </div>
     </div>
+
+    <div class="v c8 h2r">
+      <div class="vh"><h4>Referrals logged by care navigator</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart, three series, all referral counts, so one axis. Monthly, though the source dashboard offers daily, weekly and monthly on a toggle &mdash; daily is noise at this volume and weekly puts fifty-one labels on an axis that fits twelve. Two navigators carry almost all of it and swap places in March; the third appears only in a scattered stretch over the winter.">&#9432;</button></div>
+      </div>
+      <p class="info">The two main navigators trade the lead in March 2026 and never trade it back. Whether that is a caseload change, a leaver or a rota is not in the data.</p>
+      <div class="body"><div class="ch" id="cn-by"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Nowak J.</span>
+          <span><i style="background:var(--s2)"></i>Kowalska A.</span>
+          <span><i style="background:var(--s3)"></i>Wisniewski P.</span>
+        </div>
+        <div class="gapnote">&#9888; Names are invented placeholders. The source dashboard groups this by a field it labels &ldquo;Care Navigator Facility&rdquo; while the values are individual people &mdash; confirm which field is actually being grouped before this is built.</div>
+      </div>
+    </div>
+
+    <div class="v c8 h3r">
+      <div class="vh"><h4>Monthly referrals by referring facility</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart. Every series is a referral count, so one axis and the maximum comes from the stacked total. Four facilities plus Other: the source carries thirteen series, which no palette can separate and which the five-colour rule in this repo forbids. Only referrals that carry a facility are in here, which is a minority of the total &mdash; read it as a mix, not a volume.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="cn-fac"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Facility A</span><span><i style="background:var(--s2)"></i>Facility B</span>
+          <span><i style="background:var(--s3)"></i>Facility C</span><span><i style="background:var(--s4)"></i>Facility D</span>
+          <span><i style="background:var(--s5)"></i>Other facilities</span>
+        </div>
+        <div class="gapnote">&#9888; The same facility appears two or three times over in the source &mdash; a typed name and a system slug counted as separate rows &mdash; so any single facility total is understated. See the practice list at the bottom of this page.</div>
+      </div>
+    </div>
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Referral payer mix</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: clustered bar chart, not the doughnut the source uses. Eight payer slices in a circle cannot be compared by eye; bars sorted by size can. Members registered in the month, grouped by the payer recorded at referral. One colour, because a payer is a category and none of them is good or bad.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="cn-pay"></div>
+        <div class="gapnote">&#9888; The source lists CDPHP, CDPHP Medicaid and CDPHP Medicare as three unrelated slices. They are one payer with three lines of business, and whether this report wants the payer or the plan has to be decided before the mix means anything.</div>
+      </div>
+    </div>
+
+    <div class="v c12 h3r">
+      <div class="vh"><h4>Referral source by month</h4>
+        <div class="vf"><span class="wf">Rolling 6 months</span><button class="i" data-tip="Power BI: matrix, referral counts by source and month, with a row total. Every column adds up to that month&rsquo;s referrals in the tile above, which is the point of having it: it is the one place the volume chart, the navigator chart and the facility chart are reconciled against each other.">&#9432;</button></div>
+      </div>
+      <div class="body" id="cn-src"></div>
+    </div>
+
+    <div class="band"><span class="t">From referral into care</span><span class="d">How long each step takes, and where members stop.</span><span class="r"></span></div>
+
+    <div class="v kpi c4 h2r">
+      <div class="vh"><h4>Registration to diagnostic interview</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: card + line. Mean days from registration complete to a completed diagnostic interview, previous month, all payers. This is the step intake capacity controls. The same measure filtered to CDPHP is on the CDPHP report; the two should not drift apart, and if they do it is the payer cut that has moved, not the definition.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big">8.8<small> days</small></div>
+        <div class="sub">median 7 &mdash; previous month</div>
+        <div class="spark ch" id="cn-regdi"></div>
+      </div>
+    </div>
+
+    <div class="v kpi c4 h2r">
+      <div class="vh"><h4>Diagnostic interview to first session</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: card + line. Mean days from a completed diagnostic interview to the first therapy session, previous month. It is four times the registration-to-DI wait, so this &mdash; not intake &mdash; is the longest step on the path to care, and it is the one a care navigator has least control over.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big">36.5<small> days</small></div>
+        <div class="sub">median 24 &mdash; previous month</div>
+        <div class="spark ch" id="cn-difs"></div>
+      </div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Members by acuity at referral</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: clustered bar chart, not the doughnut the source uses. Four ordinal acuity levels compared by size is what bars are for; a doughnut makes the reader judge angles and loses the ordering. Counts and shares are both on the bars so nothing is lost in the swap. Acuity as recorded at referral, which is not the same field as the baseline acuity on the outcomes reports.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="cn-acu"></div></div>
+    </div>
+
+    <div class="v c8 h3r">
+      <div class="vh"><h4>Diagnostic interviews by attempts to complete</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart, four series, all member counts, so one axis. Members grouped by the registration month, split by how many diagnostic interviews it took before one was actually attended. The never-completed series is the referral that reached us and then went nowhere &mdash; the single biggest thing this team can act on.">&#9432;</button></div>
+      </div>
+      <p class="info">Roughly one member in six never completes a diagnostic interview at all. That share is flat across the year, so it is not a capacity problem that comes and goes.</p>
+      <div class="body"><div class="ch" id="cn-att"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>One attempt</span><span><i style="background:var(--s5)"></i>Two attempts</span>
+          <span><i style="background:var(--s2)"></i>Three or more</span><span><i style="background:var(--s4)"></i>Never completed</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Registered members by referring facility</h4>
+        <div class="vf"><span class="wf">Rolling 12 months</span><button class="i" data-tip="Power BI: clustered bar chart, not the doughnut the source uses &mdash; with one category at 96% a doughnut is a circle with three slivers, and bars at least let the slivers be read. Members who completed registration, grouped by the facility that referred them. The same measure is on the CDPHP report and finds the same hole.">&#9432;</button></div>
+      </div>
+      <p class="info">The facility survives the referral and not the registration. On 1,159 of 1,208 registered members there is nothing recorded, so this cannot be joined to outcomes for anyone.</p>
+      <div class="body"><div class="ch" id="cn-reg"></div>
+        <div class="gapnote">&#9888; Blocked: 96% of registered members carry no referring facility. Until that field is populated at registration, no facility-level outcome or conversion measure can be built at all.</div>
+      </div>
+    </div>
+
+    <div class="v c12 h2r">
+      <div class="vh"><h4>Initial DI outcome by days from referral</h4>
+        <div class="vf"><span class="wf">Rolling 12 months</span><button class="i" data-tip="Power BI: matrix, counts by outcome and by the gap between the referral and the first diagnostic interview booked for it. Read across a row, not down a column: the question is whether booking a member further out makes them likelier to miss, and it does &mdash; attendance falls from roughly 70% inside three days to under 45% past eleven.">&#9432;</button></div>
+      </div>
+      <div class="body" id="cn-out"></div>
+    </div>
+
+    <div class="band"><span class="t">Who the navigators are chasing</span><span class="d">The lists the team works from. Every value below is invented.</span><span class="r"></span></div>
+
+    <div class="v c12 h3r">
+      <div class="vh"><h4>Members referred, with DI outcome</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: table, not a matrix &mdash; this is a worklist rather than a summary, and it exists so a navigator can act on a named member. The source carries the member&rsquo;s email, mobile number and date of birth in the same grid, which is what makes it protected health information rather than a report.">&#9432;</button></div>
+      </div>
+      <p class="info">Column list only. The source shows four of these worklists with nearly the same columns; they are one list with different filters and should be built once with a filter, not four times.</p>
+      <div class="body" id="cn-list"></div>
+      <div class="gapnote">&#9888; Invented member ids and facility labels. The real list is protected health information &mdash; the mock-up exists to agree the column list and who may open it, which is a decision nobody has taken.</div>
+    </div>
+
+    <div class="v c6 h3r">
+      <div class="vh"><h4>Members whose diagnostic interview was not attended</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: table. The subset of the list above where a diagnostic interview was booked and the member did not attend it, oldest first. This is the queue the outreach work is actually drawn from.">&#9432;</button></div>
+      </div>
+      <div class="body" id="cn-noshow"></div>
+    </div>
+
+    <div class="v c6 h3r">
+      <div class="vh"><h4>Members with a completed DI and no session booked</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: table. Members who cleared the assessment and then stopped, sorted by how long they have been waiting. They are the most expensive members to lose: the intake work is already spent on them.">&#9432;</button></div>
+      </div>
+      <div class="body" id="cn-nosess"></div>
+    </div>
+
+    <div class="v c12 h2r">
+      <div class="vh"><h4>Referrals by HCP practice</h4>
+        <div class="vf"><span class="wf">Rolling 12 months</span><button class="i" data-tip="Power BI: matrix, distinct referral ids by practice. It is here as evidence rather than as a measure: the duplicate rows are real, and they are why every facility figure on this page is understated.">&#9432;</button></div>
+      </div>
+      <div class="body" id="cn-prac"></div>
+      <div class="gapnote">&#9888; Rows 1 and 2 are one practice, and so are rows 4 and 5 &mdash; a typed name and a system slug for the same place. Until the practice list is deduplicated at source, no facility ranking on this page is safe to quote.</div>
+    </div>
+
   </div>
 
   <div class="ptabs" role="group" aria-label="Reports">
@@ -409,7 +551,7 @@
     <a href="../internal/satisfaction-survey-report.html">Satisfaction Survey Report</a>
     <a href="../external/cdphp.html">CDPHP payer report</a>
     <a href="../external/mvp.html">MVP payer report</a>
-    <span class="hint">Named and registered, no visuals yet &mdash; the specification says what has to be decided first.</span>
+    <span class="hint">Every measure is monthly. Chips inside a visual are visual-level filters; hover &#9432; for the Power BI visual type.</span>
   </div>
 
   <div class="dd" id="dd" role="listbox"></div>
@@ -1439,9 +1581,159 @@
 </script>
 <!-- shared:js:end -->
 <script>
-/* No visuals yet. render() still runs: it is what shows the page and wires the
-   tooltip and the comment layer, so a reader can ask for the first one. */
-APTI.render(function () {});
+/* From the Sisense "Care Navigators" dashboard of 27 Aug 2026. Every figure is
+   invented; what is real is the choice of measure and the gaps named on the tiles. */
+APTI.render(function () {
+  var MO = APTI.MO, columns = APTI.columns, bars = APTI.bars, spark = APTI.spark, matrix = APTI.matrix;
+
+  /* ---- referral volume ---- */
+
+  spark("cn-tot", [168, 175, 162, 149, 181, 172, 190, 186, 197, 201, 194, 205], "var(--s1)");
+
+  columns("cn-by", {
+    labels: MO, h: 92, pl: 24, unit: " referrals",
+    series: [
+      { name: "Nowak J.", color: "var(--s1)", values: [42, 45, 39, 33, 48, 44, 51, 40, 38, 41, 37, 35] },
+      { name: "Kowalska A.", color: "var(--s2)", values: [31, 34, 30, 28, 36, 33, 39, 47, 52, 55, 58, 61] },
+      { name: "Wisniewski P.", color: "var(--s3)", values: [0, 0, 6, 9, 11, 7, 0, 0, 0, 0, 0, 0] }
+    ]
+  });
+
+  columns("cn-fac", {
+    labels: MO, h: 106, stacked: true, pl: 26, unit: " referrals",
+    series: [
+      { name: "Facility A", color: "var(--s1)", values: [24, 26, 22, 19, 28, 25, 30, 27, 29, 31, 28, 33] },
+      { name: "Facility B", color: "var(--s2)", values: [18, 20, 17, 15, 21, 19, 22, 24, 23, 25, 26, 27] },
+      { name: "Facility C", color: "var(--s3)", values: [9, 8, 10, 7, 11, 10, 9, 12, 11, 10, 13, 12] },
+      { name: "Facility D", color: "var(--s4)", values: [5, 6, 4, 5, 7, 6, 8, 7, 6, 8, 7, 9] },
+      { name: "Other facilities", color: "var(--s5)", values: [7, 6, 8, 5, 9, 7, 10, 9, 8, 11, 10, 12] }
+    ]
+  });
+
+  bars("cn-pay", {
+    lw: 104, rh: 21, max: 470,
+    rows: [
+      { label: "CDPHP Medicaid", value: 412, fmt: "412  \u00b7  34%", color: "var(--s1)" },
+      { label: "Other payers", value: 238, fmt: "238  \u00b7  20%", color: "var(--s1)" },
+      { label: "CDPHP Medicare", value: 198, fmt: "198  \u00b7  16%", color: "var(--s1)" },
+      { label: "CDPHP commercial", value: 143, fmt: "143  \u00b7  12%", color: "var(--s1)" },
+      { label: "Fidelis Medicaid", value: 121, fmt: "121  \u00b7  10%", color: "var(--s1)" },
+      { label: "MVP Health Care", value: 96, fmt: "96  \u00b7  8%", color: "var(--s1)" }
+    ]
+  });
+
+  matrix("cn-src",
+    ["Referral source", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "6 months"],
+    [
+      ["aptihealth care navigators", "90", "87", "90", "96", "95", "96", { v: "554", bar: 100 }],
+      ["HCP practices", "79", "79", "77", "85", "84", "93", { v: "497", bar: 90 }],
+      ["Health plans", "6", "6", "8", "6", "4", "5", { v: "35", bar: 6 }],
+      ["PCP practices", "5", "5", "7", "5", "4", "4", { v: "30", bar: 5 }],
+      ["Self sign-up", "7", "6", "10", "6", "5", "5", { v: "39", bar: 7 }],
+      ["Not recorded", "3", "3", "5", "3", "2", "2", { v: "18", bar: 3 }],
+      ["Total", "190", "186", "197", "201", "194", "205", { v: "1,173", bar: 100 }]
+    ]
+  );
+
+  /* ---- from referral into care ---- */
+
+  spark("cn-regdi", [7.9, 8.2, 8.0, 9.1, 8.6, 8.4, 9.3, 8.9, 8.7, 9.0, 8.5, 8.8], "var(--s1)");
+  spark("cn-difs", [31.2, 33.4, 34.1, 35.8, 33.9, 35.2, 36.1, 34.8, 37.3, 36.0, 35.4, 36.5], "var(--s2)");
+
+  bars("cn-acu", {
+    lw: 62, rh: 22, max: 720,
+    rows: [
+      { label: "Acuity 4", value: 652, fmt: "652  \u00b7  54%", color: "var(--s4)" },
+      { label: "Acuity 3", value: 230, fmt: "230  \u00b7  19%", color: "var(--s3)" },
+      { label: "Acuity 2", value: 181, fmt: "181  \u00b7  15%", color: "var(--s2)" },
+      { label: "Acuity 1", value: 145, fmt: "145  \u00b7  12%", color: "var(--s1)" }
+    ]
+  });
+
+  columns("cn-att", {
+    labels: MO, h: 106, stacked: true, pl: 26, unit: " members",
+    series: [
+      { name: "One attempt", color: "var(--s1)", values: [62, 68, 60, 55, 70, 66, 74, 71, 78, 80, 76, 83] },
+      { name: "Two attempts", color: "var(--s5)", values: [18, 19, 17, 16, 21, 20, 22, 21, 23, 24, 23, 25] },
+      { name: "Three or more", color: "var(--s2)", values: [7, 8, 6, 6, 9, 8, 9, 9, 10, 10, 9, 11] },
+      { name: "Never completed", color: "var(--s4)", values: [14, 15, 13, 12, 16, 15, 17, 16, 18, 19, 18, 20] }
+    ]
+  });
+
+  bars("cn-reg", {
+    lw: 96, rh: 22, max: 1260,
+    rows: [
+      { label: "Not recorded", value: 1159, fmt: "1,159  \u00b7  96%", color: "var(--critical)" },
+      { label: "Facility A", value: 21, fmt: "21  \u00b7  2%", color: "var(--s1)" },
+      { label: "Facility B", value: 14, fmt: "14  \u00b7  1%", color: "var(--s2)" },
+      { label: "Facility C", value: 8, fmt: "8  \u00b7  1%", color: "var(--s3)" },
+      { label: "Facility D", value: 6, fmt: "6  \u00b7  <1%", color: "var(--s4)" }
+    ]
+  });
+
+  matrix("cn-out",
+    ["First DI outcome", "0\u20133 days", "4\u20136 days", "7\u201310 days", "11+ days", "All", "Share"],
+    [
+      ["Attended", { v: "212", bar: 100 }, "184", "121", "96", "613", { v: "61.2%", cf: "g" }],
+      ["Cancelled", "41", "38", "34", "47", "160", { v: "16.0%", cf: "w" }],
+      ["Did not attend", "33", "31", "29", "44", "137", { v: "13.7%", cf: "c" }],
+      ["Rescheduled, then attended", "18", "22", "24", "28", "92", { v: "9.2%" }],
+      ["Total", "304", "275", "208", "215", "1,002", { v: "100%" }]
+    ]
+  );
+
+  /* ---- worklists. Every value invented; the real lists are PHI. ---- */
+
+  matrix("cn-list",
+    ["aptihealth_member_id", "Registered", "Platform status", "A5 status", "Referring facility", "First DI outcome", "Payer"],
+    [
+      ["00000000-0000-0000-0000-000000000001", "8/03/26", "In care", "Completed", "Facility A", "Attended", "CDPHP Medicaid"],
+      ["00000000-0000-0000-0000-000000000002", "8/05/26", "Registered", "Completed", "Not recorded", "Did not attend", "CDPHP Medicare"],
+      ["00000000-0000-0000-0000-000000000003", "8/07/26", "Registered", "In progress", "Facility B", "Cancelled", "Fidelis Medicaid"],
+      ["00000000-0000-0000-0000-000000000004", "8/11/26", "In care", "Completed", "Not recorded", "Attended", "CDPHP Medicaid"],
+      ["00000000-0000-0000-0000-000000000005", "8/14/26", "Registered", "Not started", "Not recorded", "No DI booked", "MVP Health Care"],
+      ["00000000-0000-0000-0000-000000000006", "8/18/26", "Inactivated", "Not started", "Facility C", "No DI booked", "CDPHP commercial"]
+    ],
+    { raw: true }
+  );
+
+  matrix("cn-noshow",
+    ["aptihealth_member_id", "DI booked", "Attempts", "Days waiting", "Acuity"],
+    [
+      ["00000000-0000-0000-0000-000000000002", "8/09/26", "2", "30", "4"],
+      ["00000000-0000-0000-0000-000000000007", "8/12/26", "1", "27", "3"],
+      ["00000000-0000-0000-0000-000000000008", "8/17/26", "3", "22", "4"],
+      ["00000000-0000-0000-0000-000000000009", "8/21/26", "1", "18", "2"],
+      ["00000000-0000-0000-0000-000000000010", "8/26/26", "1", "13", "4"]
+    ],
+    { raw: true }
+  );
+
+  matrix("cn-nosess",
+    ["aptihealth_member_id", "DI completed", "Days since", "Acuity", "Payer"],
+    [
+      ["00000000-0000-0000-0000-000000000011", "7/14/26", "56", "4", "CDPHP Medicaid"],
+      ["00000000-0000-0000-0000-000000000012", "7/22/26", "48", "3", "CDPHP Medicaid"],
+      ["00000000-0000-0000-0000-000000000013", "8/01/26", "38", "4", "Fidelis Medicaid"],
+      ["00000000-0000-0000-0000-000000000014", "8/10/26", "29", "2", "CDPHP Medicare"],
+      ["00000000-0000-0000-0000-000000000015", "8/19/26", "20", "4", "MVP Health Care"]
+    ],
+    { raw: true }
+  );
+
+  matrix("cn-prac",
+    ["practice_name", "referral_channel", "Distinct referrals"],
+    [
+      ["Facility A, Albany, NY", "HCP Practices", { v: "148", bar: 100 }],
+      ["facility_a", "HCP Practices", { v: "63", bar: 43 }],
+      ["Facility B General Practice", "PCP Practices", { v: "97", bar: 66 }],
+      ["Facility C Hospital, Troy, NY", "HCP Practices", { v: "71", bar: 48 }],
+      ["facility_c_hospital", "HCP Practices", { v: "34", bar: 23 }],
+      ["Facility D Rehabilitation", "Health Systems", { v: "22", bar: 15 }]
+    ]
+  );
+
+});
 </script>
 </body>
 </html>

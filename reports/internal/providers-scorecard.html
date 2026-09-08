@@ -383,17 +383,122 @@
   </div>
 
   <div class="page on" id="pg-providers-scorecard">
-    <div class="band"><span class="t">Providers Scorecard</span><span class="d">One provider at a time, against whatever the group is held to.</span><span class="r"></span></div>
 
-    <div class="v c12 h2r">
+    <div class="v c12 h1r">
       <div class="vh"><h4>What this report is for</h4>
-        <div class="vf"><button class="i" data-tip="Not a visual. The note that says what has and has not been decided about this report, so an empty report cannot be mistaken for a finished one. It comes out the moment the first real visual goes in.">&#9432;</button></div>
+        <div class="vf"><button class="i" data-tip="Not a visual. The note that says how much of the source dashboard this is, and what it does to people, so a partial build cannot be mistaken for a finished one.">&#9432;</button></div>
       </div>
-      <p class="info">Named on 8 Sep 2026 and registered empty. The Provider journey measures the group; a scorecard measures a named person, which is a different report and a different conversation.</p>
+      <p class="info">This report scores a <b>named provider</b> against thresholds, and money is withheld when a threshold is missed. That makes it the most consequential report in this repo and the one where a wrong measure name costs somebody their pay, not just a bad decision. Built from a screen capture, so the measures below are the ones legible in it; the source&rsquo;s <b>Sustainable Metrics</b> and <b>Definitions</b> tabs are not built.</p>
       <div class="body">
-        <div class="gapnote">&#9888; Blocked on what a provider is scored on, who sees the score, and what happens as a result. None of the three is agreed.</div>
+        <div class="gapnote">&#9888; Partial and provisional. Roughly half the source is here. The rest needs a readable export &mdash; and before any of it is built in Power BI, somebody has to say who may open a report that withholds pay, and on what appeal.</div>
       </div>
     </div>
+
+    <div class="band"><span class="t">Utilisation</span><span class="d">Hours available, hours billed, and the threshold in between.</span><span class="r"></span></div>
+
+    <div class="v kpi c4 h2r">
+      <div class="vh"><h4>Billable hours</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: card + line. Hours delivered in sessions that reached a bill, across the whole group. It is the numerator of the utilisation rate beside it and the base of every payout calculation further down the page.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big">4,105<small>.0 h</small></div>
+        <div class="sub">of 6,220 available hours &mdash; Aug 2026</div>
+        <div class="spark ch" id="ps-bh"></div>
+      </div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Utilisation rate against threshold</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: line chart with a constant line for the threshold. Billable hours over available hours. The source draws this as columns with the rate on a second axis; an hours count and a percentage are different units, so the count is the card beside this and the rate is here with the line it is judged against.">&#9432;</button></div>
+      </div>
+      <p class="info">Below the threshold every month of the year, and the gap is roughly the same in August as it was in September.</p>
+      <div class="body"><div class="ch" id="ps-util"></div></div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Where provider hours go</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: clustered bar chart, not the doughnut the source uses &mdash; three slices in a circle is three numbers made harder to read. Available hours split into what was billed, what was worked but not billable, and what was blocked out.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="ps-split"></div>
+        <div class="gapnote">&#9888; Non-billable hours are a third of the total and nothing in the source says what is in them. Until that is broken out, the utilisation threshold is being applied to a denominator nobody has examined.</div>
+      </div>
+    </div>
+
+    <div class="band"><span class="t">Attendance</span><span class="d">The two rates a provider is judged on that a provider does not control.</span><span class="r"></span></div>
+
+    <div class="v c6 h2r">
+      <div class="vh"><h4>No-show rate against threshold</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: line chart with a constant line for the threshold. Sessions the member did not attend, over sessions scheduled. It is the same measure as on Session Activity but applied per provider and tied to pay, which is a different thing to do with one number.">&#9432;</button></div>
+      </div>
+      <p class="info">Over the threshold since March and still climbing.</p>
+      <div class="body"><div class="ch" id="ps-ns"></div></div>
+    </div>
+
+    <div class="v c6 h2r">
+      <div class="vh"><h4>Cancellation rate against threshold</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: line chart with a constant line for the threshold. Cancelled sessions over sessions scheduled. Session Activity shows that the growth in cancellations is entirely automatic ones, which no provider causes &mdash; and this measure does not separate them.">&#9432;</button></div>
+      </div>
+      <p class="info">Rising every month. On Session Activity, all of that growth is automatic cancellations.</p>
+      <div class="body"><div class="ch" id="ps-cx"></div>
+        <div class="gapnote">&#9888; This counts member, provider and automatic cancellations together. Automatic cancellations nearly tripled this year and nobody can say what triggers one, so providers are being scored on a number they do not cause and cannot explain.</div>
+      </div>
+    </div>
+
+    <div class="band"><span class="t">The scorecard</span><span class="d">One row per provider. Names are invented.</span><span class="r"></span></div>
+
+    <div class="v c12 h3r">
+      <div class="vh"><h4>Provider scorecard</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Top 5</span><button class="i" data-tip="Power BI: matrix, one row per provider and visit type, with conditional formatting on each rate against its threshold. The source runs this across three matrices with overlapping columns; one row per provider is what a scorecard is.">&#9432;</button></div>
+      </div>
+      <div class="body" id="ps-card"></div>
+      <div class="gapnote">&#9888; Provider names are invented. Every rate here is compared with a single group-wide threshold, and nothing adjusts for case mix, panel size or the member population a provider was given.</div>
+    </div>
+
+    <div class="band"><span class="t">Pay</span><span class="d">What the scorecard does. This is the part that needs a decision before it is built.</span><span class="r"></span></div>
+
+    <div class="v kpi c4 h1r">
+      <div class="vh"><h4>Providers with pay withheld</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: KPI card. Providers who missed at least one threshold in the pay cycle and had part of their pay withheld as a result. Amber rather than red: this is a policy outcome working as designed, not an error &mdash; whether the policy is right is a different question and not one a colour can answer.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big" style="color:var(--s2)">23</div>
+        <div class="sub">of 187 providers in the cycle &mdash; 12%</div>
+      </div>
+    </div>
+
+    <div class="v c8 h1r">
+      <div class="vh"><h4>Withheld and recovered by pay cycle</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart, two series, both in the same unit. Pay withheld in the cycle and pay later recovered by clearing the threshold. The source draws the cumulative version as an area chart over columns on two axes; the cycle-by-cycle version answers the same question without a second scale.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="ps-wh"></div>
+        <div class="lg"><span><i style="background:var(--s2)"></i>Withheld</span><span><i style="background:var(--s1)"></i>Recovered</span></div>
+      </div>
+    </div>
+
+    <div class="v c12 h3r">
+      <div class="vh"><h4>Withhold by pay cycle and threshold missed</h4>
+        <div class="vf"><span class="wf">Rolling 6 cycles</span><button class="i" data-tip="Power BI: matrix, one row per pay cycle, showing which threshold was missed and what was withheld and recovered as a result. No currency appears anywhere in this report &mdash; amounts are expressed as a share of the cycle, because who may see provider pay has not been decided.">&#9432;</button></div>
+      </div>
+      <div class="body" id="ps-cycle"></div>
+      <div class="gapnote">&#9888; Utilisation is the threshold missed in almost every case, and its denominator includes a third of hours nobody has examined. That makes it the first thing to check before this drives any money at all.</div>
+    </div>
+
+    <div class="v c6 h2r">
+      <div class="vh"><h4>Which threshold was missed</h4>
+        <div class="vf"><span class="wf">Rolling 6 cycles</span><button class="i" data-tip="Power BI: clustered bar chart, count of withhold events by the threshold that triggered them. Read it with the tile beside it: nearly all of the withholding comes from one measure.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="ps-reason"></div></div>
+    </div>
+
+    <div class="v c6 h2r">
+      <div class="vh"><h4>Providers by number of cycles withheld</h4>
+        <div class="vf"><span class="wf">Rolling 6 cycles</span><button class="i" data-tip="Power BI: clustered bar chart, providers grouped by how many pay cycles they have had money withheld in. The tail is the finding: a small group is withheld from repeatedly, which is either a performance problem or a threshold that does not fit their panel.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="ps-rep"></div>
+        <div class="gapnote">&#9888; Nine providers have been withheld from in four or more cycles out of six. Either something is wrong with their work or something is wrong with the threshold as applied to them, and this report cannot tell the difference.</div>
+      </div>
+    </div>
+
   </div>
 
   <div class="ptabs" role="group" aria-label="Reports">
@@ -409,7 +514,7 @@
     <a href="../internal/satisfaction-survey-report.html">Satisfaction Survey Report</a>
     <a href="../external/cdphp.html">CDPHP payer report</a>
     <a href="../external/mvp.html">MVP payer report</a>
-    <span class="hint">Named and registered, no visuals yet &mdash; the specification says what has to be decided first.</span>
+    <span class="hint">Partial build &mdash; the Provider Metrics tab only. Hover &#9432; for the Power BI visual type.</span>
   </div>
 
   <div class="dd" id="dd" role="listbox"></div>
@@ -1439,9 +1544,105 @@
 </script>
 <!-- shared:js:end -->
 <script>
-/* No visuals yet. render() still runs: it is what shows the page and wires the
-   tooltip and the comment layer, so a reader can ask for the first one. */
-APTI.render(function () {});
+/* From the Sisense "Providers Scorecard" dashboard, screen capture of 8 Sep 2026 —
+   the Provider Metrics tab only. Every figure and every provider name is invented. */
+APTI.render(function () {
+  var MO = APTI.MO, columns = APTI.columns, lines = APTI.lines, bars = APTI.bars,
+      spark = APTI.spark, matrix = APTI.matrix;
+
+  /* ---- utilisation ---- */
+
+  spark("ps-bh", [3820, 3910, 3760, 3540, 3980, 3890, 4120, 4040, 4210, 4290, 4160, 4105], "var(--s1)");
+
+  lines("ps-util", {
+    labels: MO, h: 96, max: 100, rule: 75, ruleLabel: "threshold 75%",
+    series: [{ name: "Utilisation", color: "var(--s1)",
+      values: [71.2, 72.0, 70.4, 68.9, 72.6, 71.8, 73.4, 72.9, 74.1, 74.8, 73.6, 73.1] }]
+  });
+
+  bars("ps-split", {
+    lw: 104, rh: 24, max: 4500,
+    rows: [
+      { label: "Billed", value: 4105, fmt: "4,105  \u00b7  66%", color: "var(--s1)" },
+      { label: "Worked, not billable", value: 1928, fmt: "1,928  \u00b7  31%", color: "var(--s2)" },
+      { label: "Blocked out", value: 187, fmt: "187  \u00b7  3%", color: "var(--s5)" }
+    ]
+  });
+
+  /* ---- attendance ---- */
+
+  lines("ps-ns", {
+    labels: MO, h: 96, max: 16, rule: 8, ruleLabel: "threshold 8%",
+    series: [{ name: "No-show", color: "var(--s4)",
+      values: [8.9, 9.1, 9.4, 9.6, 9.8, 9.9, 10.0, 10.1, 10.2, 10.3, 10.1, 10.1] }]
+  });
+
+  lines("ps-cx", {
+    labels: MO, h: 96, max: 20, rule: 12, ruleLabel: "threshold 12%",
+    series: [{ name: "Cancellation", color: "var(--s2)",
+      values: [12.4, 12.6, 12.9, 13.1, 13.4, 13.6, 13.8, 14.0, 14.2, 14.4, 14.6, 14.8] }]
+  });
+
+  /* ---- the scorecard. Provider names invented. ---- */
+
+  matrix("ps-card",
+    ["Provider", "Visit type", "Billable hours", "Available hours", "Utilisation",
+     "Sessions", "No-show rate", "Cancellation rate", "Thresholds missed"],
+    [
+      ["R. Halloway", "Therapy", { v: "111.0", bar: 100 }, "142.0", { v: "78.2%", cf: "g" }, "148", { v: "6.8%", cf: "g" }, { v: "11.4%", cf: "g" }, { v: "None", cf: "g" }],
+      ["T. Ellery", "Therapy", { v: "102.0", bar: 92 }, "138.0", { v: "73.9%", cf: "w" }, "136", { v: "8.4%", cf: "w" }, { v: "13.1%", cf: "w" }, { v: "Utilisation", cf: "w" }],
+      ["M. Ainsley", "Med management", { v: "60.5", bar: 55 }, "88.0", { v: "68.8%", cf: "c" }, "121", { v: "11.2%", cf: "c" }, { v: "15.6%", cf: "c" }, { v: "All three", cf: "c" }],
+      ["S. Marchetti", "Therapy", { v: "88.5", bar: 80 }, "124.0", { v: "71.4%", cf: "w" }, "118", { v: "9.9%", cf: "w" }, { v: "14.2%", cf: "w" }, { v: "Utilisation, cancels", cf: "c" }],
+      ["P. Croft", "Med management", { v: "52.0", bar: 47 }, "80.0", { v: "65.0%", cf: "c" }, "104", { v: "12.6%", cf: "c" }, { v: "16.8%", cf: "c" }, { v: "All three", cf: "c" }],
+      ["All providers", "\u2014", { v: "4,105.0", bar: 100 }, "6,220.0", { v: "73.1%", cf: "w" }, "5,676", { v: "10.1%", cf: "c" }, { v: "14.8%", cf: "c" }, { v: "23 providers", cf: "w" }]
+    ]
+  );
+
+  /* ---- pay ---- */
+
+  columns("ps-wh", {
+    labels: ["Cycle 1", "Cycle 2", "Cycle 3", "Cycle 4", "Cycle 5", "Cycle 6"],
+    h: 74, stacked: true, pl: 26, unit: " share of cycle",
+    series: [
+      { name: "Withheld", color: "var(--s2)", values: [2.1, 2.4, 2.8, 3.1, 3.4, 3.6] },
+      { name: "Recovered", color: "var(--s1)", values: [1.4, 1.5, 1.6, 1.5, 1.4, 1.2] }
+    ]
+  });
+
+  matrix("ps-cycle",
+    ["Pay cycle", "Providers in cycle", "Providers withheld from", "Threshold most often missed",
+     "Withheld, share of cycle", "Recovered next cycle", "Not recovered"],
+    [
+      ["Cycle 1", "179", { v: "14", bar: 61 }, "Utilisation", "2.1%", { v: "67%", cf: "g" }, "0.7%"],
+      ["Cycle 2", "181", { v: "16", bar: 70 }, "Utilisation", "2.4%", { v: "63%", cf: "g" }, "0.9%"],
+      ["Cycle 3", "183", { v: "18", bar: 78 }, "Utilisation", "2.8%", { v: "57%", cf: "w" }, "1.2%"],
+      ["Cycle 4", "184", { v: "20", bar: 87 }, "Utilisation", "3.1%", { v: "48%", cf: "w" }, "1.6%"],
+      ["Cycle 5", "186", { v: "22", bar: 96 }, "Utilisation", "3.4%", { v: "41%", cf: "c" }, "2.0%"],
+      ["Cycle 6", "187", { v: "23", bar: 100 }, "Utilisation", "3.6%", { v: "33%", cf: "c" }, "2.4%"]
+    ]
+  );
+
+  bars("ps-reason", {
+    lw: 116, rh: 22, max: 120,
+    rows: [
+      { label: "Utilisation", value: 103, fmt: "103", color: "var(--s2)" },
+      { label: "Cancellation rate", value: 41, fmt: "41", color: "var(--s2)" },
+      { label: "No-show rate", value: 28, fmt: "28", color: "var(--s2)" },
+      { label: "Note timeliness", value: 9, fmt: "9", color: "var(--s2)" }
+    ]
+  });
+
+  bars("ps-rep", {
+    lw: 116, rh: 22, max: 40,
+    rows: [
+      { label: "One cycle", value: 34, fmt: "34 providers", color: "var(--s1)" },
+      { label: "Two or three", value: 17, fmt: "17 providers", color: "var(--s5)" },
+      { label: "Four or five", value: 6, fmt: "6 providers", color: "var(--s2)" },
+      { label: "All six", value: 3, fmt: "3 providers", color: "var(--s4)" }
+    ]
+  });
+
+});
 </script>
 </body>
 </html>

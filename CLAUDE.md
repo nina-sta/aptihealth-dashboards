@@ -33,7 +33,7 @@ reports/
   internal/care-navigators.html         internal — the care navigation team
   internal/outreach-and-prioritization.html  internal — the queues, and who to chase
   internal/referrals.html               internal — placeholder, the CDPHP CN page copied
-  internal/providers-scorecard.html     internal — named, no visuals yet
+  internal/providers-scorecard.html     internal — providers scored, pay withheld
   internal/satisfaction-survey-report.html   internal — what members say about their care
   external/cdphp.html                   external — the CDPHP payer report, five pages in one file
   external/mvp.html                     external — the MVP payer report, four pages, one built
@@ -55,18 +55,18 @@ largest — every other payer report is this one with visuals switched off — s
 missing from CDPHP is missing everywhere. It carries no report-level slicers: the payer sees
 one program and one period, decided when the report is issued, not switched by the reader.
 
-**One internal report is registered and empty** — Providers Scorecard, named on 8 Sep 2026.
-Care Navigators, Advanced Care Note Metrics, Outreach and Prioritization, Providers
-Compensation, Session Activity and Satisfaction Survey Report were named with it and built the
-same day from the Sisense dashboards. **Referrals is a deliberate placeholder** — the CDPHP CN
-referrals page copied verbatim on 8 Sep 2026 to be argued with, not believed; it counts one
-payer and its title claims more than its content covers, and both are said on its first tile.
-The empty one is one page
-carrying a single *What this report is for* tile that says what has and has not been decided,
-and each has its own specification. The name is the whole of the brief so far, so the first job
-on any of them is scoping, not building — several overlap measures that already live on the
-Patient or Provider journey, and their specs say which. Registering them empty is what makes
-`sync.py` refuse an undocumented first visual. The tile comes out when that visual goes in.
+**No internal report is empty any more.** The eight named on 8 Sep 2026 were all built or
+started the same day from the Sisense dashboards. Two are deliberately incomplete and say so on
+their first tile: **Referrals** is the CDPHP CN referrals page copied verbatim, to be argued
+with rather than believed — it counts one payer and its title claims more than its content
+covers. **Providers Scorecard** is the Provider Metrics tab only; its Sustainable Metrics and
+Definitions tabs need a readable export.
+
+**Providers Scorecard is the one report here that costs somebody money.** It scores a named
+provider against thresholds and records pay withheld when one is missed. Who may open it, what
+a provider may appeal, and whether one group-wide threshold fits every panel are all undecided,
+and no currency appears anywhere in it for that reason. Treat a wrong measure name there as a
+different class of mistake from a wrong measure name elsewhere.
 
 **MVP is the second payer report** and the first test of "CDPHP with visuals switched off".
 It has four pages; only Clinical Outcomes (PHQ9) is built, and the other three are named and

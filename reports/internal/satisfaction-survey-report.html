@@ -383,17 +383,152 @@
   </div>
 
   <div class="page on" id="pg-satisfaction-survey-report">
-    <div class="band"><span class="t">Satisfaction Survey Report</span><span class="d">What members and providers say when we ask them.</span><span class="r"></span></div>
 
-    <div class="v c12 h2r">
-      <div class="vh"><h4>What this report is for</h4>
-        <div class="vf"><button class="i" data-tip="Not a visual. The note that says what has and has not been decided about this report, so an empty report cannot be mistaken for a finished one. It comes out the moment the first real visual goes in.">&#9432;</button></div>
+    <div class="band"><span class="t">Response and score</span><span class="d">How many members answer, and what the answers add up to.</span><span class="r"></span></div>
+
+    <div class="v c8 h3r">
+      <div class="vh"><h4>Survey responses</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart, two series, both response counts, so one axis. Records returned each month, split by whether the member actually answered the questions or left every one blank. The source shows one bar per month labelled &ldquo;cumulative monthly count&rdquo;, which is a contradiction &mdash; the values are monthly, not cumulative.">&#9432;</button></div>
       </div>
-      <p class="info">Named on 8 Sep 2026 and registered empty. The only satisfaction figure in the prototype is <b>Provider satisfaction with Clinically AI</b> on the Provider journey, which is four pilot providers asked informally. There is no member survey at all.</p>
-      <div class="body">
-        <div class="gapnote">&#9888; Blocked on a survey existing: instrument, cadence, who is asked and the threshold that counts as success. Until then there is nothing to report.</div>
+      <p class="info">Records returned nearly doubled over eight months. Almost all of the growth is in records where every question came back blank.</p>
+      <div class="body"><div class="ch" id="ss-resp"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Questions answered</span>
+          <span><i style="background:var(--s2)"></i>Every question blank</span>
+        </div>
+        <div class="gapnote">&#9888; The source labels this &ldquo;cumulative monthly count&rdquo; while plotting a monthly count. One of the label and the measure is wrong, and the two readings differ by a factor of eight by September.</div>
       </div>
     </div>
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Average satisfaction score</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: line chart, mean patient score out of a maximum of 30 &mdash; six questions scored one to five. The fall from 26 to 22 lands in exactly the month the blank records start arriving, which is the reason the two tiles sit side by side.">&#9432;</button></div>
+      </div>
+      <p class="info">Four points lost since June, on a scale of 30. It starts in the same month the blank records do.</p>
+      <div class="body"><div class="ch" id="ss-score"></div>
+        <div class="gapnote">&#9888; If blank records score zero rather than being excluded, this fall is an artefact of counting and not a change in how members feel. That is the first thing to check on this page and nothing here can answer it.</div>
+      </div>
+    </div>
+
+    <div class="v kpi c4 h1r">
+      <div class="vh"><h4>Records with every question blank</h4>
+        <div class="vf"><span class="wf">Sep 2026</span><button class="i" data-tip="Power BI: KPI card. Survey records returned with N/A against all six questions. This is a count that should be near zero and is instead most of the file, which is why it is red.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big" style="color:var(--critical)">1,412</div>
+        <div class="sub">of 1,870 records &mdash; 76%</div>
+      </div>
+    </div>
+
+    <div class="v kpi c4 h1r">
+      <div class="vh"><h4>Members who answered</h4>
+        <div class="vf"><span class="wf">Sep 2026</span><button class="i" data-tip="Power BI: KPI card. Records where at least one question carries an answer. It is the real denominator for every question tile below, and it is a quarter of what the response count suggests.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big">458</div>
+        <div class="sub">24% of records returned</div>
+      </div>
+    </div>
+
+    <div class="v c4 h1r">
+      <div class="vh"><h4>Responses by payer</h4>
+        <div class="vf"><span class="wf">Sep 2026</span><button class="i" data-tip="Power BI: clustered bar chart. Answered records by the carrier group on the member's account. One colour: a payer is a category and none of them is better or worse than another.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="ss-payer"></div></div>
+    </div>
+
+    <div class="band"><span class="t">The six questions</span><span class="d">Each scored one to five. Answered records only.</span><span class="r"></span></div>
+
+    <div class="v c6 h3r">
+      <div class="vh"><h4>I feel understood and supported by my care team</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: 100% stacked column chart. Status colours ship with labels, never colour alone. Blank records are excluded here rather than shown as a band, which is the one departure from the source on this page &mdash; a non-answer is not a rating and putting it on the same scale makes every question look worse than it is.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="ss-q1"></div>
+        <div class="lg">
+          <span><i style="background:var(--good)"></i>Strongly agree</span><span><i style="background:var(--s1)"></i>Agree</span>
+          <span><i style="background:var(--warning)"></i>Neutral</span><span><i style="background:var(--serious)"></i>Disagree</span>
+          <span><i style="background:var(--critical)"></i>Strongly disagree</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c6 h3r">
+      <div class="vh"><h4>I feel we focus on what matters most to me</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: 100% stacked column chart, same scale and same exclusion as the question above it. The six questions move together almost exactly, which is worth knowing before anyone reads a difference between them.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="ss-q2"></div>
+        <div class="lg">
+          <span><i style="background:var(--good)"></i>Strongly agree</span><span><i style="background:var(--s1)"></i>Agree</span>
+          <span><i style="background:var(--warning)"></i>Neutral</span><span><i style="background:var(--serious)"></i>Disagree</span>
+          <span><i style="background:var(--critical)"></i>Strongly disagree</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c6 h3r">
+      <div class="vh"><h4>I feel supported between my therapy sessions</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: 100% stacked column chart. This is the weakest of the six questions and the only one where the agree bands do not clear four fifths &mdash; between-session support is the thing members are least sure of.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="ss-q3"></div>
+        <div class="lg">
+          <span><i style="background:var(--good)"></i>Strongly agree</span><span><i style="background:var(--s1)"></i>Agree</span>
+          <span><i style="background:var(--warning)"></i>Neutral</span><span><i style="background:var(--serious)"></i>Disagree</span>
+          <span><i style="background:var(--critical)"></i>Strongly disagree</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c6 h3r">
+      <div class="vh"><h4>I feel the Advanced Care Program is helping me make progress</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: 100% stacked column chart. The closest thing on the survey to an outcome question, and the one worth reading against the PHQ-9 work on the payer reports rather than against the other five here.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="ss-q4"></div>
+        <div class="lg">
+          <span><i style="background:var(--good)"></i>Strongly agree</span><span><i style="background:var(--s1)"></i>Agree</span>
+          <span><i style="background:var(--warning)"></i>Neutral</span><span><i style="background:var(--serious)"></i>Disagree</span>
+          <span><i style="background:var(--critical)"></i>Strongly disagree</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c6 h3r">
+      <div class="vh"><h4>I can reach my care team when I need support</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: 100% stacked column chart. Access rather than quality, and the strongest of the six. Read it beside the touchpoint adherence on Advanced Care Note Metrics, where half the panel had no successful contact in the month &mdash; the two cannot both be right about the same people.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="ss-q5"></div>
+        <div class="lg">
+          <span><i style="background:var(--good)"></i>Strongly agree</span><span><i style="background:var(--s1)"></i>Agree</span>
+          <span><i style="background:var(--warning)"></i>Neutral</span><span><i style="background:var(--serious)"></i>Disagree</span>
+          <span><i style="background:var(--critical)"></i>Strongly disagree</span>
+        </div>
+        <div class="gapnote">&#9888; 88% say they can reach their care team. On the same population, half of eligible members had no successful touchpoint last month. Either the survey reaches only the members we do reach, or one of the two measures is wrong.</div>
+      </div>
+    </div>
+
+    <div class="v c6 h3r">
+      <div class="vh"><h4>I am satisfied with the Advanced Care Program</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: 100% stacked column chart. The overall question. It tracks the other five within a couple of points every month, so it can stand in for the set when only one number is wanted.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="ss-q6"></div>
+        <div class="lg">
+          <span><i style="background:var(--good)"></i>Strongly agree</span><span><i style="background:var(--s1)"></i>Agree</span>
+          <span><i style="background:var(--warning)"></i>Neutral</span><span><i style="background:var(--serious)"></i>Disagree</span>
+          <span><i style="background:var(--critical)"></i>Strongly disagree</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="band"><span class="t">The file</span><span class="d">One row per survey record. Every value below is invented.</span><span class="r"></span></div>
+
+    <div class="v c12 h3r">
+      <div class="vh"><h4>Survey records</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: table &mdash; the record-level file behind every visual above. The source carries the member's first and last name in this grid alongside their answers, which makes an opinion attributable to a named person and is what turns a survey into protected health information.">&#9432;</button></div>
+      </div>
+      <p class="info">Column list only. The source shows first and last name against each set of answers; neither is here.</p>
+      <div class="body" id="ss-file"></div>
+      <div class="gapnote">&#9888; Invented member ids. A survey answer tied to a name is more sensitive than most of what this repo handles, not less &mdash; who may open this file has not been decided, and it should be decided before it is built.</div>
+    </div>
+
   </div>
 
   <div class="ptabs" role="group" aria-label="Reports">
@@ -409,7 +544,7 @@
     <a href="../internal/satisfaction-survey-report.html" aria-current="page">Satisfaction Survey Report</a>
     <a href="../external/cdphp.html">CDPHP payer report</a>
     <a href="../external/mvp.html">MVP payer report</a>
-    <span class="hint">Named and registered, no visuals yet &mdash; the specification says what has to be decided first.</span>
+    <span class="hint">Monthly since Feb 2026. Chips inside a visual are visual-level filters; hover &#9432; for the Power BI visual type.</span>
   </div>
 
   <div class="dd" id="dd" role="listbox"></div>
@@ -1439,9 +1574,104 @@
 </script>
 <!-- shared:js:end -->
 <script>
-/* No visuals yet. render() still runs: it is what shows the page and wires the
-   tooltip and the comment layer, so a reader can ask for the first one. */
-APTI.render(function () {});
+/* From the Sisense "Satisfaction Survey Report" of 8 Sep 2026. Every figure is
+   invented; the six questions, the 30-point scale and the blank-record problem
+   are the source's own. */
+APTI.render(function () {
+  var columns = APTI.columns, lines = APTI.lines, bars = APTI.bars, matrix = APTI.matrix;
+
+  var SMO = ["02/2026", "03/2026", "04/2026", "05/2026", "06/2026", "07/2026", "08/2026", "09/2026"];
+
+  /* ---- response and score ---- */
+
+  columns("ss-resp", {
+    labels: SMO, h: 118, stacked: true, pl: 30, unit: " records",
+    series: [
+      { name: "Questions answered", color: "var(--s1)", values: [471, 486, 492, 501, 508, 486, 470, 458] },
+      { name: "Every question blank", color: "var(--s2)", values: [609, 844, 928, 969, 1012, 1214, 1360, 1412] }
+    ]
+  });
+
+  lines("ss-score", {
+    labels: SMO, h: 118, max: 30, unit: "",
+    series: [{ name: "Average score", color: "var(--s1)",
+      values: [26.0, 25.8, 25.7, 25.6, 25.4, 23.1, 22.3, 22.0] }]
+  });
+
+  bars("ss-payer", {
+    lw: 96, rh: 21, max: 220,
+    rows: [
+      { label: "CDPHP", value: 201, fmt: "201  \u00b7  44%", color: "var(--s1)" },
+      { label: "MVP Health Care", value: 138, fmt: "138  \u00b7  30%", color: "var(--s1)" },
+      { label: "Medicaid", value: 79, fmt: "79  \u00b7  17%", color: "var(--s1)" },
+      { label: "Other payers", value: 40, fmt: "40  \u00b7  9%", color: "var(--s1)" }
+    ]
+  });
+
+  /* ---- the six questions. Answered records only. ---- */
+
+  function question(id, sa, ag, ne, di, sd) {
+    columns(id, {
+      labels: SMO, h: 118, stacked: true, pct: true, max: 100, pl: 24, unit: "%",
+      series: [
+        { name: "Strongly agree", color: "var(--good)", values: sa },
+        { name: "Agree", color: "var(--s1)", values: ag },
+        { name: "Neutral", color: "var(--warning)", values: ne },
+        { name: "Disagree", color: "var(--serious)", values: di },
+        { name: "Strongly disagree", color: "var(--critical)", values: sd }
+      ]
+    });
+  }
+
+  question("ss-q1",
+    [61, 61, 60, 60, 59, 58, 57, 57], [28, 28, 29, 29, 29, 30, 30, 30],
+    [ 8,  8,  8,  8,  9,  9, 10, 10], [ 2,  2,  2,  2,  2,  2,  2,  2],
+    [ 1,  1,  1,  1,  1,  1,  1,  1]);
+
+  question("ss-q2",
+    [59, 59, 58, 58, 57, 56, 56, 55], [29, 29, 30, 30, 30, 31, 31, 31],
+    [ 9,  9,  9,  9, 10, 10, 10, 11], [ 2,  2,  2,  2,  2,  2,  2,  2],
+    [ 1,  1,  1,  1,  1,  1,  1,  1]);
+
+  question("ss-q3",
+    [54, 54, 53, 53, 52, 51, 50, 50], [26, 26, 26, 26, 26, 27, 27, 27],
+    [16, 16, 17, 17, 18, 18, 19, 19], [ 3,  3,  3,  3,  3,  3,  3,  3],
+    [ 1,  1,  1,  1,  1,  1,  1,  1]);
+
+  question("ss-q4",
+    [56, 56, 55, 55, 54, 53, 53, 52], [28, 28, 28, 28, 28, 29, 29, 29],
+    [13, 13, 14, 14, 15, 15, 15, 16], [ 2,  2,  2,  2,  2,  2,  2,  2],
+    [ 1,  1,  1,  1,  1,  1,  1,  1]);
+
+  question("ss-q5",
+    [62, 62, 61, 61, 60, 60, 59, 59], [29, 29, 29, 29, 29, 29, 29, 29],
+    [ 6,  6,  7,  7,  8,  8,  9,  9], [ 2,  2,  2,  2,  2,  2,  2,  2],
+    [ 1,  1,  1,  1,  1,  1,  1,  1]);
+
+  question("ss-q6",
+    [58, 58, 57, 57, 56, 55, 55, 54], [29, 29, 30, 30, 30, 31, 31, 31],
+    [10, 10, 10, 10, 11, 11, 11, 12], [ 2,  2,  2,  2,  2,  2,  2,  2],
+    [ 1,  1,  1,  1,  1,  1,  1,  1]);
+
+  /* ---- the file. Every value invented; the real file names the member. ---- */
+
+  matrix("ss-file",
+    ["aptihealth_member_id", "Carrier group", "Understood", "Between sessions",
+     "What matters", "Making progress", "Can reach team", "Satisfied",
+     "Completed at", "Opted in to ACP", "Patient score", "Max score"],
+    [
+      ["00000000-0000-0000-0000-000000000301", "CDPHP", "Strongly agree", "Neutral", "Strongly agree", "Neutral", "Agree", "Agree", "9/4/26", "8/9/26", "24", "30"],
+      ["00000000-0000-0000-0000-000000000302", "MVP Health Care", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "9/4/26", "9/3/26", "0", "30"],
+      ["00000000-0000-0000-0000-000000000303", "CDPHP", "Neutral", "Neutral", "Neutral", "Agree", "Strongly agree", "Agree", "9/5/26", "7/22/26", "22", "30"],
+      ["00000000-0000-0000-0000-000000000304", "Medicaid", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "9/4/26", "8/26/26", "0", "30"],
+      ["00000000-0000-0000-0000-000000000305", "CDPHP", "Strongly agree", "Strongly agree", "Strongly agree", "Strongly agree", "Strongly agree", "Strongly agree", "9/4/26", "9/2/26", "30", "30"],
+      ["00000000-0000-0000-0000-000000000306", "MVP Health Care", "Disagree", "Disagree", "Disagree", "Neutral", "Neutral", "Neutral", "9/3/26", "7/23/26", "15", "30"],
+      ["00000000-0000-0000-0000-000000000307", "CDPHP", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "9/3/26", "8/17/26", "0", "30"]
+    ],
+    { raw: true }
+  );
+
+});
 </script>
 </body>
 </html>

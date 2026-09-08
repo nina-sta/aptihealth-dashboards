@@ -383,17 +383,89 @@
   </div>
 
   <div class="page on" id="pg-outreach-and-prioritization">
-    <div class="band"><span class="t">Outreach and Prioritization</span><span class="d">Who we chase, in what order, and whether the chasing works.</span><span class="r"></span></div>
 
-    <div class="v c12 h2r">
-      <div class="vh"><h4>What this report is for</h4>
-        <div class="vf"><button class="i" data-tip="Not a visual. The note that says what has and has not been decided about this report, so an empty report cannot be mistaken for a finished one. It comes out the moment the first real visual goes in.">&#9432;</button></div>
+    <div class="band"><span class="t">The outreach queues</span><span class="d">Every member who has stopped somewhere, and how many are in each place.</span><span class="r"></span></div>
+
+    <div class="v c8 h3r">
+      <div class="vh"><h4>Outreach queues</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: clustered bar chart, member counts, sorted largest first. The seven queues the source dashboard names as its priorities, in one visual instead of seven tabs. Amber throughout: a queue is work waiting, not a failure, and red on this page is reserved for the count that should be zero.">&#9432;</button></div>
       </div>
-      <p class="info">Named on 8 Sep 2026 and registered empty. The Patient journey shows who falls out &mdash; inactivations, no-shows, drop-off by stage &mdash; but nothing yet shows what was done about it.</p>
+      <p class="info">The source spreads these across six tabs and a process diagram. They are one list: seven places a member can stop between being referred and being in care, and the size of each is the whole prioritisation argument.</p>
+      <div class="body"><div class="ch" id="op-q"></div></div>
+    </div>
+
+    <div class="v kpi c4 h3r">
+      <div class="vh"><h4>Members waiting somewhere</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: card. The seven queues added together, with duplicates removed &mdash; a member stalled at registration is not also counted as having no session. The number is here to be argued with: it is larger than the members in care.">&#9432;</button></div>
+      </div>
       <div class="body">
-        <div class="gapnote">&#9888; Blocked on scope, and on the discharge notification source: payer feed, referrer notification or member self-report each give post-discharge outreach a different denominator.</div>
+        <div class="big">7,412</div>
+        <div class="sub">across seven queues, deduplicated</div>
       </div>
     </div>
+
+    <div class="band"><span class="t">Registration</span><span class="d">Who arrives, who stalls, and which channel each comes from.</span><span class="r"></span></div>
+
+    <div class="v c8 h3r">
+      <div class="vh"><h4>Monthly registrants by channel</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart, five series, all member counts, so one axis and the maximum comes from the stacked total. The source carries six channels; Embrace 365 and the health plans and systems are folded into two rows here because the five-colour rule in this repo is a colour-blindness limit, not a preference.">&#9432;</button></div>
+      </div>
+      <p class="info">Self sign-up is roughly seven registrations in ten and the shape barely moves. Volume is not a channel-mix story.</p>
+      <div class="body"><div class="ch" id="op-reg"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Self sign-up</span><span><i style="background:var(--s2)"></i>HCP practices</span>
+          <span><i style="background:var(--s3)"></i>PCP practices</span><span><i style="background:var(--s4)"></i>Health plans and systems</span>
+          <span><i style="background:var(--s5)"></i>Other</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v kpi c4 h3r">
+      <div class="vh"><h4>Members pending registration</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: card + line. Referrals that arrived and never became a registered member, by the month the referral was created. It is the top of the funnel and the largest single thing outreach can move.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big">1,616</div>
+        <div class="sub">referrals over 12 months, never registered</div>
+        <div class="spark ch" id="op-pend"></div>
+      </div>
+    </div>
+
+    <div class="v c12 h3r">
+      <div class="vh"><h4>Pending registration by channel</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: 100% stacked column chart. The same five channels as the visual beside it, as a share rather than a count, because the point is the mix and not the volume. Read the two together: the channel that supplies the fewest registrations supplies almost all of the backlog.">&#9432;</button></div>
+      </div>
+      <p class="info">HCP referrals are one registration in five and roughly six pending registrations in seven. That inversion is the finding on this page.</p>
+      <div class="body"><div class="ch" id="op-pch"></div>
+        <div class="gapnote">&#9888; An HCP referral is made on the member&rsquo;s behalf by somebody else, so the member may never have agreed to anything. Whether these are a backlog to chase or referrals that were never real is not answerable from this data, and it decides whether the largest queue on the page is work at all.</div>
+      </div>
+    </div>
+
+    <div class="band"><span class="t">The lists</span><span class="d">Who to contact, in the order the queues put them. Every value below is invented.</span><span class="r"></span></div>
+
+    <div class="v c12 h3r">
+      <div class="vh"><h4>HCP referrals with a DI booked and no registration</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: table &mdash; a worklist rather than a summary. A referrer booked the member a diagnostic interview and the member never registered, so there is an appointment on a clinician&rsquo;s calendar for somebody who does not have an account. That is the most expensive row on this page and the easiest to fix.">&#9432;</button></div>
+      </div>
+      <p class="info">Column list only. The source carries the referring clinician&rsquo;s name and work email in this grid; neither is here.</p>
+      <div class="body" id="op-l1"></div>
+      <div class="gapnote">&#9888; Invented referral ids and organisation labels. Who may open the real list has not been decided &mdash; the same decision is open on Care Navigators and Advanced Care Note Metrics.</div>
+    </div>
+
+    <div class="v c6 h3r">
+      <div class="vh"><h4>Referrals pending registration, no DI booked</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: table. The rest of the pending-registration queue: a referral arrived, nothing was booked, and nobody registered. The source marks this list &ldquo;limited to available data&rdquo;, which is worth keeping &mdash; it is not the whole queue.">&#9432;</button></div>
+      </div>
+      <div class="body" id="op-l2"></div>
+    </div>
+
+    <div class="v c6 h3r">
+      <div class="vh"><h4>Registered members with no DI and no future session</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: table. Members who got as far as an account and then stopped, with nothing on the calendar ahead of them. It is the largest queue on the page by some distance.">&#9432;</button></div>
+      </div>
+      <div class="body" id="op-l3"></div>
+    </div>
+
   </div>
 
   <div class="ptabs" role="group" aria-label="Reports">
@@ -409,7 +481,7 @@
     <a href="../internal/satisfaction-survey-report.html">Satisfaction Survey Report</a>
     <a href="../external/cdphp.html">CDPHP payer report</a>
     <a href="../external/mvp.html">MVP payer report</a>
-    <span class="hint">Named and registered, no visuals yet &mdash; the specification says what has to be decided first.</span>
+    <span class="hint">Every measure is monthly. Chips inside a visual are visual-level filters; hover &#9432; for the Power BI visual type.</span>
   </div>
 
   <div class="dd" id="dd" role="listbox"></div>
@@ -1439,9 +1511,93 @@
 </script>
 <!-- shared:js:end -->
 <script>
-/* No visuals yet. render() still runs: it is what shows the page and wires the
-   tooltip and the comment layer, so a reader can ask for the first one. */
-APTI.render(function () {});
+/* From the Sisense "Outreach and Prioritization" dashboard of 27 Aug 2026 — the
+   Registration tab, which is the only one captured. Every figure is invented. */
+APTI.render(function () {
+  var MO = APTI.MO, columns = APTI.columns, bars = APTI.bars, spark = APTI.spark, matrix = APTI.matrix;
+
+  /* ---- the outreach queues ---- */
+
+  bars("op-q", {
+    lw: 188, rh: 24, max: 3400,
+    rows: [
+      { label: "Assessment done, no DI booked", value: 3099, fmt: "3,099", color: "var(--s2)" },
+      { label: "Never registered", value: 1616, fmt: "1,616", color: "var(--s2)" },
+      { label: "Registered, assessment not done", value: 1204, fmt: "1,204", color: "var(--s2)" },
+      { label: "30+ days since last session", value: 1043, fmt: "1,043", color: "var(--s2)" },
+      { label: "Did not attend their DI", value: 412, fmt: "412", color: "var(--s2)" },
+      { label: "Not admitted to 90-day care", value: 287, fmt: "287", color: "var(--s2)" },
+      { label: "Two or more no-shows this month", value: 168, fmt: "168", color: "var(--s2)" }
+    ]
+  });
+
+  spark("op-pend", [114, 134, 141, 109, 117, 128, 138, 156, 167, 121, 139, 152], "var(--s2)");
+
+  /* ---- registration ---- */
+
+  columns("op-reg", {
+    labels: MO, h: 118, stacked: true, pl: 28, unit: " registrations",
+    series: [
+      { name: "Self sign-up", color: "var(--s1)", values: [402, 379, 478, 396, 422, 467, 438, 493, 466, 416, 408, 422] },
+      { name: "HCP practices", color: "var(--s2)", values: [118, 111, 140, 116, 124, 137, 129, 145, 137, 122, 120, 124] },
+      { name: "PCP practices", color: "var(--s3)", values: [26, 24, 31, 26, 27, 30, 28, 31, 30, 27, 26, 27] },
+      { name: "Health plans and systems", color: "var(--s4)", values: [14, 13, 17, 13, 15, 16, 15, 17, 16, 14, 14, 15] },
+      { name: "Other", color: "var(--s5)", values: [11, 11, 12, 11, 11, 13, 12, 13, 13, 11, 11, 11] }
+    ]
+  });
+
+  columns("op-pch", {
+    labels: MO, h: 118, stacked: true, pct: true, max: 100, pl: 28, unit: "%",
+    series: [
+      { name: "HCP practices", color: "var(--s2)", values: [98, 114, 113, 93, 100, 109, 117, 132, 144, 102, 122, 133] },
+      { name: "Self sign-up", color: "var(--s1)", values: [8, 10, 15, 8, 9, 10, 11, 13, 13, 10, 9, 11] },
+      { name: "PCP practices", color: "var(--s3)", values: [4, 5, 6, 4, 4, 5, 5, 6, 6, 5, 4, 5] },
+      { name: "Health plans and systems", color: "var(--s4)", values: [3, 3, 4, 3, 3, 3, 4, 4, 3, 3, 3, 2] },
+      { name: "Other", color: "var(--s5)", values: [1, 2, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1] }
+    ]
+  });
+
+  /* ---- worklists. Every value invented; the real lists are PHI. ---- */
+
+  matrix("op-l1",
+    ["referral_id", "Referring organisation", "Referral date", "Referring role", "Intake provider", "DI scheduled", "Session status"],
+    [
+      ["REF-000000001", "Organisation A, Albany NY", "6/13/26", "Care navigator (HCP)", "Provider 1", "6/20/26 11:30", "Cancelled"],
+      ["REF-000000002", "Organisation A, Albany NY", "6/25/26", "Other (HCP)", "Provider 2", "7/02/26 09:00", "Future visit"],
+      ["REF-000000003", "Organisation B, Troy NY", "6/04/26", "Care navigator (HCP)", "Provider 1", "6/28/26 13:00", "Cancelled"],
+      ["REF-000000004", "Organisation B, Troy NY", "6/19/26", "Social worker (HCP)", "Provider 3", "6/29/26 11:00", "Future visit"],
+      ["REF-000000005", "Organisation C, Albany NY", "6/18/26", "Crisis team (HCP)", "Provider 2", "6/29/26 14:15", "Cancelled"],
+      ["REF-000000006", "Organisation C, Albany NY", "6/14/26", "Care navigator (HCP)", "Provider 4", "6/18/26 10:30", "Cancelled"]
+    ],
+    { raw: true }
+  );
+
+  matrix("op-l2",
+    ["referral_id", "Referring organisation", "Referral date", "Referring role", "AS status"],
+    [
+      ["REF-000000007", "Organisation A, Albany NY", "6/06/26", "Nurse (PA, LPN, HCP)", "Not started"],
+      ["REF-000000008", "Organisation A, Albany NY", "5/11/26", "Care navigator (HCP)", "Not started"],
+      ["REF-000000009", "Organisation B, Troy NY", "6/01/26", "Other (HCP)", "Not started"],
+      ["REF-000000010", "Organisation C, Albany NY", "6/13/26", "Crisis team (HCP)", "Not started"],
+      ["REF-000000011", "Organisation D, Schenectady NY", "6/15/26", "Administrator (HCP)", "Not started"]
+    ],
+    { raw: true }
+  );
+
+  matrix("op-l3",
+    ["aptihealth_member_id", "Registered", "Referral channel", "Payer", "AS status", "Age group"],
+    [
+      ["00000000-0000-0000-0000-000000000201", "2/19/26", "Self sign-up", "Payer A", "Completed", "60 and over"],
+      ["00000000-0000-0000-0000-000000000202", "2/18/26", "HCP practice", "Payer B", "Not started", "30\u201344"],
+      ["00000000-0000-0000-0000-000000000203", "3/01/26", "Self sign-up", "Payer C", "Completed", "22\u201329"],
+      ["00000000-0000-0000-0000-000000000204", "3/13/26", "Self sign-up", "Payer A", "In progress", "18\u201321"],
+      ["00000000-0000-0000-0000-000000000205", "3/03/26", "PCP practice", "Payer B", "Completed", "45\u201359"],
+      ["00000000-0000-0000-0000-000000000206", "2/24/26", "Self sign-up", "Payer A", "Not started", "12\u201317"]
+    ],
+    { raw: true }
+  );
+
+});
 </script>
 </body>
 </html>

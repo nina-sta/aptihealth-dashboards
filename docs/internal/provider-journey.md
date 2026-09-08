@@ -8,7 +8,7 @@
 matched, how long each step takes once they are, and who carries the co-sign load behind them.
 That is where delivered care turns into billable, defensible care.
 
-The report is read top-down, and the three sections below are the three bands on the page.
+The report is read top-down, and the four sections below are the four bands on the page.
 
 ## How to read the table
 
@@ -25,6 +25,22 @@ whether it is buildable yet.
 visual. Every row currently reads `_unassigned_`; assigning them is the next working session
 and is the point of this document.
 
+
+### Adoption and satisfaction
+
+Whether providers take up the tools we give them, and whether those tools make the day better.
+
+Both measures were set on 28 Aug 2026, when the acceptance criterion for Clinically AI was
+agreed: **a happier provider, not a faster one.** The published research does not support AI
+scribing as a meaningful time saver, so time saved is measured through the operational lens
+and deliberately is not the provider-side success metric. Neither threshold is agreed — 50%
+adoption and 80% satisfaction were said out loud as examples, not decided, which is why
+neither tile draws a target line.
+
+| Visual | Business question | Owner | Business impact | Status |
+| --- | --- | --- | --- | --- |
+| Clinically AI adoption | Are providers actually using the tool we bought them? | _unassigned_ | _to agree_ | Blocked — Needs a marker on the note recording that it was drafted in Clinically AI. Without one, adoption can only come from the vendor's own usage export and cannot be joined to a provider or a note type |
+| Provider satisfaction with Clinically AI | Are providers happier for having it? | _unassigned_ | _to agree_ | Blocked — No survey instrument, cadence or threshold agreed. Today's figure is four pilot providers asked informally |
 
 ### Providers
 
@@ -60,6 +76,8 @@ Who cannot sign their own notes, who reviews them, and how that review goes.
 
 ## Open items
 
+- **Clinically AI adoption** — Needs a marker on the note recording that it was drafted in Clinically AI, otherwise adoption is only knowable from the vendor's usage export and cannot be split by provider, role or note type.
+- **Provider satisfaction with Clinically AI** — Needs a survey: instrument, cadence and the threshold that counts as success. Until then the tile is an anecdote from four pilot providers, and it says so.
 - **Medical group headcount by licence type** — Needs a provider role attribute in the model (BHS, prescriber, other). If only licence type is stored, the role split has to be inferred from the licence. No longer shown as a warning on the tile; this document is the record.
 - **Median time from session end to signed note** — Depends on a session-end timestamp existing in the model. If only a session date is stored, this measure cannot be built as specified. No longer shown as a warning on the tile; this document is the record.
 - **Supervisor load and note review** — Needs a co-sign review event carrying an outcome, so a note returned once and then accepted is not counted as accepted on the first pass.

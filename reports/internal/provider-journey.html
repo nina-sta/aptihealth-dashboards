@@ -384,6 +384,29 @@
 
   <div class="page on" id="pg-provider">
 
+    <div class="band"><span class="t">Adoption and satisfaction</span><span class="d">Whether providers take up the tools we give them, and whether those tools make the day better.</span><span class="r"></span></div>
+
+    <div class="v kpi c6 h1r">
+      <div class="vh"><h4>Clinically AI adoption</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: card + line. Providers who wrote at least one guided session note in Clinically AI during the month, against the providers who write guided session notes at all — behavioral health specialists and prescribers, 130 of the group. Every month before the pilot is a true zero, not missing data. Share of notes rather than of providers is the second reading of this measure and needs the same denominator decided once.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big">4</div>
+        <div class="sub">of 130 who write guided session notes &mdash; pilot</div>
+        <div class="spark ch" id="k-ai"></div>
+      </div>
+    </div>
+
+    <div class="v kpi c6 h1r">
+      <div class="vh"><h4>Provider satisfaction with Clinically AI</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: KPI card, and a card + line once there is a survey to trend. The acceptance criterion is that providers are happier, not faster — the published research does not support AI scribing as a meaningful time saver, so time saved belongs to the operational lens and not to this measure. Today's figure is four pilot providers asked informally, which is an anecdote rather than a measure.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big">3<small> of 4</small></div>
+        <div class="sub">pilot providers say it helps &mdash; no survey yet</div>
+      </div>
+    </div>
+
     <div class="band"><span class="t">Providers</span><span class="d">Who exists, who is configured, and who can actually be matched to a member.</span><span class="r"></span></div>
 
     <div class="v kpi c3 h1r">
@@ -1561,6 +1584,10 @@ APTI.render(function () {
   var MO = APTI.MO, columns = APTI.columns, lines = APTI.lines,
       funnel = APTI.funnel, spark = APTI.spark, smallMultiples = APTI.smallMultiples, matrix = APTI.matrix;
 
+
+  /* ---- adoption and satisfaction ---- */
+
+  spark("k-ai", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4], "var(--s1)");
 
   /* ---- providers ---- */
 

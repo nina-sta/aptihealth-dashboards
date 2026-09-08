@@ -27,8 +27,8 @@ Not decided, and both block any visual going in:
   contractual question as much as a data one — the 7-day follow-up standard, the HEDIS
   thresholds and the acuity definitions are all per-contract.
 
-Until both are answered the report ships as named pages with a note saying so, and only
-Clinical Outcomes has anything in it. It is registered in `tools/sync.py` and appears in the
+Until both are answered the report ships as named, empty pages, and only Clinical Outcomes has
+anything in it. It is registered in `tools/sync.py` and appears in the
 report navigation, so the moment a visual lands the specification pairing is already enforced.
 
 ## How to read the table
@@ -36,12 +36,6 @@ report navigation, so the moment a visual lands the specification pairing is alr
 Same rules as every other report in this repo. `Visual` matches the tile heading in the report
 exactly — that is the join key. The measure definition is not repeated here; it lives in the ⓘ
 tooltip on the tile. This document owns the owner, the business impact and the status.
-
-## Page — MVP Billing
-
-| Visual | Business question | Owner | Business impact | Status |
-| --- | --- | --- | --- | --- |
-| What this report is for | What has been decided about this report, and what has not? | _unassigned_ | _to agree_ | Blocked — Not a measure. It is the note that keeps an empty report from reading as a finished one, and it comes out the moment the first real visual goes in |
 
 ## Page — Clinical Outcomes (PHQ9)
 
@@ -125,5 +119,5 @@ is protected health information; the mock-up exists to agree the column list.
 
 ## Pages with no visuals
 
-MVP Patient Acquisition and MVP Update have no rows because they have no visuals yet.
-Adding a visual means adding a row in the same commit.
+MVP Billing, MVP Patient Acquisition and MVP Update have no rows because they have no visuals
+yet. Adding a visual means adding a row in the same commit.

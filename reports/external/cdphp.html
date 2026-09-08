@@ -605,7 +605,6 @@
           <span><i style="background:var(--s2)"></i>Kowalska A.</span>
           <span><i style="background:var(--s3)"></i>Wisniewski P.</span>
         </div>
-        <div class="gapnote">Names are invented placeholders. And the source labels this dimension &ldquo;Facility&rdquo; while the values are individuals &mdash; confirm which field is actually being grouped before this is built.</div>
       </div>
     </div>
 
@@ -622,7 +621,6 @@
           <span><i style="background:var(--s3)"></i>Facility C</span><span><i style="background:var(--s4)"></i>Facility D</span>
           <span><i style="background:var(--s5)"></i>Other facilities</span>
         </div>
-        <div class="gapnote">Facility names are labels here on purpose. In the source the same facility appears two or three times over &mdash; a typed name and a system slug counted as separate series &mdash; so the real totals per facility are higher than any one of its rows. That has to be resolved before a facility figure means anything.</div>
       </div>
     </div>
 
@@ -632,7 +630,6 @@
       </div>
       <p class="info">The facility survives the referral and not the registration. On 859 of 896 registered members there is nothing recorded, so this cannot be joined to outcomes for anyone.</p>
       <div class="body"><div class="ch" id="cn-reg"></div>
-        <div class="gapnote">Blocked: 96% of registered members carry no referring facility. Until that field is populated at registration, no facility-level outcome or conversion measure can be built at all.</div>
       </div>
     </div>
 
@@ -1013,7 +1010,6 @@
           <span><i style="background:var(--s1)"></i>0–90d</span><span><i style="background:var(--s2)"></i>91–180d</span>
           <span><i style="background:var(--s3)"></i>181–365d</span><span><i style="background:var(--s4)"></i>365d+</span>
         </div>
-        <div class="gapnote">Blocked: needs an episode-of-care definition — days in care currently run through inactivation.</div>
       </div>
     </div>
 
@@ -1023,7 +1019,6 @@
       </div>
       <div class="body"><div class="ch" id="x-payers"></div>
         <div class="lg"><span><i style="background:var(--s1)"></i>Under contract</span><span><i style="background:var(--s2)"></i>Credentialed to bill</span></div>
-        <div class="gapnote">Confirm whether &ldquo;licensed&rdquo; in the ask means payer credentialing or state licensure &mdash; they are different counts.</div>
       </div>
     </div>
 
@@ -1123,7 +1118,6 @@
         <div class="vf"><span class="wf">Within 7 days</span><button class="i" data-tip="Power BI: clustered column with a constant line for target. Share of members with a known discharge who had a two-way contact inside the window. The chip switches the window (7 / 14 / 30 days) and moves the target with it.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="x-pdout"></div>
-        <div class="gapnote">Denominator depends on how we learn about a discharge &mdash; payer feed, referrer notification or member self-report. Each gives a different population.</div>
       </div>
     </div>
 
@@ -1145,7 +1139,6 @@
       </div>
       <div class="body"><div class="ch" id="x-direpeat"></div>
         <div class="lg"><span><i style="background:var(--s1)"></i>First-time</span><span><i style="background:var(--s2)"></i>Repeat</span></div>
-        <div class="gapnote">&ldquo;Repeat&rdquo; is not defined on our side. The only written rules are the annual re-assessment for returning members and A5R every 90 days.</div>
       </div>
     </div>
 
@@ -1173,7 +1166,6 @@
         <div class="vf"><span class="wf">Cut-off: 60 idle days</span><button class="i" data-tip="Power BI: line chart, one series, in days. Active care runs from first session to the last session before the cut-off. The chip switches the idle cut-off (30 / 60 / 90 days), which is what decides when care is treated as ended.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="x-loc"></div>
-        <div class="gapnote">Blocked on the same episode-of-care definition as the tenure visual. Today length of care runs through to inactivation, which overstates it.</div>
       </div>
     </div>
 
@@ -1220,7 +1212,6 @@
       </div>
       <p class="info">The 0–7 day spike is people who never really started. The 90–120 band is expected — that's the end of the 90-day programme.</p>
       <div class="body"><div class="ch" id="c-inact-days"></div>
-        <div class="gapnote">Needs an inactivation reason field to separate lapsed from clinically discharged.</div>
       </div>
     </div>
 
@@ -1266,7 +1257,6 @@
         <div class="vf"><span class="wf">All note types</span><button class="i" data-tip="Power BI: line chart, one series, in hours, with a constant line at the 24-hour standard. The share-based view is the note timeliness visual; this is the median the share cannot show.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="x-notemed"></div>
-        <div class="gapnote">Depends on a session-end timestamp existing in the model. If only a session date is stored, this measure cannot be built as specified.</div>
       </div>
     </div>
 

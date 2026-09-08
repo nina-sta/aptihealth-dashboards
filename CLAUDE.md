@@ -56,17 +56,22 @@ missing from CDPHP is missing everywhere. It carries no report-level slicers: th
 one program and one period, decided when the report is issued, not switched by the reader.
 
 **No internal report is empty any more.** The eight named on 8 Sep 2026 were all built or
-started the same day from the Sisense dashboards. Two are deliberately incomplete and say so on
-their first tile: **Referrals** is the CDPHP CN referrals page copied verbatim, to be argued
-with rather than believed — it counts one payer and its title claims more than its content
-covers. **Providers Scorecard** is the Provider Metrics tab only; its Sustainable Metrics and
-Definitions tabs need a readable export.
+started the same day from the Sisense dashboards. Two are deliberately incomplete, and it is the
+specification that records this rather than the page: **Referrals** is the CDPHP CN referrals
+page copied verbatim, to be argued with rather than believed — it counts one payer and its
+title claims more than its content covers. **Providers Scorecard** is the Provider Metrics tab
+only; its Sustainable Metrics and Definitions tabs need a readable export.
 
 **Providers Scorecard is the one report here that costs somebody money.** It scores a named
 provider against thresholds and records pay withheld when one is missed. Who may open it, what
 a provider may appeal, and whether one group-wide threshold fits every panel are all undecided,
 and no currency appears anywhere in it for that reason. Treat a wrong measure name there as a
 different class of mistake from a wrong measure name elsewhere.
+
+**Tiles carry no gapnotes.** They were removed on 8 Sep 2026: the notes were generated rather
+than agreed, and a warning on a tile reads as a finding somebody stands behind. What is blocked
+and why is recorded in the `Status` column of each specification, which is where this repo says
+status belongs. Do not put them back on the tiles without being asked.
 
 **MVP is the second payer report** and the first test of "CDPHP with visuals switched off".
 It has four pages; only Clinical Outcomes (PHQ9) is built, and the other three are named and
@@ -238,9 +243,12 @@ All figures are mock. Values marked `(doc)` come from real sources. **Do not inv
 `(doc)` claims** — if a number is not sourced, leave it unmarked or write "not documented".
 Provider names in the mock-ups are invented; do not replace them with real colleagues.
 
-Where a measure cannot honestly be built yet, ship the tile with a `gapnote` naming the
-missing field or decision rather than a clean number. `sync.py` surfaces those as *Blocked*
-in the spec.
+Where a measure cannot honestly be built yet, do not invent a clean number for it — draw it as
+`not documented`, or leave the tile out. **Name the missing field or decision in the `Status`
+column of the specification, not on the tile.** Tiles used to carry a red `gapnote` saying it;
+those were removed on 8 Sep 2026 because a warning on a tile reads as a finding somebody stands
+behind, and they had been generated rather than agreed. The `.gapnote` style is still in the
+shared CSS for whenever a note is genuinely wanted back.
 
 ## Workflow
 

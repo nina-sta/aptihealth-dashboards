@@ -20,8 +20,7 @@ figure on it is a payer cut standing in for an all-payer one.
 
 **And the title overclaims.** Every tile here is *care navigator* referrals. A report called
 Referrals should cover referrals — HCP practices, PCP practices, health plans, health systems,
-self sign-up — of which care navigators are one channel among several. The mock-up says so on
-the first tile rather than letting the name imply coverage it does not have.
+self sign-up — of which care navigators are one channel among several.
 
 ## What has to be decided before this stops being a copy
 
@@ -47,7 +46,6 @@ tooltip on the tile. This document owns the owner, the business impact and the s
 
 | Visual | Business question | Owner | Business impact | Status |
 | --- | --- | --- | --- | --- |
-| What this report is for | Is this a scoped report or a starting point? | _unassigned_ | _to agree_ | Blocked — Not a measure. It is the note that keeps a copied page from reading as a scoped report, and it comes out when this report is given its own definition |
 | Total CN referrals | How much referral volume arrives, and how much becomes a member? | _unassigned_ | _to agree_ | Blocked — Copied from the CDPHP page, so it counts one payer. An internal report needs all of them |
 | CN referrals per month | Is referral volume growing? | _unassigned_ | _to agree_ | Blocked — Same payer cut as above |
 | CN referrals per working day | Is a quiet month quiet, or short? | _unassigned_ | _to agree_ | Blocked — Same payer cut as above |

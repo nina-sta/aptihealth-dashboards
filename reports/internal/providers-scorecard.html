@@ -384,16 +384,6 @@
 
   <div class="page on" id="pg-providers-scorecard">
 
-    <div class="v c12 h1r">
-      <div class="vh"><h4>What this report is for</h4>
-        <div class="vf"><button class="i" data-tip="Not a visual. The note that says how much of the source dashboard this is, and what it does to people, so a partial build cannot be mistaken for a finished one.">&#9432;</button></div>
-      </div>
-      <p class="info">This report scores a <b>named provider</b> against thresholds, and money is withheld when a threshold is missed. That makes it the most consequential report in this repo and the one where a wrong measure name costs somebody their pay, not just a bad decision. Built from a screen capture, so the measures below are the ones legible in it; the source&rsquo;s <b>Sustainable Metrics</b> and <b>Definitions</b> tabs are not built.</p>
-      <div class="body">
-        <div class="gapnote">Partial and provisional. Roughly half the source is here. The rest needs a readable export &mdash; and before any of it is built in Power BI, somebody has to say who may open a report that withholds pay, and on what appeal.</div>
-      </div>
-    </div>
-
     <div class="band"><span class="t">Utilisation</span><span class="d">Hours available, hours billed, and the threshold in between.</span><span class="r"></span></div>
 
     <div class="v kpi c4 h2r">
@@ -420,7 +410,6 @@
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: clustered bar chart, not the doughnut the source uses &mdash; three slices in a circle is three numbers made harder to read. Available hours split into what was billed, what was worked but not billable, and what was blocked out.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="ps-split"></div>
-        <div class="gapnote">Non-billable hours are a third of the total and nothing in the source says what is in them. Until that is broken out, the utilisation threshold is being applied to a denominator nobody has examined.</div>
       </div>
     </div>
 
@@ -440,7 +429,6 @@
       </div>
       <p class="info">Rising every month. On Session Activity, all of that growth is automatic cancellations.</p>
       <div class="body"><div class="ch" id="ps-cx"></div>
-        <div class="gapnote">This counts member, provider and automatic cancellations together. Automatic cancellations nearly tripled this year and nobody can say what triggers one, so providers are being scored on a number they do not cause and cannot explain.</div>
       </div>
     </div>
 
@@ -451,7 +439,6 @@
         <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Top 5</span><button class="i" data-tip="Power BI: matrix, one row per provider and visit type, with conditional formatting on each rate against its threshold. The source runs this across three matrices with overlapping columns; one row per provider is what a scorecard is.">&#9432;</button></div>
       </div>
       <div class="body" id="ps-card"></div>
-      <div class="gapnote">Provider names are invented. Every rate here is compared with a single group-wide threshold, and nothing adjusts for case mix, panel size or the member population a provider was given.</div>
     </div>
 
     <div class="band"><span class="t">Pay</span><span class="d">What the scorecard does. This is the part that needs a decision before it is built.</span><span class="r"></span></div>
@@ -480,7 +467,6 @@
         <div class="vf"><span class="wf">Rolling 6 cycles</span><button class="i" data-tip="Power BI: matrix, one row per pay cycle, showing which threshold was missed and what was withheld and recovered as a result. No currency appears anywhere in this report &mdash; amounts are expressed as a share of the cycle, because who may see provider pay has not been decided.">&#9432;</button></div>
       </div>
       <div class="body" id="ps-cycle"></div>
-      <div class="gapnote">Utilisation is the threshold missed in almost every case, and its denominator includes a third of hours nobody has examined. That makes it the first thing to check before this drives any money at all.</div>
     </div>
 
     <div class="v c6 h2r">
@@ -495,7 +481,6 @@
         <div class="vf"><span class="wf">Rolling 6 cycles</span><button class="i" data-tip="Power BI: clustered bar chart, providers grouped by how many pay cycles they have had money withheld in. The tail is the finding: a small group is withheld from repeatedly, which is either a performance problem or a threshold that does not fit their panel.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="ps-rep"></div>
-        <div class="gapnote">Nine providers have been withheld from in four or more cycles out of six. Either something is wrong with their work or something is wrong with the threshold as applied to them, and this report cannot tell the difference.</div>
       </div>
     </div>
 

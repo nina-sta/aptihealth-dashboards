@@ -27,7 +27,7 @@ money on the page decides it by default.
 
 ## The thresholds are being applied to numbers providers do not control
 
-This is the substantive finding, and it is on two tiles.
+This is the substantive finding, and it runs through two of the visuals below.
 
 **Cancellation rate.** The scorecard counts member, provider and automatic cancellations
 together. [Session Activity](session-activity.md) shows that the entire growth in cancellations
@@ -63,7 +63,6 @@ tooltip on the tile. This document owns the owner, the business impact and the s
 
 | Visual | Business question | Owner | Business impact | Status |
 | --- | --- | --- | --- | --- |
-| What this report is for | Is this a finished report, and what does it do to people? | _unassigned_ | _to agree_ | Blocked — Not a measure. It is the note that keeps a partial build from reading as a finished one, and it comes out when the report is complete and governed |
 | Billable hours | How many hours reached a bill? | _unassigned_ | _to agree_ | Built |
 | Utilisation rate against threshold | Are providers billing enough of their available time? | _unassigned_ | _to agree_ | Blocked — A third of available hours are worked but not billable and nothing says what is in them. This threshold drives almost all the withholding |
 | Where provider hours go | What is in the denominator? | _unassigned_ | _to agree_ | Blocked — The non-billable third has never been broken out |

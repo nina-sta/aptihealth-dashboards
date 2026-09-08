@@ -27,7 +27,7 @@ reports/
   _shared/charts.js                     canonical chart builders and page behaviour
   internal/patient-journey.html         internal — the member's path
   internal/provider-journey.html        internal — documentation, supervision, matching
-  internal/session-activity.html        internal — named, no visuals yet
+  internal/session-activity.html        internal — the book ahead (headline band only)
   internal/advanced-care-note-metrics.html   internal — care activity notes, touchpoints
   internal/providers-compensation.html  internal — billable sessions, hours, RVUs
   internal/care-navigators.html         internal — the care navigation team
@@ -55,10 +55,13 @@ largest — every other payer report is this one with visuals switched off — s
 missing from CDPHP is missing everywhere. It carries no report-level slicers: the payer sees
 one program and one period, decided when the report is issued, not switched by the reader.
 
-**Four internal reports are registered and empty** — Session Activity, Referrals, Providers
-Scorecard and Satisfaction Survey Report, named on 8 Sep 2026. Care Navigators, Advanced Care
-Note Metrics, Outreach and Prioritization and Providers Compensation were named with them and
-built the same day from the Sisense dashboards of 27 Aug 2026. Each empty one is one page
+**Three internal reports are registered and empty** — Referrals, Providers Scorecard and
+Satisfaction Survey Report, named on 8 Sep 2026. Care Navigators, Advanced Care Note Metrics,
+Outreach and Prioritization and Providers Compensation were named with them and built the same
+day from the Sisense dashboards of 27 Aug 2026. **Session Activity is partly built** — its
+headline band only, because the rest of that dashboard was not legible in the capture; a
+measure whose name is a guess agrees nothing, which is the one thing these mock-ups are for.
+Each empty one is one page
 carrying a single *What this report is for* tile that says what has and has not been decided,
 and each has its own specification. The name is the whole of the brief so far, so the first job
 on any of them is scoping, not building — several overlap measures that already live on the

@@ -6,14 +6,17 @@
 **Audience:** MVP Health Care, and internally whoever signs off before anything leaves the building.
 **Purpose:** Answer what MVP asked for. This report is the CDPHP report with visuals switched off — that is the model for every payer after the first, so a measure missing from [the CDPHP report](cdphp.md) is missing here too.
 
-**Five pages, one report,** mirroring CDPHP page for page so the two can be read side by side:
-MVP Billing, MVP Patient Acquisition, MVP CN referrals, Clinical Outcomes (PHQ9), MVP
-Update. Every one of them is currently empty.
+**Four pages, one report:** MVP Billing, MVP Patient Acquisition, Clinical Outcomes (PHQ9),
+MVP Update. Only Clinical Outcomes carries visuals; the other three are named and empty.
+
+**MVP CN referrals was removed on 8 Sep 2026.** CDPHP has that page and MVP now does not, so
+the page mirror is deliberately no longer exact. No reason is recorded here because none was
+given — if the page comes back, this note is what says it was taken out on purpose.
 
 ## What is decided and what is not
 
-Decided: that MVP gets its own report rather than a payer slicer on the CDPHP one, and that the
-page structure follows CDPHP.
+Decided: that MVP gets its own report rather than a payer slicer on the CDPHP one; that the
+page structure follows CDPHP other than CN referrals, which MVP does not carry.
 
 Not decided, and both block any visual going in:
 
@@ -24,9 +27,9 @@ Not decided, and both block any visual going in:
   contractual question as much as a data one — the 7-day follow-up standard, the HEDIS
   thresholds and the acuity definitions are all per-contract.
 
-Until both are answered the report ships as five named, empty pages with a note saying so. It
-is registered in `tools/sync.py` and appears in the report navigation, so the moment a visual
-lands the specification pairing is already enforced.
+Until both are answered the report ships as named pages with a note saying so, and only
+Clinical Outcomes has anything in it. It is registered in `tools/sync.py` and appears in the
+report navigation, so the moment a visual lands the specification pairing is already enforced.
 
 ## How to read the table
 
@@ -122,5 +125,5 @@ is protected health information; the mock-up exists to agree the column list.
 
 ## Pages with no visuals
 
-MVP Patient Acquisition and MVP CN referrals have no rows because they have no visuals yet.
+MVP Patient Acquisition and MVP Update have no rows because they have no visuals yet.
 Adding a visual means adding a row in the same commit.

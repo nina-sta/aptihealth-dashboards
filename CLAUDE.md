@@ -28,7 +28,7 @@ reports/
   internal/patient-journey.html         internal — the member's path
   internal/provider-journey.html        internal — documentation, supervision, matching
   external/cdphp.html                   external — the CDPHP payer report, five pages in one file
-  external/mvp.html                     external — the MVP payer report, five empty pages
+  external/mvp.html                     external — the MVP payer report, four pages, one built
 docs/
   README.md                             how the specs work
   internal/patient-journey.md           spec paired with the patient mock-up
@@ -47,10 +47,12 @@ missing from CDPHP is missing everywhere. It carries no report-level slicers: th
 one program and one period, decided when the report is issued, not switched by the reader.
 
 **MVP is the second payer report** and the first test of "CDPHP with visuals switched off".
-It has five pages mirroring CDPHP's; only Clinical Outcomes (PHQ9) is built, and the other four
-are named and empty. Nobody has written down what MVP asked for, and which CDPHP visuals are
-switched on for them is a contractual question as much as a data one. It is registered in `sync.py` so the pairing bites the moment a visual
-lands. `EXTERNAL` in `sync.py` lists the payer reports — add to it, not just to `REPORTS`, when
+It has four pages; only Clinical Outcomes (PHQ9) is built, and the other three are named and
+empty. It mirrored CDPHP page for page until **CN referrals was removed on 8 Sep 2026** — the
+mirror is deliberately no longer exact, and `docs/external/mvp.md` is where that is recorded.
+Nobody has written down what MVP asked for, and which CDPHP visuals are switched on for them is
+a contractual question as much as a data one. It is registered in `sync.py` so the pairing bites
+the moment a visual lands. `EXTERNAL` in `sync.py` lists the payer reports — add to it, not just to `REPORTS`, when
 the third payer arrives, or the new report's visuals start counting as internal ones.
 
 **The CDPHP report is one file holding five pages**, switched by the `<button data-pg="…">`

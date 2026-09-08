@@ -388,7 +388,7 @@
       <div class="vh"><h4>What this report is for</h4>
         <div class="vf"><button class="i" data-tip="Not a visual. The note that says what has and has not been decided about this report, so an empty page cannot be mistaken for a finished one.">&#9432;</button></div>
       </div>
-      <p class="info">Every payer report is the CDPHP report with visuals switched off &mdash; that is the model, so a measure missing from CDPHP is missing here too. The page structure mirrors CDPHP so the two can be read side by side. Clinical Outcomes is the one page with visuals; this one and the other three are still empty.</p>
+      <p class="info">Every payer report is the CDPHP report with visuals switched off &mdash; that is the model, so a measure missing from CDPHP is missing here too. The page structure follows CDPHP except that CN referrals is not carried here. Clinical Outcomes is the one page with visuals; this one and the other two are still empty.</p>
       <div class="body">
         <div class="gapnote">&#9888; Blocked on two decisions: what MVP actually asked for, and which CDPHP visuals are switched on for them. Until both are answered there is nothing honest to draw here.</div>
       </div>
@@ -399,9 +399,6 @@
     <div class="band"><span class="t">MVP Patient Acquisition</span><span class="d">Reserved. Nothing is switched on for MVP yet &mdash; the visuals and their definitions come next.</span><span class="r"></span></div>
   </div>
 
-  <div class="page" id="pg-mvp-cn">
-    <div class="band"><span class="t">MVP CN referrals</span><span class="d">Reserved. Nothing is switched on for MVP yet &mdash; the visuals and their definitions come next.</span><span class="r"></span></div>
-  </div>
 
   <div class="page" id="pg-mvp-outcomes">
     <div class="band"><span class="t">Headline</span><span class="d">The four numbers the payer reads first. Each is a share, so each carries its denominator.</span><span class="r"></span></div>
@@ -735,10 +732,9 @@
     <span class="sep"></span>
     <button data-pg="pg-mvp-billing" aria-pressed="true">MVP Billing</button>
     <button data-pg="pg-mvp-acq" aria-pressed="false">MVP Patient Acquisition</button>
-    <button data-pg="pg-mvp-cn" aria-pressed="false">MVP CN referrals</button>
     <button data-pg="pg-mvp-outcomes" aria-pressed="false">Clinical Outcomes (PHQ9)</button>
     <button data-pg="pg-mvp-update" aria-pressed="false">MVP Update</button>
-    <span class="hint">Five pages mirroring CDPHP. Only Clinical Outcomes has visuals so far. Hover &#9432; for the Power BI visual type.</span>
+    <span class="hint">Four pages. Only Clinical Outcomes has visuals so far. Hover &#9432; for the Power BI visual type.</span>
   </div>
 
   <div class="dd" id="dd" role="listbox"></div>

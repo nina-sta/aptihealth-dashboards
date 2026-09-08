@@ -4,21 +4,40 @@
 > same commit. `tools/sync.py` fails if the visuals in the two disagree.
 
 **Audience:** Internal — _to agree_.
-**Purpose:** _Not yet written._ The report was named on 8 Sep 2026 and registered empty, so the pairing between mock-up and specification bites from the first visual onwards.
+**Purpose:** _Not yet written._ Set on 8 Sep 2026 as a deliberate placeholder: **the CDPHP
+CN referrals page, copied**, to be argued with rather than to be believed.
 
-## What is decided and what is not
+## This report is a copy, on purpose
 
-Decided: that this report exists, that it is internal, and that it is registered empty rather
-than sketched. Registering it empty means the mock-up and this document are already paired, so
-the first visual to land cannot land undocumented.
+Every visual here is the CDPHP report's **CN referrals** page — same measures, same headings,
+same definitions in the ⓘ tooltips. The headings are identical because the measures are
+identical; the heading is this repo's join key, and forking a definition by renaming it is the
+failure the key exists to prevent.
 
-Not decided, and each of these blocks any visual going in:
+One thing does differ, and it is the reason this cannot stay as it is: the CDPHP page counts
+one payer, and an internal report should count all of them. Until this report is scoped, every
+figure on it is a payer cut standing in for an all-payer one.
 
-- **What the report is for.** The name is the whole of the brief so far. A report named but not
-  scoped will otherwise be filled with whatever is easy to query.
-- **Who reads it, and what they do differently having read it.** Internal reports are held to
-  this: every visual traces to a named person who acts on it.
-- **What it takes from the reports that already exist.** **Routine referrals**, **Access by referral channel**, **Urgent referrals — time to care by reason** and **Referral to first appointment conversion rate** are all on the Patient journey. This report either gathers them or adds to them; it should not quietly duplicate them.
+**And the title overclaims.** Every tile here is *care navigator* referrals. A report called
+Referrals should cover referrals — HCP practices, PCP practices, health plans, health systems,
+self sign-up — of which care navigators are one channel among several. The mock-up says so on
+the first tile rather than letting the name imply coverage it does not have.
+
+## What has to be decided before this stops being a copy
+
+- **What this report answers that the CDPHP page does not.** If the honest answer is "nothing
+  except the payer filter", then this should be a slicer on that page and not a report.
+- **Its relationship to the four referral measures on the [Patient journey](patient-journey.md)** —
+  Routine referrals, Access by referral channel, Urgent referrals — time to care by reason, and
+  Referral to first appointment conversion rate. They are referral measures that already have a
+  home.
+- **Its relationship to [Care Navigators](care-navigators.md)**, which was built on the same day
+  and already carries the care-navigator view in a wider form, including the referral source
+  reconciliation and the DI outcome work.
+- **All channels, or one.** The title says all. The content is one.
+
+Until those are answered, the two blockers already recorded against the CDPHP page apply
+unchanged here: duplicate practice names, and the missing referring facility at registration.
 
 ## How to read the table
 
@@ -28,11 +47,21 @@ tooltip on the tile. This document owns the owner, the business impact and the s
 
 | Visual | Business question | Owner | Business impact | Status |
 | --- | --- | --- | --- | --- |
-| What this report is for | What has been decided about this report, and what has not? | _unassigned_ | _to agree_ | Blocked — Not a measure. It is the note that keeps an empty report from reading as a finished one, and it comes out the moment the first real visual goes in |
+| What this report is for | Is this a scoped report or a starting point? | _unassigned_ | _to agree_ | Blocked — Not a measure. It is the note that keeps a copied page from reading as a scoped report, and it comes out when this report is given its own definition |
+| Total CN referrals | How much referral volume arrives, and how much becomes a member? | _unassigned_ | _to agree_ | Blocked — Copied from the CDPHP page, so it counts one payer. An internal report needs all of them |
+| CN referrals per month | Is referral volume growing? | _unassigned_ | _to agree_ | Blocked — Same payer cut as above |
+| CN referrals per working day | Is a quiet month quiet, or short? | _unassigned_ | _to agree_ | Blocked — Same payer cut as above |
+| Weekly CN referral counts by care navigator | Who is carrying the volume? | _unassigned_ | _to agree_ | Blocked — The source groups by a field labelled "Facility" whose values are people. Also duplicated, in a wider form, on Care Navigators |
+| Monthly CN referrals by referring facility | Which facilities send us members? | _unassigned_ | _to agree_ | Blocked — The same facility appears two or three times in the source, so every facility total is understated |
+| Registered members by referring facility | Can we tell who referred a member once they register? | _unassigned_ | _to agree_ | Blocked — 96% of registered members carry no referring facility |
 
 ## Open items
 
-- **Scope** — nobody has written down what this report answers. Until somebody does, it stays empty.
+- **Scope.** This report is a copy and says so. Deciding what it is for is the whole of the
+  next piece of work, and it may end with the report being deleted in favour of a slicer.
+- **The title covers more than the content.** Care-navigator referrals are one channel.
+- **Overlap with Care Navigators and the Patient journey**, both of which carry referral
+  measures already.
+- **Duplicate practice names** and **missing referring facility at registration** — inherited
+  from the CDPHP page along with everything else.
 - **Owner** — unassigned, like every row in every specification here.
-- **Referral reason** — the urgency measures assume a stored attribute, not free text in a note. Unconfirmed.
-- **Overlap with the Patient journey** — four referral measures already live there.

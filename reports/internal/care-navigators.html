@@ -379,7 +379,7 @@
 <div class="root">
   <div class="rpthead">
     <h1>aptihealth &mdash; Care Navigators</h1>
-    <span class="mock">&#9888; <b>Prototype only.</b> The real report will be built in Power BI, so the finished thing follows whatever Power BI allows. This is here to agree the metrics.</span>
+    <span class="mock"><b>Prototype only.</b> The real report will be built in Power BI, so the finished thing follows whatever Power BI allows. This is here to agree the metrics.</span>
   </div>
 
   <div class="page on" id="pg-care-navigators">
@@ -408,7 +408,7 @@
           <span><i style="background:var(--s2)"></i>Kowalska A.</span>
           <span><i style="background:var(--s3)"></i>Wisniewski P.</span>
         </div>
-        <div class="gapnote">&#9888; Names are invented placeholders. The source dashboard groups this by a field it labels &ldquo;Care Navigator Facility&rdquo; while the values are individual people &mdash; confirm which field is actually being grouped before this is built.</div>
+        <div class="gapnote">Names are invented placeholders. The source dashboard groups this by a field it labels &ldquo;Care Navigator Facility&rdquo; while the values are individual people &mdash; confirm which field is actually being grouped before this is built.</div>
       </div>
     </div>
 
@@ -422,7 +422,7 @@
           <span><i style="background:var(--s3)"></i>Facility C</span><span><i style="background:var(--s4)"></i>Facility D</span>
           <span><i style="background:var(--s5)"></i>Other facilities</span>
         </div>
-        <div class="gapnote">&#9888; The same facility appears two or three times over in the source &mdash; a typed name and a system slug counted as separate rows &mdash; so any single facility total is understated. See the practice list at the bottom of this page.</div>
+        <div class="gapnote">The same facility appears two or three times over in the source &mdash; a typed name and a system slug counted as separate rows &mdash; so any single facility total is understated. See the practice list at the bottom of this page.</div>
       </div>
     </div>
 
@@ -431,7 +431,7 @@
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: clustered bar chart, not the doughnut the source uses. Eight payer slices in a circle cannot be compared by eye; bars sorted by size can. Members registered in the month, grouped by the payer recorded at referral. One colour, because a payer is a category and none of them is good or bad.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="cn-pay"></div>
-        <div class="gapnote">&#9888; The source lists CDPHP, CDPHP Medicaid and CDPHP Medicare as three unrelated slices. They are one payer with three lines of business, and whether this report wants the payer or the plan has to be decided before the mix means anything.</div>
+        <div class="gapnote">The source lists CDPHP, CDPHP Medicaid and CDPHP Medicare as three unrelated slices. They are one payer with three lines of business, and whether this report wants the payer or the plan has to be decided before the mix means anything.</div>
       </div>
     </div>
 
@@ -492,7 +492,7 @@
       </div>
       <p class="info">The facility survives the referral and not the registration. On 1,159 of 1,208 registered members there is nothing recorded, so this cannot be joined to outcomes for anyone.</p>
       <div class="body"><div class="ch" id="cn-reg"></div>
-        <div class="gapnote">&#9888; Blocked: 96% of registered members carry no referring facility. Until that field is populated at registration, no facility-level outcome or conversion measure can be built at all.</div>
+        <div class="gapnote">Blocked: 96% of registered members carry no referring facility. Until that field is populated at registration, no facility-level outcome or conversion measure can be built at all.</div>
       </div>
     </div>
 
@@ -511,7 +511,7 @@
       </div>
       <p class="info">Column list only. The source shows four of these worklists with nearly the same columns; they are one list with different filters and should be built once with a filter, not four times.</p>
       <div class="body" id="cn-list"></div>
-      <div class="gapnote">&#9888; Invented member ids and facility labels. The real list is protected health information &mdash; the mock-up exists to agree the column list and who may open it, which is a decision nobody has taken.</div>
+      <div class="gapnote">Invented member ids and facility labels. The real list is protected health information &mdash; the mock-up exists to agree the column list and who may open it, which is a decision nobody has taken.</div>
     </div>
 
     <div class="v c6 h3r">
@@ -533,7 +533,7 @@
         <div class="vf"><span class="wf">Rolling 12 months</span><button class="i" data-tip="Power BI: matrix, distinct referral ids by practice. It is here as evidence rather than as a measure: the duplicate rows are real, and they are why every facility figure on this page is understated.">&#9432;</button></div>
       </div>
       <div class="body" id="cn-prac"></div>
-      <div class="gapnote">&#9888; Rows 1 and 2 are one practice, and so are rows 4 and 5 &mdash; a typed name and a system slug for the same place. Until the practice list is deduplicated at source, no facility ranking on this page is safe to quote.</div>
+      <div class="gapnote">Rows 1 and 2 are one practice, and so are rows 4 and 5 &mdash; a typed name and a system slug for the same place. Until the practice list is deduplicated at source, no facility ranking on this page is safe to quote.</div>
     </div>
 
   </div>

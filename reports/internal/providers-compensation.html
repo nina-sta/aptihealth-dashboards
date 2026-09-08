@@ -379,7 +379,7 @@
 <div class="root">
   <div class="rpthead">
     <h1>aptihealth &mdash; Providers Compensation</h1>
-    <span class="mock">&#9888; <b>Prototype only.</b> The real report will be built in Power BI, so the finished thing follows whatever Power BI allows. This is here to agree the metrics.</span>
+    <span class="mock"><b>Prototype only.</b> The real report will be built in Power BI, so the finished thing follows whatever Power BI allows. This is here to agree the metrics.</span>
   </div>
 
   <div class="page on" id="pg-providers-compensation">
@@ -428,7 +428,7 @@
         <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Top 5</span><button class="i" data-tip="Power BI: matrix, one row per provider, with RVU per billable hour as the last column and conditional formatting on it. RVU per hour is the measure this report exists to produce and the one the source never calculates &mdash; it lists RVU totals and hours in separate grids and leaves the division to the reader.">&#9432;</button></div>
       </div>
       <div class="body" id="pc-prov"></div>
-      <div class="gapnote">&#9888; Provider names are invented. RVU per hour varies by more than half across the group, and every bit of that could be code mix rather than productivity &mdash; a prescriber billing 99213 and a therapist billing 90837 are not comparable on this number. Whether compensation is meant to be read from it is the decision this report is blocked on.</div>
+      <div class="gapnote">Provider names are invented. RVU per hour varies by more than half across the group, and every bit of that could be code mix rather than productivity &mdash; a prescriber billing 99213 and a therapist billing 90837 are not comparable on this number. Whether compensation is meant to be read from it is the decision this report is blocked on.</div>
     </div>
 
     <div class="band"><span class="t">What stops a session being billed</span><span class="d">An incomplete note is an unbillable session. This is where the money leaks.</span><span class="r"></span></div>
@@ -462,7 +462,7 @@
         <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: clustered bar chart, mean hours from session end to a completed note, by the code the session was billed under. Intake notes take nearly twice as long as anything else, which is where the unsigned backlog concentrates.">&#9432;</button></div>
       </div>
       <div class="body"><div class="ch" id="pc-hrs"></div>
-        <div class="gapnote">&#9888; Depends on a session-end timestamp existing in the model. If only a session date is stored, this measure cannot be built as specified &mdash; the same blocker as on the Provider journey.</div>
+        <div class="gapnote">Depends on a session-end timestamp existing in the model. If only a session date is stored, this measure cannot be built as specified &mdash; the same blocker as on the Provider journey.</div>
       </div>
     </div>
 
@@ -492,7 +492,7 @@
         <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Top 5</span><button class="i" data-tip="Power BI: matrix, session counts by provider and primary diagnosis. Counts only: a member can carry several diagnoses, so a share of the total here would be nonsense &mdash; the same caveat as the diagnosis matrix on the CDPHP outcomes page.">&#9432;</button></div>
       </div>
       <div class="body" id="pc-dx"></div>
-      <div class="gapnote">&#9888; Rows do not sum to the sessions in the month. A session carries a primary and a secondary diagnosis and only the primary is counted here; the source shows both in one grid without saying which is which.</div>
+      <div class="gapnote">Rows do not sum to the sessions in the month. A session carries a primary and a secondary diagnosis and only the primary is counted here; the source shows both in one grid without saying which is which.</div>
     </div>
 
   </div>

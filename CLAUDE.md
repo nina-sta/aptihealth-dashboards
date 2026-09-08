@@ -29,7 +29,7 @@ reports/
   internal/provider-journey.html        internal — documentation, supervision, matching
   internal/session-activity.html        internal — named, no visuals yet
   internal/advanced-care-note-metrics.html   internal — care activity notes, touchpoints
-  internal/providers-compensation.html  internal — named, no visuals yet
+  internal/providers-compensation.html  internal — billable sessions, hours, RVUs
   internal/care-navigators.html         internal — the care navigation team
   internal/outreach-and-prioritization.html  internal — the queues, and who to chase
   internal/referrals.html               internal — named, no visuals yet
@@ -55,9 +55,9 @@ largest — every other payer report is this one with visuals switched off — s
 missing from CDPHP is missing everywhere. It carries no report-level slicers: the payer sees
 one program and one period, decided when the report is issued, not switched by the reader.
 
-**Five internal reports are registered and empty** — Session Activity, Providers Compensation,
-Referrals, Providers Scorecard and Satisfaction Survey Report, named on 8 Sep 2026. Care
-Navigators, Advanced Care Note Metrics and Outreach and Prioritization were named with them and
+**Four internal reports are registered and empty** — Session Activity, Referrals, Providers
+Scorecard and Satisfaction Survey Report, named on 8 Sep 2026. Care Navigators, Advanced Care
+Note Metrics, Outreach and Prioritization and Providers Compensation were named with them and
 built the same day from the Sisense dashboards of 27 Aug 2026. Each empty one is one page
 carrying a single *What this report is for* tile that says what has and has not been decided,
 and each has its own specification. The name is the whole of the brief so far, so the first job

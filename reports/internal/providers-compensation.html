@@ -383,17 +383,118 @@
   </div>
 
   <div class="page on" id="pg-providers-compensation">
-    <div class="band"><span class="t">Providers Compensation</span><span class="d">What providers are paid, against what they delivered.</span><span class="r"></span></div>
 
-    <div class="v c12 h2r">
-      <div class="vh"><h4>What this report is for</h4>
-        <div class="vf"><button class="i" data-tip="Not a visual. The note that says what has and has not been decided about this report, so an empty report cannot be mistaken for a finished one. It comes out the moment the first real visual goes in.">&#9432;</button></div>
+    <div class="band"><span class="t">What a provider is paid on</span><span class="d">Sessions that reached a bill, the codes they were billed under, and the hours behind them.</span><span class="r"></span></div>
+
+    <div class="v kpi c4 h2r">
+      <div class="vh"><h4>Billable sessions</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: card + line. Sessions delivered in the month that carry a completed note and a billable CPT code. It is the base every compensation figure on this page is built from, which is why the unbillable count sits directly beneath it.">&#9432;</button></div>
       </div>
-      <p class="info">Named on 8 Sep 2026 and registered empty. No compensation measure exists anywhere in this prototype, and no compensation source has been named, so this report starts from nothing.</p>
       <div class="body">
-        <div class="gapnote">&#9888; Blocked on the whole scope, and before that on whether pay-level data can sit in a report this many people open.</div>
+        <div class="big">2,231</div>
+        <div class="sub">Aug 2026 &mdash; 1,347 billable hours</div>
+        <div class="spark ch" id="pc-tot"></div>
       </div>
     </div>
+
+    <div class="v c8 h2r">
+      <div class="vh"><h4>Billable sessions by CPT code</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart, five series, all session counts, so one axis and the maximum comes from the stacked total. The code decides the rate, so the mix is the compensation story and the total is only half of it. Five codes cover almost everything; anything rarer folds into the largest neighbour rather than adding a sixth colour.">&#9432;</button></div>
+      </div>
+      <p class="info">The mix barely moves across the year. Growth in what providers earn is coming from volume, not from a shift towards longer sessions.</p>
+      <div class="body"><div class="ch" id="pc-cpt"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>90834 &middot; 45 min</span><span><i style="background:var(--s2)"></i>90837 &middot; 60 min</span>
+          <span><i style="background:var(--s3)"></i>99213+ &middot; med mgmt</span><span><i style="background:var(--s4)"></i>90832 &middot; 30 min</span>
+          <span><i style="background:var(--s5)"></i>90791 &middot; intake</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c12 h2r">
+      <div class="vh"><h4>Billable sessions by provider role</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart, four series, all session counts. The source splits this into two matrices, one for behavioral health specialists and one for prescribers, which makes the two impossible to compare and hides intake and case management entirely. One stack shows all four and their shares at once.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="pc-role"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Behavioral health specialists</span><span><i style="background:var(--s2)"></i>Prescribers</span>
+          <span><i style="background:var(--s3)"></i>Intake</span><span><i style="background:var(--s4)"></i>Case management</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c12 h3r">
+      <div class="vh"><h4>Billable hours and RVUs by provider</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Top 5</span><button class="i" data-tip="Power BI: matrix, one row per provider, with RVU per billable hour as the last column and conditional formatting on it. RVU per hour is the measure this report exists to produce and the one the source never calculates &mdash; it lists RVU totals and hours in separate grids and leaves the division to the reader.">&#9432;</button></div>
+      </div>
+      <div class="body" id="pc-prov"></div>
+      <div class="gapnote">&#9888; Provider names are invented. RVU per hour varies by more than half across the group, and every bit of that could be code mix rather than productivity &mdash; a prescriber billing 99213 and a therapist billing 90837 are not comparable on this number. Whether compensation is meant to be read from it is the decision this report is blocked on.</div>
+    </div>
+
+    <div class="band"><span class="t">What stops a session being billed</span><span class="d">An incomplete note is an unbillable session. This is where the money leaks.</span><span class="r"></span></div>
+
+    <div class="v kpi c4 h2r">
+      <div class="vh"><h4>Sessions delivered but not billable</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: KPI card. Sessions that happened and cannot be billed because the note is not complete. This is a count that should be zero, which is why it is red &mdash; the work was done, the member was seen, and nobody gets paid for it.">&#9432;</button></div>
+      </div>
+      <div class="body">
+        <div class="big" style="color:var(--critical)">335</div>
+        <div class="sub">15% of sessions delivered in the month</div>
+        <div class="spark ch" id="pc-unb"></div>
+      </div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Note timeliness</h4>
+        <div class="vf"><span class="wf">Rolling 12 months</span><button class="i" data-tip="Power BI: 100% stacked column chart. Status colours always ship with labels, never colour alone. The same measure as on the Provider journey and the CDPHP report &mdash; it is here because an unsigned note is an unbilled session, which makes it a compensation measure as much as a documentation one.">&#9432;</button></div>
+      </div>
+      <p class="info">Flat at roughly 15% unsigned all year. That share is the unbillable count above.</p>
+      <div class="body"><div class="ch" id="pc-time"></div>
+        <div class="lg">
+          <span><i style="background:var(--good)"></i>&lt;24h</span><span><i style="background:var(--warning)"></i>24&ndash;48h</span>
+          <span><i style="background:var(--serious)"></i>48&ndash;72h</span><span><i style="background:var(--critical)"></i>&gt;72h / unsigned</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Average hours to a completed note by CPT code</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: clustered bar chart, mean hours from session end to a completed note, by the code the session was billed under. Intake notes take nearly twice as long as anything else, which is where the unsigned backlog concentrates.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="pc-hrs"></div>
+        <div class="gapnote">&#9888; Depends on a session-end timestamp existing in the model. If only a session date is stored, this measure cannot be built as specified &mdash; the same blocker as on the Provider journey.</div>
+      </div>
+    </div>
+
+    <div class="band"><span class="t">Capacity ahead</span><span class="d">Slots that are open. An empty slot is a session that will not be billed.</span><span class="r"></span></div>
+
+    <div class="v c8 h2r">
+      <div class="vh"><h4>Available appointment slots by day</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart, two series, both slot counts, so one axis. This week against next week, by weekday. The source gives each week its own matrix of calendar links; two series on one axis is the comparison those two grids were trying to make.">&#9432;</button></div>
+      </div>
+      <p class="info">Next week is roughly half empty. Friday is the emptiest day in both weeks and Thursday the fullest.</p>
+      <div class="body"><div class="ch" id="pc-slot"></div>
+        <div class="lg"><span><i style="background:var(--s1)"></i>This week</span><span><i style="background:var(--s2)"></i>Next week</span></div>
+      </div>
+    </div>
+
+    <div class="v c4 h2r">
+      <div class="vh"><h4>Available slots by provider</h4>
+        <div class="vf"><span class="wf">Top 5</span><button class="i" data-tip="Power BI: clustered bar chart, open slots in the next two weeks per provider, most open first. Read it beside the RVU table: the providers with the most open time are not the ones with the lowest RVU per hour, so open capacity is not the same problem as low productivity.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="pc-pslot"></div></div>
+    </div>
+
+    <div class="band"><span class="t">Case mix</span><span class="d">What providers are treating, which is what the codes above are attached to.</span><span class="r"></span></div>
+
+    <div class="v c12 h3r">
+      <div class="vh"><h4>Primary diagnosis by provider</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><span class="wf">Top 5</span><button class="i" data-tip="Power BI: matrix, session counts by provider and primary diagnosis. Counts only: a member can carry several diagnoses, so a share of the total here would be nonsense &mdash; the same caveat as the diagnosis matrix on the CDPHP outcomes page.">&#9432;</button></div>
+      </div>
+      <div class="body" id="pc-dx"></div>
+      <div class="gapnote">&#9888; Rows do not sum to the sessions in the month. A session carries a primary and a secondary diagnosis and only the primary is counted here; the source shows both in one grid without saying which is which.</div>
+    </div>
+
   </div>
 
   <div class="ptabs" role="group" aria-label="Reports">
@@ -409,7 +510,7 @@
     <a href="../internal/satisfaction-survey-report.html">Satisfaction Survey Report</a>
     <a href="../external/cdphp.html">CDPHP payer report</a>
     <a href="../external/mvp.html">MVP payer report</a>
-    <span class="hint">Named and registered, no visuals yet &mdash; the specification says what has to be decided first.</span>
+    <span class="hint">Every measure is monthly. Chips inside a visual are visual-level filters; hover &#9432; for the Power BI visual type.</span>
   </div>
 
   <div class="dd" id="dd" role="listbox"></div>
@@ -1439,9 +1540,110 @@
 </script>
 <!-- shared:js:end -->
 <script>
-/* No visuals yet. render() still runs: it is what shows the page and wires the
-   tooltip and the comment layer, so a reader can ask for the first one. */
-APTI.render(function () {});
+/* From the Sisense "Providers Compensation" dashboard of 27 Aug 2026. Every figure
+   is invented and every provider name with it. */
+APTI.render(function () {
+  var MO = APTI.MO, columns = APTI.columns, bars = APTI.bars, spark = APTI.spark, matrix = APTI.matrix;
+
+  /* ---- what a provider is paid on ---- */
+
+  spark("pc-tot", [1842, 1904, 1798, 1655, 1921, 1877, 2043, 1988, 2106, 2174, 2088, 2231], "var(--s1)");
+
+  columns("pc-cpt", {
+    labels: MO, h: 96, stacked: true, pl: 28, unit: " sessions",
+    series: [
+      { name: "90834", color: "var(--s1)", values: [829, 857, 809, 745, 864, 845, 919, 895, 948, 978, 940, 1004] },
+      { name: "90837", color: "var(--s2)", values: [405, 419, 396, 364, 423, 413, 449, 437, 463, 478, 459, 491] },
+      { name: "99213+", color: "var(--s3)", values: [258, 267, 252, 232, 269, 263, 286, 278, 295, 304, 292, 312] },
+      { name: "90832", color: "var(--s4)", values: [221, 228, 216, 199, 231, 225, 245, 239, 253, 261, 251, 268] },
+      { name: "90791", color: "var(--s5)", values: [129, 133, 125, 115, 134, 131, 144, 139, 147, 153, 146, 156] }
+    ]
+  });
+
+  columns("pc-role", {
+    labels: MO, h: 96, stacked: true, pl: 28, unit: " sessions",
+    series: [
+      { name: "Behavioral health specialists", color: "var(--s1)", values: [1326, 1371, 1295, 1192, 1383, 1351, 1471, 1431, 1516, 1565, 1503, 1606] },
+      { name: "Prescribers", color: "var(--s2)", values: [258, 267, 252, 232, 269, 263, 286, 278, 295, 304, 292, 312] },
+      { name: "Intake", color: "var(--s3)", values: [129, 133, 125, 115, 134, 131, 143, 139, 147, 152, 146, 156] },
+      { name: "Case management", color: "var(--s4)", values: [129, 133, 126, 116, 135, 132, 143, 140, 148, 153, 147, 157] }
+    ]
+  });
+
+  matrix("pc-prov",
+    ["Provider", "Role", "Billable sessions", "Billable hours", "RVU total", "RVU per hour"],
+    [
+      ["R. Halloway", "Behavioral", { v: "148", bar: 100 }, "111.0", "268.9", { v: "2.42", cf: "g" }],
+      ["T. Ellery", "Behavioral", { v: "136", bar: 92 }, "102.0", "239.7", { v: "2.35", cf: "g" }],
+      ["M. Ainsley", "Prescriber", { v: "121", bar: 82 }, "60.5", "111.9", { v: "1.85", cf: "w" }],
+      ["S. Marchetti", "Behavioral", { v: "118", bar: 80 }, "88.5", "194.7", { v: "2.20", cf: "g" }],
+      ["P. Croft", "Prescriber", { v: "104", bar: 70 }, "52.0", "88.4", { v: "1.70", cf: "c" }],
+      ["All providers", "\u2014", { v: "2,231", bar: 100 }, "1,347.0", "2,842.2", { v: "2.11" }]
+    ]
+  );
+
+  /* ---- what stops a session being billed ---- */
+
+  spark("pc-unb", [312, 305, 288, 265, 298, 291, 317, 308, 326, 337, 324, 335], "var(--critical)");
+
+  columns("pc-time", {
+    labels: MO, h: 78, stacked: true, pct: true, max: 100, pl: 22, unit: "%",
+    series: [
+      { name: "<24h", color: "var(--good)", values: [73, 71, 74, 72, 75, 73, 70, 72, 74, 73, 75, 73] },
+      { name: "24-48h", color: "var(--warning)", values: [8, 9, 8, 9, 7, 8, 10, 9, 8, 8, 7, 8] },
+      { name: "48-72h", color: "var(--serious)", values: [4, 4, 3, 4, 3, 4, 5, 4, 3, 4, 3, 4] },
+      { name: ">72h / unsigned", color: "var(--critical)", values: [15, 16, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15] }
+    ]
+  });
+
+  bars("pc-hrs", {
+    lw: 92, rh: 21, max: 48,
+    rows: [
+      { label: "90791 \u00b7 intake", value: 41.2, fmt: "41.2 h", color: "var(--s1)" },
+      { label: "90837 \u00b7 60 min", value: 27.8, fmt: "27.8 h", color: "var(--s1)" },
+      { label: "90834 \u00b7 45 min", value: 22.4, fmt: "22.4 h", color: "var(--s1)" },
+      { label: "90832 \u00b7 30 min", value: 19.1, fmt: "19.1 h", color: "var(--s1)" },
+      { label: "99213+ \u00b7 med mgmt", value: 12.6, fmt: "12.6 h", color: "var(--s1)" }
+    ]
+  });
+
+  /* ---- capacity ahead ---- */
+
+  columns("pc-slot", {
+    labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+    h: 84, pl: 26, unit: " slots",
+    series: [
+      { name: "This week", color: "var(--s1)", values: [118, 96, 104, 88, 132] },
+      { name: "Next week", color: "var(--s2)", values: [164, 151, 148, 139, 178] }
+    ]
+  });
+
+  bars("pc-pslot", {
+    lw: 92, rh: 21, max: 54,
+    rows: [
+      { label: "J. Vance", value: 46, fmt: "46 slots", color: "var(--s2)" },
+      { label: "D. Ferris", value: 41, fmt: "41 slots", color: "var(--s2)" },
+      { label: "S. Marchetti", value: 38, fmt: "38 slots", color: "var(--s2)" },
+      { label: "T. Ellery", value: 31, fmt: "31 slots", color: "var(--s2)" },
+      { label: "R. Halloway", value: 27, fmt: "27 slots", color: "var(--s2)" }
+    ]
+  });
+
+  /* ---- case mix ---- */
+
+  matrix("pc-dx",
+    ["Provider", "F41.1 anxiety", "F33.1 depression, recurrent", "F32.1 depression, single", "F43.23 adjustment", "F90.2 ADHD", "Primary total"],
+    [
+      ["R. Halloway", "51", "38", "24", "19", "12", { v: "144", bar: 100 }],
+      ["T. Ellery", "44", "36", "22", "18", "14", { v: "134", bar: 93 }],
+      ["M. Ainsley", "29", "31", "18", "11", "28", { v: "117", bar: 81 }],
+      ["S. Marchetti", "41", "28", "21", "16", "10", { v: "116", bar: 81 }],
+      ["P. Croft", "24", "27", "16", "9", "24", { v: "100", bar: 69 }],
+      ["Top 5 total", "189", "160", "101", "73", "88", { v: "611" }]
+    ]
+  );
+
+});
 </script>
 </body>
 </html>

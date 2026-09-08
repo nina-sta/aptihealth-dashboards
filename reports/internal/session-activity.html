@@ -384,121 +384,278 @@
 
   <div class="page on" id="pg-session-activity">
 
-    <div class="band"><span class="t">The book ahead</span><span class="d">What is scheduled, and how much provider time is still unbooked.</span><span class="r"></span></div>
+    <div class="band"><span class="t">Volume and growth</span><span class="d">What was booked, what was held, and which way the numbers are moving.</span><span class="r"></span></div>
 
-    <div class="v kpi c4 h2r">
-      <div class="vh"><h4>Sessions scheduled, next four weeks</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: card + line. Sessions on the calendar for the coming four weeks, with the provider hours still unbooked underneath. Eighty-eight hours left across the whole group is a book that is effectively full &mdash; there is nowhere to put an urgent member.">&#9432;</button></div>
+    <div class="v c8 h3r">
+      <div class="vh"><h4>Sessions scheduled</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart, three series, all session counts, so one axis and the maximum comes from the stacked total. Every scheduled session ends one of three ways. The source shows the count and the completion rate on one visual with the rate on a second axis; a count and a rate are different units, so the rate is the tile beside this one.">&#9432;</button></div>
       </div>
-      <div class="body">
-        <div class="big">3,307</div>
-        <div class="sub">88 provider hours still unbooked</div>
-        <div class="spark ch" id="sa-s1"></div>
+      <p class="info">Volume is up roughly a fifth over the year. Every category grew with it, which is why the rate beside this tells a different story from the counts.</p>
+      <div class="body"><div class="ch" id="sa-sched"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Completed</span><span><i style="background:var(--s2)"></i>Cancelled</span>
+          <span><i style="background:var(--s4)"></i>No-show</span>
+        </div>
       </div>
     </div>
 
-    <div class="v kpi c4 h2r">
-      <div class="vh"><h4>Sessions scheduled, following four weeks</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: card + line. The same measure one window further out. Read it against the tile beside it: the near book is full and the far book is half empty, which is what a calendar always looks like and is why neither number means anything on its own.">&#9432;</button></div>
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Completed session rate</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: line chart, one series, completed sessions over all scheduled sessions. Two points of decline across a year is small and completely steady, which is what makes it worth looking at &mdash; a steady drift is a process changing, not a bad month.">&#9432;</button></div>
       </div>
-      <div class="body">
-        <div class="big">2,462</div>
-        <div class="sub">1,918 provider hours still unbooked</div>
-        <div class="spark ch" id="sa-s2"></div>
-      </div>
+      <p class="info">Down two points across the year, every month a little lower than the last. Growing volume is hiding it in the counts.</p>
+      <div class="body"><div class="ch" id="sa-rate"></div></div>
     </div>
-
-    <div class="v kpi c4 h2r">
-      <div class="vh"><h4>Projected session growth</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: KPI card. The projected change in session count against the comparable previous period. It is red because it is negative and this is a number the business is trying to grow &mdash; judgement, not category.">&#9432;</button></div>
-      </div>
-      <div class="body">
-        <div class="big" style="color:var(--critical)">&minus;13.03<small>%</small></div>
-        <div class="sub">against the comparable previous period</div>
-        <div class="spark ch" id="sa-gr"></div>
-      </div>
-    </div>
-
-    <div class="band"><span class="t">What happens to a booked session</span><span class="d">Held, cancelled, or nobody came.</span><span class="r"></span></div>
 
     <div class="v kpi c4 h1r">
-      <div class="vh"><h4>Completed sessions</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: card. Sessions that were held. The cancellation rate sits underneath it rather than on its own tile because the two are the same denominator read two ways.">&#9432;</button></div>
+      <div class="vh"><h4>Month-over-month session growth</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: KPI card. Change in scheduled sessions against the previous month. It swings between roughly plus and minus eight percent month to month, so a single reading of it says almost nothing &mdash; the line beneath is the tile, not the number.">&#9432;</button></div>
       </div>
       <div class="body">
-        <div class="big">471</div>
-        <div class="sub">cancellation rate 14.8%</div>
+        <div class="big">+6.9<small>%</small></div>
+        <div class="sub">against July &mdash; swings &plusmn;8% month to month</div>
+        <div class="spark ch" id="sa-mom"></div>
       </div>
     </div>
 
     <div class="v kpi c4 h1r">
-      <div class="vh"><h4>Cancelled sessions</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: card. Sessions cancelled before they were due. Amber, not red: a cancellation is an unwelcome category rather than a judgement, and the palette rule in this repo reserves red for what is badly wrong.">&#9432;</button></div>
+      <div class="vh"><h4>Month-over-month note growth</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: KPI card. The same measure for notes rather than sessions. It tracks the session figure within half a point every month, which is the reassuring answer: notes are being written for the sessions that happen.">&#9432;</button></div>
       </div>
       <div class="body">
-        <div class="big" style="color:var(--s2)">325</div>
-        <div class="sub">cancellation rate 11.2%</div>
+        <div class="big">+6.5<small>%</small></div>
+        <div class="sub">tracks sessions within half a point</div>
+        <div class="spark ch" id="sa-momn"></div>
       </div>
     </div>
 
-    <div class="v kpi c4 h1r">
-      <div class="vh"><h4>No-shows</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: card. Members who did not attend a session they had booked. The count and the rate on this tile contradict each other in the source, which is why the tile carries a warning rather than a number to act on.">&#9432;</button></div>
+    <div class="v c4 h1r">
+      <div class="vh"><h4>Sessions and notes due, next 14 days</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart, two series, both counts. The only forward-looking visual in the source: what is on the calendar for the next fortnight and the notes it will generate. Days rather than months, because a fortnight has no months in it.">&#9432;</button></div>
       </div>
-      <div class="body">
-        <div class="big">0</div>
-        <div class="sub">and yet a no-show rate of 3.8%</div>
-        <div class="gapnote">&#9888; A count of zero and a rate of 3.8% cannot both be right. One of the two measures is broken and nobody has said which.</div>
+      <div class="body"><div class="ch" id="sa-next"></div>
+        <div class="lg"><span><i style="background:var(--s1)"></i>Sessions</span><span><i style="background:var(--s2)"></i>Notes due</span></div>
       </div>
     </div>
 
-    <div class="band"><span class="t">Measures that return no value</span><span class="d">Two capacity tiles the source ships with #N/A on them.</span><span class="r"></span></div>
+    <div class="band"><span class="t">Billing and notes</span><span class="d">Which codes were billed, and whether the paperwork caught up.</span><span class="r"></span></div>
 
-    <div class="v kpi c6 h1r">
-      <div class="vh"><h4>Remaining intake provider hours</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: card. Intake capacity left in the window. It should be the tile that says whether a newly referred member can be seen; in the source it returns no value at all.">&#9432;</button></div>
+    <div class="v c8 h3r">
+      <div class="vh"><h4>Sessions by CPT code</h4>
+        <div class="vf"><span class="wf" data-opts="All sessions|Billable only" data-head="Session set">All sessions</span><button class="i" data-tip="Power BI: stacked column chart, five series, all session counts. The chip switches between every session and only the billable ones &mdash; the source carries those as two separate visuals with the same shape, which invites the reader to compare two pictures instead of one. The gap between them is the unbillable share. The source excludes an 'Other' CPT bucket from this visual without saying what is in it.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="sa-cpt"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>90834</span><span><i style="background:var(--s2)"></i>90837</span>
+          <span><i style="background:var(--s3)"></i>99213+</span><span><i style="background:var(--s4)"></i>90832</span>
+          <span><i style="background:var(--s5)"></i>90791</span>
+        </div>
+        <div class="gapnote">&#9888; The source excludes an &ldquo;Other&rdquo; CPT bucket from this visual and does not say what falls into it or how large it is.</div>
+      </div>
+    </div>
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Billable encounters and notes processed</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart, two series, both encounter counts. An encounter with an unprocessed note cannot be billed, so the amber band is delivered work that has not turned into money yet. The source shows the processed share as a percentage on the same visual; it is the same split read the other way and does not need its own axis.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="sa-proc"></div>
+        <div class="lg"><span><i style="background:var(--s1)"></i>Note processed</span><span><i style="background:var(--s2)"></i>Unprocessed</span></div>
+      </div>
+    </div>
+
+    <div class="v c12 h1r">
+      <div class="vh"><h4>Average days from service to a processed note</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: card + line, mean days from the session to the note being processed. It is the measure that would join the unprocessed backlog above to the billing delay, and in the source it does not run at all.">&#9432;</button></div>
       </div>
       <div class="body">
         <div class="big" style="color:var(--ink-muted)">not documented</div>
-        <div class="sub">the source returns #N/A</div>
-        <div class="gapnote">&#9888; Shipped broken. Either the measure is wrong or its inputs are missing, and it has been on screen long enough that readers have stopped seeing it.</div>
+        <div class="sub">the source visual fails to load</div>
+        <div class="gapnote">&#9888; Shipped broken. The source returns &ldquo;Error querying your data model &mdash; Analytical Engine Error: java.lang.ClassCastException&rdquo;, with an internal ticket reference on the tile. It has been failing long enough to have a ticket number printed on it.</div>
       </div>
     </div>
 
-    <div class="v kpi c6 h1r">
-      <div class="vh"><h4>Unused diagnostic interview hours</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: card. Booked DI capacity that went unused. It is the measure that would say whether the 36-day wait from diagnostic interview to first session is a capacity problem or a scheduling one; in the source it returns no value.">&#9432;</button></div>
+    <div class="band"><span class="t">Booking, cancelling, rescheduling</span><span class="d">How much notice anyone gives, and who withdraws.</span><span class="r"></span></div>
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Booking lead time</h4>
+        <div class="vf"><span class="wf" data-opts="Booked by: member|Booked by: provider" data-head="Booked by">Booked by: member</span><button class="i" data-tip="Power BI: 100% stacked column chart. How far ahead a session that went on to be completed was booked. The chip switches between sessions the member booked and sessions a provider booked; the source carries these as two visuals side by side, and the interesting thing is the difference between them, which two visuals make you hold in your head.">&#9432;</button></div>
       </div>
-      <div class="body">
-        <div class="big" style="color:var(--ink-muted)">not documented</div>
-        <div class="sub">the source returns #N/A</div>
-        <div class="gapnote">&#9888; Shipped broken, and it is the one number that would explain the longest wait on the patient journey.</div>
+      <div class="body"><div class="ch" id="sa-lead"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>More than a week</span><span><i style="background:var(--s5)"></i>Same week</span>
+          <span><i style="background:var(--s2)"></i>24 hours</span><span><i style="background:var(--s4)"></i>Same day</span>
+        </div>
       </div>
     </div>
 
-    <div class="band"><span class="t">What a session leaves behind</span><span class="d">The note, and the score.</span><span class="r"></span></div>
-
-    <div class="v kpi c6 h2r">
-      <div class="vh"><h4>Session to note completion</h4>
-        <div class="vf"><button class="i" data-tip="Power BI: card + line. Mean days from a session to its completed note, with the per-provider mean underneath. In days rather than the hours used on Providers Compensation, which is the same measure at a different scale &mdash; 1.70 days is roughly 41 hours, and the two reports should not carry two units for one thing.">&#9432;</button></div>
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Cancellation rate by who cancelled</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: line chart, three series, all rates in the same unit, so one axis. The source spreads this across seven visuals &mdash; a rate and a count for member, for provider and for automatic cancellations, plus a combined one. They are one measure cut three ways and belong on one pair of axes where the three can actually be compared.">&#9432;</button></div>
       </div>
-      <div class="body">
-        <div class="big">1.70<small> days</small></div>
-        <div class="sub">1.62 days averaged per provider rather than per note</div>
-        <div class="spark ch" id="sa-note"></div>
-        <div class="gapnote">&#9888; Two averages of the same thing, differing by how they are weighted. Which one the business is held to has not been decided, and Providers Compensation expresses the same measure in hours.</div>
+      <p class="info">Automatic cancellations are the ones that grew. Member and provider cancellations are flat.</p>
+      <div class="body"><div class="ch" id="sa-cxr"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Member</span><span><i style="background:var(--s2)"></i>Automatic</span>
+          <span><i style="background:var(--s3)"></i>Provider</span>
+        </div>
       </div>
     </div>
 
-    <div class="v kpi c6 h2r">
-      <div class="vh"><h4>Completed sessions with a PHQ score</h4>
-        <div class="vf"><span class="wf">All time</span><button class="i" data-tip="Power BI: card + line. The share of completed sessions that carry a PHQ-9 score, counted from April 2023 onwards. It is the coverage figure every outcome measure on the payer reports rests on: a third of sessions have no score, so a third of the population cannot appear in any outcome.">&#9432;</button></div>
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Cancelled sessions by who cancelled</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart, three series, all session counts. The counts behind the rates beside it. Automatic cancellations are now a third of everything cancelled, and nothing in this dashboard says what triggers one.">&#9432;</button></div>
       </div>
-      <div class="body">
-        <div class="big">64.6<small>%</small></div>
-        <div class="sub">121,184 completed sessions since Apr 2023</div>
-        <div class="spark ch" id="sa-phq"></div>
-        <div class="gapnote">&#9888; All-time, not monthly &mdash; the source counts from a fixed date, so the figure can only move slowly and a recent fall would be invisible in it. A monthly version is what would show whether coverage is improving.</div>
+      <div class="body"><div class="ch" id="sa-cxc"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Member</span><span><i style="background:var(--s2)"></i>Automatic</span>
+          <span><i style="background:var(--s3)"></i>Provider</span>
+        </div>
+        <div class="gapnote">&#9888; What causes an automatic cancellation is not defined anywhere in the source. It is the fastest-growing category on the page and nobody can say what it means.</div>
+      </div>
+    </div>
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Cancellation notice period</h4>
+        <div class="vf"><span class="wf" data-opts="Cancelled by: member|Cancelled by: provider" data-head="Cancelled by">Cancelled by: member</span><button class="i" data-tip="Power BI: 100% stacked column chart. How much notice a cancellation came with. The last band is sessions cancelled after the session was due to start, which is a no-show recorded as a cancellation and should probably not be in this measure at all.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="sa-cxn"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>More than a week</span><span><i style="background:var(--s5)"></i>48 hours</span>
+          <span><i style="background:var(--s2)"></i>24 hours</span><span><i style="background:var(--s4)"></i>Same day</span>
+          <span><i style="background:var(--critical)"></i>After it started</span>
+        </div>
+        <div class="gapnote">&#9888; Cancellations recorded after the session start time are counted here as cancellations and, on the attendance tiles, potentially as no-shows. Whether a session can be both has not been decided.</div>
+      </div>
+    </div>
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Cancellation reasons</h4>
+        <div class="vf"><span class="wf">Rolling 12 months</span><button class="i" data-tip="Power BI: clustered bar chart, cancellation counts by the reason recorded. The reasons are stored as raw system strings and are shown here as they actually appear, because tidying them up in the mock-up would hide the fact that nobody has agreed a reason list.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="sa-cxreason"></div>
+        <div class="gapnote">&#9888; Raw system values, not an agreed list &mdash; three separate &ldquo;conflict&rdquo; reasons, an &ldquo;sms&rdquo; reason that describes a channel rather than a cause, and an &ldquo;other&rdquo; bucket second largest of all.</div>
+      </div>
+    </div>
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Reschedules by notice period</h4>
+        <div class="vf"><span class="wf" data-opts="Rescheduled by: member|Rescheduled by: provider" data-head="Rescheduled by">Rescheduled by: member</span><button class="i" data-tip="Power BI: 100% stacked column chart. A reschedule is a cancellation that kept the member, so it belongs beside the cancellation tiles and not with them. The source again carries member and provider as two visuals.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="sa-resch"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>More than a week</span><span><i style="background:var(--s5)"></i>48 hours</span>
+          <span><i style="background:var(--s2)"></i>24 hours</span><span><i style="background:var(--s4)"></i>Same day</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="band"><span class="t">Attendance</span><span class="d">Who does not turn up, and when it happens.</span><span class="r"></span></div>
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>No-show rate</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: line chart, no-show sessions over all scheduled sessions, by date of service. Half a point of drift over the year on a base of three and a half percent &mdash; small, steady, and in the wrong direction.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="sa-nsr"></div></div>
+    </div>
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Members by no-show behaviour</h4>
+        <div class="vf"><span class="wf">Rolling 12 months</span><button class="i" data-tip="Power BI: clustered bar chart, members grouped by how many sessions they failed to attend. Read the bottom row first: a small group of members with three or more no-shows accounts for most of the missed sessions, so this is a targeting question rather than a general one.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="sa-nsb"></div></div>
+    </div>
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>No-shows and cancellations by time of day</h4>
+        <div class="vf"><span class="wf">Diagnostic interviews</span><button class="i" data-tip="Power BI: stacked column chart, two series, both session counts, by the hour the session was due to start. Diagnostic interviews only, which is the source's own scope. Early-morning and late-afternoon slots lose the most, which is a scheduling decision the team can act on directly.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="sa-tod"></div>
+        <div class="lg"><span><i style="background:var(--s4)"></i>No-show</span><span><i style="background:var(--s2)"></i>Cancelled</span></div>
+      </div>
+    </div>
+
+    <div class="band"><span class="t">Delivery and capacity</span><span class="d">Who is delivering the sessions, and whether members have another one booked.</span><span class="r"></span></div>
+
+    <div class="v c8 h3r">
+      <div class="vh"><h4>Sessions per provider per day by role</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: clustered column chart, three series, all the same unit. The source carries an overall figure and one per role as four separate visuals; the overall figure is the weighted average of the other three and tells you nothing the three do not. Prescribers run at roughly twice the sessions per day because their sessions are shorter, which is why this is not a productivity ranking.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="sa-spd"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Behavioral health</span><span><i style="background:var(--s2)"></i>Prescribers</span>
+          <span><i style="background:var(--s3)"></i>Intake</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Providers delivering sessions by role</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart, three series, all provider counts. How many distinct providers delivered at least one session in the period. Read it under the sessions-per-day tile: the two together separate a change in output from a change in headcount.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="sa-pcount"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Behavioral health</span><span><i style="background:var(--s2)"></i>Prescribers</span>
+          <span><i style="background:var(--s3)"></i>Intake</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c8 h3r">
+      <div class="vh"><h4>Members with and without a future session</h4>
+        <div class="vf"><button class="i" data-tip="Power BI: stacked column chart, three series, all member counts. Of the members active in the month, how many have something on the calendar ahead of them. The members with nothing booked are the ones about to fall out of care, and they are the join between this report and the outreach queues.">&#9432;</button></div>
+      </div>
+      <p class="info">Roughly a quarter of active members have nothing booked ahead of them. That group is the largest queue on the Outreach and Prioritization report.</p>
+      <div class="body"><div class="ch" id="sa-fut"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Session booked this month</span><span><i style="background:var(--s5)"></i>Booked next month</span>
+          <span><i style="background:var(--s4)"></i>Nothing booked</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Dropped calls</h4>
+        <div class="vf"><span class="wf" data-opts="By: who dropped|By: device" data-head="Split by">By: who dropped</span><button class="i" data-tip="Power BI: stacked column chart. A session that dropped mid-call, split by which side went and on what device. The source carries the two splits as separate visuals and a rate and a count for each; one chip does the same job. Mobile browsers drop several times more often than the app, which is a product finding rather than a clinical one.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="sa-drop"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Member</span><span><i style="background:var(--s2)"></i>Provider</span>
+          <span><i style="background:var(--s4)"></i>Both</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="band"><span class="t">Access and satisfaction</span><span class="d">What happens to a diagnostic interview, and what members say afterwards.</span><span class="r"></span></div>
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Diagnostic interview outcome by referral channel</h4>
+        <div class="vf"><span class="wf">Rolling 12 months</span><button class="i" data-tip="Power BI: 100% stacked column chart. What happened to the first diagnostic interview, by the channel the member arrived through. As a share rather than a count, because the channels differ in size by an order of magnitude and the question is whether one of them attends better.">&#9432;</button></div>
+      </div>
+      <p class="info">Self sign-up attends best by a wide margin. Members somebody else referred are markedly likelier to miss the first appointment.</p>
+      <div class="body"><div class="ch" id="sa-dich"></div>
+        <div class="lg">
+          <span><i style="background:var(--s1)"></i>Attended</span><span><i style="background:var(--s5)"></i>Rescheduled</span>
+          <span><i style="background:var(--s2)"></i>Cancelled</span><span><i style="background:var(--s4)"></i>No-show</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>HCP referrals &mdash; time from referral to a booked DI</h4>
+        <div class="vf"><span class="wf">Rolling 12 months</span><button class="i" data-tip="Power BI: clustered bar chart used as a histogram, referrals bucketed by the hours between the referral arriving and a diagnostic interview being booked. Buckets come from a DAX calculated column, not from the visual &mdash; Power BI cannot bin a measure.">&#9432;</button></div>
+      </div>
+      <div class="body"><div class="ch" id="sa-hcp"></div>
+        <div class="gapnote">&#9888; The source&rsquo;s buckets stop at &ldquo;120+ hours&rdquo;, which is five days and holds the largest group. Everything slower than five days looks the same, and that is where the problem is.</div>
+      </div>
+    </div>
+
+    <div class="v c4 h3r">
+      <div class="vh"><h4>Sessions by patient satisfaction rating</h4>
+        <div class="vf"><span class="wf">Aug 2026</span><button class="i" data-tip="Power BI: clustered bar chart. Completed sessions grouped by the rating the member gave, with the share of sessions that carry any rating at all in the subtitle. The source reports an average score and an average rating as two separate measures without saying how they differ.">&#9432;</button></div>
+      </div>
+      <p class="info">Only 31% of completed sessions carry a rating, so every satisfaction figure here describes a third of the work.</p>
+      <div class="body"><div class="ch" id="sa-pss"></div>
+        <div class="gapnote">&#9888; The source carries both an &ldquo;average PSS score&rdquo; and an &ldquo;average PSS rating&rdquo; and does not say how the two differ. Neither can be quoted until somebody does.</div>
       </div>
     </div>
 
@@ -517,7 +674,7 @@
     <a href="../internal/satisfaction-survey-report.html">Satisfaction Survey Report</a>
     <a href="../external/cdphp.html">CDPHP payer report</a>
     <a href="../external/mvp.html">MVP payer report</a>
-    <span class="hint">The headline band only &mdash; most of the source dashboard is not built. Hover &#9432; for the Power BI visual type.</span>
+    <span class="hint">Every measure is monthly. Chips inside a visual are visual-level filters; hover &#9432; for the Power BI visual type.</span>
   </div>
 
   <div class="dd" id="dd" role="listbox"></div>
@@ -1547,17 +1704,226 @@
 </script>
 <!-- shared:js:end -->
 <script>
-/* From the Sisense "Session Activity" dashboard of 27 Aug 2026 — the headline band
-   only; the rest of that dashboard was not legible in the capture. Figures invented
-   apart from the ones the capture actually showed. */
+/* From the Sisense "Session Activity" dashboard, PDF export of 8 Sep 2026. Every
+   figure is invented; the measure names, the buckets and the failures are the
+   source's own. */
 APTI.render(function () {
-  var spark = APTI.spark;
+  var MO = APTI.MO, columns = APTI.columns, lines = APTI.lines, bars = APTI.bars,
+      spark = APTI.spark;
 
-  spark("sa-s1", [3612, 3548, 3401, 3190, 3466, 3402, 3588, 3495, 3441, 3382, 3350, 3307], "var(--s1)");
-  spark("sa-s2", [2841, 2790, 2688, 2504, 2716, 2673, 2802, 2744, 2681, 2593, 2520, 2462], "var(--s1)");
-  spark("sa-gr", [4.2, 2.8, 1.1, -0.6, 1.9, 0.4, -2.1, -4.8, -6.3, -9.1, -11.4, -13.0], "var(--critical)");
-  spark("sa-note", [2.31, 2.24, 2.18, 2.09, 2.02, 1.96, 1.91, 1.86, 1.82, 1.78, 1.74, 1.70], "var(--s1)");
-  spark("sa-phq", [58.1, 58.9, 59.6, 60.2, 60.9, 61.5, 62.1, 62.7, 63.2, 63.8, 64.2, 64.6], "var(--s1)");
+  /* ---- volume and growth ---- */
+
+  columns("sa-sched", {
+    labels: MO, h: 118, stacked: true, pl: 30, unit: " sessions",
+    series: [
+      { name: "Completed", color: "var(--s1)", values: [4069, 4209, 3958, 3633, 4213, 4102, 4457, 4325, 4576, 4711, 4525, 4830] },
+      { name: "Cancelled", color: "var(--s2)", values: [452, 476, 459, 429, 506, 501, 553, 545, 587, 609, 590, 635] },
+      { name: "No-show", color: "var(--s4)", values: [151, 158, 153, 143, 169, 167, 184, 182, 195, 203, 196, 211] }
+    ]
+  });
+
+  lines("sa-rate", {
+    labels: MO, h: 118, max: 100,
+    series: [{ name: "Completed", color: "var(--s1)",
+      values: [87.1, 86.9, 86.6, 86.4, 86.2, 86.0, 85.8, 85.6, 85.4, 85.3, 85.2, 85.1] }]
+  });
+
+  spark("sa-mom", [4.2, 3.7, -5.6, -8.0, 16.2, -2.4, 8.9, -2.7, 6.1, 3.1, -3.8, 6.9], "var(--s1)");
+  spark("sa-momn", [3.9, 4.1, -5.2, -7.6, 15.4, -2.0, 8.4, -2.2, 5.8, 2.9, -3.4, 6.5], "var(--s1)");
+
+  columns("sa-next", {
+    labels: ["M", "T", "W", "T", "F", "M", "T", "W", "T", "F"],
+    h: 74, pl: 24, unit: " due",
+    series: [
+      { name: "Sessions", color: "var(--s1)", values: [214, 198, 206, 221, 172, 208, 194, 201, 216, 168] },
+      { name: "Notes due", color: "var(--s2)", values: [201, 186, 194, 208, 162, 196, 183, 189, 203, 158] }
+    ]
+  });
+
+  /* ---- billing and notes ---- */
+
+  columns("sa-cpt", {
+    labels: MO, h: 118, stacked: true, pl: 30, unit: " sessions",
+    series: [
+      { name: "90834", color: "var(--s1)", values: [1831, 1894, 1781, 1635, 1896, 1846, 2006, 1946, 2059, 2120, 2036, 2174] },
+      { name: "90837", color: "var(--s2)", values: [895, 926, 871, 799, 927, 902, 981, 952, 1007, 1036, 996, 1063] },
+      { name: "99213+", color: "var(--s3)", values: [570, 589, 554, 509, 590, 574, 624, 606, 641, 660, 634, 676] },
+      { name: "90832", color: "var(--s4)", values: [488, 505, 475, 436, 505, 492, 535, 519, 549, 565, 543, 580] },
+      { name: "90791", color: "var(--s5)", values: [285, 295, 277, 254, 295, 288, 311, 302, 320, 330, 316, 337] }
+    ]
+  });
+
+  columns("sa-proc", {
+    labels: MO, h: 118, stacked: true, pl: 30, unit: " encounters",
+    series: [
+      { name: "Note processed", color: "var(--s1)", values: [3459, 3578, 3364, 3088, 3581, 3487, 3788, 3676, 3890, 4004, 3846, 4106] },
+      { name: "Unprocessed", color: "var(--s2)", values: [610, 631, 594, 545, 632, 615, 669, 649, 686, 707, 679, 724] }
+    ]
+  });
+
+  /* ---- booking, cancelling, rescheduling ---- */
+
+  columns("sa-lead", {
+    labels: MO, h: 118, stacked: true, pct: true, max: 100, pl: 24, unit: "%",
+    series: [
+      { name: "More than a week", color: "var(--s1)", values: [41, 40, 42, 39, 41, 40, 39, 38, 38, 37, 36, 36] },
+      { name: "Same week", color: "var(--s5)", values: [33, 33, 32, 34, 33, 33, 34, 34, 34, 35, 35, 35] },
+      { name: "24 hours", color: "var(--s2)", values: [18, 19, 18, 19, 18, 19, 19, 20, 20, 20, 21, 21] },
+      { name: "Same day", color: "var(--s4)", values: [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8] }
+    ]
+  });
+
+  lines("sa-cxr", {
+    labels: MO, h: 118, max: 8,
+    series: [
+      { name: "Member", color: "var(--s1)", values: [5.1, 5.2, 5.0, 5.1, 5.2, 5.1, 5.2, 5.1, 5.2, 5.2, 5.1, 5.2] },
+      { name: "Automatic", color: "var(--s2)", values: [1.9, 2.1, 2.2, 2.4, 2.7, 2.9, 3.2, 3.4, 3.7, 3.9, 4.1, 4.4] },
+      { name: "Provider", color: "var(--s3)", values: [2.6, 2.5, 2.6, 2.5, 2.6, 2.6, 2.5, 2.6, 2.6, 2.5, 2.6, 2.6] }
+    ]
+  });
+
+  columns("sa-cxc", {
+    labels: MO, h: 118, stacked: true, pl: 30, unit: " cancelled",
+    series: [
+      { name: "Member", color: "var(--s1)", values: [238, 252, 229, 214, 254, 243, 270, 258, 279, 287, 271, 295] },
+      { name: "Automatic", color: "var(--s2)", values: [89, 102, 101, 101, 132, 138, 166, 172, 198, 215, 218, 250] },
+      { name: "Provider", color: "var(--s3)", values: [125, 122, 129, 114, 120, 120, 117, 115, 110, 107, 101, 90] }
+    ]
+  });
+
+  columns("sa-cxn", {
+    labels: MO, h: 118, stacked: true, pct: true, max: 100, pl: 24, unit: "%",
+    series: [
+      { name: "More than a week", color: "var(--s1)", values: [22, 21, 22, 20, 21, 20, 20, 19, 19, 18, 18, 17] },
+      { name: "48 hours", color: "var(--s5)", values: [24, 24, 23, 24, 23, 24, 23, 23, 23, 23, 22, 22] },
+      { name: "24 hours", color: "var(--s2)", values: [27, 27, 27, 28, 28, 28, 28, 28, 29, 29, 29, 30] },
+      { name: "Same day", color: "var(--s4)", values: [22, 23, 23, 23, 23, 23, 24, 25, 24, 25, 25, 25] },
+      { name: "After it started", color: "var(--critical)", values: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6] }
+    ]
+  });
+
+  bars("sa-cxreason", {
+    lw: 138, rh: 21, max: 1900,
+    rows: [
+      { label: "conflict_member", value: 1712, fmt: "1,712", color: "var(--s2)" },
+      { label: "other", value: 1284, fmt: "1,284", color: "var(--s2)" },
+      { label: "auto", value: 1082, fmt: "1,082", color: "var(--s2)" },
+      { label: "illness_medical", value: 706, fmt: "706", color: "var(--s2)" },
+      { label: "conflict_with_time", value: 498, fmt: "498", color: "var(--s2)" },
+      { label: "need_sooner_appointment", value: 341, fmt: "341", color: "var(--s2)" },
+      { label: "conflict_self", value: 287, fmt: "287", color: "var(--s2)" },
+      { label: "sms", value: 164, fmt: "164", color: "var(--s2)" }
+    ]
+  });
+
+  columns("sa-resch", {
+    labels: MO, h: 118, stacked: true, pct: true, max: 100, pl: 24, unit: "%",
+    series: [
+      { name: "More than a week", color: "var(--s1)", values: [29, 28, 29, 27, 28, 27, 27, 26, 26, 25, 25, 24] },
+      { name: "48 hours", color: "var(--s5)", values: [28, 28, 27, 28, 28, 28, 28, 28, 27, 28, 27, 27] },
+      { name: "24 hours", color: "var(--s2)", values: [26, 27, 27, 27, 27, 28, 28, 28, 29, 29, 30, 31] },
+      { name: "Same day", color: "var(--s4)", values: [17, 17, 17, 18, 17, 17, 17, 18, 18, 18, 18, 18] }
+    ]
+  });
+
+  /* ---- attendance ---- */
+
+  lines("sa-nsr", {
+    labels: MO, h: 118, max: 6,
+    series: [{ name: "No-show", color: "var(--s4)",
+      values: [3.2, 3.3, 3.3, 3.4, 3.5, 3.5, 3.5, 3.6, 3.6, 3.7, 3.7, 3.7] }]
+  });
+
+  bars("sa-nsb", {
+    lw: 96, rh: 24, max: 4200,
+    rows: [
+      { label: "No no-shows", value: 3841, fmt: "3,841  \u00b7  79%", color: "var(--s1)" },
+      { label: "One", value: 664, fmt: "664  \u00b7  14%", color: "var(--s5)" },
+      { label: "Two", value: 218, fmt: "218  \u00b7  4%", color: "var(--s2)" },
+      { label: "Three or more", value: 132, fmt: "132  \u00b7  3%", color: "var(--s4)" }
+    ]
+  });
+
+  columns("sa-tod", {
+    labels: ["8a", "9a", "10a", "11a", "12p", "1p", "2p", "3p", "4p", "5p"],
+    h: 118, stacked: true, pl: 24, unit: " sessions",
+    series: [
+      { name: "No-show", color: "var(--s4)", values: [31, 24, 18, 16, 19, 17, 18, 22, 29, 34] },
+      { name: "Cancelled", color: "var(--s2)", values: [58, 47, 39, 36, 41, 38, 40, 46, 55, 63] }
+    ]
+  });
+
+  /* ---- delivery and capacity ---- */
+
+  columns("sa-spd", {
+    labels: MO, h: 118, pl: 26, unit: " per day",
+    series: [
+      { name: "Behavioral health", color: "var(--s1)", values: [4.8, 4.9, 4.7, 4.6, 4.9, 4.8, 5.0, 4.9, 5.1, 5.2, 5.0, 5.2] },
+      { name: "Prescribers", color: "var(--s2)", values: [9.6, 9.8, 9.4, 9.1, 9.7, 9.5, 9.9, 9.7, 10.1, 10.3, 9.9, 10.4] },
+      { name: "Intake", color: "var(--s3)", values: [6.1, 6.2, 6.0, 5.8, 6.2, 6.1, 6.3, 6.2, 6.4, 6.5, 6.3, 6.6] }
+    ]
+  });
+
+  columns("sa-pcount", {
+    labels: MO, h: 118, stacked: true, pl: 26, unit: " providers",
+    series: [
+      { name: "Behavioral health", color: "var(--s1)", values: [128, 131, 129, 127, 133, 134, 138, 137, 141, 143, 142, 146] },
+      { name: "Prescribers", color: "var(--s2)", values: [19, 19, 20, 20, 21, 21, 22, 22, 23, 23, 23, 24] },
+      { name: "Intake", color: "var(--s3)", values: [14, 14, 14, 14, 15, 15, 16, 16, 16, 17, 17, 17] }
+    ]
+  });
+
+  columns("sa-fut", {
+    labels: MO, h: 118, stacked: true, pl: 30, unit: " members",
+    series: [
+      { name: "Session booked this month", color: "var(--s1)", values: [2914, 2988, 2871, 2762, 3016, 2974, 3108, 3061, 3184, 3241, 3179, 3302] },
+      { name: "Booked next month", color: "var(--s5)", values: [806, 828, 794, 764, 834, 823, 860, 847, 881, 897, 880, 914] },
+      { name: "Nothing booked", color: "var(--s4)", values: [1188, 1231, 1196, 1174, 1264, 1258, 1319, 1311, 1372, 1406, 1391, 1452] }
+    ]
+  });
+
+  columns("sa-drop", {
+    labels: MO, h: 118, stacked: true, pl: 26, unit: " dropped",
+    series: [
+      { name: "Member", color: "var(--s1)", values: [61, 64, 59, 55, 66, 64, 70, 68, 73, 76, 73, 78] },
+      { name: "Provider", color: "var(--s2)", values: [22, 23, 21, 20, 24, 23, 25, 24, 26, 27, 26, 28] },
+      { name: "Both", color: "var(--s4)", values: [9, 9, 8, 8, 10, 9, 10, 10, 11, 11, 11, 12] }
+    ]
+  });
+
+  /* ---- access and satisfaction ---- */
+
+  columns("sa-dich", {
+    labels: ["Self sign-up", "HCP", "Health plans", "Health systems"],
+    h: 118, stacked: true, pct: true, max: 100, pl: 24, unit: "%",
+    series: [
+      { name: "Attended", color: "var(--s1)", values: [74, 52, 58, 55] },
+      { name: "Rescheduled", color: "var(--s5)", values: [11, 16, 14, 15] },
+      { name: "Cancelled", color: "var(--s2)", values: [9, 18, 16, 17] },
+      { name: "No-show", color: "var(--s4)", values: [6, 14, 12, 13] }
+    ]
+  });
+
+  bars("sa-hcp", {
+    lw: 84, rh: 22, max: 820,
+    rows: [
+      { label: "120+ hours", value: 742, fmt: "742  \u00b7  41%", color: "var(--s4)" },
+      { label: "0\u20131 hour", value: 386, fmt: "386  \u00b7  21%", color: "var(--s1)" },
+      { label: "48\u201372 hours", value: 274, fmt: "274  \u00b7  15%", color: "var(--s2)" },
+      { label: "72\u201396 hours", value: 231, fmt: "231  \u00b7  13%", color: "var(--s2)" },
+      { label: "96\u2013120 hours", value: 178, fmt: "178  \u00b7  10%", color: "var(--s2)" }
+    ]
+  });
+
+  bars("sa-pss", {
+    lw: 74, rh: 24, max: 1150,
+    rows: [
+      { label: "Rated 5", value: 1064, fmt: "1,064  \u00b7  71%", color: "var(--s1)" },
+      { label: "Rated 4", value: 289, fmt: "289  \u00b7  19%", color: "var(--s5)" },
+      { label: "Rated 3", value: 96, fmt: "96  \u00b7  6%", color: "var(--s2)" },
+      { label: "Rated under 3", value: 48, fmt: "48  \u00b7  3%", color: "var(--s4)" }
+    ]
+  });
 
 });
 </script>

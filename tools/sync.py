@@ -41,6 +41,14 @@ JS_S, JS_E = "<!-- shared:js:start -->", "<!-- shared:js:end -->"
 REPORTS = {
     "reports/internal/patient-journey.html": "docs/internal/patient-journey.md",
     "reports/internal/provider-journey.html": "docs/internal/provider-journey.md",
+    "reports/internal/session-activity.html": "docs/internal/session-activity.md",
+    "reports/internal/advanced-care-note-metrics.html": "docs/internal/advanced-care-note-metrics.md",
+    "reports/internal/providers-compensation.html": "docs/internal/providers-compensation.md",
+    "reports/internal/care-navigators.html": "docs/internal/care-navigators.md",
+    "reports/internal/outreach-and-prioritization.html": "docs/internal/outreach-and-prioritization.md",
+    "reports/internal/referrals.html": "docs/internal/referrals.md",
+    "reports/internal/providers-scorecard.html": "docs/internal/providers-scorecard.md",
+    "reports/internal/satisfaction-survey-report.html": "docs/internal/satisfaction-survey-report.md",
     "reports/external/cdphp.html": "docs/external/cdphp.md",
     "reports/external/mvp.html": "docs/external/mvp.md",
 }

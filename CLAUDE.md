@@ -21,18 +21,27 @@ disagrees.
 ## Layout
 
 ```
-index.html                              landing page, links the three reports
+index.html                              landing page, links every report
 reports/
   _shared/report.css                    canonical stylesheet
   _shared/charts.js                     canonical chart builders and page behaviour
   internal/patient-journey.html         internal — the member's path
   internal/provider-journey.html        internal — documentation, supervision, matching
+  internal/session-activity.html        internal — named, no visuals yet
+  internal/advanced-care-note-metrics.html   internal — named, no visuals yet
+  internal/providers-compensation.html  internal — named, no visuals yet
+  internal/care-navigators.html         internal — named, no visuals yet
+  internal/outreach-and-prioritization.html  internal — named, no visuals yet
+  internal/referrals.html               internal — named, no visuals yet
+  internal/providers-scorecard.html     internal — named, no visuals yet
+  internal/satisfaction-survey-report.html   internal — named, no visuals yet
   external/cdphp.html                   external — the CDPHP payer report, five pages in one file
   external/mvp.html                     external — the MVP payer report, four pages, one built
 docs/
   README.md                             how the specs work
   internal/patient-journey.md           spec paired with the patient mock-up
   internal/provider-journey.md          spec paired with the provider mock-up
+  internal/<the eight above>.md         one spec each, paired and empty
   external/cdphp.md                     spec paired with the CDPHP mock-up
   external/mvp.md                       spec paired with the MVP mock-up
 tools/sync.py                           consistency check — run it before finishing
@@ -45,6 +54,15 @@ who acts on it. **External reports** go to payers. CDPHP is built first and deli
 largest — every other payer report is this one with visuals switched off — so a measure
 missing from CDPHP is missing everywhere. It carries no report-level slicers: the payer sees
 one program and one period, decided when the report is issued, not switched by the reader.
+
+**Eight internal reports are registered and empty** — Session Activity, Advanced Care Note
+Metrics, Providers Compensation, Care Navigators, Outreach and Prioritization, Referrals,
+Providers Scorecard and Satisfaction Survey Report, all named on 8 Sep 2026. Each is one page
+carrying a single *What this report is for* tile that says what has and has not been decided,
+and each has its own specification. The name is the whole of the brief so far, so the first job
+on any of them is scoping, not building — several overlap measures that already live on the
+Patient or Provider journey, and their specs say which. Registering them empty is what makes
+`sync.py` refuse an undocumented first visual. The tile comes out when that visual goes in.
 
 **MVP is the second payer report** and the first test of "CDPHP with visuals switched off".
 It has four pages; only Clinical Outcomes (PHQ9) is built, and the other three are named and

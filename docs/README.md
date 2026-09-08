@@ -7,6 +7,14 @@ a single deliverable: **change one, change the other in the same commit.**
 | --- | --- | --- |
 | [Patient journey](internal/patient-journey.md) | [`reports/internal/patient-journey.html`](../reports/internal/patient-journey.html) | Internal — leadership, product, data |
 | [Provider journey](internal/provider-journey.md) | [`reports/internal/provider-journey.html`](../reports/internal/provider-journey.html) | Internal — clinical ops, leadership, data |
+| [Session Activity](internal/session-activity.md) | [`reports/internal/session-activity.html`](../reports/internal/session-activity.html) | Internal — named, no visuals yet |
+| [Advanced Care Note Metrics](internal/advanced-care-note-metrics.md) | [`reports/internal/advanced-care-note-metrics.html`](../reports/internal/advanced-care-note-metrics.html) | Internal — named, no visuals yet |
+| [Providers Compensation](internal/providers-compensation.md) | [`reports/internal/providers-compensation.html`](../reports/internal/providers-compensation.html) | Internal — named, no visuals yet |
+| [Care Navigators](internal/care-navigators.md) | [`reports/internal/care-navigators.html`](../reports/internal/care-navigators.html) | Internal — named, no visuals yet |
+| [Outreach and Prioritization](internal/outreach-and-prioritization.md) | [`reports/internal/outreach-and-prioritization.html`](../reports/internal/outreach-and-prioritization.html) | Internal — named, no visuals yet |
+| [Referrals](internal/referrals.md) | [`reports/internal/referrals.html`](../reports/internal/referrals.html) | Internal — named, no visuals yet |
+| [Providers Scorecard](internal/providers-scorecard.md) | [`reports/internal/providers-scorecard.html`](../reports/internal/providers-scorecard.html) | Internal — named, no visuals yet |
+| [Satisfaction Survey Report](internal/satisfaction-survey-report.md) | [`reports/internal/satisfaction-survey-report.html`](../reports/internal/satisfaction-survey-report.html) | Internal — named, no visuals yet |
 | [CDPHP payer report](external/cdphp.md) | [`reports/external/cdphp.html`](../reports/external/cdphp.html) | External — the payer |
 | [MVP payer report](external/mvp.md) | [`reports/external/mvp.html`](../reports/external/mvp.html) | External — the payer |
 
